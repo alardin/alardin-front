@@ -73,3 +73,5 @@ buck-out/
 
 # lock
 package-lock.json
+
+ios/tmp.xcconfig
