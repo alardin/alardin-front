@@ -8,9 +8,12 @@
  * @format
  */
 
-import React, {useEffect} from 'react';
-import {View, Text, Alert} from 'react-native';
+import React, { useEffect } from 'react';
+import { Alert } from 'react-native';
 import messaging from '@react-native-firebase/messaging';
+import StackNavi from './navigation/stack/StackNavi';
+import { NavigationContainer } from '@react-navigation/native';
+import { RecoilRoot } from 'recoil';
 
 const requestUserPermission = async () => {
   const authStatus = await messaging().requestPermission();
@@ -34,9 +37,11 @@ const App = () => {
   });
 
   return (
-    <View>
-      <Text>Hello FCM!</Text>
-    </View>
+    <RecoilRoot>
+      <NavigationContainer>
+        <StackNavi />
+      </NavigationContainer>
+    </RecoilRoot>
   );
 };
 
