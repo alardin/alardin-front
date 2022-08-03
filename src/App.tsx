@@ -1,20 +1,12 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * Generated with the TypeScript template
- * https://github.com/react-native-community/react-native-template-typescript
- *
- * @format
- */
-
 import React, { useEffect } from 'react';
 import { Alert } from 'react-native';
 import messaging from '@react-native-firebase/messaging';
-import StackNavi from './navigation/stack/StackNavi';
 import { NavigationContainer } from '@react-navigation/native';
 import { RecoilRoot } from 'recoil';
 import { ThemeProvider } from 'styled-components/native';
+import StackNavigation from './navigation/stack/StackNavigation';
+
+import 'react-native-gesture-handler';
 import theme from './theme/theme';
 
 const requestUserPermission = async () => {
@@ -42,7 +34,7 @@ const App = () => {
     <RecoilRoot>
       <ThemeProvider theme={theme}>
         <NavigationContainer>
-          <StackNavi />
+          <StackNavigation />
         </NavigationContainer>
       </ThemeProvider>
     </RecoilRoot>
