@@ -1,28 +1,8 @@
-import React, { useState } from 'react';
-import { SafeAreaView, Text } from 'react-native';
-import KakaoLogin from './components/atoms/buttons/KakaoLogin';
-import WebScreen from './screen/WebScreen';
-import messaging from '@react-native-firebase/messaging';
-import Config from 'react-native-config';
+import React from 'react';
+import { SafeAreaView } from 'react-native';
 
 const Test = () => {
-  const [token, setToken] = useState<string>('');
-  const bringToken = async () => {
-    const result = await messaging().getToken();
-    console.log(result);
-    setToken(result);
-  };
-
-  bringToken();
-
-  return (
-    <SafeAreaView>
-      <Text style={{ padding: 4 }}>{Config.KAKAO_NATIVE_APP_REDIRECT}</Text>
-      <Text>{token}</Text>
-      <WebScreen />
-      <KakaoLogin />
-    </SafeAreaView>
-  );
+  return <SafeAreaView></SafeAreaView>;
 };
 
 export default Test;

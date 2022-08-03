@@ -290,6 +290,7 @@ dependencies {
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
     implementation 'com.google.firebase:firebase-messaging:20.2.3'
     implementation project(':react-native-config')
+    implementation project(':react-native-vector-icons')
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
         exclude group:'com.facebook.fbjni'
@@ -347,3 +348,9 @@ def isNewArchitectureEnabled() {
     // - Set an environment variable `ORG_GRADLE_PROJECT_newArchEnabled=true`
     return project.hasProperty("newArchEnabled") && project.newArchEnabled == "true"
 }
+
+project.ext.vectoricons = [
+    iconFontNames: [ 'AntDesign.ttf', 'Entypo.ttf', 'EvilIcons.ttf', 'Feather.ttf', 'FontAwesome.ttf', 'FontAwesome5_Brands.ttf', 'FontAwesome5_Regular.ttf', 'FontAwesome5_Solid.ttf', 'Foundation.ttf', 'Ionicons.ttf', 'MaterialIcons.ttf', 'MaterialCommunityIcons.ttf', 'SimpleLineIcons.ttf', 'Octicons.ttf', 'Zocial.ttf' ] // Name of the font files you want to copy
+]
+
+apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"

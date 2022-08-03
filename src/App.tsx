@@ -14,6 +14,8 @@ import messaging from '@react-native-firebase/messaging';
 import StackNavi from './navigation/stack/StackNavi';
 import { NavigationContainer } from '@react-navigation/native';
 import { RecoilRoot } from 'recoil';
+import { ThemeProvider } from 'styled-components/native';
+import theme from './theme/theme';
 
 const requestUserPermission = async () => {
   const authStatus = await messaging().requestPermission();
@@ -38,9 +40,11 @@ const App = () => {
 
   return (
     <RecoilRoot>
-      <NavigationContainer>
-        <StackNavi />
-      </NavigationContainer>
+      <ThemeProvider theme={theme}>
+        <NavigationContainer>
+          <StackNavi />
+        </NavigationContainer>
+      </ThemeProvider>
     </RecoilRoot>
   );
 };
