@@ -1,8 +1,8 @@
 import React from 'react';
-import { SafeAreaView } from 'react-native';
+import Container from './components/atoms/container/Container';
 
 const Test = () => {
-  return <SafeAreaView></SafeAreaView>;
+  return <Container></Container>;
 };
 
 export default Test;

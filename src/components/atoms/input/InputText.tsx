@@ -3,29 +3,58 @@ import { TextInputProps } from 'react-native';
 import styled from 'styled-components/native';
 
 export interface ITextInputProps extends TextInputProps {
-  size:
-    | 'full'
-    | 'xxlarge'
-    | 'xlarge'
-    | 'large'
-    | 'medium'
-    | 'small'
-    | 'xsmall'
-    | 'xxsmall';
+  textAlign?: 'right' | 'center';
+  width?: string;
+  height?: string;
+  border?: boolean;
+  colorName?:
+    | 'white'
+    | 'lightGray'
+    | 'lightSlate'
+    | 'black'
+    | 'red'
+    | 'pink'
+    | 'green'
+    | 'darkGray'
+    | 'lightOrange'
+    | 'skyBlue';
   children?: JSX.Element;
 }
 
 const DefaultTextInput = styled.TextInput<ITextInputProps>`
-  ${({ theme, size }) => `border-radius: ${theme.shape.rectangle} 
-                        width: ${theme.shapeSize.rectangle[size]}   
-                        height: 48px`}
-  border: 2px solid ${({ theme }) => theme.color.black};
+  text-align: ${({ textAlign }) =>
+    textAlign === 'right'
+      ? 'right'
+      : textAlign === 'center'
+      ? 'center'
+      : 'left'};
+  ${({ textAlign }) =>
+    textAlign === 'right'
+      ? 'padding-right: 8px'
+      : textAlign === 'center'
+      ? ''
+      : 'padding-left: 8px'};
+  ${({ width }) => `width: ${width}`};
+  ${({ height }) => `height: ${height}`};
+  border-radius: ${({ theme }) => theme.shape.rectangle};
   color: ${({ theme }) => theme.color.black};
-  padding-left: 8px;
+  background-color: ${({ theme, colorName }) =>
+    colorName ? theme.color[colorName] : 'transparent'};
 `;
 
-const InputText = ({ size, children, ...rest }: ITextInputProps) => (
-  <DefaultTextInput {...{ size, ...rest }}>{children}</DefaultTextInput>
+const InputText = ({
+  width,
+  height,
+  border,
+  textAlign,
+  colorName,
+  children,
+  ...rest
+}: ITextInputProps) => (
+  <DefaultTextInput
+    {...{ width, height, border, textAlign, colorName, ...rest }}>
+    {children}
+  </DefaultTextInput>
 );
 
 export default InputText;

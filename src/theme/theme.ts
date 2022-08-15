@@ -4,7 +4,7 @@ const theme = {
   // FontSize
   fontSize: {
     xxlarge: '48px',
-    xlarge: '36px',
+    xlarge: '32px',
     large: '24px',
     medium: '18px',
     small: '12px',
@@ -27,12 +27,16 @@ const theme = {
     black: '#08121A',
     green: '#6EC18B',
     red: '#EF6E85',
+    pink: '#FFADBD',
+    darkGray: '#42381F',
+    lightOrange: '#F8A436',
+    skyBlue: '#3880FF',
   },
 
   // Shape
   shape: {
     circle: '1000px',
-    rectangle: '6px',
+    rectangle: '12px',
   },
 
   // ShapeSize

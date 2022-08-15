@@ -8,6 +8,16 @@ module.exports = {
     project: './tsconfig.json',
   },
   ignorePatterns: ['.eslintrc.js'],
+  rules: {
+    camelcase: ['error'],
+    '@typescript-eslint/naming-convention': [
+      'error',
+      {
+        selector: 'property',
+        format: ['snake_case', 'camelCase', 'PascalCase'],
+      },
+    ],
+  },
   overrides: [
     {
       files: ['*.ts', '*.tsx'],
@@ -22,6 +32,8 @@ module.exports = {
             additionalHooks: 'useRecoilCallback',
           },
         ],
+        'import/no-extraneous-dependencies': 'off',
+        camelcase: ['off'],
       },
     },
   ],

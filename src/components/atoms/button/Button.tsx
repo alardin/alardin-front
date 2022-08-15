@@ -1,35 +1,37 @@
 import styled from 'styled-components/native';
 import React from 'react';
-import { TouchableOpacityProps } from 'react-native';
+import { TouchableHighlightProps } from 'react-native';
 
-export interface IButtonProps extends TouchableOpacityProps {
-  size:
-    | 'full'
-    | 'xxlarge'
-    | 'xlarge'
-    | 'large'
-    | 'medium'
-    | 'small'
-    | 'xsmall'
-    | 'xxsmall';
-  options?: 'circle';
-  buttonType?: 'ok' | 'cancel';
-  children?: JSX.Element | string | number;
+export interface IButtonProps extends TouchableHighlightProps {
+  width?: string;
+  height?: string;
+  rounded?: boolean;
+  center?: boolean;
+  colorName?:
+    | 'white'
+    | 'lightGray'
+    | 'lightSlate'
+    | 'black'
+    | 'red'
+    | 'pink'
+    | 'green'
+    | 'darkGray'
+    | 'lightOrange'
+    | 'skyBlue';
+  value?: string;
+  children?: JSX.Element | JSX.Element[] | string | number;
 }
 
-const DefaultButton = styled.TouchableOpacity<IButtonProps>`
-  justify-content: center;
-  align-items: center;
-  background-color: ${({ theme, buttonType }) =>
-    buttonType === 'ok'
-      ? theme.color.green
-      : buttonType === 'cancel'
-      ? theme.color.red
-      : theme.color.black};
-  ${({ theme, options, size }) =>
-    options === 'circle'
-      ? `border-radius: ${theme.shape.circle} width: ${theme.shapeSize.circle[size]} height: ${theme.shapeSize.circle[size]}`
-      : `border-radius: ${theme.shape.rectangle} width: ${theme.shapeSize.rectangle[size]} height: 48px`}
+const DefaultButton = styled.TouchableHighlight<IButtonProps>`
+  ${({ center }) => center && `justify-content: center align-items: center`};
+  ${({ width }) => `width: ${width}`}
+  ${({ height }) => `height: ${height}`}
+  background-color: ${({ theme, colorName }) =>
+    colorName || colorName === 'white'
+      ? theme.color[colorName]
+      : 'transparent'};
+  border-radius: ${({ theme, rounded }) =>
+    rounded ? theme.shape.circle : theme.shape.rectangle};
 `;
 
 const ButtonText = styled.Text`
@@ -38,13 +40,18 @@ const ButtonText = styled.Text`
 `;
 
 const Button = ({
-  size,
-  options,
-  buttonType,
+  width,
+  height,
+  center,
+  rounded,
+  colorName,
+  value,
   children,
   ...rest
 }: IButtonProps) => (
-  <DefaultButton {...{ size, options, buttonType, ...rest }}>
+  <DefaultButton
+    {...{ width, height, center, rounded, colorName, ...rest }}
+    value={value}>
     {React.isValidElement(children) ? (
       children
     ) : (

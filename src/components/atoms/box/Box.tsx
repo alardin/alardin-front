@@ -3,25 +3,58 @@ import { ViewProps } from 'react-native';
 import styled from 'styled-components/native';
 
 export interface IBoxProps extends ViewProps {
-  boxType: string;
+  width?: string;
+  height?: string;
+  padding?: boolean;
   shadow?: boolean;
-  children?: JSX.Element | JSX.Element[];
+  row?: boolean;
+  center?: boolean;
+  colorName?:
+    | 'white'
+    | 'lightGray'
+    | 'lightSlate'
+    | 'black'
+    | 'red'
+    | 'pink'
+    | 'green'
+    | 'darkGray'
+    | 'lightOrange'
+    | 'skyBlue';
+  children?: Element | JSX.Element | JSX.Element[];
 }
 
 const DefaultBox = styled.View<IBoxProps>`
   display: flex;
-  flex-direction: row;
-  padding: 8px 4px;
+  flex-direction: ${({ row }) => (row ? 'row' : 'column')};
   border-radius: ${({ theme }) => theme.shape.rectangle};
-  background-color: ${({ theme }) => theme.color.white};
+  background-color: ${({ theme, colorName }) =>
+    colorName ? theme.color[colorName] : 'transparent'};
+  ${({ width }) => width && `width: ${width}`};
+  ${({ height }) => height && `height: ${height}`};
+  ${({ padding }) => padding && `padding: 8px 4px`};
+  ${({ center }) => center && `justify-content: center align-items: center`};
   ${({ theme, shadow }) =>
     shadow &&
-    `shadow-color: ${theme.shadow.default.color} shadow-offset: ${theme.shadow.default.offest.x} ${theme.shadow.default.offest.y}} shadow-opacity: ${theme.shadow.default.opacity} shadow-radius: ${theme.shadow.default.radius}; 
+    `
+    shadow-color: ${theme.shadow.default.color} 
+    shadow-offset: ${theme.shadow.default.offest.x} ${theme.shadow.default.offest.y}} 
+    shadow-opacity: ${theme.shadow.default.opacity} 
+    shadow-radius: ${theme.shadow.default.radius}; 
   `}
 `;
 
-const Box = ({ boxType, shadow, children, ...rest }: IBoxProps) => (
-  <DefaultBox {...{ boxType, shadow, ...rest }}>{children}</DefaultBox>
+const Box = ({
+  width,
+  height,
+  shadow,
+  padding,
+  center,
+  children,
+  ...rest
+}: IBoxProps) => (
+  <DefaultBox {...{ width, height, padding, center, shadow, ...rest }}>
+    {children}
+  </DefaultBox>
 );
 
 export default Box;

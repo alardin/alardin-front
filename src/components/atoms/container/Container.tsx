@@ -1,18 +1,19 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { ViewProps } from 'react-native';
 import styled from 'styled-components/native';
 
-export interface IContainerProps extends ViewProps {
-  children?: JSX.Element | JSX.Element[];
+export interface IViewProps extends ViewProps {
+  options?: 'zero';
+  children?: ReactNode;
 }
 
-const DefaultBox = styled.View<IContainerProps>`
+const DefaultBox = styled.View<IViewProps>`
   display: flex;
-  flex-direction: row;
+  padding: ${({ options }) => (options === 'zero' ? `0px` : `8px`)};
 `;
 
-const Box = ({ children, ...rest }: IContainerProps) => (
-  <DefaultBox {...rest}>{children}</DefaultBox>
+const Container = ({ options, children, ...rest }: IViewProps) => (
+  <DefaultBox {...{ options, ...rest }}>{children}</DefaultBox>
 );
 
-export default Box;
+export default Container;

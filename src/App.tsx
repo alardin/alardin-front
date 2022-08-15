@@ -1,21 +1,22 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * Generated with the TypeScript template
- * https://github.com/react-native-community/react-native-template-typescript
- *
- * @format
- */
-
 import React, { useEffect } from 'react';
-import { Alert } from 'react-native';
+import { Alert, LogBox } from 'react-native';
 import messaging from '@react-native-firebase/messaging';
-import StackNavi from './navigation/stack/StackNavi';
-import { NavigationContainer } from '@react-navigation/native';
+import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { RecoilRoot } from 'recoil';
 import { ThemeProvider } from 'styled-components/native';
+import StackNavigation from './navigation/stack/StackNavigation';
+
+import 'react-native-gesture-handler';
 import theme from './theme/theme';
+
+// Ignore some warnings when debugging
+LogBox.ignoreLogs(['EventEmitter.removeListener']);
+LogBox.ignoreLogs([
+  'Require cycle: node_modules/core-js/internals/microtask.js -> node_modules/core-js/internals/microtask.js',
+]);
+LogBox.ignoreLogs([
+  'Non-serializable values were found in the navigation state',
+]);
 
 const requestUserPermission = async () => {
   const authStatus = await messaging().requestPermission();
@@ -28,8 +29,19 @@ const requestUserPermission = async () => {
   }
 };
 
+const navTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    background: theme.color.lightSlate,
+  },
+};
+
 const App = () => {
-  requestUserPermission();
+  useEffect(() => {
+    requestUserPermission();
+  }, []);
+
   useEffect(() => {
     const unsubscribe = messaging().onMessage(async remoteMessage => {
       console.log(remoteMessage);
@@ -41,8 +53,8 @@ const App = () => {
   return (
     <RecoilRoot>
       <ThemeProvider theme={theme}>
-        <NavigationContainer>
-          <StackNavi />
+        <NavigationContainer theme={navTheme}>
+          <StackNavigation />
         </NavigationContainer>
       </ThemeProvider>
     </RecoilRoot>
