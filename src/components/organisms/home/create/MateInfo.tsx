@@ -1,6 +1,7 @@
 import React from 'react';
 import { ScrollViewProps } from 'react-native';
 import styled from 'styled-components/native';
+import Box from '../../../atoms/box/Box';
 import Button from '../../../atoms/button/Button';
 import Container from '../../../atoms/container/Container';
 import Text from '../../../atoms/text/Text';
@@ -49,9 +50,6 @@ const MateInfo = ({ members, setMembers }: IMateInfoProps) => {
         ))}
         <MateInvite {...{ setMembers }} />
       </CustomScrollBox>
-      <ConfirmButton width="100%" height="48px" colorName="black" center>
-        알람 등록
-      </ConfirmButton>
     </CustomContainer>
   );
 };

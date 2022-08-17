@@ -31,6 +31,7 @@ const theme = {
     darkGray: '#42381F',
     lightOrange: '#F8A436',
     skyBlue: '#3880FF',
+    yellow: '#FDCC0D',
   },
 
   // Shape

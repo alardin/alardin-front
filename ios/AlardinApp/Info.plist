@@ -37,6 +37,8 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>The purpose for accessing the microphone, such as for a call or interactive live streaming.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
 	<key>UIBackgroundModes</key>
@@ -73,6 +75,7 @@
 	<string>${KAKAO_NATIVE_APP_KEY_WITH_KAKAO}</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
+        <string>${KAKAO_NATIVE_APP_REDIRECT}</string>
 		<string>kakaokompassauth</string>
 		<string>storykompassauth</string>
 		<string>kakaolink</string>

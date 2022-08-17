@@ -1,10 +1,17 @@
 import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
 import React from 'react';
-import { TouchableHighlight } from 'react-native';
 import Icon from 'react-native-vector-icons/Octicons';
 import styled from 'styled-components/native';
+import { RootStackParamList } from '../../../navigation/stack/StackNavigation';
 import theme from '../../../theme/theme';
 import Box from '../../atoms/box/Box';
+import Button from '../../atoms/button/Button';
+
+export type IAlarmCreateNavigation = StackNavigationProp<
+  RootStackParamList,
+  'AlarmCreate'
+>;
 
 const AlarmContainer = styled(Box)`
   height: 86px;
@@ -13,16 +20,16 @@ const AlarmContainer = styled(Box)`
 `;
 
 const AlarmPlus = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<IAlarmCreateNavigation>();
   const handlePress = () => {
     navigation.navigate('AlarmCreate', { type: 'plus' });
   };
   return (
-    <TouchableHighlight onPress={handlePress}>
+    <Button onPress={handlePress}>
       <AlarmContainer width="100%" height="100%" colorName="white">
         <Icon name="plus" size={40} color={theme.color.black} />
       </AlarmContainer>
-    </TouchableHighlight>
+    </Button>
   );
 };
 

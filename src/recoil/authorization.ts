@@ -1,8 +1,8 @@
-import { KakaoOAuthToken } from '@react-native-seoul/kakao-login';
 import { atom } from 'recoil';
 
-export interface IAuthorization extends KakaoOAuthToken {
-  deviceToken: string;
+export interface IAuthorization {
+  appAccessToken: string;
+  appRefreshToken: string;
 }
 
 const authorization = atom<IAuthorization>({

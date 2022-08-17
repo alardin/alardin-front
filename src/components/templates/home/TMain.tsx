@@ -25,10 +25,10 @@ const exampleData: IAlarmInfoData[] = [
     members: [
       {
         id: 1,
-        email: 'bbangjo@gmail.com',
-        name: '조병근',
-        nickname: 'bbangjo',
-        bio: "Hello, I'm bbangjo!",
+        email: 'hongdong@gmail.com',
+        name: '홍길동',
+        nickname: 'hongdong',
+        bio: "Hello, I'm hongdong!",
         profile_image_url:
           'https://cdn.kakao.com/img/20190201_iahpdf_168108123.jpg',
         thumbnail_image_url:
@@ -52,10 +52,10 @@ const exampleData: IAlarmInfoData[] = [
     members: [
       {
         id: 1,
-        email: 'bbangjo@gmail.com',
-        name: '조병근',
-        nickname: 'bbangjo',
-        bio: "Hello, I'm bbangjo!",
+        email: 'hongdong@gmail.com',
+        name: '홍길동',
+        nickname: 'hongdong',
+        bio: "Hello, I'm hongdong!",
         profile_image_url:
           'https://cdn.kakao.com/img/20190201_iahpdf_168108123.jpg',
         thumbnail_image_url:

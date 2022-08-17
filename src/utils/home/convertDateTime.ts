@@ -50,7 +50,6 @@ export const isToday = (time: string) => {
   const currentTime = new Date();
   const setTime = new Date();
 
-  console.log(time.split(' '));
   const [amPm, strTime] = time.split(' ');
   const [hour, minute] = strTime.split(':');
   const strHour = () => {

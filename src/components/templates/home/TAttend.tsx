@@ -1,7 +1,9 @@
 import React, { useEffect } from 'react';
 import { SafeAreaView, ScrollView } from 'react-native';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
+import styled from 'styled-components/native';
 import { summaryData } from '../../../recoil/home/summary';
+import Button from '../../atoms/button/Button';
 import Container from '../../atoms/container/Container';
 import Header from '../../organisms/home/create/Header';
 import MateInfo from '../../organisms/home/create/MateInfo';
@@ -34,6 +36,9 @@ const TAttend = ({ route }) => {
           <Header title="테스트" host={host_id} />
           <Summary type="attend" />
           <MateInfo members={members} />
+          <Button width="100%" height="48px" colorName="black" center>
+            알람 등록
+          </Button>
         </Container>
       </ScrollView>
     </SafeAreaView>

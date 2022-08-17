@@ -7,7 +7,13 @@ import Text from '../../atoms/text/Text';
 import Label from '../../atoms/label/Label';
 import Button from '../../atoms/button/Button';
 import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackParamList } from '../../../navigation/stack/StackNavigation';
 
+export type IAlarmAttendNavigation = StackNavigationProp<
+  RootStackParamList,
+  'AlarmAttend'
+>;
 export interface IAlarmInfoData {
   id: number;
   time: string;
@@ -21,7 +27,7 @@ export interface IAlarmInfoData {
   date: Date;
 }
 
-interface IAlarmInfoProps extends IAlarmInfoData {
+export interface IAlarmInfoProps extends IAlarmInfoData {
   margin?: string;
 }
 
@@ -54,7 +60,7 @@ const AlarmInfo = (props: IAlarmInfoProps) => {
 
   const [amPm, timeNum] = time.split(' ');
 
-  const navigation = useNavigation();
+  const navigation = useNavigation<IAlarmAttendNavigation>();
   const handlePress = () => {
     navigation.navigate('AlarmAttend', { ...props, type: 'attend' });
   };
@@ -84,6 +90,7 @@ const AlarmInfo = (props: IAlarmInfoProps) => {
         <RightContainer>
           {members.map((image, index) => (
             <ProfileIcon
+              size={56}
               key={`player_${index}`}
               position="absolute"
               arrow={{ right: index === 0 ? 0 : index + 15 }}

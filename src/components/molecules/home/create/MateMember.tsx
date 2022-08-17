@@ -47,7 +47,7 @@ const MateMember = ({ id, name }: IMateMemberData) => {
     <Button width="140px" height="180px">
       <Box width="100%" height="100%" colorName="white" shadow center>
         <CustomContainer>
-          <CustomProfileIcon />
+          <CustomProfileIcon size={50} />
           <Text textType="comment" options="semiBold">
             {`#${id}`}
           </Text>

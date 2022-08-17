@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Alert, LogBox } from 'react-native';
+import { Alert, PermissionsAndroid, Platform } from 'react-native';
 import messaging from '@react-native-firebase/messaging';
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { RecoilRoot } from 'recoil';
@@ -8,15 +8,6 @@ import StackNavigation from './navigation/stack/StackNavigation';
 
 import 'react-native-gesture-handler';
 import theme from './theme/theme';
-
-// Ignore some warnings when debugging
-LogBox.ignoreLogs(['EventEmitter.removeListener']);
-LogBox.ignoreLogs([
-  'Require cycle: node_modules/core-js/internals/microtask.js -> node_modules/core-js/internals/microtask.js',
-]);
-LogBox.ignoreLogs([
-  'Non-serializable values were found in the navigation state',
-]);
 
 const requestUserPermission = async () => {
   const authStatus = await messaging().requestPermission();
@@ -37,9 +28,30 @@ const navTheme = {
   },
 };
 
+const requestCameraAndAudioPermission = async () => {
+  if (Platform.OS === 'android') {
+    try {
+      const granted = await PermissionsAndroid.requestMultiple([
+        PermissionsAndroid.PERMISSIONS.RECORD_AUDIO,
+      ]);
+      if (
+        granted['android.permission.RECORD_AUDIO'] ===
+        PermissionsAndroid.RESULTS.GRANTED
+      ) {
+        console.log('You can use the mic');
+      } else {
+        console.log('Permission denied');
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
+};
+
 const App = () => {
   useEffect(() => {
     requestUserPermission();
+    requestCameraAndAudioPermission();
   }, []);
 
   useEffect(() => {

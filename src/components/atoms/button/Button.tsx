@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { TouchableHighlightProps } from 'react-native';
 
 export interface IButtonProps extends TouchableHighlightProps {
@@ -19,7 +19,7 @@ export interface IButtonProps extends TouchableHighlightProps {
     | 'lightOrange'
     | 'skyBlue';
   value?: string;
-  children?: JSX.Element | JSX.Element[] | string | number;
+  children?: ReactNode;
 }
 
 const DefaultButton = styled.TouchableHighlight<IButtonProps>`
@@ -51,6 +51,8 @@ const Button = ({
 }: IButtonProps) => (
   <DefaultButton
     {...{ width, height, center, rounded, colorName, ...rest }}
+    activeOpacity={0.6}
+    underlayColor="transparent"
     value={value}>
     {React.isValidElement(children) ? (
       children

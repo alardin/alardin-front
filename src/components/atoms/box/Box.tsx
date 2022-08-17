@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { ViewProps } from 'react-native';
 import styled from 'styled-components/native';
 
@@ -20,7 +20,7 @@ export interface IBoxProps extends ViewProps {
     | 'darkGray'
     | 'lightOrange'
     | 'skyBlue';
-  children?: Element | JSX.Element | JSX.Element[];
+  children?: ReactNode;
 }
 
 const DefaultBox = styled.View<IBoxProps>`
@@ -29,9 +29,9 @@ const DefaultBox = styled.View<IBoxProps>`
   border-radius: ${({ theme }) => theme.shape.rectangle};
   background-color: ${({ theme, colorName }) =>
     colorName ? theme.color[colorName] : 'transparent'};
+  ${({ padding }) => padding && 'padding: 4px 4px'};
   ${({ width }) => width && `width: ${width}`};
   ${({ height }) => height && `height: ${height}`};
-  ${({ padding }) => padding && `padding: 8px 4px`};
   ${({ center }) => center && `justify-content: center align-items: center`};
   ${({ theme, shadow }) =>
     shadow &&
