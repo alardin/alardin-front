@@ -6,14 +6,25 @@ import TAttend from '../../components/templates/home/TAttend';
 import Login from '../../screen/Login';
 import GameStart from '../../screen/game/GameStart';
 import GameEnd from '../../screen/game/GameEnd';
-import CallScreen from '../../screen/CallScreen';
+import CallScreen, { IAgoraVoiceCall } from '../../screen/CallScreen';
+import RtcEngine from 'react-native-agora';
+import { IAlarmInfoProps } from '../../components/molecules/home/AlarmInfo';
+import { useRecoilValue } from 'recoil';
+import authorization from '../../recoil/authorization';
 
+interface IAlarmAttendStackProps extends IAlarmInfoProps {
+  type: string;
+}
 export type RootStackParamList = {
-  BottomNavigation: undefined;
-  AlarmCreate: undefined;
-  AlarmAttend: undefined;
   Login: undefined;
-  GameStart: undefined;
+  BottomNavigation: undefined;
+  AlarmCreate: { type: string };
+  AlarmAttend: IAlarmAttendStackProps;
+  GameStart: {
+    engine: RtcEngine | undefined;
+    agora: IAgoraVoiceCall;
+    setAgora: React.Dispatch<React.SetStateAction<IAgoraVoiceCall>>;
+  };
   GameEnd: undefined;
   CallScreen: undefined;
 };
@@ -21,13 +32,22 @@ export type RootStackParamList = {
 const Stack = createStackNavigator<RootStackParamList>();
 
 const StackNavigation = () => {
+  const auth = useRecoilValue(authorization);
   return (
-    <Stack.Navigator initialRouteName="BottomNavigation">
-      <Stack.Screen
-        name="BottomNavigation"
-        component={BottomNavigation}
-        options={{ headerShown: false }}
-      />
+    <Stack.Navigator initialRouteName="Login">
+      {!auth.appAccessToken ? (
+        <Stack.Screen
+          name="Login"
+          component={Login}
+          options={{ headerShown: false }}
+        />
+      ) : (
+        <Stack.Screen
+          name="BottomNavigation"
+          component={BottomNavigation}
+          options={{ headerShown: false }}
+        />
+      )}
       <Stack.Screen
         name="AlarmCreate"
         component={TCreate}
@@ -36,11 +56,6 @@ const StackNavigation = () => {
       <Stack.Screen
         name="AlarmAttend"
         component={TAttend}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="Login"
-        component={Login}
         options={{ headerShown: false }}
       />
       <Stack.Screen

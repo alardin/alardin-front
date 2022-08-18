@@ -16,7 +16,7 @@ export type RootBottomParamList = {
   Menu: undefined;
 };
 
-const Tab = createBottomTabNavigator();
+const Tab = createBottomTabNavigator<RootBottomParamList>();
 
 const BottomNavigation = () => {
   return (
