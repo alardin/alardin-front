@@ -1,8 +1,6 @@
 import React from 'react';
 import { ScrollViewProps } from 'react-native';
 import styled from 'styled-components/native';
-import Box from '../../../atoms/box/Box';
-import Button from '../../../atoms/button/Button';
 import Container from '../../../atoms/container/Container';
 import Text from '../../../atoms/text/Text';
 import MateInvite from '../../../molecules/home/create/MateInvite';
@@ -27,11 +25,6 @@ const CustomScrollBox = styled.ScrollView<ScrollViewProps>`
   padding: 4px;
 `;
 
-const ConfirmButton = styled(Button)`
-  margin-top: 40px;
-  margin-bottom: 40px;
-`;
-
 const MarginView = styled.View`
   margin: 0 8px;
 `;
@@ -48,7 +41,6 @@ const MateInfo = ({ members, setMembers }: IMateInfoProps) => {
             <MateMember {...member} />
           </MarginView>
         ))}
-        <MateInvite {...{ setMembers }} />
       </CustomScrollBox>
     </CustomContainer>
   );

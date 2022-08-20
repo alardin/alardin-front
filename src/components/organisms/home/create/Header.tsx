@@ -9,7 +9,7 @@ import { useNavigation } from '@react-navigation/native';
 
 interface IHeaderProps {
   title: string;
-  host: string;
+  id: number;
 }
 
 const LeftContainer = styled(Container)`
@@ -23,7 +23,7 @@ const RightContainer = styled(Container)`
   align-items: flex-end;
 `;
 
-const Header = ({ title, host }: IHeaderProps) => {
+const Header = ({ title, id }: IHeaderProps) => {
   const navigation = useNavigation();
 
   return (
@@ -40,7 +40,7 @@ const Header = ({ title, host }: IHeaderProps) => {
         </Button>
       </LeftContainer>
       <RightContainer>
-        <Text options="semiBold">{`방장인 ${host}`}</Text>
+        <Text options="semiBold">{`방장인 #${id}`}</Text>
         <Text textType="title" options="bold">
           {title}
         </Text>

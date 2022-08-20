@@ -1,31 +1,20 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import Box from '../../atoms/box/Box';
-import Container from '../../atoms/container/Container';
-import ProfileIcon from '../../atoms/profile/ProfileIcon';
-import Text from '../../atoms/text/Text';
-import Label from '../../atoms/label/Label';
-import Button from '../../atoms/button/Button';
+import Box from '../../../atoms/box/Box';
+import Container from '../../../atoms/container/Container';
+import ProfileIcon from '../../../atoms/profile/ProfileIcon';
+import Text from '../../../atoms/text/Text';
+import Label from '../../../atoms/label/Label';
+import Button from '../../../atoms/button/Button';
 import { useNavigation } from '@react-navigation/native';
+import { IAlarmInfoData } from '../../../../recoil/home/alarmList';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../../../navigation/stack/StackNavigation';
+import { RootStackParamList } from '../../../../navigation/stack/StackNavigation';
 
-export type IAlarmAttendNavigation = StackNavigationProp<
+type IAlarmAttendNavigation = StackNavigationProp<
   RootStackParamList,
   'AlarmAttend'
 >;
-export interface IAlarmInfoData {
-  id: number;
-  time: string;
-  is_repeated: string;
-  is_private: boolean;
-  music_volume: number;
-  max_members: number;
-  game: string;
-  host_id: number;
-  members: object[];
-  date: Date;
-}
 
 export interface IAlarmInfoProps extends IAlarmInfoData {
   margin?: string;
@@ -56,7 +45,7 @@ const ClockText = styled(Text)`
 `;
 
 const AlarmInfo = (props: IAlarmInfoProps) => {
-  const { is_private, is_repeated, members, game, time } = props;
+  const { is_private, is_repeated, Members, Game, time } = props;
 
   const [amPm, timeNum] = time.split(' ');
 
@@ -84,17 +73,18 @@ const AlarmInfo = (props: IAlarmInfoProps) => {
                 반복
               </Label>
             )}
-            <Label colorName="skyBlue">{game}</Label>
+            <Label colorName="skyBlue">{Game.name}</Label>
           </Box>
         </LeftContainer>
         <RightContainer>
-          {members.map((image, index) => (
+          {Members.map(({ thumbnail_image_url }, index) => (
             <ProfileIcon
               size={56}
               key={`player_${index}`}
               position="absolute"
               arrow={{ right: index === 0 ? 0 : index + 15 }}
-              zIndex={members.length - index}
+              zIndex={Members.length - index}
+              uri={thumbnail_image_url}
             />
           ))}
         </RightContainer>

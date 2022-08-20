@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/naming-convention */
+/* eslint-disable react-native/no-inline-styles */
+
 import {
   KakaoOAuthToken,
   loginWithKakaoAccount,
@@ -10,10 +13,11 @@ import { Image, ImageBackground, SafeAreaView } from 'react-native';
 import styled from 'styled-components/native';
 import Text from '../components/atoms/text/Text';
 import Container from '../components/atoms/container/Container';
-import { useSetRecoilState } from 'recoil';
-import authorization from '../recoil/authorization';
 import axios from 'axios';
 import Config from 'react-native-config';
+import EncryptedStorage from 'react-native-encrypted-storage';
+import { useSetRecoilState } from 'recoil';
+import { IAuthorization, token } from '../recoil/authorization';
 
 const TopBox = styled(Box)`
   height: 60%;
@@ -24,7 +28,7 @@ const BottomBox = styled(Box)`
 `;
 
 const Login = () => {
-  const setAuthorization = useSetRecoilState(authorization);
+  const setAuthorization = useSetRecoilState(token);
   const handlePress = async () => {
     const { accessToken, refreshToken }: KakaoOAuthToken =
       await loginWithKakaoAccount();
@@ -46,8 +50,15 @@ const Login = () => {
         .then(res => {
           const { status, data } = res.data;
           if (status === 'SUCCESS') {
-            console.log(data);
             setAuthorization(data);
+            EncryptedStorage.setItem(
+              'appAccessToken',
+              JSON.stringify({ appAccessToken: data.appAccessToken }),
+            );
+            EncryptedStorage.setItem(
+              'appRefreshToken',
+              JSON.stringify({ appRefreshToken: data.appRefreshToken }),
+            );
           }
         })
         .catch(err => console.log(err));

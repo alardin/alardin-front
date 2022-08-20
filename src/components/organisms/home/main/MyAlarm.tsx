@@ -1,9 +1,12 @@
+/* eslint-disable react-native/no-inline-styles */
+
 import React from 'react';
 import { View } from 'react-native';
 import styled from 'styled-components/native';
 import Container from '../../../atoms/container/Container';
 import Text from '../../../atoms/text/Text';
-import AlarmInfo, { IAlarmInfoData } from '../../../molecules/home/AlarmInfo';
+import AlarmInfo from '../../../molecules/home/main/AlarmInfo';
+import { IAlarmInfoData } from '../../../../recoil/home/alarmList';
 
 interface IMyAlarmProps {
   data: IAlarmInfoData[];

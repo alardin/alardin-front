@@ -25,8 +25,8 @@ const LabelView = styled.View<ILabelProps>`
   align-items: center;
   border-radius: 14px;
   padding: 4px 10px;
-  ${({ width }) => width && `width: ${width}`}
-  ${({ height }) => height && `height: ${height}`}
+  ${({ width }) => width && `width: ${width}px`}
+  ${({ height }) => height && `height: ${height}px`}
   ${({ marginHorizontal }) => marginHorizontal && `margin-right: 2px`}
   background-color: ${({ theme, colorName }) => theme.color[colorName]};
   ${({ theme, shadow }) =>

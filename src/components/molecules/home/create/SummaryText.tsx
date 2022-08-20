@@ -19,7 +19,13 @@ const TextBox = styled(Box)`
   margin-bottom: 4px;
 `;
 
-const SummaryText = ({ player, is_repeated, time, game }: ISummaryData) => {
+const SummaryText = ({
+  player,
+  is_repeated,
+  time,
+  game,
+  type,
+}: ISummaryData) => {
   const [today, setToday] = useState<boolean>(false);
   useEffect(() => {
     if (time) {
@@ -29,12 +35,14 @@ const SummaryText = ({ player, is_repeated, time, game }: ISummaryData) => {
 
   return (
     <CustomContainer>
-      <TextBox row>
-        <CustomText textType="subTitle" options="bold">
-          {`${player} 메이트`}
-        </CustomText>
-        <CustomText>와 함께</CustomText>
-      </TextBox>
+      {type === 'attend' && (
+        <TextBox row>
+          <CustomText textType="subTitle" options="bold">
+            {`${player} 메이트`}
+          </CustomText>
+          <CustomText>와 함께</CustomText>
+        </TextBox>
+      )}
       <CustomText textType="subTitle" options="bold">
         {is_repeated !== '0' ? `매주 ${is_repeated}` : today ? '오늘' : '내일'}
       </CustomText>

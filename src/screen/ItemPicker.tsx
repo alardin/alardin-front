@@ -1,5 +1,5 @@
 import { Picker } from '@react-native-picker/picker';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { SetterOrUpdater, useRecoilValue, useSetRecoilState } from 'recoil';
 import { summaryData } from '../recoil/home/summary';
 import { pickerList } from '../recoil/picker';
@@ -19,10 +19,6 @@ const ItemPicker = ({
 }: IItemPickerProps) => {
   const recoilResult = useRecoilValue(pickerList);
   const setSummary = useSetRecoilState(summaryData);
-
-  useEffect(() => {
-    console.log(selectedValue);
-  }, [selectedValue]);
 
   return (
     <Picker
@@ -50,7 +46,7 @@ const ItemPicker = ({
           setSelectedValue(value);
         }
       }}>
-      {recoilResult.data.map(({ label, value }, index) => (
+      {recoilResult?.data.map(({ label, value }, index) => (
         <Picker.Item key={`picker_${index}`} label={label} value={value} />
       ))}
     </Picker>

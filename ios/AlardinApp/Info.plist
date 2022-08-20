@@ -26,10 +26,16 @@
 	<true/>
 	<key>NSAppTransportSecurity</key>
 	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
 		<key>NSAllowsArbitraryLoadsInWebContent</key>
 		<true/>
 		<key>NSExceptionDomains</key>
 		<dict>
+			<key>k.kakaocdn.net</key>
+			<dict/>
+			<key>NSExceptionAllowInsecureHTTPLoads</key>
+			<true/>
 			<key>localhost</key>
 			<dict>
 				<key>NSExceptionAllowsInsecureHTTPLoads</key>
@@ -75,7 +81,7 @@
 	<string>${KAKAO_NATIVE_APP_KEY_WITH_KAKAO}</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
-        <string>${KAKAO_NATIVE_APP_REDIRECT}</string>
+		<string>${KAKAO_NATIVE_APP_REDIRECT}</string>
 		<string>kakaokompassauth</string>
 		<string>storykompassauth</string>
 		<string>kakaolink</string>

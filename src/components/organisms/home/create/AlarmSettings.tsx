@@ -1,10 +1,5 @@
-import React, { useState } from 'react';
-import {
-  SetterOrUpdater,
-  useRecoilState,
-  useRecoilValue,
-  useSetRecoilState,
-} from 'recoil';
+import React from 'react';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components/native';
 import {
   settingData,

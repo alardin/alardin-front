@@ -16,6 +16,7 @@ export interface ISummaryData {
   game: string;
   is_private: boolean;
   player: string;
+  type?: string;
 }
 
 export const summaryData = atom<ISummaryData>({

@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import { Alert, PermissionsAndroid, Platform } from 'react-native';
 import messaging from '@react-native-firebase/messaging';
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { RecoilRoot } from 'recoil';
 import { ThemeProvider } from 'styled-components/native';
 import StackNavigation from './navigation/stack/StackNavigation';
+import EncryptedStorage from 'react-native-encrypted-storage';
 
 import 'react-native-gesture-handler';
 import theme from './theme/theme';
@@ -62,11 +63,16 @@ const App = () => {
     return unsubscribe;
   });
 
+  EncryptedStorage.removeItem('appAccessToken');
+  EncryptedStorage.removeItem('appRefreshToken');
+
   return (
     <RecoilRoot>
       <ThemeProvider theme={theme}>
         <NavigationContainer theme={navTheme}>
-          <StackNavigation />
+          <Suspense>
+            <StackNavigation />
+          </Suspense>
         </NavigationContainer>
       </ThemeProvider>
     </RecoilRoot>

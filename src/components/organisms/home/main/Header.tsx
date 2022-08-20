@@ -4,17 +4,24 @@ import styled from 'styled-components/native';
 import { TouchableOpacity } from 'react-native';
 import Container from '../../../atoms/container/Container';
 import Text from '../../../atoms/text/Text';
-import NextAlarm from '../../../molecules/home/NextAlarm';
+import NextAlarm, {
+  INextAlarmProps,
+} from '../../../molecules/home/main/NextAlarm';
 import Box from '../../../atoms/box/Box';
-import { IAlarmInfoData } from '../../../molecules/home/AlarmInfo';
+import { IAlarmInfoData } from '../../../../recoil/home/alarmList';
 import {
   convertDate,
   convertTime,
 } from '../../../../utils/home/convertDateTime';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackParamList } from '../../../../navigation/stack/StackNavigation';
 
 interface IHeaderProps {
   lastestAlarm: IAlarmInfoData;
 }
+
+type IMatesNavigation = StackNavigationProp<RootStackParamList, 'Mates'>;
 
 const LeftContainer = styled(Container)`
   flex: 4;
@@ -30,26 +37,31 @@ const Title = styled(Text)`
 `;
 
 const Header = ({ lastestAlarm }: IHeaderProps) => {
-  // 가장 최신 데이터 1개를 가져온 상태에서 텍스트로 변환
-  // date를 보고 내일, 내일 모레, 이번주 O요일, 다음주 O요일, O월 O일(O) 순으로 우선 표기
-  // time를 보고 오전, 오후 구분 후에 00:00 타입으로 표기 -> common util로
+  const navigation = useNavigation<IMatesNavigation>();
+  const [nextData, setNextData] = useState<INextAlarmProps>({
+    date: '',
+    time: '',
+  });
 
-  const [nextDate, setNextDate] = useState<string>('');
-  const [nextTime, setNextTime] = useState<string>('');
+  const naivgateMates = () => {
+    navigation.navigate('Mates');
+  };
 
   useEffect(() => {
-    setNextDate(convertDate(lastestAlarm.date));
-    setNextTime(convertTime(lastestAlarm.time));
+    setNextData({
+      date: convertDate(lastestAlarm.created_at),
+      time: convertTime(lastestAlarm.time),
+    });
   }, [lastestAlarm]);
 
   return (
     <Box row>
       <LeftContainer>
         <Title options="semiBold">다음 알람</Title>
-        <NextAlarm nextDate={nextDate} nextTime={nextTime} />
+        <NextAlarm date={nextData.date} time={nextData.time} />
       </LeftContainer>
       <RightContainer>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={naivgateMates}>
           <Icon name="user-plus" size={28} />
         </TouchableOpacity>
       </RightContainer>

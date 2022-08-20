@@ -5,10 +5,10 @@ import Text from '../../../atoms/text/Text';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import Box from '../../../atoms/box/Box';
 import Button from '../../../atoms/button/Button';
-import { IMateMemberData } from './MateMember';
+import { IMembersDataType } from '../../../../recoil/home/members';
 
 interface IMateInviteProps {
-  setMembers: React.Dispatch<React.SetStateAction<IMateMemberData[]>>;
+  setMembers: React.Dispatch<React.SetStateAction<IMembersDataType[]>>;
 }
 
 const CustomContainer = styled(Container)`

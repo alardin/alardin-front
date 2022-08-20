@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { IAlarmInfoData } from '../components/molecules/home/AlarmInfo';
+import { IAlarmInfoData } from '../recoil/home/alarmList';
 
 const useNextAlarm = (alarmData: IAlarmInfoData[]) => {
   const [data, setData] = useState<IAlarmInfoData>({

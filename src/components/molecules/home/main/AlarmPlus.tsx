@@ -3,10 +3,10 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import React from 'react';
 import Icon from 'react-native-vector-icons/Octicons';
 import styled from 'styled-components/native';
-import { RootStackParamList } from '../../../navigation/stack/StackNavigation';
-import theme from '../../../theme/theme';
-import Box from '../../atoms/box/Box';
-import Button from '../../atoms/button/Button';
+import { RootStackParamList } from '../../../../navigation/stack/StackNavigation';
+import theme from '../../../../theme/theme';
+import Box from '../../../atoms/box/Box';
+import Button from '../../../atoms/button/Button';
 
 export type IAlarmCreateNavigation = StackNavigationProp<
   RootStackParamList,

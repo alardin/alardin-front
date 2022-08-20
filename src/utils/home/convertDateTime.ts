@@ -7,7 +7,8 @@ export const convertDay = (day: number) => {
   return day === 0 ? '없음' : dayString[day];
 };
 
-export const convertDate = (date: Date) => {
+export const convertDate = (dateString: string) => {
+  const date = new Date(dateString);
   const today = new Date();
   const [dMonth, dDate, dDay] = [
     date.getMonth(),

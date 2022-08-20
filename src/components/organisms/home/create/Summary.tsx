@@ -1,5 +1,5 @@
 import React from 'react';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import styled from 'styled-components/native';
 import { settingData } from '../../../../recoil/home/alarmSettings';
 import { summaryData } from '../../../../recoil/home/summary';
@@ -73,7 +73,7 @@ const Summary = ({ type }: ISummaryProps) => {
           </RoomMode>
         )}
       </TitleBox>
-      <SummaryText {...{ ...summary }} />
+      <SummaryText {...{ ...summary, type }} />
     </Container>
   );
 };

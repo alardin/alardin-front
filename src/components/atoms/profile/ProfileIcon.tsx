@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
+
 import React from 'react';
+import { Image } from 'react-native';
 import styled from 'styled-components/native';
 import Box from '../box/Box';
 
@@ -8,6 +10,7 @@ export interface IProfileIconProps {
   position?: 'absolute';
   arrow?: { top?: number; left?: number; right?: number; bottom?: number };
   zIndex?: number;
+  uri?: string;
 }
 
 const CircleBox = styled(Box)<IProfileIconProps>`
@@ -44,14 +47,15 @@ const ProfileIcon = ({
   arrow,
   zIndex,
   size,
+  uri,
   ...rest
 }: IProfileIconProps) => {
   return (
-    <CircleBox shadow {...{ position, arrow, zIndex, size, ...rest }}>
-      <ImageFile
-        size={size}
-        source={require('../../../assets/images/sample-profile.jpeg')}
-      />
+    <CircleBox
+      shadow
+      {...{ position, arrow, zIndex, size, ...rest }}
+      colorName="white">
+      <ImageFile source={{ uri }} {...{ size }} />
     </CircleBox>
   );
 };

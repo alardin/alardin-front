@@ -1,17 +1,30 @@
+import { StackScreenProps } from '@react-navigation/stack';
 import React, { useEffect, useState } from 'react';
-import { SafeAreaView, ScrollView } from 'react-native';
+import { Alert, SafeAreaView, ScrollView } from 'react-native';
 import { useRecoilState } from 'recoil';
+import styled from 'styled-components/native';
+import { RootStackParamList } from '../../../navigation/stack/StackNavigation';
 import { settingData, settingLabel } from '../../../recoil/home/alarmSettings';
+import { IMembersDataType } from '../../../recoil/home/members';
 import { summaryData } from '../../../recoil/home/summary';
 import BottomScreen from '../../../screen/BottomScreen';
+import Pickers from '../../../screen/Pickers';
+import alardinApi from '../../../utils/alardinApi';
+import Button from '../../atoms/button/Button';
 import Container from '../../atoms/container/Container';
-import { IMateMemberData } from '../../molecules/home/create/MateMember';
 import AlarmSettings from '../../organisms/home/create/AlarmSettings';
 import Header from '../../organisms/home/create/Header';
 import MateInfo from '../../organisms/home/create/MateInfo';
 import Summary from '../../organisms/home/create/Summary';
 
-const TCreate = ({ route }) => {
+type IAlarmCreateScreen = StackScreenProps<RootStackParamList, 'AlarmCreate'>;
+
+const ConfirmButton = styled(Button)`
+  margin-top: 20px;
+  margin-bottom: 80px;
+`;
+
+const TCreate = ({ route, navigation }: IAlarmCreateScreen) => {
   // Summary State, Effect 생성
   // AlarmSettings에 대한 데이터 전달/처리 및 Event 확인
   const { type } = route.params;
@@ -20,7 +33,14 @@ const TCreate = ({ route }) => {
   const [setting, setSetting] = useRecoilState(settingData);
   const [inputLabel, setInputLabel] = useRecoilState(settingLabel);
 
-  const [members, setMembers] = useState<IMateMemberData[]>([]);
+  // const [members, setMembers] = useState<IMembersDataType[]>([]);
+
+  const requestData = () => {
+    // alardinApi
+    //   .post('/alarm', { ...summary })
+    //   .then(() => navigation.goBack())
+    //   .catch(err => Alert.alert(`${err}`));
+  };
 
   useEffect(() => {
     setSummary({
@@ -35,17 +55,26 @@ const TCreate = ({ route }) => {
 
   return (
     <SafeAreaView>
-      <Header title="알람방 생성" host="홍길동" />
+      <Header title="알람방 생성" id={1} />
       <ScrollView>
         <Container>
           <Summary type="create" />
           <AlarmSettings {...{ setVisible }} />
-          <MateInfo {...{ members, setMembers }} />
-          <BottomScreen
-            {...{ visible, setVisible, inputLabel, setInputLabel }}
-            selectedValue={setting}
-            setSelectedValue={setSetting}
-          />
+          <ConfirmButton
+            width="100%"
+            height="48px"
+            colorName="black"
+            center
+            onPress={requestData}>
+            알람 등록
+          </ConfirmButton>
+          <BottomScreen {...{ visible, setVisible }}>
+            <Pickers
+              selectedValue={setting}
+              setSelectedValue={setSetting}
+              {...{ setVisible, inputLabel, setInputLabel }}
+            />
+          </BottomScreen>
         </Container>
       </ScrollView>
     </SafeAreaView>

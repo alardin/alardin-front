@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { SetterOrUpdater } from 'recoil';
+import { SetterOrUpdater, useSetRecoilState } from 'recoil';
 import styled from 'styled-components/native';
+import { summaryData } from '../../../../recoil/home/summary';
 import Box from '../../../atoms/box/Box';
 import CheckBox from '../../../atoms/checkbox/CheckBox';
 
@@ -23,15 +24,21 @@ const SetItemDays = ({ display, setSetting }: ISetItemDaysProps) => {
   const [checked, setChecked] = useState<boolean[]>(
     Array.from({ length: 8 }, () => false),
   );
+  const setSummary = useSetRecoilState(summaryData);
 
   useEffect(() => {
     const daysArr = checked
-      .map((day, index) => day && index + 1)
+      .map((day, index) => day && index)
       .filter(value => typeof value === 'number');
+    console.log(daysArr);
     const convertDays = daysArr.length === 0 ? '0' : daysArr.join('');
     setSetting((prevState: any) => ({
       ...prevState,
       is_repeated: convertDays,
+    }));
+    setSummary(prevState => ({
+      ...prevState,
+      is_repeated: daysArr.map(day => dayText[day - 1]).join(', '),
     }));
   }, [checked]);
 

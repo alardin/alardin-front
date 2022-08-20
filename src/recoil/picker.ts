@@ -1,4 +1,18 @@
 import { atom, selector } from 'recoil';
+import alardinApi from '../utils/alardinApi';
+
+interface IGameMetaType {
+  id: number;
+  name: string;
+  category: string;
+  price: number;
+  description: string;
+  thumbnail_url: string;
+  rating: number;
+  min_player: number;
+  max_player: number;
+  keyword_count: number;
+}
 
 export const pickerMetaData = [
   {
@@ -43,14 +57,24 @@ export const pickerMode = atom<string>({
 
 export const pickerList = selector<IPickerObject>({
   key: 'pickerList',
-  get: ({ get }) => {
+  get: async ({ get }) => {
     const mode = get(pickerMode);
 
     switch (mode) {
       case 'music':
         return pickerMetaData[0];
       case 'game':
-        return pickerMetaData[1];
+        const response = await alardinApi.get('/game', {
+          params: { skip: 0, take: 100 },
+        });
+        const dataList = response.data.data;
+        console.log(dataList);
+        const data = dataList.map(({ name, id }: IGameMetaType) => ({
+          label: name,
+          value: id,
+        }));
+
+        return { type: 'game', data };
       case 'is_repeated':
         return pickerMetaData[2];
       default:
