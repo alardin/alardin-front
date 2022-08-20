@@ -8,13 +8,15 @@ import GameStart from '../../screen/game/GameStart';
 import GameEnd from '../../screen/game/GameEnd';
 import CallScreen, { IAgoraVoiceCall } from '../../screen/CallScreen';
 import RtcEngine from 'react-native-agora';
-import { IAlarmInfoProps } from '../../components/molecules/home/AlarmInfo';
+import { IAlarmInfoProps } from '../../components/molecules/home/main/AlarmInfo';
 import { useRecoilValue } from 'recoil';
-import authorization from '../../recoil/authorization';
+import { token } from '../../recoil/authorization';
+import TMates from '../../components/templates/mates/TMates';
 
 interface IAlarmAttendStackProps extends IAlarmInfoProps {
   type: string;
 }
+
 export type RootStackParamList = {
   Login: undefined;
   BottomNavigation: undefined;
@@ -27,15 +29,17 @@ export type RootStackParamList = {
   };
   GameEnd: undefined;
   CallScreen: undefined;
+  Mates: undefined;
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
 
 const StackNavigation = () => {
-  const auth = useRecoilValue(authorization);
+  const auth = useRecoilValue(token);
+  console.log(auth);
   return (
     <Stack.Navigator initialRouteName="Login">
-      {!auth.appAccessToken ? (
+      {!auth?.appAccessToken ? (
         <Stack.Screen
           name="Login"
           component={Login}
@@ -71,6 +75,11 @@ const StackNavigation = () => {
       <Stack.Screen
         name="CallScreen"
         component={CallScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Mates"
+        component={TMates}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
