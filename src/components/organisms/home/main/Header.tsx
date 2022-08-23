@@ -16,9 +16,10 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../../../../navigation/stack/StackNavigation';
+import { Loadable } from 'recoil';
 
 interface IHeaderProps {
-  lastestAlarm: IAlarmInfoData;
+  lastestAlarm: Loadable<IAlarmInfoData>;
 }
 
 type IMatesNavigation = StackNavigationProp<RootStackParamList, 'Mates'>;
@@ -39,8 +40,8 @@ const Title = styled(Text)`
 const Header = ({ lastestAlarm }: IHeaderProps) => {
   const navigation = useNavigation<IMatesNavigation>();
   const [nextData, setNextData] = useState<INextAlarmProps>({
-    date: '',
-    time: '',
+    date: undefined,
+    time: undefined,
   });
 
   const naivgateMates = () => {
@@ -49,8 +50,16 @@ const Header = ({ lastestAlarm }: IHeaderProps) => {
 
   useEffect(() => {
     setNextData({
-      date: convertDate(lastestAlarm.created_at),
-      time: convertTime(lastestAlarm.time),
+      date: convertDate(
+        lastestAlarm.state === 'hasValue'
+          ? lastestAlarm.contents.created_at
+          : '',
+      ),
+      time: convertTime(
+        lastestAlarm.state === 'hasValue'
+          ? String(lastestAlarm.contents.time)
+          : '',
+      ),
     });
   }, [lastestAlarm]);
 
@@ -58,7 +67,11 @@ const Header = ({ lastestAlarm }: IHeaderProps) => {
     <Box row>
       <LeftContainer>
         <Title options="semiBold">다음 알람</Title>
-        <NextAlarm date={nextData.date} time={nextData.time} />
+        {lastestAlarm.state === 'loading' ? (
+          <Text>Loading...</Text>
+        ) : (
+          <NextAlarm date={nextData.date} time={nextData.time} />
+        )}
       </LeftContainer>
       <RightContainer>
         <TouchableOpacity onPress={naivgateMates}>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components/native';
+import { myProfile } from '../../../recoil/authorization';
 import bottomVisible from '../../../recoil/bottomVisible';
 import bottomMateInfo from '../../../recoil/mates/bottomMateInfo';
 import alardinApi from '../../../utils/alardinApi';
@@ -8,6 +9,10 @@ import Box from '../../atoms/box/Box';
 import Button from '../../atoms/button/Button';
 import ProfileIcon from '../../atoms/profile/ProfileIcon';
 import Text from '../../atoms/text/Text';
+
+interface IMateConfirmProps {
+  setRefreshData: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
 const CustomBox = styled(Box)`
   justify-content: space-evenly;
@@ -22,9 +27,10 @@ const TextBox = styled(Box)`
   align-items: center;
 `;
 
-const MateConfirm = () => {
+const MateConfirm = ({ setRefreshData }: IMateConfirmProps) => {
+  const me = useRecoilValue(myProfile);
   const setVisible = useSetRecoilState(bottomVisible);
-  const { type, id, nickname, thumbnail_image_url } =
+  const { type, id, nickname, thumbnail_image_url, kakao_id } =
     useRecoilValue(bottomMateInfo);
 
   const handleCancel = () => {
@@ -32,9 +38,22 @@ const MateConfirm = () => {
   };
   const handleConfirm = () => {
     // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-    // type === 'remove'
-    //   ? alardinApi.delete('/mate', {}).then(() => setVisible(false))
-    //   : alardinApi.post('mate', {}).then(() => setVisible(false));
+    type === 'remove'
+      ? alardinApi
+          .delete('/mate', { data: { id: me.id, mateId: id } })
+          .then(() => {
+            setRefreshData(prev => !prev);
+            setVisible(false);
+          })
+      : alardinApi
+          .post(`mate?targetUserId=${kakao_id}`, {
+            id: me.id,
+            mateId: kakao_id,
+          })
+          .then(() => {
+            setRefreshData(prev => !prev);
+            setVisible(false);
+          });
   };
 
   return (

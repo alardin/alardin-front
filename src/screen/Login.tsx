@@ -17,7 +17,9 @@ import axios from 'axios';
 import Config from 'react-native-config';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import { useSetRecoilState } from 'recoil';
-import { IAuthorization, token } from '../recoil/authorization';
+import { IMyProfile, myProfile, token } from '../recoil/authorization';
+import alardinApi from '../utils/alardinApi';
+import checkScopes from '../recoil/checkScopes';
 
 const TopBox = styled(Box)`
   height: 60%;
@@ -29,10 +31,13 @@ const BottomBox = styled(Box)`
 
 const Login = () => {
   const setAuthorization = useSetRecoilState(token);
+  const setMyProfile = useSetRecoilState(myProfile);
+  const setScope = useSetRecoilState(checkScopes);
   const handlePress = async () => {
-    const { accessToken, refreshToken }: KakaoOAuthToken =
+    const { accessToken, refreshToken, scopes }: KakaoOAuthToken =
       await loginWithKakaoAccount();
     const deviceToken = await messaging().getToken();
+    console.log(`DEvice Token: ${deviceToken}`);
 
     if (accessToken && refreshToken && deviceToken) {
       axios({
@@ -51,6 +56,8 @@ const Login = () => {
           const { status, data } = res.data;
           if (status === 'SUCCESS') {
             setAuthorization(data);
+            setScope(scopes);
+            console.log(data);
             EncryptedStorage.setItem(
               'appAccessToken',
               JSON.stringify({ appAccessToken: data.appAccessToken }),
@@ -59,6 +66,10 @@ const Login = () => {
               'appRefreshToken',
               JSON.stringify({ appRefreshToken: data.appRefreshToken }),
             );
+            alardinApi.get('/users').then((my: any) => {
+              const profileData: IMyProfile = my.data.data;
+              setMyProfile(profileData);
+            });
           }
         })
         .catch(err => console.log(err));

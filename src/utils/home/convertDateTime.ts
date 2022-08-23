@@ -8,38 +8,50 @@ export const convertDay = (day: number) => {
 };
 
 export const convertDate = (dateString: string) => {
-  const date = new Date(dateString);
-  const today = new Date();
-  const [dMonth, dDate, dDay] = [
-    date.getMonth(),
-    date.getDate() + 1,
-    convertDay(date.getDay()),
-  ];
-  const leftDate = Math.abs(today.getDate() - dDate);
-  const changeComment = () => {
-    if (leftDate === 0) return '오늘';
-    if (leftDate === 1) return '내일';
-    if (leftDate === 2) return '내일 모레';
-    if (leftDate >= 3 && leftDate <= 5) return `${leftDate}일 후`;
-    return `${dMonth}월 ${dDate}일(${dDay})`;
-  };
-  return changeComment();
+  if (dateString !== '' && dateString) {
+    const date = new Date(dateString);
+    const today = new Date();
+    const [dMonth, dDate, dDay] = [
+      date.getMonth(),
+      date.getDate() + 1,
+      convertDay(date.getDay()),
+    ];
+    const leftDate = Math.abs(today.getDate() - dDate);
+    const changeComment = () => {
+      if (leftDate === 0) return '오늘';
+      if (leftDate === 1) return '내일';
+      if (leftDate === 2) return '내일 모레';
+      if (leftDate >= 3 && leftDate <= 5) return `${leftDate}일 후`;
+      return `${dMonth}월 ${dDate}일(${dDay})`;
+    };
+    return changeComment();
+  }
+  return undefined;
 };
 
 export const dateToTimeString = (date: Date) => {
-  const [hour, minute] = [date.getHours(), date.getMinutes()];
+  const [hour, minute] = [
+    minuteStringCheck(date.getHours()),
+    minuteStringCheck(date.getMinutes()),
+  ];
   return `${hour}:${minute}`;
 };
 
 export const convertTime = (time: string) => {
-  const arrTime = time.split(':');
-  const convertHour =
-    Number(arrTime[0]) > 12 ? Number(arrTime[0]) % 12 : Number(arrTime[0]);
-  const convertMinute = minuteStringCheck(Number(arrTime[1]));
-  const convertString = `${convertHour}:${convertMinute}`;
-  const amPm = Number(arrTime[0]) < 12 ? '오전' : '오후';
+  if (time !== '' && time) {
+    const arrTime = time.split(':');
+    let convertHour =
+      Number(arrTime[0]) > 12 ? Number(arrTime[0]) % 12 : Number(arrTime[0]);
+    const convertMinute = minuteStringCheck(Number(arrTime[1]));
+    const amPm = Number(arrTime[0]) < 12 ? '오전' : '오후';
+    if (amPm === '오전' && convertHour === 0) {
+      convertHour = 12;
+    }
+    const convertString = `${convertHour}:${convertMinute}`;
 
-  return `${amPm} ${convertString}`;
+    return `${amPm} ${convertString}`;
+  }
+  return undefined;
 };
 
 export const isToday = (time: string) => {

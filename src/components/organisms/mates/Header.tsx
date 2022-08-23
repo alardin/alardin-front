@@ -6,6 +6,8 @@ import styled from 'styled-components/native';
 import Container from '../../atoms/container/Container';
 import { useNavigation } from '@react-navigation/native';
 import Text from '../../atoms/text/Text';
+import { useSetRecoilState } from 'recoil';
+import { alarmListRefresh } from '../../../recoil/home/alarmList';
 
 const LeftContainer = styled(Container)`
   flex: 1;
@@ -21,6 +23,8 @@ const RightContainer = styled(Container)`
 
 const Header = () => {
   const navigation = useNavigation();
+  const refreshData = useSetRecoilState(alarmListRefresh);
+
   return (
     <Box row>
       <LeftContainer>
@@ -30,7 +34,10 @@ const Header = () => {
           rounded
           center
           colorName="black"
-          onPress={() => navigation.goBack()}>
+          onPress={() => {
+            refreshData(v => v + 1);
+            navigation.goBack();
+          }}>
           <Icon name="chevron-back-outline" color="white" size={32} />
         </Button>
       </LeftContainer>

@@ -6,8 +6,12 @@ import TAttend from '../../components/templates/home/TAttend';
 import Login from '../../screen/Login';
 import GameStart from '../../screen/game/GameStart';
 import GameEnd from '../../screen/game/GameEnd';
-import CallScreen, { IAgoraVoiceCall } from '../../screen/CallScreen';
+import CallScreen, {
+  IAgoraVoiceCall,
+  ICheckMembersSuccess,
+} from '../../screen/CallScreen';
 import RtcEngine from 'react-native-agora';
+import RtmEngine from 'agora-react-native-rtm';
 import { IAlarmInfoProps } from '../../components/molecules/home/main/AlarmInfo';
 import { useRecoilValue } from 'recoil';
 import { token } from '../../recoil/authorization';
@@ -23,12 +27,24 @@ export type RootStackParamList = {
   AlarmCreate: { type: string };
   AlarmAttend: IAlarmAttendStackProps;
   GameStart: {
+    id: number;
+    client: RtmEngine | undefined;
     engine: RtcEngine | undefined;
-    agora: IAgoraVoiceCall;
-    setAgora: React.Dispatch<React.SetStateAction<IAgoraVoiceCall>>;
+    gameId: number;
+    alarmId: number;
+    userType: string;
   };
-  GameEnd: undefined;
-  CallScreen: undefined;
+  GameEnd: {
+    gameId: number;
+  };
+  CallScreen: {
+    id: number;
+    thumbnail_image_url: string;
+    alarmId: number;
+    gameId: number;
+    nickname: string;
+    userType: string;
+  };
   Mates: undefined;
 };
 
@@ -36,7 +52,6 @@ const Stack = createStackNavigator<RootStackParamList>();
 
 const StackNavigation = () => {
   const auth = useRecoilValue(token);
-  console.log(auth);
   return (
     <Stack.Navigator initialRouteName="Login">
       {!auth?.appAccessToken ? (

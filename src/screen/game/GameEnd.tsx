@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 
 import { StackScreenProps } from '@react-navigation/stack';
-import React from 'react';
+import React, { useState } from 'react';
 import { Image } from 'react-native';
 import styled from 'styled-components/native';
 import Box from '../../components/atoms/box/Box';
@@ -10,6 +10,7 @@ import Container from '../../components/atoms/container/Container';
 import Text from '../../components/atoms/text/Text';
 import Rating from '../../components/molecules/other/Rating';
 import { RootStackParamList } from '../../navigation/stack/StackNavigation';
+import alardinApi from '../../utils/alardinApi';
 
 export type GameEndProps = StackScreenProps<RootStackParamList, 'GameEnd'>;
 
@@ -37,8 +38,12 @@ const EndButton = styled(Button)`
   width: 100%;
 `;
 
-const GameEnd = ({ navigation }: GameEndProps) => {
-  const handleExit = () => {
+const GameEnd = ({ route, navigation }: GameEndProps) => {
+  const { gameId } = route.params;
+  console.log(gameId);
+  const [ratingScore, setRatingScore] = useState<number>(1);
+  const handleExit = async () => {
+    await alardinApi.post(`/game/${gameId}/rate`, { score: ratingScore });
     navigation.reset({
       index: 0,
       routes: [{ name: 'BottomNavigation' }],
@@ -75,7 +80,7 @@ const GameEnd = ({ navigation }: GameEndProps) => {
             좋은 평가 부탁드립니다!
           </Text>
         </TextBox>
-        <Rating />
+        <Rating {...{ setRatingScore }} />
       </BottomBox>
       <EndButton
         colorName="black"

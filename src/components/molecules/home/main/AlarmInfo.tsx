@@ -47,7 +47,7 @@ const ClockText = styled(Text)`
 const AlarmInfo = (props: IAlarmInfoProps) => {
   const { is_private, is_repeated, Members, Game, time } = props;
 
-  const [amPm, timeNum] = time.split(' ');
+  const splitedTime = time?.split(' ');
 
   const navigation = useNavigation<IAlarmAttendNavigation>();
   const handlePress = () => {
@@ -59,9 +59,9 @@ const AlarmInfo = (props: IAlarmInfoProps) => {
       <InfoBox width="100%" height="100%" colorName="white" row>
         <LeftContainer>
           <TextBox row>
-            <ClockText>{amPm}</ClockText>
+            <ClockText>{splitedTime ? splitedTime[0] : ''}</ClockText>
             <Text textType="title" options="semiBold">
-              {timeNum}
+              {splitedTime ? splitedTime[1] : ''}
             </Text>
           </TextBox>
           <Box row>

@@ -32,7 +32,7 @@ const SetItemInput = ({
   onChangeText,
 }: IItemProps<SetterOrUpdater<ISettingData>>) => {
   const handleChangeText = (inputStr: string) => {
-    onChangeText(prevState => ({ ...prevState, title: inputStr }));
+    onChangeText(prevState => ({ ...prevState, name: inputStr }));
   };
   return (
     <CustomBox row>

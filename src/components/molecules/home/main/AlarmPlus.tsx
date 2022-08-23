@@ -26,7 +26,7 @@ const AlarmPlus = () => {
   };
   return (
     <Button onPress={handlePress}>
-      <AlarmContainer width="100%" height="100%" colorName="white">
+      <AlarmContainer width="100%" colorName="white">
         <Icon name="plus" size={40} color={theme.color.black} />
       </AlarmContainer>
     </Button>

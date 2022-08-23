@@ -1,6 +1,8 @@
-import React from 'react';
+import { addFriendsAccess } from '@react-native-seoul/kakao-login';
+import React, { useCallback } from 'react';
 import styled from 'styled-components/native';
 import Box from '../../atoms/box/Box';
+import Button from '../../atoms/button/Button';
 import Container from '../../atoms/container/Container';
 import Text from '../../atoms/text/Text';
 import FriendInfo from '../../molecules/mates/FriendInfo';
@@ -18,6 +20,10 @@ const Title = styled(Text)`
   padding-bottom: 12px;
 `;
 
+const MarginBox = styled(Box)`
+  margin-bottom: 8px;
+`;
+
 const UnregisteredMate = ({ matesList }: IUnregisteredMateProps) => {
   return (
     <CustomContainer>
@@ -26,7 +32,9 @@ const UnregisteredMate = ({ matesList }: IUnregisteredMateProps) => {
       </Title>
       <Box>
         {matesList.map((mate, index) => (
-          <FriendInfo key={`friend_${index}`} {...mate} />
+          <MarginBox key={`friend_${index}`}>
+            <FriendInfo {...mate} />
+          </MarginBox>
         ))}
       </Box>
     </CustomContainer>

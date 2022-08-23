@@ -13,14 +13,17 @@ import { IAuthorization, token } from '../../recoil/authorization';
 
 export type CallScreenProps = StackNavigationProp<
   RootStackParamList,
-  'CallScreen'
+  'GameEnd'
 >;
 
 const Menu = () => {
   const setAuthorization = useSetRecoilState(token);
   const navigation = useNavigation<CallScreenProps>();
   const handlePress = () => {
-    navigation.navigate('CallScreen');
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'GameEnd', params: { gameId: 1 } }],
+    });
   };
   const handleLogout = async () => {
     await EncryptedStorage.removeItem('appAccessToken');

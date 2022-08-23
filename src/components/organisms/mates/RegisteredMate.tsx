@@ -1,4 +1,5 @@
 import React from 'react';
+import { View } from 'react-native';
 import styled from 'styled-components/native';
 import Box from '../../atoms/box/Box';
 import Container from '../../atoms/container/Container';
@@ -18,6 +19,10 @@ const Title = styled(Text)`
   padding-bottom: 12px;
 `;
 
+const MarginBox = styled(Box)`
+  margin-bottom: 8px;
+`;
+
 const RegisteredMate = ({ matesList }: IRegisteredMateProps) => {
   return (
     <CustomContainer>
@@ -26,7 +31,9 @@ const RegisteredMate = ({ matesList }: IRegisteredMateProps) => {
       </Title>
       <Box>
         {matesList.map((mate, index) => (
-          <FriendInfo key={`friend_${index}`} {...mate} />
+          <MarginBox key={`friend_${index}`}>
+            <FriendInfo {...mate} />
+          </MarginBox>
         ))}
       </Box>
     </CustomContainer>

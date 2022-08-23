@@ -1,14 +1,16 @@
-import React, { Suspense, useEffect } from 'react';
-import { Alert, PermissionsAndroid, Platform } from 'react-native';
+import React, { useEffect } from 'react';
+import { PermissionsAndroid, Platform } from 'react-native';
 import messaging from '@react-native-firebase/messaging';
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { RecoilRoot } from 'recoil';
 import { ThemeProvider } from 'styled-components/native';
 import StackNavigation from './navigation/stack/StackNavigation';
 import EncryptedStorage from 'react-native-encrypted-storage';
+import { navigationRef } from './navigation/RootNavigation';
 
 import 'react-native-gesture-handler';
 import theme from './theme/theme';
+import notification from './utils/notifications';
 
 const requestUserPermission = async () => {
   const authStatus = await messaging().requestPermission();
@@ -57,8 +59,9 @@ const App = () => {
 
   useEffect(() => {
     const unsubscribe = messaging().onMessage(async remoteMessage => {
-      console.log(remoteMessage);
-      Alert.alert(`A new FCM message from ${JSON.stringify(remoteMessage)}`);
+      notification(remoteMessage);
+      // console.log(remoteMessage);
+      // Alert.alert(`A new FCM message from ${JSON.stringify(remoteMessage)}`);
     });
     return unsubscribe;
   });
@@ -69,10 +72,8 @@ const App = () => {
   return (
     <RecoilRoot>
       <ThemeProvider theme={theme}>
-        <NavigationContainer theme={navTheme}>
-          <Suspense>
-            <StackNavigation />
-          </Suspense>
+        <NavigationContainer ref={navigationRef} theme={navTheme}>
+          <StackNavigation />
         </NavigationContainer>
       </ThemeProvider>
     </RecoilRoot>

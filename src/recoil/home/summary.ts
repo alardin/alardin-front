@@ -1,19 +1,21 @@
+/* eslint-disable @typescript-eslint/naming-convention */
+
 import { atom } from 'recoil';
 
 export const initialSummaryData = {
-  host_id: 0,
+  id: 0,
   is_repeated: '0',
   time: '',
-  game: '',
+  Game_id: '',
   is_private: false,
   player: '',
 };
 
 export interface ISummaryData {
-  host_id: number;
+  id: number;
   is_repeated: string;
-  time: string;
-  game: string;
+  time: string | undefined;
+  Game_id: string;
   is_private: boolean;
   player: string;
   type?: string;

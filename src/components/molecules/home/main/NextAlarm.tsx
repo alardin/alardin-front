@@ -3,18 +3,19 @@ import Container from '../../../atoms/container/Container';
 import Text from '../../../atoms/text/Text';
 
 export interface INextAlarmProps {
-  date: string;
-  time: string;
+  date: string | undefined;
+  time: string | undefined;
 }
 
 const NextAlarm = ({ date, time }: INextAlarmProps) => {
+  console.log(date, time);
   return (
     <Container options="zero">
       <Text textType="title" options="bold">
-        {date}
+        {date ? date : `지금 알람을`}
       </Text>
       <Text textType="title" options="bold">
-        {`${time}입니다`}
+        {time ? `${time}입니다` : `생성하세요`}
       </Text>
     </Container>
   );

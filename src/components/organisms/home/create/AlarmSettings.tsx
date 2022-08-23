@@ -32,11 +32,15 @@ const AlarmSettings = ({ setVisible }: IAlarmSettingsProps) => {
 
   const metaData = [
     { name: '시간', keyValue: 'time', icon: 'alarm-outline' },
-    { name: '알람 소리', keyValue: 'music', icon: 'musical-notes-outline' },
-    { name: '게임', keyValue: 'game', icon: 'game-controller-outline' },
+    {
+      name: '알람 소리',
+      keyValue: 'music_name',
+      icon: 'musical-notes-outline',
+    },
+    { name: '게임', keyValue: 'Game_id', icon: 'game-controller-outline' },
     { name: '반복', keyValue: 'is_repeated', icon: 'repeat-outline' },
     { name: '', keyValue: 'days', icon: '' },
-    { name: '제목', keyValue: 'title', icon: 'happy-outline' },
+    { name: '제목', keyValue: 'name', icon: 'happy-outline' },
   ];
 
   const handlePicker = (mode: string) => {
@@ -54,7 +58,7 @@ const AlarmSettings = ({ setVisible }: IAlarmSettingsProps) => {
           index === 5 ? (
             <SetItemInput
               key={`item_${index}`}
-              text={setting.title as string}
+              text={setting.name as string}
               onChangeText={setSetting}
               {...{ ...item }}
             />

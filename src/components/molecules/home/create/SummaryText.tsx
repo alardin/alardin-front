@@ -23,7 +23,7 @@ const SummaryText = ({
   player,
   is_repeated,
   time,
-  game,
+  Game_id,
   type,
 }: ISummaryData) => {
   const [today, setToday] = useState<boolean>(false);
@@ -44,14 +44,18 @@ const SummaryText = ({
         </TextBox>
       )}
       <CustomText textType="subTitle" options="bold">
-        {is_repeated !== '0' ? `매주 ${is_repeated}` : today ? '오늘' : '내일'}
+        {!(is_repeated === '없음' || is_repeated === '0')
+          ? `매주 ${is_repeated}`
+          : today
+          ? '오늘'
+          : '내일'}
       </CustomText>
       <CustomText textType="title" options="bold">
         {time}
       </CustomText>
       <TextBox row>
         <CustomText textType="subTitle" options="bold">
-          {`"${game}"`}
+          {`"${Game_id}"`}
         </CustomText>
         <CustomText>으로</CustomText>
       </TextBox>

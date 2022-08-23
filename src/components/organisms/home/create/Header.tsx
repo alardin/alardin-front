@@ -6,6 +6,8 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import Box from '../../../atoms/box/Box';
 import Button from '../../../atoms/button/Button';
 import { useNavigation } from '@react-navigation/native';
+import { useSetRecoilState } from 'recoil';
+import { alarmListRefresh } from '../../../../recoil/home/alarmList';
 
 interface IHeaderProps {
   title: string;
@@ -25,6 +27,7 @@ const RightContainer = styled(Container)`
 
 const Header = ({ title, id }: IHeaderProps) => {
   const navigation = useNavigation();
+  // const refresh = useSetRecoilState(alarmListRefresh);
 
   return (
     <Box row>
@@ -35,12 +38,15 @@ const Header = ({ title, id }: IHeaderProps) => {
           rounded
           center
           colorName="black"
-          onPress={() => navigation.goBack()}>
+          onPress={() => {
+            // refresh(v => v + 1);
+            navigation.goBack();
+          }}>
           <Icon name="chevron-back-outline" color="white" size={32} />
         </Button>
       </LeftContainer>
       <RightContainer>
-        <Text options="semiBold">{`방장인 #${id}`}</Text>
+        <Text options="semiBold">{`방번호 #${id}`}</Text>
         <Text textType="title" options="bold">
           {title}
         </Text>

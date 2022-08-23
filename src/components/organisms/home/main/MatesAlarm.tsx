@@ -8,9 +8,10 @@ import Text from '../../../atoms/text/Text';
 import AlarmInfo from '../../../molecules/home/main/AlarmInfo';
 import { IAlarmInfoData } from '../../../../recoil/home/alarmList';
 import AlarmPlus from '../../../molecules/home/main/AlarmPlus';
+import { Loadable } from 'recoil';
 
 interface IMyAlarmProps {
-  data: IAlarmInfoData[];
+  data: Loadable<IAlarmInfoData[]>;
 }
 
 const CustomContainer = styled(Container)`
@@ -27,11 +28,17 @@ const MatesAlarm = ({ data }: IMyAlarmProps) => {
       <Title textType="subTitle" options="semiBold">
         메이트가 등록한 알람
       </Title>
-      {data.map((props, index) => (
-        <View key={`alarm_${index}`} style={{ marginBottom: 8 }}>
-          <AlarmInfo {...props} />
-        </View>
-      ))}
+      {data.state === 'hasValue' ? (
+        data.contents.map((props, index) => (
+          <View key={`alarm_${index}`} style={{ marginBottom: 8 }}>
+            <AlarmInfo {...props} />
+          </View>
+        ))
+      ) : data.state === 'loading' ? (
+        <Text>Loading</Text>
+      ) : (
+        <Text>Error</Text>
+      )}
       <AlarmPlus />
     </CustomContainer>
   );

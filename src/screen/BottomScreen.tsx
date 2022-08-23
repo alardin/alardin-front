@@ -1,12 +1,7 @@
-import React, { ReactNode, Suspense } from 'react';
+import React, { ReactNode } from 'react';
 import { Modal, TouchableOpacity } from 'react-native';
-import { useRecoilValue } from 'recoil';
 import styled from 'styled-components/native';
-import Button from '../components/atoms/button/Button';
 import Container from '../components/atoms/container/Container';
-import { pickerMode } from '../recoil/picker';
-import DatePickerModal from './DatePicker';
-import ItemPicker from './ItemPicker';
 
 interface IBottomScreenProps {
   visible: boolean;

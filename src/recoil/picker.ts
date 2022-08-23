@@ -16,7 +16,7 @@ interface IGameMetaType {
 
 export const pickerMetaData = [
   {
-    type: 'music',
+    type: 'music_name',
     data: [
       { label: '기본', value: 'default' },
       { label: '바닷 소리', value: 'beach' },
@@ -25,11 +25,8 @@ export const pickerMetaData = [
     ],
   },
   {
-    type: 'game',
-    data: [
-      { label: '연산 맞추기', value: 'calculate' },
-      { label: '그림 맞추기', value: 'picture' },
-    ],
+    type: 'Game_id',
+    data: [{ label: '선택하세요', value: 'default' }],
   },
   {
     type: 'is_repeated',
@@ -61,20 +58,19 @@ export const pickerList = selector<IPickerObject>({
     const mode = get(pickerMode);
 
     switch (mode) {
-      case 'music':
+      case 'music_name':
         return pickerMetaData[0];
-      case 'game':
+      case 'Game_id':
         const response = await alardinApi.get('/game', {
           params: { skip: 0, take: 100 },
         });
         const dataList = response.data.data;
-        console.log(dataList);
         const data = dataList.map(({ name, id }: IGameMetaType) => ({
           label: name,
           value: id,
         }));
 
-        return { type: 'game', data };
+        return { type: 'Game_id', data };
       case 'is_repeated':
         return pickerMetaData[2];
       default:
