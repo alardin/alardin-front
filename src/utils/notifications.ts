@@ -8,6 +8,8 @@ import { navigate, navigationRef } from '../navigation/RootNavigation';
 //   from: string;
 // }
 
+const handleBackground = () => {};
+
 const notification = ({ data }: FirebaseMessagingTypes.RemoteMessage) => {
   if (data && Object.keys(data).length !== 0) {
     const { type, message } = data;
@@ -15,18 +17,17 @@ const notification = ({ data }: FirebaseMessagingTypes.RemoteMessage) => {
       case 'ALARM_START':
         console.log(`Notification: ${type}`);
         console.log(`Notification: ${message}`);
-        const { id, alarmId, gameId, nickname, thumbnail_image_url, userType } =
+        const { id, alarmId, nickname, thumbnail_url, userType } =
           JSON.parse(message);
         if (navigationRef.current?.isReady()) {
           navigate({
             name: 'CallScreen',
             params: {
               id,
-              thumbnail_image_url,
               alarmId,
-              gameId,
               nickname,
               userType,
+              thumbnail_image_url: thumbnail_url,
             },
           });
         }

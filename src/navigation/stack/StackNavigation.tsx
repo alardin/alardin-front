@@ -6,10 +6,7 @@ import TAttend from '../../components/templates/home/TAttend';
 import Login from '../../screen/Login';
 import GameStart from '../../screen/game/GameStart';
 import GameEnd from '../../screen/game/GameEnd';
-import CallScreen, {
-  IAgoraVoiceCall,
-  ICheckMembersSuccess,
-} from '../../screen/CallScreen';
+import CallScreen from '../../screen/CallScreen';
 import RtcEngine from 'react-native-agora';
 import RtmEngine from 'agora-react-native-rtm';
 import { IAlarmInfoProps } from '../../components/molecules/home/main/AlarmInfo';
@@ -30,7 +27,6 @@ export type RootStackParamList = {
     id: number;
     client: RtmEngine | undefined;
     engine: RtcEngine | undefined;
-    gameId: number;
     alarmId: number;
     userType: string;
   };
@@ -41,7 +37,6 @@ export type RootStackParamList = {
     id: number;
     thumbnail_image_url: string;
     alarmId: number;
-    gameId: number;
     nickname: string;
     userType: string;
   };

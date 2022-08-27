@@ -73,7 +73,7 @@ export const myAttendAlarmList = selector<IAlarmInfoData[]>({
       time: data.time ? convertTime(data.time) : data.time,
       Members: data.Members.map(member => ({
         ...member,
-        thumbnail_image_url: `https://${
+        thumbnail_image_url: `http://${
           member.thumbnail_image_url.split('//')[1]
         }`,
       })),
@@ -97,7 +97,7 @@ export const matesAttendAlarmList = selector<IAlarmInfoData[]>({
         time,
         Members: data.Members.map(member => ({
           ...member,
-          thumbnail_image_url: `https://${
+          thumbnail_image_url: `http://${
             member.thumbnail_image_url.split('//')[1]
           }`,
         })),

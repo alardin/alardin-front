@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 
 import React, { useEffect, useState } from 'react';
-import RtcEngine from 'react-native-agora';
+import RtcEngine, { ChannelProfile } from 'react-native-agora';
 import Container from '../components/atoms/container/Container';
 import Button from '../components/atoms/button/Button';
 import Config from 'react-native-config';
@@ -55,8 +55,7 @@ const InsideBox = styled(Box)`
 let engine: RtcEngine;
 
 const CallScreen = ({ route, navigation }: CallScreenProps) => {
-  const { id, alarmId, thumbnail_image_url, nickname, gameId, userType } =
-    route.params;
+  const { id, alarmId, thumbnail_image_url, nickname, userType } = route.params;
   const [profileImg, setProfileImg] = useState<string>(
     'https://mblogthumb-phinf.pstatic.net/20150427_261/ninevincent_1430122791768m7oO1_JPEG/kakao_1.jpg?type=w2',
   );
@@ -67,6 +66,7 @@ const CallScreen = ({ route, navigation }: CallScreenProps) => {
   const initialAgoraEngine = async () => {
     engine = await RtcEngine.create(Config.AGORA_APP_ID);
     await engine?.enableAudio();
+    await engine?.setChannelProfile(ChannelProfile.Game);
 
     engine?.addListener('Warning', warn => {
       console.log(`RTCWarning: ${warn}`);
@@ -118,7 +118,6 @@ const CallScreen = ({ route, navigation }: CallScreenProps) => {
           params: {
             id,
             alarmId,
-            gameId,
             userType,
           },
         },

@@ -40,7 +40,7 @@ const EndButton = styled(Button)`
 
 const GameEnd = ({ route, navigation }: GameEndProps) => {
   const { gameId } = route.params;
-  console.log(gameId);
+  console.log(route.params);
   const [ratingScore, setRatingScore] = useState<number>(1);
   const handleExit = async () => {
     await alardinApi.post(`/game/${gameId}/rate`, { score: ratingScore });

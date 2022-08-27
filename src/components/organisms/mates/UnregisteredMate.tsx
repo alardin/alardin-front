@@ -1,8 +1,6 @@
-import { addFriendsAccess } from '@react-native-seoul/kakao-login';
-import React, { useCallback } from 'react';
+import React from 'react';
 import styled from 'styled-components/native';
 import Box from '../../atoms/box/Box';
-import Button from '../../atoms/button/Button';
 import Container from '../../atoms/container/Container';
 import Text from '../../atoms/text/Text';
 import FriendInfo from '../../molecules/mates/FriendInfo';
@@ -28,7 +26,7 @@ const UnregisteredMate = ({ matesList }: IUnregisteredMateProps) => {
   return (
     <CustomContainer>
       <Title textType="subTitle" options="semiBold">
-        등록된 메이트
+        미등록된 메이트
       </Title>
       <Box>
         {matesList.map((mate, index) => (

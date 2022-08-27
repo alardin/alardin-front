@@ -42,7 +42,7 @@ const WebBox = styled(Box)`
 let client: RtmEngine = new RtmEngine();
 
 const GameStart = ({ route, navigation }: GameStartProps) => {
-  const { alarmId, gameId, userType } = route.params;
+  const { alarmId, userType } = route.params;
   const [gameData, setGameData] = useState<IGameTokenData>();
   const [allAttend, setAllAttend] = useState<boolean>(false);
   const [steadyMe, setSteadyMe] = useState<boolean | null>(null);
@@ -151,14 +151,14 @@ const GameStart = ({ route, navigation }: GameStartProps) => {
     return { rtmToken, rtcToken, uid, channelName };
   };
 
-  const leaveChannel = async () => {
+  const leaveChannel = async (gameNum: number) => {
     await engine?.leaveChannel();
     await client?.leaveChannel(agora.channelName);
     client?.logout();
     setAgora(prevState => ({ ...prevState, peerIds: [], joinSucceed: false }));
     navigation.reset({
       index: 0,
-      routes: [{ name: 'GameEnd', params: { gameId } }],
+      routes: [{ name: 'GameEnd', params: { gameId: gameNum } }],
     });
   };
 
@@ -175,7 +175,12 @@ const GameStart = ({ route, navigation }: GameStartProps) => {
   };
 
   const switchSpeakerphone = () => {
-    engine?.setEnableSpeakerphone(!agora.enableSpeakerphone).then(() => {});
+    engine?.setEnableSpeakerphone(!agora.enableSpeakerphone).then(() => {
+      setAgora(prevState => ({
+        ...prevState,
+        enableSpeakerphone: !agora.openMicrophone,
+      }));
+    });
   };
 
   const handleMessage = async ({
@@ -204,12 +209,13 @@ const GameStart = ({ route, navigation }: GameStartProps) => {
         }
         return;
       case 'OUTPUT_DATA':
-        console.log(message);
+        console.log(`game id`);
+        console.log(message.gameId);
         await alardinApi.post('/game/save', {
           ...message,
           trial: message.trial + 1,
         });
-        await leaveChannel();
+        await leaveChannel(message.gameId);
         return;
       default:
         console.log(message);
