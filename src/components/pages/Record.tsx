@@ -1,15 +1,21 @@
 import React from 'react';
 import { SafeAreaView } from 'react-native';
+import styled from 'styled-components/native';
+import RecordNavigation from '../../navigation/top/RecordNavigation';
 import Container from '../atoms/container/Container';
-import Text from '../atoms/text/Text';
+import Header from '../molecules/record/Header';
+
+const CustomContainer = styled(Container)`
+  width: 100%;
+  height: 100%;
+`;
 
 const Record = () => (
   <SafeAreaView>
-    <Container>
-      <Text textType="title" options="bold">
-        Hello Record!
-      </Text>
-    </Container>
+    <CustomContainer>
+      <Header />
+      <RecordNavigation />
+    </CustomContainer>
   </SafeAreaView>
 );
 

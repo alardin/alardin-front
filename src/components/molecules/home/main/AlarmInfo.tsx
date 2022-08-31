@@ -21,11 +21,12 @@ export interface IAlarmInfoProps extends IAlarmInfoData {
 }
 
 const InfoBox = styled(Box)`
-  padding: 4px 8px;
+  padding: 0 8px;
 `;
 
 const LeftContainer = styled(Container)`
   flex: 3;
+  justify-content: center;
 `;
 
 const RightContainer = styled(Container)`

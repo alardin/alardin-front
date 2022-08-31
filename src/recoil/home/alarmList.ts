@@ -4,6 +4,7 @@ import {
   convertRepeatDay,
   convertTime,
 } from '../../utils/home/convertDateTime';
+import { token } from '../authorization';
 import { IMembersDataType } from './members';
 
 export interface IAlarmInfoData {
@@ -24,18 +25,21 @@ export interface IAlarmInfoData {
   name: string;
 }
 
+export const alarmListRefresh = atom<number>({
+  key: 'alarmListRefresh',
+  default: 0,
+});
+
 const apiAlarmList = selector({
   key: 'apiAlarmList',
-  get: async () => {
+  get: async ({ get }) => {
+    get(token);
+    get(alarmListRefresh);
+
     const response = await alardinApi.get('/users/joined-alarms');
     const joinedAlarms: IAlarmInfoData[] = response.data.data.joinedAlarms;
     return joinedAlarms;
   },
-});
-
-export const alarmListRefresh = atom<number>({
-  key: 'alarmListRefresh',
-  default: 0,
 });
 
 export const alarmList = atom<IAlarmInfoData[]>({

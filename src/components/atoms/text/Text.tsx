@@ -1,15 +1,34 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
-import React, { ReactNode } from 'react';
+import React from 'react';
 import { TextProps } from 'react-native';
 import styled from 'styled-components/native';
 
 export interface ITextProps extends TextProps {
+  size?:
+    | 'xxlarge'
+    | 'xlarge'
+    | 'large'
+    | 'medium'
+    | 'small'
+    | 'xsmall'
+    | 'xxsmall';
+  colorName?:
+    | 'white'
+    | 'lightGray'
+    | 'lightSlate'
+    | 'black'
+    | 'red'
+    | 'pink'
+    | 'green'
+    | 'darkGray'
+    | 'lightOrange'
+    | 'skyBlue';
   position?: 'absolute';
   arrow?: { top?: number; left?: number; right?: number; bottom?: number };
   textType?: 'title' | 'subTitle' | 'comment' | 'reference';
   options?: 'bold' | 'semiBold' | 'light';
   shadow?: boolean;
-  children?: ReactNode;
+  children?: React.ReactNode;
 }
 
 const DefaultText = styled.Text<ITextProps>`
@@ -26,7 +45,7 @@ const DefaultText = styled.Text<ITextProps>`
       arrow.bottom && (result += `bottom: ${arrow.bottom}px `);
     }
     return result;
-  }}
+  }};
   ${({ theme, textType }) => {
     let value = 'font-size: ';
     switch (textType) {
@@ -47,7 +66,9 @@ const DefaultText = styled.Text<ITextProps>`
         break;
     }
     return value;
-  }}
+  }};
+  ${({ theme, size }) => size && `font-size: ${theme.fontSize[size]}`};
+  ${({ theme, colorName }) => colorName && `color: ${theme.color[colorName]}`};
   ${({ theme, shadow }) =>
     shadow &&
     `
@@ -55,10 +76,12 @@ const DefaultText = styled.Text<ITextProps>`
     shadow-offset: ${theme.shadow.text.offest.x} ${theme.shadow.text.offest.y}} 
     shadow-opacity: ${theme.shadow.text.opacity} 
     shadow-radius: ${theme.shadow.text.radius}; 
-  `}
+  `};
 `;
 
 const Text = ({
+  size,
+  colorName,
   textType,
   options,
   position,
@@ -67,7 +90,17 @@ const Text = ({
   children,
   ...rest
 }: ITextProps) => (
-  <DefaultText {...{ textType, options, position, arrow, shadow, ...rest }}>
+  <DefaultText
+    {...{
+      size,
+      colorName,
+      textType,
+      options,
+      position,
+      arrow,
+      shadow,
+      ...rest,
+    }}>
     {children}
   </DefaultText>
 );

@@ -23,9 +23,9 @@ const theme = {
   // Color
   color: {
     white: '#FFFFFF',
-    lightGray: '#DFE5EA',
-    lightSlate: '#ECF0F3',
-    black: '#08121A',
+    lightGray: '#868C91',
+    lightSlate: '#E1E6EA',
+    black: '#0C0D0E',
     green: '#6EC18B',
     red: '#EF6E85',
     pink: '#FFADBD',
