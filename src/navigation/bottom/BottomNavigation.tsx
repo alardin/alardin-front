@@ -7,6 +7,8 @@ import Record from '../../components/pages/Record';
 import Shop from '../../components/pages/Shop';
 import Notify from '../../components/pages/Notify';
 import Menu from '../../components/pages/Menu';
+import { useRecoilValue } from 'recoil';
+import { isNotify } from '../../recoil/notify/notify';
 
 export type RootBottomParamList = {
   Home: undefined;
@@ -19,6 +21,7 @@ export type RootBottomParamList = {
 const Tab = createBottomTabNavigator<RootBottomParamList>();
 
 const BottomNavigation = () => {
+  const checkNotify = useRecoilValue(isNotify);
   return (
     <Tab.Navigator
       initialRouteName="Home"
@@ -66,6 +69,12 @@ const BottomNavigation = () => {
           tabBarIcon: ({ color }) => (
             <Icon name="bell" color={color} size={22} />
           ),
+          tabBarBadge: checkNotify ? '1' : undefined,
+          tabBarBadgeStyle: {
+            backgroundColor: theme.color.red,
+            color: 'white',
+            fontSize: 10,
+          },
         }}
       />
       <Tab.Screen

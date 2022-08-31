@@ -9,11 +9,11 @@ import UnregisteredMate from '../../organisms/mates/UnregisteredMate';
 import kakaoApi from '../../../utils/kakaoApi';
 import BottomScreen from '../../../screen/BottomScreen';
 import MateConfirm from '../../organisms/mates/MateConfirm';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import bottomVisible from '../../../recoil/bottomVisible';
 import checkScopes from '../../../recoil/checkScopes';
 import Button from '../../atoms/button/Button';
-import { addFriendsAccess, unlink } from '@react-native-seoul/kakao-login';
+import { addFriendsAccess } from '@react-native-seoul/kakao-login';
 import { renewalTokenByAgreement } from '../../../recoil/authorization';
 
 export interface IMateListDataType extends IMembersDataType {
@@ -33,18 +33,18 @@ const TMates = () => {
   const [isKakaoAgree, setIsKakaoAgree] = useState<boolean>(
     scopes.includes('friends'),
   );
-  const [refreshData, setRefreshData] = useState<boolean>(false);
+
+  const [, setRefreshData] = useState<boolean>(false);
 
   const requestKakaoAgreement = async () => {
-    const result = await addFriendsAccess();
-    console.log(result);
-    // addFriendsAccess().then(newToken => {
-    //   console.log(newToken);
-    //   if (typeof newToken !== 'string') {
-    //     setScopes(newToken.scopes);
-    //     renewalToken(newToken);
-    //   }
-    // });
+    addFriendsAccess().then(newToken => {
+      console.log(newToken);
+      if (typeof newToken !== 'string') {
+        setScopes(newToken.scopes);
+        renewalToken(newToken);
+        setIsKakaoAgree(scopes.includes('friends'));
+      }
+    });
   };
 
   const requestKakaoFriends = () => {
@@ -63,22 +63,15 @@ const TMates = () => {
   useEffect(() => {
     alardinApi.get('/mate').then(res => {
       const responseData: IMateListDataType[] = res.data.data;
-      const convertData = responseData.map(mate => ({
-        ...mate,
-        thumbnail_image_url: `https://${
-          mate.thumbnail_image_url.split('//')[1]
-        }`,
-      }));
-      setRegisteredMatesList(convertData);
+      setRegisteredMatesList(responseData);
     });
-  }, [refreshData]);
+  }, []);
 
   useEffect(() => {
-    console.log(isKakaoAgree);
-    // if()
-    // setIsKakaoAgree(scopes.includes('friends'));
-    // requestKakaoFriends();
-  }, [scopes]);
+    if (isKakaoAgree) {
+      requestKakaoFriends();
+    }
+  }, [isKakaoAgree]);
 
   return (
     <SafeAreaView>
@@ -97,14 +90,6 @@ const TMates = () => {
             친구 목록 추가 동의
           </Button>
         )}
-        <Button
-          width="100%"
-          height="48px"
-          colorName="black"
-          center
-          onPress={async () => await unlink()}>
-          unlink
-        </Button>
         <BottomScreen {...{ visible, setVisible }}>
           <MateConfirm {...{ setRefreshData }} />
         </BottomScreen>

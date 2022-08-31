@@ -1,5 +1,4 @@
 import React, { ReactNode } from 'react';
-import { View } from 'react-native';
 import styled from 'styled-components/native';
 
 export interface ILabelProps {
@@ -16,6 +15,7 @@ export interface ILabelProps {
     | 'skyBlue';
   width?: number;
   height?: number;
+  rounded?: boolean;
   marginHorizontal?: boolean;
   shadow?: boolean;
   children?: ReactNode;
@@ -24,7 +24,7 @@ export interface ILabelProps {
 const LabelView = styled.View<ILabelProps>`
   justify-content: center;
   align-items: center;
-  border-radius: 14px;
+  border-radius: ${({ rounded }) => (rounded ? '100px' : '14px')};
   padding: 4px 10px;
   ${({ width }) => width && `width: ${width}px`}
   ${({ height }) => height && `height: ${height}px`}
@@ -47,9 +47,12 @@ const Label = ({
   width,
   height,
   marginHorizontal,
+  shadow,
+  rounded,
   children,
 }: ILabelProps) => (
-  <LabelView {...{ colorName, width, height, marginHorizontal }}>
+  <LabelView
+    {...{ colorName, width, height, shadow, marginHorizontal, rounded }}>
     <LabelText>{children}</LabelText>
   </LabelView>
 );

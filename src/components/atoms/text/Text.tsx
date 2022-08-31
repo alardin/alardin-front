@@ -31,19 +31,19 @@ const DefaultText = styled.Text<ITextProps>`
     let value = 'font-size: ';
     switch (textType) {
       case 'title':
-        value += theme.fontSize.xlarge;
-        break;
-      case 'subTitle':
         value += theme.fontSize.large;
         break;
+      case 'subTitle':
+        value += theme.fontSize.medium;
+        break;
       case 'comment':
-        value += theme.fontSize.small;
+        value += theme.fontSize.xsmall;
         break;
       case 'reference':
-        value += theme.fontSize.medium + ` color: ${theme.color.lightGray}`;
+        value += theme.fontSize.xsmall + ` color: ${theme.color.lightGray}`;
         break;
       default:
-        value += theme.fontSize.medium;
+        value += theme.fontSize.small;
         break;
     }
     return value;

@@ -8,6 +8,7 @@ import Text from '../../../atoms/text/Text';
 import AlarmInfo from '../../../molecules/home/main/AlarmInfo';
 import { IAlarmInfoData } from '../../../../recoil/home/alarmList';
 import { Loadable } from 'recoil';
+import { Placeholder, Fade, PlaceholderLine } from 'rn-placeholder';
 
 interface IMyAlarmProps {
   data: Loadable<IAlarmInfoData[]>;
@@ -36,7 +37,19 @@ const MyAlarm = ({ data }: IMyAlarmProps) => {
           </View>
         ))
       ) : data.state === 'loading' ? (
-        <Text>Loading</Text>
+        <Placeholder Animation={Fade}>
+          <PlaceholderLine
+            style={{
+              width: '100%',
+              height: 88,
+              marginBottom: 4,
+              borderRadius: 12,
+            }}
+          />
+          <PlaceholderLine
+            style={{ width: '100%', height: 88, borderRadius: 12 }}
+          />
+        </Placeholder>
       ) : (
         <Text>Error!</Text>
       )}

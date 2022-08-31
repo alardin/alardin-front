@@ -9,10 +9,11 @@ const useNextAlarm = (alarmData: IAlarmInfoData[]) => {
     is_private: false,
     music_volume: 0,
     max_members: 0,
-    game: '',
-    host_id: 0,
-    members: [],
-    date: new Date(),
+    Game: { id: 0, name: '', thumbnail_url: '' },
+    Members: [],
+    music_name: '',
+    created_at: '',
+    name: '',
   });
 
   useEffect(() => {

@@ -1,9 +1,11 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import React, { useCallback, useEffect, useState } from 'react';
 import DevMenu from 'react-native-dev-menu';
+import { RecoilRoot } from 'recoil';
 
 import Storybook from '../storybook';
 import App from './App';
-import Login from './screen/Login';
 
 const Root = () => {
   const [storybookActive, setStorybookActive] = useState(false);
@@ -18,8 +20,12 @@ const Root = () => {
     }
   }, [toggleStorybook]);
 
-  // return storybookActive ? <Storybook /> : <Login />;
-  return <App />;
+  // return storybookActive ? <Storybook /> : <App />;
+  return (
+    <RecoilRoot>
+      <App />
+    </RecoilRoot>
+  );
 };
 
 export default Root;

@@ -3,12 +3,13 @@
 const theme = {
   // FontSize
   fontSize: {
-    xxlarge: '48px',
-    xlarge: '32px',
-    large: '24px',
-    medium: '18px',
-    small: '12px',
-    xsmall: '8px',
+    xxlarge: '64px',
+    xlarge: '48px',
+    large: '32px',
+    medium: '24px',
+    small: '18px',
+    xsmall: '12px',
+    xxsmall: '8px',
   },
 
   // FontWeight

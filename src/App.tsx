@@ -1,16 +1,19 @@
-import React, { useEffect } from 'react';
+/* eslint-disable @typescript-eslint/no-unused-expressions */
+
+import React, { useCallback, useEffect } from 'react';
 import { PermissionsAndroid, Platform } from 'react-native';
 import messaging from '@react-native-firebase/messaging';
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
-import { RecoilRoot } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 import { ThemeProvider } from 'styled-components/native';
 import StackNavigation from './navigation/stack/StackNavigation';
-import EncryptedStorage from 'react-native-encrypted-storage';
 import { navigationRef } from './navigation/RootNavigation';
 
 import 'react-native-gesture-handler';
 import theme from './theme/theme';
 import notification from './utils/notifications';
+import checkNotifyType from './utils/checkNotifyType';
+import { isNotify } from './recoil/notify/notify';
 
 const requestUserPermission = async () => {
   const authStatus = await messaging().requestPermission();
@@ -52,6 +55,28 @@ const requestCameraAndAudioPermission = async () => {
 };
 
 const App = () => {
+  const setIsNotify = useSetRecoilState(isNotify);
+
+  const handleMessage = useCallback(() => {
+    messaging().onNotificationOpenedApp(remoteMessage => {
+      checkNotifyType(remoteMessage) && setIsNotify(true);
+      notification(remoteMessage);
+    });
+
+    messaging()
+      .getInitialNotification()
+      .then(remoteMessage => {
+        if (remoteMessage) {
+          checkNotifyType(remoteMessage) && setIsNotify(true);
+          notification(remoteMessage);
+        }
+      });
+  }, []);
+
+  useEffect(() => {
+    handleMessage();
+  }, [handleMessage]);
+
   useEffect(() => {
     requestUserPermission();
     requestCameraAndAudioPermission();
@@ -59,24 +84,18 @@ const App = () => {
 
   useEffect(() => {
     const unsubscribe = messaging().onMessage(async remoteMessage => {
+      checkNotifyType(remoteMessage) && setIsNotify(true);
       notification(remoteMessage);
-      // console.log(remoteMessage);
-      // Alert.alert(`A new FCM message from ${JSON.stringify(remoteMessage)}`);
     });
     return unsubscribe;
   });
 
-  EncryptedStorage.removeItem('appAccessToken');
-  EncryptedStorage.removeItem('appRefreshToken');
-
   return (
-    <RecoilRoot>
-      <ThemeProvider theme={theme}>
-        <NavigationContainer ref={navigationRef} theme={navTheme}>
-          <StackNavigation />
-        </NavigationContainer>
-      </ThemeProvider>
-    </RecoilRoot>
+    <ThemeProvider theme={theme}>
+      <NavigationContainer ref={navigationRef} theme={navTheme}>
+        <StackNavigation />
+      </NavigationContainer>
+    </ThemeProvider>
   );
 };
 

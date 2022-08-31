@@ -10,19 +10,25 @@ import CallScreen from '../../screen/CallScreen';
 import RtcEngine from 'react-native-agora';
 import RtmEngine from 'agora-react-native-rtm';
 import { IAlarmInfoProps } from '../../components/molecules/home/main/AlarmInfo';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValueLoadable } from 'recoil';
 import { token } from '../../recoil/authorization';
 import TMates from '../../components/templates/mates/TMates';
+import TRetouch from '../../components/templates/home/TRetouch';
+import { IAlarmInfoData } from '../../recoil/home/alarmList';
+import Loading from '../../screen/Loading';
 
 interface IAlarmAttendStackProps extends IAlarmInfoProps {
   type: string;
 }
+
+interface IAlarmRetouchStackProps extends IAlarmInfoData {}
 
 export type RootStackParamList = {
   Login: undefined;
   BottomNavigation: undefined;
   AlarmCreate: { type: string };
   AlarmAttend: IAlarmAttendStackProps;
+  AlarmRetouch: IAlarmRetouchStackProps;
   GameStart: {
     id: number;
     client: RtmEngine | undefined;
@@ -41,20 +47,29 @@ export type RootStackParamList = {
     userType: string;
   };
   Mates: undefined;
+  Loading: undefined;
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
 
 const StackNavigation = () => {
-  const auth = useRecoilValue(token);
+  const auth = useRecoilValueLoadable(token);
   return (
     <Stack.Navigator initialRouteName="Login">
-      {!auth?.appAccessToken ? (
-        <Stack.Screen
-          name="Login"
-          component={Login}
-          options={{ headerShown: false }}
-        />
+      {!auth?.contents.appAccessToken ? (
+        auth.state === 'loading' ? (
+          <Stack.Screen
+            name="Loading"
+            component={Loading}
+            options={{ headerShown: false }}
+          />
+        ) : (
+          <Stack.Screen
+            name="Login"
+            component={Login}
+            options={{ headerShown: false }}
+          />
+        )
       ) : (
         <Stack.Screen
           name="BottomNavigation"
@@ -70,6 +85,11 @@ const StackNavigation = () => {
       <Stack.Screen
         name="AlarmAttend"
         component={TAttend}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="AlarmRetouch"
+        component={TRetouch}
         options={{ headerShown: false }}
       />
       <Stack.Screen

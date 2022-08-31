@@ -36,7 +36,7 @@ const DefaultButton = styled.TouchableHighlight<IButtonProps>`
 
 const ButtonText = styled.Text`
   ${({ theme }) =>
-    `font-size: ${theme.fontSize.medium} font-weight: ${theme.fontWeight.default} color: ${theme.color.white}`}
+    `font-size: ${theme.fontSize.small} font-weight: ${theme.fontWeight.default} color: ${theme.color.white}`}
 `;
 
 const Button = ({
