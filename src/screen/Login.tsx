@@ -68,6 +68,10 @@ const Login = () => {
             );
             alardinApi.get('/users').then((my: any) => {
               const profileData: IMyProfile = my.data.data;
+              EncryptedStorage.setItem(
+                'myProfile',
+                JSON.stringify(profileData),
+              );
               setMyProfile(profileData);
             });
           }

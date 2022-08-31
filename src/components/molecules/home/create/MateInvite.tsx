@@ -29,6 +29,7 @@ const IconBox = styled(Box)`
 
 const MateInvite = ({ setMembers }: IMateInviteProps) => {
   const handleInvite = () => {
+    setMembers([]);
     console.log('invite pressed!');
   };
   return (

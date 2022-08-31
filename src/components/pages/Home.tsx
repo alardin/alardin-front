@@ -1,5 +1,4 @@
-import React, { Suspense } from 'react';
-import Text from '../atoms/text/Text';
+import React from 'react';
 import TMain from '../templates/home/TMain';
 
 const Home = () => {

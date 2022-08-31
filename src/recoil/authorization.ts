@@ -1,15 +1,12 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
-import { atom, DefaultValue, selector } from 'recoil';
+import { atom, selector } from 'recoil';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import messaging from '@react-native-firebase/messaging';
 import axios from 'axios';
 import Config from 'react-native-config';
 import alardinApi from '../utils/alardinApi';
-import {
-  KakaoAccessTokenInfo,
-  KakaoOAuthToken,
-} from '@react-native-seoul/kakao-login';
+import { KakaoOAuthToken } from '@react-native-seoul/kakao-login';
 
 export interface IMyProfile {
   id: number;
@@ -39,28 +36,44 @@ export interface IAuthorization {
   appRefreshToken: string;
 }
 
-const defaultToken = async () => {
-  const appAccessJson = await EncryptedStorage.getItem('appAccessToken');
-  const appRefreshJson = await EncryptedStorage.getItem('appRefreshToken');
-  if (appAccessJson && appRefreshJson) {
-    const access = JSON.parse(appAccessJson);
-    const refresh = JSON.parse(appRefreshJson);
-    return {
-      appAccessToken: access.appAccessToken,
-      appRefreshToken: refresh.appRefreshToken,
-    } as IAuthorization;
-  }
-  return {} as IAuthorization;
-};
+const defaultToken = selector({
+  key: 'defaultToken',
+  get: async () => {
+    const appAccessJson = await EncryptedStorage.getItem('appAccessToken');
+    const appRefreshJson = await EncryptedStorage.getItem('appRefreshToken');
+    if (appAccessJson && appRefreshJson) {
+      console.log('login found!');
+      const access = JSON.parse(appAccessJson);
+      const refresh = JSON.parse(appRefreshJson);
+      return {
+        appAccessToken: access.appAccessToken,
+        appRefreshToken: refresh.appRefreshToken,
+      } as IAuthorization;
+    }
+    return {} as IAuthorization;
+  },
+});
+
+const defaultProfile = selector({
+  key: 'defaultProfile',
+  get: async () => {
+    const profileJson = await EncryptedStorage.getItem('myProfile');
+    if (profileJson) {
+      const myProfile = JSON.parse(profileJson);
+      return { ...myProfile };
+    }
+    return {} as IMyProfile;
+  },
+});
 
 export const token = atom({
   key: 'token',
-  default: {} as IAuthorization,
+  default: defaultToken,
 });
 
 export const myProfile = atom({
   key: 'myProfile',
-  default: {} as IMyProfile,
+  default: defaultProfile,
 });
 
 export const renewalTokenByAgreement = selector<KakaoOAuthToken>({
@@ -95,6 +108,7 @@ export const renewalTokenByAgreement = selector<KakaoOAuthToken>({
       );
       alardinApi.get('/users').then((my: any) => {
         const profileData: IMyProfile = my.data.data;
+        EncryptedStorage.setItem('myProfile', JSON.stringify(profileData));
         set(myProfile, profileData);
       });
     });

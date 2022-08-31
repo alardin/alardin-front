@@ -1,9 +1,13 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
 import { StackScreenProps } from '@react-navigation/stack';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { SafeAreaView } from 'react-native';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import {
+  useRecoilState,
+  useRecoilValueLoadable,
+  useSetRecoilState,
+} from 'recoil';
 import styled from 'styled-components/native';
 import { RootStackParamList } from '../../../navigation/stack/StackNavigation';
 import { myProfile } from '../../../recoil/authorization';
@@ -29,18 +33,16 @@ const BottomBox = styled(Box)`
   justify-content: flex-end;
 `;
 
-const TAttend = ({ route }: IAlarmAttendScreen) => {
+const TAttend = ({ route, navigation }: IAlarmAttendScreen) => {
   // Summary State, Effect 생성
   // Navigation으로 전달받은 data 중 summary, mateinfo 데이터 처리
 
   const { id, is_repeated, is_private, Game, time, Members, name } =
     route.params;
   const setSummary = useSetRecoilState(summaryData);
-  const profileData = useRecoilValue(myProfile);
+  const profileData = useRecoilValueLoadable(myProfile);
   const [visible, setVisible] = useRecoilState(bottomVisible);
-  const checkMeAttendRoom = Members.filter(
-    memeber => memeber.id === profileData.id,
-  );
+  const [checkMeAttend, setCheckMeAttend] = useState<number>(0);
 
   useEffect(() => {
     setSummary(prevState => ({
@@ -54,13 +56,19 @@ const TAttend = ({ route }: IAlarmAttendScreen) => {
     }));
   }, [route]);
 
+  useEffect(() => {
+    setCheckMeAttend(
+      Members.filter(memeber => memeber.id === profileData.contents.id).length,
+    );
+  }, []);
+
   return (
     <SafeAreaView>
       <Container>
         <TopBox>
           <Header title={name} id={id} />
           <Summary type="attend" />
-          <MateInfo members={Members} />
+          {profileData.state === 'hasValue' && <MateInfo members={Members} />}
         </TopBox>
         <BottomBox>
           <Button
@@ -69,9 +77,13 @@ const TAttend = ({ route }: IAlarmAttendScreen) => {
             colorName="black"
             center
             onPress={() =>
-              checkMeAttendRoom.length ? console.log('수정') : setVisible(true)
+              checkMeAttend
+                ? navigation.navigate('AlarmRetouch', {
+                    ...route.params,
+                  })
+                : setVisible(true)
             }>
-            {checkMeAttendRoom.length ? `알람 수정` : `알람 참가`}
+            {checkMeAttend ? `알람 수정` : `알람 참가`}
           </Button>
         </BottomBox>
         <BottomScreen {...{ visible, setVisible }}>

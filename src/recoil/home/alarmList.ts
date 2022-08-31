@@ -11,6 +11,7 @@ export interface IAlarmInfoData {
   time: string | undefined;
   is_repeated: string;
   is_private: boolean;
+  music_name: string;
   music_volume: number;
   max_members: number;
   created_at: string;
@@ -23,6 +24,15 @@ export interface IAlarmInfoData {
   name: string;
 }
 
+const apiAlarmList = selector({
+  key: 'apiAlarmList',
+  get: async () => {
+    const response = await alardinApi.get('/users/joined-alarms');
+    const joinedAlarms: IAlarmInfoData[] = response.data.data.joinedAlarms;
+    return joinedAlarms;
+  },
+});
+
 export const alarmListRefresh = atom<number>({
   key: 'alarmListRefresh',
   default: 0,
@@ -30,30 +40,30 @@ export const alarmListRefresh = atom<number>({
 
 export const alarmList = atom<IAlarmInfoData[]>({
   key: 'alarmList',
-  default: [],
+  default: apiAlarmList,
 });
 
 export const nextAlarm = selector<IAlarmInfoData>({
   key: 'nextAlarm',
   get: async ({ get }) => {
     get(alarmListRefresh);
-    const response = await alardinApi.get('/users/joined-alarms');
-    const joinedAlarms: IAlarmInfoData[] = response.data.data.joinedAlarms;
+    const joinedAlarms = get(alarmList);
 
     if (joinedAlarms.length !== 0) {
       let nextResult: IAlarmInfoData = { ...joinedAlarms[0] };
       joinedAlarms.forEach(aData => {
-        const nextString = new Date(nextResult.created_at).toDateString();
-        const aString = new Date(aData.created_at).toDateString();
-        const nextDate = new Date(nextString);
-        const aDate = new Date(aString);
-        if (nextDate === aDate) {
-          const rTime = Date.parse(`Wed, 09 Aug 1995 ${nextResult.time}:00`);
-          const aTime = Date.parse(`Wed, 09 Aug 1995 ${aData.time}:00`);
-          if (rTime > aTime) nextResult = aData;
-        }
+        console.log(nextResult);
+        const nextDate = Date.parse(nextResult.created_at);
+        const aDate = Date.parse(aData.created_at);
+        console.log(`nextDate: ${nextDate}, aDate: ${aDate}`);
+        // if (nextDate === aDate) {
+        //   const rTime = Date.parse(`Wed, 09 Aug 1995 ${nextResult.time}:00`);
+        //   const aTime = Date.parse(`Wed, 09 Aug 1995 ${aData.time}:00`);
+        //   if (rTime > aTime) nextResult = aData;
+        // }
         if (nextDate > aDate) nextResult = aData;
       });
+      console.log(`result : ${nextResult.created_at}`);
       return nextResult;
     }
     return {} as IAlarmInfoData;
@@ -64,19 +74,12 @@ export const myAttendAlarmList = selector<IAlarmInfoData[]>({
   key: 'myAttendAlarmList',
   get: async ({ get }) => {
     get(alarmListRefresh);
-    const response = await alardinApi.get('/users/joined-alarms');
-    const joinedAlarms: IAlarmInfoData[] = response.data.data.joinedAlarms;
+    const joinedAlarms = get(alarmList);
 
     const convertData = joinedAlarms.map(data => ({
       ...data,
       is_repeated: convertRepeatDay(data.is_repeated),
       time: data.time ? convertTime(data.time) : data.time,
-      Members: data.Members.map(member => ({
-        ...member,
-        thumbnail_image_url: `http://${
-          member.thumbnail_image_url.split('//')[1]
-        }`,
-      })),
     }));
     return convertData;
   },
@@ -95,12 +98,6 @@ export const matesAttendAlarmList = selector<IAlarmInfoData[]>({
         ...data,
         is_repeated: convertRepeatDay(data.is_repeated),
         time,
-        Members: data.Members.map(member => ({
-          ...member,
-          thumbnail_image_url: `http://${
-            member.thumbnail_image_url.split('//')[1]
-          }`,
-        })),
       };
     });
     return convertData;

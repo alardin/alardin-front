@@ -10,6 +10,7 @@ import EncryptedStorage from 'react-native-encrypted-storage';
 import { logout } from '@react-native-seoul/kakao-login';
 import { useSetRecoilState } from 'recoil';
 import { IAuthorization, token } from '../../recoil/authorization';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export type CallScreenProps = StackNavigationProp<
   RootStackParamList,
@@ -28,6 +29,7 @@ const Menu = () => {
   const handleLogout = async () => {
     await EncryptedStorage.removeItem('appAccessToken');
     await EncryptedStorage.removeItem('appRefreshToken');
+    await AsyncStorage.removeItem('notifyStorage');
     setAuthorization({} as IAuthorization);
     await logout();
   };

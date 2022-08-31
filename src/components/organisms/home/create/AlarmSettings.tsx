@@ -72,7 +72,8 @@ const AlarmSettings = ({ setVisible }: IAlarmSettingsProps) => {
             <SetItemDefault
               key={`item_${index}`}
               onPress={() => handlePicker(item.keyValue)}
-              {...{ ...item, inputLabel }}
+              inputLabel={inputLabel}
+              {...{ ...item }}
             />
           ),
         )}

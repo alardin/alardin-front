@@ -1,16 +1,14 @@
 import React from 'react';
 import { ScrollViewProps } from 'react-native';
 import styled from 'styled-components/native';
+import { IMembersDataType } from '../../../../recoil/home/members';
 import Container from '../../../atoms/container/Container';
 import Text from '../../../atoms/text/Text';
-import MateInvite from '../../../molecules/home/create/MateInvite';
-import MateMember, {
-  IMateMemberData,
-} from '../../../molecules/home/create/MateMember';
+import MateMember from '../../../molecules/home/create/MateMember';
 
 interface IMateInfoProps {
-  members: IMateMemberData[];
-  setMembers?: React.Dispatch<React.SetStateAction<IMateMemberData[]>>;
+  members: IMembersDataType[];
+  setMembers?: React.Dispatch<React.SetStateAction<IMembersDataType[]>>;
 }
 
 const CustomContainer = styled(Container)`
@@ -29,7 +27,7 @@ const MarginView = styled.View`
   margin: 0 8px;
 `;
 
-const MateInfo = ({ members, setMembers }: IMateInfoProps) => {
+const MateInfo = ({ members }: IMateInfoProps) => {
   return (
     <CustomContainer>
       <Title textType="subTitle" options="semiBold">

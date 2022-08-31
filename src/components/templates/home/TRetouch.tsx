@@ -10,7 +10,6 @@ import {
 } from 'recoil';
 import styled from 'styled-components/native';
 import { RootStackParamList } from '../../../navigation/stack/StackNavigation';
-import { alarmListRefresh } from '../../../recoil/home/alarmList';
 import {
   gameMetaData,
   initialRecoilSetting,
@@ -23,6 +22,7 @@ import BottomScreen from '../../../screen/BottomScreen';
 import Pickers from '../../../screen/Pickers';
 import alardinApi from '../../../utils/alardinApi';
 import { convertTime } from '../../../utils/home/convertDateTime';
+import Box from '../../atoms/box/Box';
 import Button from '../../atoms/button/Button';
 import Container from '../../atoms/container/Container';
 import Text from '../../atoms/text/Text';
@@ -30,42 +30,64 @@ import AlarmSettings from '../../organisms/home/create/AlarmSettings';
 import Header from '../../organisms/home/create/Header';
 import Summary from '../../organisms/home/create/Summary';
 
-type IAlarmCreateScreen = StackScreenProps<RootStackParamList, 'AlarmCreate'>;
+type IAlarmRetouchScreen = StackScreenProps<RootStackParamList, 'AlarmRetouch'>;
 
 const ConfirmButton = styled(Button)`
-  margin-top: 20px;
+  margin: 10px 0;
+`;
+
+const ButtonBox = styled(Box)`
   margin-bottom: 80px;
 `;
 
-const TCreate = ({ route, navigation }: IAlarmCreateScreen) => {
-  const { type } = route.params;
+const TRetouch = ({ route, navigation }: IAlarmRetouchScreen) => {
+  const {
+    id,
+    time,
+    is_repeated,
+    is_private,
+    music_name,
+    music_volume,
+    max_members,
+    Game,
+    Members,
+    name,
+  } = route.params;
   const [visible, setVisible] = useState<boolean>(false);
   const setSummary = useSetRecoilState(summaryData);
   const [setting, setSetting] = useRecoilState(settingData);
   const [inputLabel, setInputLabel] = useRecoilState(settingLabel);
   const gameList = useRecoilValueLoadable(gameMetaData);
 
-  const refreshData = useSetRecoilState(alarmListRefresh);
-
   const requestData = () => {
-    console.log(setting);
     alardinApi
-      .post('/alarm', { ...setting })
+      .put('/alarm', { ...setting })
       .then(() => {
-        refreshData(v => v + 1);
-        navigation.goBack();
+        navigation.reset({
+          index: 0,
+          routes: [{ name: 'BottomNavigation' }],
+        });
       })
       .catch(err => console.log(err));
   };
 
+  const requestDelete = () => {
+    alardinApi.delete('/alarm', { ...setting }).then(() => {
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'BottomNavigation' }],
+      });
+    });
+  };
+
   useEffect(() => {
     setSummary({
-      id: 0,
-      is_repeated: '0',
-      time: inputLabel.time,
-      Game_id: inputLabel.Game_id,
-      is_private: false,
-      player: '',
+      id,
+      is_repeated,
+      time,
+      is_private,
+      player: Members[0].nickname,
+      Game_id: Game.name,
     });
   }, [inputLabel]);
 
@@ -73,10 +95,14 @@ const TCreate = ({ route, navigation }: IAlarmCreateScreen) => {
     console.log(gameList.contents);
     if (gameList.state === 'hasValue') {
       setSetting({
-        ...initialRecoilSetting,
-        is_repeated: pickerMetaData[2].data[0].value,
-        music_name: pickerMetaData[0].data[0].value,
-        Game_id: gameList.contents[0].value,
+        time,
+        is_private,
+        is_repeated,
+        name,
+        music_volume,
+        max_members,
+        music_name,
+        Game_id: Game.id,
       });
       setInputLabel({
         ...initialRecoilSetting,
@@ -90,7 +116,7 @@ const TCreate = ({ route, navigation }: IAlarmCreateScreen) => {
 
   return (
     <SafeAreaView>
-      <Header title="알람방 생성" id={1} />
+      <Header title="알람방 수정" id={id} />
       <ScrollView>
         {gameList.state === 'loading' ? (
           <Text>Loading...</Text>
@@ -98,16 +124,26 @@ const TCreate = ({ route, navigation }: IAlarmCreateScreen) => {
           <Text>Error...</Text>
         ) : (
           <Container>
-            <Summary {...{ type }} />
+            <Summary type="create" />
             <AlarmSettings {...{ setVisible }} />
-            <ConfirmButton
-              width="100%"
-              height="48px"
-              colorName="black"
-              center
-              onPress={requestData}>
-              알람 등록
-            </ConfirmButton>
+            <ButtonBox center>
+              <ConfirmButton
+                width="100%"
+                height="48px"
+                colorName="red"
+                center
+                onPress={requestDelete}>
+                알람 삭제
+              </ConfirmButton>
+              <ConfirmButton
+                width="100%"
+                height="48px"
+                colorName="black"
+                center
+                onPress={requestData}>
+                알람 수정
+              </ConfirmButton>
+            </ButtonBox>
             <BottomScreen {...{ visible, setVisible }}>
               <Pickers
                 selectedValue={setting}
@@ -122,4 +158,4 @@ const TCreate = ({ route, navigation }: IAlarmCreateScreen) => {
   );
 };
 
-export default TCreate;
+export default TRetouch;

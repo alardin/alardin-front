@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 
 import React from 'react';
-import { Image } from 'react-native';
 import styled from 'styled-components/native';
 import Box from '../box/Box';
 
@@ -50,12 +49,15 @@ const ProfileIcon = ({
   uri,
   ...rest
 }: IProfileIconProps) => {
+  const sourceUrl = uri
+    ? { uri }
+    : require('../../../assets/images/sample-profile.jpeg');
   return (
     <CircleBox
       shadow
       {...{ position, arrow, zIndex, size, ...rest }}
       colorName="white">
-      <ImageFile source={{ uri }} {...{ size }} />
+      <ImageFile source={sourceUrl} {...{ size }} />
     </CircleBox>
   );
 };
