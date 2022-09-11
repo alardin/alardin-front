@@ -5,7 +5,7 @@ import styled from 'styled-components/native';
 export interface IBoxProps extends ViewProps {
   width?: string;
   height?: string;
-  padding?: boolean;
+  isPadding?: boolean;
   shadow?: boolean;
   row?: boolean;
   center?: boolean;
@@ -29,10 +29,10 @@ const DefaultBox = styled.View<IBoxProps>`
   border-radius: ${({ theme }) => theme.shape.rectangle};
   background-color: ${({ theme, colorName }) =>
     colorName ? theme.color[colorName] : 'transparent'};
-  ${({ padding }) => padding && 'padding: 4px 4px'};
   ${({ width }) => width && `width: ${width}`};
   ${({ height }) => height && `height: ${height}`};
   ${({ center }) => center && `justify-content: center align-items: center`};
+  ${({ isPadding }) => isPadding && `padding: 4px 4px`};
   ${({ theme, shadow }) =>
     shadow &&
     `
@@ -47,12 +47,12 @@ const Box = ({
   width,
   height,
   shadow,
-  padding,
+  isPadding,
   center,
   children,
   ...rest
 }: IBoxProps) => (
-  <DefaultBox {...{ width, height, padding, center, shadow, ...rest }}>
+  <DefaultBox {...{ width, height, isPadding, center, shadow, ...rest }}>
     {children}
   </DefaultBox>
 );

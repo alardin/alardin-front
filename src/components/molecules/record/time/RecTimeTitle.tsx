@@ -6,7 +6,7 @@ import Text from '../../../atoms/text/Text';
 const TitleBox = styled(Box)`
   justify-content: space-between;
   align-items: center;
-  padding: 16px 12px;
+  padding: 12px;
   border-bottom-width: 1px;
   border-color: ${({ theme }) => theme.color.lightGray};
 `;

@@ -35,7 +35,11 @@ const RecTimeList = ({ data }: IRecTimeListProps) => {
 
   return (
     <Container>
-      <FlatList data={data} renderItem={renderItem} />
+      <FlatList
+        data={data}
+        renderItem={renderItem}
+        showsVerticalScrollIndicator={false}
+      />
     </Container>
   );
 };

@@ -66,15 +66,13 @@ const AlarmInfo = (props: IAlarmInfoProps) => {
             </Text>
           </TextBox>
           <Box row>
-            <Label marginHorizontal colorName="red">
+            <Label colorName="red" marginRight>
               {is_private ? '비공개' : '공개'}
             </Label>
-            {is_repeated !== '없음' && (
-              <Label marginHorizontal colorName="darkGray">
-                반복
-              </Label>
-            )}
-            <Label colorName="skyBlue">{Game.name}</Label>
+            {is_repeated !== '없음' && <Label colorName="darkGray">반복</Label>}
+            <Label colorName="skyBlue" marginRight>
+              {Game.name}
+            </Label>
           </Box>
         </LeftContainer>
         <RightContainer>
