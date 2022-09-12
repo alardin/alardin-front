@@ -16,6 +16,7 @@ import TMates from '../../components/templates/mates/TMates';
 import TRetouch from '../../components/templates/home/TRetouch';
 import { IAlarmInfoData } from '../../recoil/home/alarmList';
 import Loading from '../../screen/Loading';
+import TGame from '../../components/templates/shop/TGame';
 
 interface IAlarmAttendStackProps extends IAlarmInfoProps {
   type: string;
@@ -48,6 +49,9 @@ export type RootStackParamList = {
   };
   Mates: undefined;
   Loading: undefined;
+  GameInfo: {
+    gameId: number;
+  };
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -110,6 +114,11 @@ const StackNavigation = () => {
       <Stack.Screen
         name="Mates"
         component={TMates}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="GameInfo"
+        component={TGame}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

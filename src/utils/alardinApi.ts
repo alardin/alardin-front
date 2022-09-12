@@ -29,6 +29,7 @@ alardinApi.interceptors.response.use(
   async error => {
     const { config } = error;
     const tokenJson = await EncryptedStorage.getItem('appRefreshToken');
+    console.log(`response error code : ${error.code}`);
     if (tokenJson) {
       const { appRefreshToken } = JSON.parse(tokenJson);
       console.log('need refresh token');
@@ -56,6 +57,8 @@ alardinApi.interceptors.response.use(
         return resolve(alardinApi.request(config));
       });
       return retryOriginalReq;
+      // if (error.response === '403' && error.response === '401') {
+      //   }
     }
     return Promise.reject(error);
   },
