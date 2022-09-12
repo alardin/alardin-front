@@ -12,6 +12,7 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		3DE01DC6B1719F54A5C1B22B /* libPods-AlardinApp-AlardinAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FDA90FE29C77596B0CE3AFAB /* libPods-AlardinApp-AlardinAppTests.a */; };
 		9AF3D41F100116B72E0A9E98 /* libPods-AlardinApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B436364464CA657998F61054 /* libPods-AlardinApp.a */; };
+		DD473D5A28CF31A10097D1F9 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD473D5928CF31A10097D1F9 /* StoreKit.framework */; };
 		DDDB396A289598C30055ED6B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DDDB3969289598C30055ED6B /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
@@ -41,6 +42,7 @@
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = AlardinApp/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8BC8FBEBA92263A1B48EC08D /* Pods-AlardinApp-AlardinAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlardinApp-AlardinAppTests.debug.xcconfig"; path = "Target Support Files/Pods-AlardinApp-AlardinAppTests/Pods-AlardinApp-AlardinAppTests.debug.xcconfig"; sourceTree = "<group>"; };
 		B436364464CA657998F61054 /* libPods-AlardinApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AlardinApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		DD473D5928CF31A10097D1F9 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		DDA6BD5628954163006BC492 /* AlardinApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = AlardinApp.entitlements; path = AlardinApp/AlardinApp.entitlements; sourceTree = "<group>"; };
 		DDBDBEC52897EFDA00ACFF5A /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		DDBDBEC82897F63B00ACFF5A /* AlardinApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "AlardinApp-Bridging-Header.h"; path = "AlardinApp/AlardinApp-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -79,6 +81,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9AF3D41F100116B72E0A9E98 /* libPods-AlardinApp.a in Frameworks */,
+				DD473D5A28CF31A10097D1F9 /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -120,6 +123,7 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				DD473D5928CF31A10097D1F9 /* StoreKit.framework */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				B436364464CA657998F61054 /* libPods-AlardinApp.a */,
 				FDA90FE29C77596B0CE3AFAB /* libPods-AlardinApp-AlardinAppTests.a */,
