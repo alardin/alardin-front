@@ -84,6 +84,7 @@ const App = () => {
 
   useEffect(() => {
     const unsubscribe = messaging().onMessage(async remoteMessage => {
+      console.log(remoteMessage);
       checkNotifyType(remoteMessage) && setIsNotify(true);
       notification(remoteMessage);
     });

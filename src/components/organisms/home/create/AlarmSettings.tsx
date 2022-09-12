@@ -53,7 +53,7 @@ const AlarmSettings = ({ setVisible }: IAlarmSettingsProps) => {
       <Title textType="subTitle" options="semiBold">
         알람 설정
       </Title>
-      <Box shadow colorName="white" padding>
+      <Box colorName="white" isPadding>
         {metaData.map((item, index) =>
           index === 5 ? (
             <SetItemInput

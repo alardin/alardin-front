@@ -54,7 +54,6 @@ const ProfileIcon = ({
     : require('../../../assets/images/sample-profile.jpeg');
   return (
     <CircleBox
-      shadow
       {...{ position, arrow, zIndex, size, ...rest }}
       colorName="white">
       <ImageFile source={sourceUrl} {...{ size }} />

@@ -19,12 +19,12 @@ const useNextAlarm = (alarmData: IAlarmInfoData[]) => {
   useEffect(() => {
     let result: IAlarmInfoData = { ...alarmData[0] };
     alarmData.forEach(aData => {
-      if (result.date === aData.date) {
+      if (result.created_at === aData.created_at) {
         const rTime = Date.parse(`Wed, 09 Aug 1995 ${result.time}:00`);
         const aTime = Date.parse(`Wed, 09 Aug 1995 ${aData.time}:00`);
         if (rTime > aTime) result = aData;
       }
-      if (result.date > aData.date) result = aData;
+      if (result.created_at > aData.created_at) result = aData;
     });
     setData(result);
   }, [alarmData]);
