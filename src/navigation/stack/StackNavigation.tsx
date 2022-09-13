@@ -17,6 +17,7 @@ import TRetouch from '../../components/templates/home/TRetouch';
 import { IAlarmInfoData } from '../../recoil/home/alarmList';
 import Loading from '../../screen/Loading';
 import TGame from '../../components/templates/shop/TGame';
+import WebScreen from '../../screen/WebScreen';
 
 interface IAlarmAttendStackProps extends IAlarmInfoProps {
   type: string;
@@ -52,6 +53,7 @@ export type RootStackParamList = {
   GameInfo: {
     gameId: number;
   };
+  WebScreen: undefined;
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -121,6 +123,7 @@ const StackNavigation = () => {
         component={TGame}
         options={{ headerShown: false }}
       />
+      <Stack.Screen name="WebScreen" component={WebScreen} />
     </Stack.Navigator>
   );
 };

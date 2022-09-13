@@ -75,9 +75,10 @@ export const initialSetting = {
 export const apiGameMetaData = selector({
   key: 'apiGameMetaData',
   get: async () => {
-    const response = await alardinApi.get('/game', {
-      params: { skip: 0, take: 100 },
-    });
+    // const response = await alardinApi.get('/game', {
+    //   params: { skip: 0, take: 100 },
+    // });
+    const response = await alardinApi.get('/assets/games');
     const gameDataList: IGameMetaType[] = response.data.data;
     console.log(`api game: ${gameDataList}`);
     const gameData = gameDataList.map(({ name, id }: IGameMetaType) => ({

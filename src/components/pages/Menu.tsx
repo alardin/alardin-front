@@ -1,60 +1,13 @@
-import { useNavigation } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
 import React from 'react';
 import { SafeAreaView } from 'react-native';
-import { RootStackParamList } from '../../navigation/stack/StackNavigation';
-import Button from '../atoms/button/Button';
 import Container from '../atoms/container/Container';
-import Text from '../atoms/text/Text';
-import EncryptedStorage from 'react-native-encrypted-storage';
-import { logout } from '@react-native-seoul/kakao-login';
-import { useSetRecoilState } from 'recoil';
-import { IAuthorization, token } from '../../recoil/authorization';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
-export type CallScreenProps = StackNavigationProp<
-  RootStackParamList,
-  'GameEnd'
->;
+import TMenu from '../templates/menu/TMenu';
 
 const Menu = () => {
-  const setAuthorization = useSetRecoilState(token);
-  const navigation = useNavigation<CallScreenProps>();
-  const handlePress = () => {
-    navigation.reset({
-      index: 0,
-      routes: [{ name: 'GameEnd', params: { gameId: 1 } }],
-    });
-  };
-  const handleLogout = async () => {
-    await EncryptedStorage.removeItem('appAccessToken');
-    await EncryptedStorage.removeItem('appRefreshToken');
-    await AsyncStorage.removeItem('notifyStorage');
-    setAuthorization({} as IAuthorization);
-    await logout();
-  };
   return (
     <SafeAreaView>
       <Container>
-        <Text textType="title" options="bold">
-          Hello Menu!
-        </Text>
-        <Button
-          width="100%"
-          height="48px"
-          colorName="black"
-          center
-          onPress={handlePress}>
-          Navigate to CallScreen
-        </Button>
-        <Button
-          width="100%"
-          height="48px"
-          colorName="black"
-          center
-          onPress={handleLogout}>
-          Logout
-        </Button>
+        <TMenu />
       </Container>
     </SafeAreaView>
   );

@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 
-import React, { useState } from 'react';
-import { FlatList, ListRenderItem, SafeAreaView, View } from 'react-native';
+import React from 'react';
+import { View } from 'react-native';
 import styled from 'styled-components/native';
 import { IGameMetaType } from '../../../recoil/home/alarmSettings';
 import Box from '../../atoms/box/Box';
@@ -18,10 +18,13 @@ const Title = styled(Text)`
 `;
 
 const ListBox = styled(Box)`
-  padding-top: 24px;
+  padding: 24px 8px;
+  flex: 1;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
-  min-height: 280px;
 `;
 
 const AdBox = styled(Box)`
@@ -31,34 +34,29 @@ const AdBox = styled(Box)`
 `;
 
 const GameShopList = ({ data }: IGameShopProps) => {
-  const numColums = 4;
-  const [containerWidth, setContainerWidth] = useState<number>(0);
-
-  const renderItem: ListRenderItem<any> = ({ item }) => (
-    <View
-      style={{
-        width: (containerWidth - 8) / numColums,
-        paddingHorizontal: 4,
-        marginBottom: 24,
-      }}>
-      <GameShopIcon text={item.name} icon={item.thumbnail_url} id={item.id} />
-    </View>
-  );
-
   return (
     <Container>
       <Title textType="subTitle" options="bold">
         게임 목록
       </Title>
       <ListBox row colorName="white">
-        <FlatList
-          scrollEnabled={false}
-          data={data}
-          renderItem={renderItem}
-          onLayout={e => setContainerWidth(e.nativeEvent.layout.width)}
-          keyExtractor={(_, index) => index}
-          numColumns={numColums}
-        />
+        {data.map((item, index) => {
+          return (
+            <View
+              key={`icon_${index}`}
+              style={{
+                width: '25%',
+                paddingHorizontal: 4,
+                marginBottom: 24,
+              }}>
+              <GameShopIcon
+                text={item.name}
+                icon={item.thumbnail_url}
+                id={item.id}
+              />
+            </View>
+          );
+        })}
       </ListBox>
       <AdBox colorName="green"></AdBox>
     </Container>

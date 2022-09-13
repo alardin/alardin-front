@@ -1,10 +1,14 @@
 import React from 'react';
-import { Image } from 'react-native';
+import { Image, ListRenderItem } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
 import Box from '../../../atoms/box/Box';
 import Container from '../../../atoms/container/Container';
 import Text from '../../../atoms/text/Text';
+
+interface IScreenShotsProps {
+  images: string[];
+}
 
 const CustomContainer = styled(Container)`
   margin: 16px 0;
@@ -25,14 +29,8 @@ const Title = styled(Text)`
   margin-bottom: 16px;
 `;
 
-const ScreenShots = () => {
-  const exampleData = [
-    'http://res.heraldm.com/content/image/2015/02/12/20150212000850_0.jpg',
-    'http://res.heraldm.com/content/image/2015/02/12/20150212000850_0.jpg',
-    'http://res.heraldm.com/content/image/2015/02/12/20150212000850_0.jpg',
-    'http://res.heraldm.com/content/image/2015/02/12/20150212000850_0.jpg',
-  ];
-  const renderItem = ({ item }) => (
+const ScreenShots = ({ images }: IScreenShotsProps) => {
+  const renderItem: ListRenderItem<string> = ({ item }) => (
     <ScreenShotBox colorName="white" style={{ marginRight: 24 }}>
       <ScreenShotImage source={{ uri: item }} />
     </ScreenShotBox>
@@ -43,7 +41,7 @@ const ScreenShots = () => {
         스크린샷
       </Title>
       <Box row>
-        <FlatList renderItem={renderItem} data={exampleData} horizontal />
+        <FlatList renderItem={renderItem} data={images} horizontal />
       </Box>
     </CustomContainer>
   );
