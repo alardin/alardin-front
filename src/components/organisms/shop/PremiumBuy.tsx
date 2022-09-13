@@ -1,5 +1,4 @@
 import React from 'react';
-import { Image } from 'react-native';
 import styled from 'styled-components/native';
 import Box from '../../atoms/box/Box';
 import Button from '../../atoms/button/Button';

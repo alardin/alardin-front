@@ -1,9 +1,9 @@
+import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { ScrollView } from 'react-native-gesture-handler';
+import { ScrollView } from 'react-native';
 import { IGameMetaType } from '../../../recoil/home/alarmSettings';
 import CenterScreen from '../../../screen/CenterScreen';
 import alardinApi from '../../../utils/alardinApi';
-import Box from '../../atoms/box/Box';
 import UserCoin from '../../molecules/shop/user/UserCoin';
 import UserGame from '../../molecules/shop/user/UserGame';
 import GameShopList from '../../organisms/shop/GameShopList';
@@ -25,23 +25,24 @@ const TShop = () => {
   const [gameList, setGameList] = useState<IGameMetaType[]>([]);
 
   useEffect(() => {
-    alardinApi.get('/assets').then(res => {
-      const { asset, games } = res.data.data;
-      setUserAsset({
-        coin: asset.coin,
-        isPremium: asset.is_premium,
-        totalGames: games.length,
-      });
-    });
-    alardinApi.get('/game').then(res => {
-      const { data } = res.data;
-      setGameList(data);
-    });
+    axios.all([alardinApi.get('/assets'), alardinApi.get('/game')]).then(
+      axios.spread((res1, res2) => {
+        const { asset, games } = res1.data.data;
+        const { data } = res2.data;
+        setUserAsset({
+          coin: asset.coin,
+          isPremium: asset.is_premium,
+          totalGames: games.length,
+        });
+        setGameList(data);
+      }),
+    );
   }, []);
+
   return (
     <>
       <Header isPremium={userAsset.isPremium} setVisible={setVisible} />
-      <ScrollView>
+      <ScrollView nestedScrollEnabled={true}>
         <UserList>
           <UserCoin coin={userAsset.coin} />
           <UserGame totalGames={userAsset.totalGames} />

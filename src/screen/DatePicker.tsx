@@ -3,6 +3,7 @@ import DatePicker from 'react-native-date-picker';
 import { SetterOrUpdater } from 'recoil';
 import styled from 'styled-components/native';
 import Container from '../components/atoms/container/Container';
+import theme from '../theme/theme';
 import { convertTime, dateToTimeString } from '../utils/home/convertDateTime';
 
 interface IDatePickerProps {
@@ -36,7 +37,12 @@ const DatePickerModal = ({
   }, [date]);
   return (
     <CustomDatePicker>
-      <DatePicker mode="time" date={date} onDateChange={setDate} />
+      <DatePicker
+        mode="time"
+        date={date}
+        onDateChange={setDate}
+        textColor={theme.color.black}
+      />
     </CustomDatePicker>
   );
 };

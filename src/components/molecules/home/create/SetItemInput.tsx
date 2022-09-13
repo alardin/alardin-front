@@ -50,7 +50,7 @@ const SetItemInput = ({
           textAlign="right"
           width="180px"
           height="100%"
-          colorName="lightGray"
+          colorName="lightSlate"
           value={text}
           onChangeText={handleChangeText}
         />
