@@ -58,7 +58,7 @@ const AlarmSettings = ({ setVisible }: IAlarmSettingsProps) => {
           index === 5 ? (
             <SetItemInput
               key={`item_${index}`}
-              text={setting.name as string}
+              text={setting.name}
               onChangeText={setSetting}
               {...{ ...item }}
             />

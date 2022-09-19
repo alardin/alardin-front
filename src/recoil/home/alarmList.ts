@@ -56,18 +56,18 @@ export const nextAlarm = selector<IAlarmInfoData>({
     if (joinedAlarms.length !== 0) {
       let nextResult: IAlarmInfoData = { ...joinedAlarms[0] };
       joinedAlarms.forEach(aData => {
-        console.log(nextResult);
         const nextDate = Date.parse(nextResult.created_at);
         const aDate = Date.parse(aData.created_at);
-        console.log(`nextDate: ${nextDate}, aDate: ${aDate}`);
-        // if (nextDate === aDate) {
-        //   const rTime = Date.parse(`Wed, 09 Aug 1995 ${nextResult.time}:00`);
-        //   const aTime = Date.parse(`Wed, 09 Aug 1995 ${aData.time}:00`);
-        //   if (rTime > aTime) nextResult = aData;
-        // }
+        const nextDateString = nextResult.created_at.split('T')[0];
+        const aDateString = aData.created_at.split('T')[0];
+
+        if (nextDateString === aDateString) {
+          const rTime = Date.parse(`Wed, 09 Aug 1995 ${nextResult.time}:00`);
+          const aTime = Date.parse(`Wed, 09 Aug 1995 ${aData.time}:00`);
+          if (rTime > aTime) nextResult = aData;
+        }
         if (nextDate > aDate) nextResult = aData;
       });
-      console.log(`result : ${nextResult.created_at}`);
       return nextResult;
     }
     return {} as IAlarmInfoData;

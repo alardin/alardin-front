@@ -31,7 +31,7 @@ const TextBox = styled(Box)`
 const AttendConfirm = ({ thumbnail_image_url }: IAttendConfirmProps) => {
   const navigation = useNavigation();
   const setVisible = useSetRecoilState(bottomVisible);
-  const { is_repeated, id, time, player } = useRecoilValue(summaryData);
+  const { id, player } = useRecoilValue(summaryData);
   const refreshAlarmList = useSetRecoilState(alarmListRefresh);
 
   const handleCancel = () => {
@@ -46,18 +46,12 @@ const AttendConfirm = ({ thumbnail_image_url }: IAttendConfirmProps) => {
     });
   };
 
-  const textDays =
-    is_repeated !== '0' ? `매주 ${is_repeated}` : `${is_repeated}`;
-
   return (
     <CustomBox height="100%">
       <ProfileIcon size={82} uri={thumbnail_image_url} />
       <TextBox>
         <Text textType="subTitle" options="semiBold">
-          {`${player} 메이트와 함께`}
-        </Text>
-        <Text textType="subTitle" options="semiBold">
-          {`${textDays}에 ${time}`}
+          {`방장인 ${player} 메이트의`}
         </Text>
         <Text textType="subTitle" options="semiBold">
           알람방에 참가하시겠습니까?

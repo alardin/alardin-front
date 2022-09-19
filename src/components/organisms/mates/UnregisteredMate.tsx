@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from 'styled-components/native';
+import { IMembersDataType } from '../../../recoil/home/members';
 import Box from '../../atoms/box/Box';
 import Container from '../../atoms/container/Container';
 import Text from '../../atoms/text/Text';
 import FriendInfo from '../../molecules/mates/FriendInfo';
-import { IMateListDataType } from '../../templates/mates/TMates';
 
 interface IUnregisteredMateProps {
-  matesList: IMateListDataType[];
+  matesList: IMembersDataType[];
 }
 
 const CustomContainer = styled(Container)`
@@ -29,7 +29,7 @@ const UnregisteredMate = ({ matesList }: IUnregisteredMateProps) => {
         미등록된 메이트
       </Title>
       <Box>
-        {matesList.map((mate, index) => (
+        {matesList?.map((mate, index) => (
           <MarginBox key={`friend_${index}`}>
             <FriendInfo {...mate} />
           </MarginBox>

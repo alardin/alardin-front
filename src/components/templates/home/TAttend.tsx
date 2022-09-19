@@ -2,7 +2,7 @@
 
 import { StackScreenProps } from '@react-navigation/stack';
 import React, { useEffect, useState } from 'react';
-import { SafeAreaView } from 'react-native';
+import { Alert, SafeAreaView } from 'react-native';
 import {
   useRecoilState,
   useRecoilValueLoadable,
@@ -37,12 +37,21 @@ const TAttend = ({ route, navigation }: IAlarmAttendScreen) => {
   // Summary State, Effect 생성
   // Navigation으로 전달받은 data 중 summary, mateinfo 데이터 처리
 
-  const { id, is_repeated, is_private, Game, time, Members, name } =
-    route.params;
+  const {
+    id,
+    is_repeated,
+    is_private,
+    Game,
+    time,
+    Members,
+    name,
+    max_members,
+  } = route.params;
   const setSummary = useSetRecoilState(summaryData);
   const profileData = useRecoilValueLoadable(myProfile);
   const [visible, setVisible] = useRecoilState(bottomVisible);
   const [checkMeAttend, setCheckMeAttend] = useState<number>(0);
+  const isFull = Members.length === max_members;
 
   useEffect(() => {
     setSummary(prevState => ({
@@ -60,7 +69,7 @@ const TAttend = ({ route, navigation }: IAlarmAttendScreen) => {
     setCheckMeAttend(
       Members.filter(memeber => memeber.id === profileData.contents.id).length,
     );
-  }, []);
+  }, [profileData]);
 
   return (
     <SafeAreaView>
@@ -68,9 +77,9 @@ const TAttend = ({ route, navigation }: IAlarmAttendScreen) => {
         <TopBox>
           <Header title={name} id={id} />
           <Summary type="attend" />
-          {profileData.state === 'hasValue' && <MateInfo members={Members} />}
         </TopBox>
         <BottomBox>
+          {profileData.state === 'hasValue' && <MateInfo members={Members} />}
           <Button
             width="100%"
             height="48px"
@@ -81,9 +90,13 @@ const TAttend = ({ route, navigation }: IAlarmAttendScreen) => {
                 ? navigation.navigate('AlarmRetouch', {
                     ...route.params,
                   })
+                : isFull
+                ? Alert.alert(
+                    `최대 참가할 수 있는 인원이 ${max_members}명입니다`,
+                  )
                 : setVisible(true)
             }>
-            {checkMeAttend ? `알람 수정` : `알람 참가`}
+            {checkMeAttend === 1 ? `알람 수정` : `알람 참가`}
           </Button>
         </BottomBox>
         <BottomScreen {...{ visible, setVisible }}>

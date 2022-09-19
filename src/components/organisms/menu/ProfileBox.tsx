@@ -40,7 +40,7 @@ const ProfileBox = ({ premium, profile }: IProfileBox) => {
     <Container>
       <Box width="100%" height="120px" row colorName="white">
         <LeftBox>
-          <ProfileIcon size={64} />
+          <ProfileIcon size={64} uri={profile.thumbnail_image_url} />
         </LeftBox>
         <MiddleBox>
           <ProfileText

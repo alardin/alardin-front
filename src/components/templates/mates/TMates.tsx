@@ -1,6 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { SafeAreaView } from 'react-native';
-import { IMembersDataType } from '../../../recoil/home/members';
+import {
+  IKakaoMembersData,
+  IMembersDataType,
+} from '../../../recoil/home/members';
 import alardinApi from '../../../utils/alardinApi';
 import Container from '../../atoms/container/Container';
 import Header from '../../organisms/mates/Header';
@@ -15,71 +18,92 @@ import checkScopes from '../../../recoil/checkScopes';
 import Button from '../../atoms/button/Button';
 import { addFriendsAccess } from '@react-native-seoul/kakao-login';
 import { renewalTokenByAgreement } from '../../../recoil/authorization';
+import EncryptedStorage from 'react-native-encrypted-storage';
 
-export interface IMateListDataType extends IMembersDataType {
-  kakao_id: string;
+export interface IMateListDataType {
+  kakaoFriends: IMembersDataType[];
+  mates: IMembersDataType[];
 }
 
 const TMates = () => {
-  const [registeredMatesList, setRegisteredMatesList] = useState<
-    IMateListDataType[]
-  >([]);
-  const [unregisteredMatesList, setUnregisteredMatesList] = useState<
-    IMateListDataType[]
-  >([]);
+  const [matesList, setMatesList] = useState<IMateListDataType>(
+    {} as IMateListDataType,
+  );
   const renewalToken = useSetRecoilState(renewalTokenByAgreement);
   const [visible, setVisible] = useRecoilState(bottomVisible);
-  const [scopes, setScopes] = useRecoilState(checkScopes);
-  const [isKakaoAgree, setIsKakaoAgree] = useState<boolean>(
-    scopes.includes('friends'),
-  );
+  const [isKakaoAgree, setIsKakaoAgree] = useState<boolean>(true);
 
   const [, setRefreshData] = useState<boolean>(false);
 
-  const requestKakaoAgreement = async () => {
-    addFriendsAccess().then(newToken => {
+  const requestKakaoAgreement = () => {
+    addFriendsAccess().then(async newToken => {
       console.log(newToken);
       if (typeof newToken !== 'string') {
-        setScopes(newToken.scopes);
+        await EncryptedStorage.setItem(
+          'scopes',
+          JSON.stringify(newToken.scopes),
+        );
         renewalToken(newToken);
-        setIsKakaoAgree(scopes.includes('friends'));
+        setIsKakaoAgree(newToken.scopes.includes('friends'));
       }
     });
   };
 
-  const requestKakaoFriends = () => {
-    kakaoApi.get('/talk/friends').then(res => {
-      const responseData = res.data.elements;
-      console.log(responseData);
-      const convertData = responseData.map((friend: any) => ({
+  const bringStorageScopes = useCallback(async () => {
+    const jsonScopes = await EncryptedStorage.getItem('scopes');
+    if (jsonScopes) {
+      const scopes = JSON.parse(jsonScopes);
+      console.log(scopes);
+      setIsKakaoAgree(scopes.includes('friends'));
+    }
+  }, []);
+
+  // const requestKakaoFriends = () => {
+  //   kakaoApi.get('/talk/friends').then(res => {
+  //     const responseData = res.data.elements;
+  //     console.log(responseData);
+  //     const convertData = responseData.map((friend: any) => ({
+  //       kakao_id: friend.id,
+  //       thumbnail_image_url: friend.profile_thumbnail_image,
+  //       nickname: friend.profile_nickname,
+  //     }));
+  //     setMatesList(prevState => ({ ...prevState }));
+  //   });
+  // };
+
+  useEffect(() => {
+    alardinApi.get('/mate').then(res => {
+      const responseData = res.data.data;
+      const matesThumbnails = responseData.mates.map(
+        (friends: any) => friends.nickname,
+      );
+      const convertKakaoData = responseData.kakaoFriends.map((friend: any) => ({
         kakao_id: friend.id,
         thumbnail_image_url: friend.profile_thumbnail_image,
         nickname: friend.profile_nickname,
       }));
-      setUnregisteredMatesList(convertData);
-    });
-  };
-
-  useEffect(() => {
-    alardinApi.get('/mate').then(res => {
-      const responseData: IMateListDataType[] = res.data.data;
-      setRegisteredMatesList(responseData);
+      const filteredKakao = convertKakaoData.filter(
+        (friend: any) => !matesThumbnails.includes(friend.nickname),
+      );
+      setMatesList({
+        kakaoFriends: filteredKakao,
+        mates: responseData.mates,
+      });
     });
   }, []);
 
   useEffect(() => {
-    if (isKakaoAgree) {
-      requestKakaoFriends();
-    }
-  }, [isKakaoAgree]);
+    bringStorageScopes();
+    return () => setIsKakaoAgree(true);
+  }, []);
 
   return (
     <SafeAreaView>
       <Container>
         <Header />
-        <RegisteredMate matesList={registeredMatesList} />
+        <RegisteredMate matesList={matesList.mates} />
         {isKakaoAgree ? (
-          <UnregisteredMate matesList={unregisteredMatesList} />
+          <UnregisteredMate matesList={matesList.kakaoFriends} />
         ) : (
           <Button
             width="100%"

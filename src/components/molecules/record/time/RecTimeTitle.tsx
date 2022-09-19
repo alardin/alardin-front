@@ -3,6 +3,9 @@ import styled from 'styled-components/native';
 import Box from '../../../atoms/box/Box';
 import Text from '../../../atoms/text/Text';
 
+interface IRecTitleProps {
+  date: string;
+}
 const TitleBox = styled(Box)`
   justify-content: space-between;
   align-items: center;
@@ -11,10 +14,11 @@ const TitleBox = styled(Box)`
   border-color: ${({ theme }) => theme.color.lightGray};
 `;
 
-const RecTimeTitle = () => {
+const RecTimeTitle = ({ date }: IRecTitleProps) => {
+  const convertDate = date.split('T')[0];
   return (
     <TitleBox row>
-      <Text size="small">2022.06.28(수)</Text>
+      <Text size="small">{convertDate}</Text>
       <Text size="xsmall" colorName="lightGray" options="semiBold">
         경과 시간
       </Text>

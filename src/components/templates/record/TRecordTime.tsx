@@ -1,26 +1,39 @@
-import React from 'react';
-import RecTimeList, {
-  IRecTimeDataType,
-} from '../../organisms/record/time/RecTimeList';
+/* eslint-disable @typescript-eslint/naming-convention */
+
+import React, { useEffect, useState } from 'react';
+import alardinApi from '../../../utils/alardinApi';
+import RecTimeList from '../../organisms/record/time/RecTimeList';
+
+export interface IRecTimeItem {
+  created_at: string;
+  User_id: number;
+  Alarm_result_id: number;
+  Alarm_result: {
+    start_time: string;
+    end_time: string;
+    trial: number;
+    Game: {
+      name: string;
+      thumbnail_url: string;
+    };
+    Alarm: {
+      id: number;
+      Members: { nickname: string; thumbnail_image_url: string }[];
+    };
+  };
+}
 
 const TRecordTime = () => {
-  const exampleTimeData: IRecTimeDataType[] = [
-    {
-      thumbnail_image_url: '',
-      start_time: '09:00:00',
-      end_time: '09:04:23',
-      nickname: '이상혁',
-      game_image_url: '',
-    },
-    {
-      thumbnail_image_url: '',
-      start_time: '09:00:00',
-      end_time: '09:04:23',
-      nickname: '홍길동',
-      game_image_url: '',
-    },
-  ];
-  return <RecTimeList data={exampleTimeData} />;
+  const [data, setData] = useState<IRecTimeItem[]>([]);
+
+  useEffect(() => {
+    alardinApi.get('/users/history').then(res => {
+      setData(res.data.data);
+    });
+    return () => setData([]);
+  }, []);
+
+  return <RecTimeList data={data} setData={setData} />;
 };
 
 export default TRecordTime;

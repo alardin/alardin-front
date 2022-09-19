@@ -34,7 +34,6 @@ type IAlarmCreateScreen = StackScreenProps<RootStackParamList, 'AlarmCreate'>;
 
 const ConfirmButton = styled(Button)`
   margin-top: 20px;
-  margin-bottom: 80px;
 `;
 
 const TCreate = ({ route, navigation }: IAlarmCreateScreen) => {
@@ -90,34 +89,36 @@ const TCreate = ({ route, navigation }: IAlarmCreateScreen) => {
 
   return (
     <SafeAreaView>
-      <Header title="알람방 생성" id={1} />
       <ScrollView>
-        {gameList.state === 'loading' ? (
-          <Text>Loading...</Text>
-        ) : gameList.state === 'hasError' ? (
-          <Text>Error...</Text>
-        ) : (
-          <Container>
-            <Summary {...{ type }} />
-            <AlarmSettings {...{ setVisible }} />
-            <ConfirmButton
-              width="100%"
-              height="48px"
-              colorName="black"
-              center
-              onPress={requestData}>
-              알람 등록
-            </ConfirmButton>
-            <BottomScreen {...{ visible, setVisible }}>
-              <Pickers
-                selectedValue={setting}
-                setSelectedValue={setSetting}
-                {...{ setVisible, inputLabel, setInputLabel }}
-              />
-            </BottomScreen>
-          </Container>
-        )}
+        <Container>
+          <Header title="알람방 생성" id={1} />
+          {gameList.state === 'loading' ? (
+            <Text>Loading...</Text>
+          ) : gameList.state === 'hasError' ? (
+            <Text>Error...</Text>
+          ) : (
+            <>
+              <Summary {...{ type }} />
+              <AlarmSettings {...{ setVisible }} />
+              <ConfirmButton
+                width="100%"
+                height="48px"
+                colorName="black"
+                center
+                onPress={requestData}>
+                알람 등록
+              </ConfirmButton>
+            </>
+          )}
+        </Container>
       </ScrollView>
+      <BottomScreen {...{ visible, setVisible }}>
+        <Pickers
+          selectedValue={setting}
+          setSelectedValue={setSetting}
+          {...{ setVisible, inputLabel, setInputLabel }}
+        />
+      </BottomScreen>
     </SafeAreaView>
   );
 };

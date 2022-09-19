@@ -1,11 +1,13 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/dot-notation */
 /* eslint-disable @typescript-eslint/naming-convention */
 
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import Config from 'react-native-config';
 import EncryptedStorage from 'react-native-encrypted-storage';
 
 const ENDPOINT = Config.ENDPOINT;
+let checkRefresh = false;
 
 const alardinApi = axios.create({
   baseURL: `${ENDPOINT}/api`,
@@ -29,12 +31,12 @@ alardinApi.interceptors.response.use(
   async error => {
     const { config } = error;
     const tokenJson = await EncryptedStorage.getItem('appRefreshToken');
-    console.log(`response error code : ${error.code}`);
-    if (tokenJson) {
+    console.log(`response error code : ${error.response.status}`);
+    if (tokenJson && error.response.status === 401 && checkRefresh === false) {
       const { appRefreshToken } = JSON.parse(tokenJson);
-      console.log('need refresh token');
-      console.log(appRefreshToken);
-      const retryOriginalReq = new Promise(resolve => {
+      const retryOriginalReq = () => {
+        checkRefresh = true;
+        console.log('load promise');
         axios({
           method: 'GET',
           url: `${Config.ENDPOINT}/api/users/refresh`,
@@ -44,21 +46,19 @@ alardinApi.interceptors.response.use(
           params: {
             refreshToken: appRefreshToken,
           },
-        }).then(res => {
-          console.log(res);
+        }).then(async res => {
           const { appAccessToken } = res.data.data;
-          EncryptedStorage.setItem(
+          await EncryptedStorage.setItem(
             'appAccessToken',
             JSON.stringify({ appAccessToken }),
           );
           axios.defaults.headers.common.Authorization = `Bearer ${appAccessToken}`;
           config.headers.Authorization = `Bearer ${appAccessToken}`;
+          checkRefresh = false;
         });
-        return resolve(alardinApi.request(config));
-      });
-      return retryOriginalReq;
-      // if (error.response === '403' && error.response === '401') {
-      //   }
+        return alardinApi(config);
+      };
+      return Promise.reject(error);
     }
     return Promise.reject(error);
   },

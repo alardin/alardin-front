@@ -31,6 +31,7 @@ const LeftContainer = styled(Container)`
 const RightContainer = styled(Container)`
   flex: 1;
   align-items: center;
+  min-height: 120px;
 `;
 
 const Title = styled(Text)`

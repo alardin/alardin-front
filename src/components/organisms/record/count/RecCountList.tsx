@@ -1,21 +1,16 @@
-import React from 'react';
-import { FlatList, ListRenderItem } from 'react-native';
+import React, { useCallback, useState } from 'react';
+import { FlatList, ListRenderItem, RefreshControl } from 'react-native';
 import styled from 'styled-components/native';
+import alardinApi from '../../../../utils/alardinApi';
 import Box from '../../../atoms/box/Box';
 import Container from '../../../atoms/container/Container';
 import RecCountItem from '../../../molecules/record/count/RecCountItem';
 import RecCountTitle from '../../../molecules/record/count/RecCountTitle';
-
-export interface IRecCountDataType {
-  thumbnail_image_url: string;
-  nickname: string;
-  success_count: number;
-  fail_count: number;
-  created_at: string;
-}
+import { IRecCountItem } from '../../../templates/record/TRecordCount';
 
 interface IRecCountListProps {
-  data: IRecCountDataType[];
+  data: IRecCountItem[];
+  setData: React.Dispatch<React.SetStateAction<IRecCountItem[]>>;
 }
 
 const TimeBox = styled(Box)`
@@ -23,10 +18,26 @@ const TimeBox = styled(Box)`
   margin-bottom: 16px;
 `;
 
-const RecCountList = ({ data }: IRecCountListProps) => {
-  const renderItem: ListRenderItem<IRecCountDataType> = ({ item }) => (
+const RecCountList = ({ data, setData }: IRecCountListProps) => {
+  const [refreshing, setRefreshing] = useState<boolean>(false);
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      alardinApi.get('/users/history-count').then(res => {
+        setData(res.data.data);
+      });
+      setRefreshing(false);
+    }, 1000);
+  }, []);
+
+  const renderItem: ListRenderItem<IRecCountItem> = ({ item }) => (
     <TimeBox colorName="white">
-      <RecCountTitle />
+      <RecCountTitle
+        name={item.nickname}
+        playCount={item.playCount}
+        profileImage={item.thumbnail_image_url}
+      />
       <RecCountItem {...item} />
     </TimeBox>
   );
@@ -37,6 +48,7 @@ const RecCountList = ({ data }: IRecCountListProps) => {
         data={data}
         renderItem={renderItem}
         showsVerticalScrollIndicator={false}
+        refreshControl={<RefreshControl {...{ refreshing, onRefresh }} />}
       />
     </Container>
   );

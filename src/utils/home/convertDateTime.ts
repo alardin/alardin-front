@@ -12,7 +12,7 @@ export const convertDate = (dateString: string) => {
     const date = new Date(dateString);
     const today = new Date();
     const [dMonth, dDate, dDay] = [
-      date.getMonth(),
+      date.getMonth() + 1,
       date.getDate() + 1,
       convertDay(date.getDay()),
     ];
