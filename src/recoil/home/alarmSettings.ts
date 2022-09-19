@@ -58,7 +58,7 @@ export const initialRecoilSetting = {
   is_repeated: '0',
   name: '',
   music_volume: 90,
-  max_members: 2,
+  max_member: 2,
 };
 
 export const initialSetting = {
@@ -69,7 +69,7 @@ export const initialSetting = {
   Game_id: pickerMetaData[2].data[0].value,
   music_name: pickerMetaData[0].data[0].value,
   music_volume: 90,
-  max_members: 2,
+  max_member: 2,
 };
 
 export const apiGameMetaData = selector({
@@ -104,7 +104,7 @@ export const settingData = atom<ISettingData>({
     Game_id: pickerMetaData[1].data[0].value,
     music_name: pickerMetaData[0].data[0].value,
     music_volume: 90,
-    max_members: 2,
+    max_member: 2,
   },
 });
 

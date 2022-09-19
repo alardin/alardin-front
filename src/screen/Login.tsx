@@ -1,10 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable react-native/no-inline-styles */
 
-import {
-  KakaoOAuthToken,
-  loginWithKakaoAccount,
-} from '@react-native-seoul/kakao-login';
+import { KakaoOAuthToken, login } from '@react-native-seoul/kakao-login';
 import React from 'react';
 import messaging from '@react-native-firebase/messaging';
 import Box from '../components/atoms/box/Box';
@@ -19,7 +16,6 @@ import EncryptedStorage from 'react-native-encrypted-storage';
 import { useSetRecoilState } from 'recoil';
 import { IMyProfile, myProfile, token } from '../recoil/authorization';
 import alardinApi from '../utils/alardinApi';
-import checkScopes from '../recoil/checkScopes';
 
 const TopBox = styled(Box)`
   height: 60%;
@@ -32,12 +28,12 @@ const BottomBox = styled(Box)`
 const Login = () => {
   const setAuthorization = useSetRecoilState(token);
   const setMyProfile = useSetRecoilState(myProfile);
-  const setScope = useSetRecoilState(checkScopes);
   const handlePress = async () => {
     const { accessToken, refreshToken, scopes }: KakaoOAuthToken =
-      await loginWithKakaoAccount();
+      await login();
+    console.log(accessToken, scopes);
     const deviceToken = await messaging().getToken();
-    console.log(`DEvice Token: ${deviceToken}`);
+    console.log(`Device Token: ${deviceToken}`);
 
     if (accessToken && refreshToken && deviceToken) {
       axios({
@@ -52,23 +48,23 @@ const Login = () => {
           deviceToken,
         },
       })
-        .then(res => {
+        .then(async res => {
           const { status, data } = res.data;
           if (status === 'SUCCESS') {
             setAuthorization(data);
-            setScope(scopes);
+            await EncryptedStorage.setItem('scopes', JSON.stringify(scopes));
             console.log(data);
-            EncryptedStorage.setItem(
+            await EncryptedStorage.setItem(
               'appAccessToken',
               JSON.stringify({ appAccessToken: data.appAccessToken }),
             );
-            EncryptedStorage.setItem(
+            await EncryptedStorage.setItem(
               'appRefreshToken',
               JSON.stringify({ appRefreshToken: data.appRefreshToken }),
             );
-            alardinApi.get('/users').then((my: any) => {
+            alardinApi.get('/users').then(async (my: any) => {
               const profileData: IMyProfile = my.data.data;
-              EncryptedStorage.setItem(
+              await EncryptedStorage.setItem(
                 'myProfile',
                 JSON.stringify(profileData),
               );

@@ -1,5 +1,7 @@
 import React from 'react';
+import { useImperativeHandle } from 'react';
 import { TextInputProps } from 'react-native';
+import { isSearchBarAvailableForCurrentPlatform } from 'react-native-screens';
 import styled from 'styled-components/native';
 
 export interface ITextInputProps extends TextInputProps {
@@ -7,6 +9,7 @@ export interface ITextInputProps extends TextInputProps {
   width?: string;
   height?: string;
   border?: boolean;
+  ref?: React.MutableRefObject<any>;
   colorName?:
     | 'white'
     | 'lightGray'
@@ -46,15 +49,18 @@ const InputText = ({
   width,
   height,
   border,
+  ref,
   textAlign,
   colorName,
   children,
   ...rest
-}: ITextInputProps) => (
-  <DefaultTextInput
-    {...{ width, height, border, textAlign, colorName, ...rest }}>
-    {children}
-  </DefaultTextInput>
-);
+}: ITextInputProps) => {
+  return (
+    <DefaultTextInput
+      {...{ width, height, border, textAlign, colorName, ...rest, ref }}>
+      {children}
+    </DefaultTextInput>
+  );
+};
 
 export default InputText;

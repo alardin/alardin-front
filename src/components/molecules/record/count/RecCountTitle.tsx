@@ -4,6 +4,12 @@ import Box from '../../../atoms/box/Box';
 import ProfileIcon from '../../../atoms/profile/ProfileIcon';
 import Text from '../../../atoms/text/Text';
 
+interface IRecCountTitleProps {
+  name: string;
+  playCount: number;
+  profileImage: string;
+}
+
 const TitleBox = styled(Box)`
   justify-content: space-between;
   align-items: center;
@@ -20,18 +26,22 @@ const LeftBox = styled(Box)``;
 
 const RightBox = styled(Box)``;
 
-const RecCountTitle = () => {
+const RecCountTitle = ({
+  name,
+  playCount,
+  profileImage,
+}: IRecCountTitleProps) => {
   return (
     <TitleBox row>
       <LeftBox row center>
-        <ProfileIcon size={36} />
+        <ProfileIcon size={36} uri={profileImage} />
         <NameText size="small" options="semiBold">
-          홍길동
+          {name}
         </NameText>
       </LeftBox>
       <RightBox center>
         <Text size="xsmall" colorName="lightGray" options="semiBold">
-          2022.06.30 ~
+          {`총 ${playCount}회 같이 참여`}
         </Text>
       </RightBox>
     </TitleBox>

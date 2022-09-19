@@ -561,6 +561,8 @@ PODS:
     - React-Core
   - RNCPicker (2.4.3):
     - React-Core
+  - RNCPushNotificationIOS (1.10.1):
+    - React-Core
   - RNDevMenu (4.1.0):
     - React-Core
     - React-Core/DevSupport
@@ -579,6 +581,11 @@ PODS:
   - RNScreens (3.15.0):
     - React-Core
     - React-RCTImage
+  - RNSound (0.11.2):
+    - React-Core
+    - RNSound/Core (= 0.11.2)
+  - RNSound/Core (0.11.2):
+    - React-Core
   - RNVectorIcons (9.2.0):
     - React-Core
   - SocketRocket (0.6.0)
@@ -657,12 +664,14 @@ DEPENDENCIES:
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
   - "RNCMaskedView (from `../node_modules/@react-native-masked-view/masked-view`)"
   - "RNCPicker (from `../node_modules/@react-native-picker/picker`)"
+  - "RNCPushNotificationIOS (from `../node_modules/@react-native-community/push-notification-ios`)"
   - RNDevMenu (from `../node_modules/react-native-dev-menu`)
   - "RNFBApp (from `../node_modules/@react-native-firebase/app`)"
   - "RNFBMessaging (from `../node_modules/@react-native-firebase/messaging`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNIap (from `../node_modules/react-native-iap`)
   - RNScreens (from `../node_modules/react-native-screens`)
+  - RNSound (from `../node_modules/react-native-sound`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
@@ -795,6 +804,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-masked-view/masked-view"
   RNCPicker:
     :path: "../node_modules/@react-native-picker/picker"
+  RNCPushNotificationIOS:
+    :path: "../node_modules/@react-native-community/push-notification-ios"
   RNDevMenu:
     :path: "../node_modules/react-native-dev-menu"
   RNFBApp:
@@ -807,6 +818,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-iap"
   RNScreens:
     :path: "../node_modules/react-native-screens"
+  RNSound:
+    :path: "../node_modules/react-native-sound"
   RNVectorIcons:
     :path: "../node_modules/react-native-vector-icons"
   Yoga:
@@ -893,17 +906,19 @@ SPEC CHECKSUMS:
   RNCAsyncStorage: 0c357f3156fcb16c8589ede67cc036330b6698ca
   RNCMaskedView: cb9670ea9239998340eaab21df13fa12a1f9de15
   RNCPicker: a99807a74d9cd65c394f6e2a6c843a377b355b4d
+  RNCPushNotificationIOS: 87b8d16d3ede4532745e05b03c42cff33a36cc45
   RNDevMenu: 40dcdfb0653664c654b5afcf3e77a6fb9f280e34
   RNFBApp: c9723c07e0a315538dfc9deea60ffb072b2f44d6
   RNFBMessaging: 084f466c02f3148884ef22fa86db5473f80e8433
   RNGestureHandler: bad495418bcbd3ab47017a38d93d290ebd406f50
   RNIap: 70a62925cd6bdb5db29a242be80f2a6d3a72a144
   RNScreens: 4a1af06327774490d97342c00aee0c2bafb497b7
+  RNSound: 6c156f925295bdc83e8e422e7d8b38d33bc71852
   RNVectorIcons: fcc2f6cb32f5735b586e66d14103a74ce6ad61f8
   SocketRocket: fccef3f9c5cedea1353a9ef6ada904fde10d6608
   Yoga: 44c64131616253fa83366295acdbce3d14926041
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: 7c239e1f77dae24665995c7ce7a6df402a8c6e92
+PODFILE CHECKSUM: 717f5db6f660004b7c9f4f3f57fcb63bebfba250
 
 COCOAPODS: 1.11.3

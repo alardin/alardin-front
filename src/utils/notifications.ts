@@ -1,6 +1,7 @@
 import { FirebaseMessagingTypes } from '@react-native-firebase/messaging';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { navigate, navigationRef } from '../navigation/RootNavigation';
+import Sound from 'react-native-sound';
 
 // export interface NotificationType {
 //   messageId: string;
@@ -32,6 +33,35 @@ const notification = ({ data }: FirebaseMessagingTypes.RemoteMessage) => {
       case 'ALARM_START':
         const { id, alarmId, nickname, thumbnail_url, userType } =
           JSON.parse(message);
+
+        const sound = new Sound('test_rooster.wav', Sound.MAIN_BUNDLE, err => {
+          if (err) {
+            console.log('cannot load music file');
+            return;
+          }
+          console.log(
+            'duration in seconds: ' +
+              sound.getDuration() +
+              'number of channels: ' +
+              sound.getNumberOfChannels(),
+          );
+        });
+
+        const soundAlarm = () => {
+          sound.setVolume(1);
+          sound.setNumberOfLoops(-1);
+
+          sound.play(success => {
+            if (success) {
+              console.log('successfully finished playing');
+            } else {
+              console.log('playback failed due to audio decoding errors');
+            }
+          });
+        };
+
+        soundAlarm();
+
         if (navigationRef.current?.isReady()) {
           navigate({
             name: 'CallScreen',
@@ -41,6 +71,7 @@ const notification = ({ data }: FirebaseMessagingTypes.RemoteMessage) => {
               nickname,
               userType,
               thumbnail_image_url: thumbnail_url,
+              sound,
             },
           });
         } else {
@@ -54,6 +85,7 @@ const notification = ({ data }: FirebaseMessagingTypes.RemoteMessage) => {
                   nickname,
                   userType,
                   thumbnail_image_url: thumbnail_url,
+                  sound,
                 },
               }),
             1000,

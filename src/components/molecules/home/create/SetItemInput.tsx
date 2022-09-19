@@ -1,4 +1,9 @@
 import React from 'react';
+import {
+  Alert,
+  NativeSyntheticEvent,
+  TextInputChangeEventData,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { SetterOrUpdater } from 'recoil';
 import styled from 'styled-components/native';
@@ -31,8 +36,16 @@ const SetItemInput = ({
   text,
   onChangeText,
 }: IItemProps<SetterOrUpdater<ISettingData>>) => {
-  const handleChangeText = (inputStr: string) => {
-    onChangeText(prevState => ({ ...prevState, name: inputStr }));
+  const handleChangeText = (
+    event: NativeSyntheticEvent<TextInputChangeEventData>,
+  ) => {
+    const value = event.nativeEvent.text;
+    if (value.length > 10) {
+      onChangeText(prevState => ({ ...prevState, name: '' }));
+      Alert.alert('10글자 이하로 작성해주세요');
+      return;
+    }
+    onChangeText(prevState => ({ ...prevState, name: value }));
   };
   return (
     <CustomBox row>
@@ -52,7 +65,7 @@ const SetItemInput = ({
           height="100%"
           colorName="lightSlate"
           value={text}
-          onChangeText={handleChangeText}
+          onChange={handleChangeText}
         />
       </CustomInputBox>
     </CustomBox>

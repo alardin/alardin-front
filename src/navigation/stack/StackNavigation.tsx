@@ -1,5 +1,5 @@
 import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import BottomNavigation from '../bottom/BottomNavigation';
 import TCreate from '../../components/templates/home/TCreate';
 import TAttend from '../../components/templates/home/TAttend';
@@ -18,6 +18,7 @@ import { IAlarmInfoData } from '../../recoil/home/alarmList';
 import Loading from '../../screen/Loading';
 import TGame from '../../components/templates/shop/TGame';
 import WebScreen from '../../screen/WebScreen';
+import Sound from 'react-native-sound';
 
 interface IAlarmAttendStackProps extends IAlarmInfoProps {
   type: string;
@@ -37,6 +38,7 @@ export type RootStackParamList = {
     engine: RtcEngine | undefined;
     alarmId: number;
     userType: string;
+    sound: Sound;
   };
   GameEnd: {
     gameId: number;
@@ -47,6 +49,7 @@ export type RootStackParamList = {
     alarmId: number;
     nickname: string;
     userType: string;
+    sound: Sound;
   };
   Mates: undefined;
   Loading: undefined;
@@ -56,7 +59,7 @@ export type RootStackParamList = {
   WebScreen: undefined;
 };
 
-const Stack = createStackNavigator<RootStackParamList>();
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const StackNavigation = () => {
   const auth = useRecoilValueLoadable(token);

@@ -13,6 +13,10 @@
 		3DE01DC6B1719F54A5C1B22B /* libPods-AlardinApp-AlardinAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FDA90FE29C77596B0CE3AFAB /* libPods-AlardinApp-AlardinAppTests.a */; };
 		9AF3D41F100116B72E0A9E98 /* libPods-AlardinApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B436364464CA657998F61054 /* libPods-AlardinApp.a */; };
 		DD473D5A28CF31A10097D1F9 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD473D5928CF31A10097D1F9 /* StoreKit.framework */; };
+		DD473D5F28D19C130097D1F9 /* test_two.wav in Resources */ = {isa = PBXBuildFile; fileRef = DD473D5E28D19C130097D1F9 /* test_two.wav */; };
+		DD473D6128D19C320097D1F9 /* test_mp3.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DD473D6028D19C320097D1F9 /* test_mp3.mp3 */; };
+		DD473D6528D1AC180097D1F9 /* test_alarm.wav in Resources */ = {isa = PBXBuildFile; fileRef = DD473D6428D1AC170097D1F9 /* test_alarm.wav */; };
+		DD473D6728D1AC460097D1F9 /* test_rooster.wav in Resources */ = {isa = PBXBuildFile; fileRef = DD473D6628D1AC460097D1F9 /* test_rooster.wav */; };
 		DDDB396A289598C30055ED6B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DDDB3969289598C30055ED6B /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
@@ -43,6 +47,10 @@
 		8BC8FBEBA92263A1B48EC08D /* Pods-AlardinApp-AlardinAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlardinApp-AlardinAppTests.debug.xcconfig"; path = "Target Support Files/Pods-AlardinApp-AlardinAppTests/Pods-AlardinApp-AlardinAppTests.debug.xcconfig"; sourceTree = "<group>"; };
 		B436364464CA657998F61054 /* libPods-AlardinApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AlardinApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD473D5928CF31A10097D1F9 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		DD473D5E28D19C130097D1F9 /* test_two.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = test_two.wav; sourceTree = "<group>"; };
+		DD473D6028D19C320097D1F9 /* test_mp3.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = test_mp3.mp3; sourceTree = "<group>"; };
+		DD473D6428D1AC170097D1F9 /* test_alarm.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = test_alarm.wav; path = ../../../Downloads/test_alarm.wav; sourceTree = "<group>"; };
+		DD473D6628D1AC460097D1F9 /* test_rooster.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = test_rooster.wav; sourceTree = "<group>"; };
 		DDA6BD5628954163006BC492 /* AlardinApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = AlardinApp.entitlements; path = AlardinApp/AlardinApp.entitlements; sourceTree = "<group>"; };
 		DDBDBEC52897EFDA00ACFF5A /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		DDBDBEC82897F63B00ACFF5A /* AlardinApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "AlardinApp-Bridging-Header.h"; path = "AlardinApp/AlardinApp-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -141,6 +149,10 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				DD473D6428D1AC170097D1F9 /* test_alarm.wav */,
+				DD473D6028D19C320097D1F9 /* test_mp3.mp3 */,
+				DD473D6628D1AC460097D1F9 /* test_rooster.wav */,
+				DD473D5E28D19C130097D1F9 /* test_two.wav */,
 				DDC9F4FC289A3B7900CD8CCE /* Fonts */,
 				DDBDBEC82897F63B00ACFF5A /* AlardinApp-Bridging-Header.h */,
 				DDBDBEC52897EFDA00ACFF5A /* Config.xcconfig */,
@@ -294,6 +306,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DD473D6128D19C320097D1F9 /* test_mp3.mp3 in Resources */,
+				DD473D6528D1AC180097D1F9 /* test_alarm.wav in Resources */,
+				DD473D5F28D19C130097D1F9 /* test_two.wav in Resources */,
+				DD473D6728D1AC460097D1F9 /* test_rooster.wav in Resources */,
 				DDDB396A289598C30055ED6B /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

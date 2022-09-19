@@ -3,12 +3,12 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import { useSetRecoilState } from 'recoil';
 import styled from 'styled-components/native';
 import bottomVisible from '../../../recoil/bottomVisible';
+import { IMembersDataType } from '../../../recoil/home/members';
 import bottomMateInfo from '../../../recoil/mates/bottomMateInfo';
 import Box from '../../atoms/box/Box';
 import Button from '../../atoms/button/Button';
 import ProfileIcon from '../../atoms/profile/ProfileIcon';
 import Text from '../../atoms/text/Text';
-import { IMateListDataType } from '../../templates/mates/TMates';
 
 const InfoBox = styled(Box)`
   padding: 4px 16px;
@@ -33,7 +33,7 @@ const FriendInfo = ({
   kakao_id,
   thumbnail_image_url,
   nickname,
-}: IMateListDataType) => {
+}: IMembersDataType) => {
   const idValue = id ? `#${id}` : '카카오톡 친구';
   const setVisible = useSetRecoilState(bottomVisible);
   const setMateInfo = useSetRecoilState(bottomMateInfo);

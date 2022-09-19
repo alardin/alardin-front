@@ -55,7 +55,8 @@ const InsideBox = styled(Box)`
 let engine: RtcEngine;
 
 const CallScreen = ({ route, navigation }: CallScreenProps) => {
-  const { id, alarmId, thumbnail_image_url, nickname, userType } = route.params;
+  const { id, alarmId, thumbnail_image_url, nickname, userType, sound } =
+    route.params;
   const [profileImg, setProfileImg] = useState<string>(
     'https://mblogthumb-phinf.pstatic.net/20150427_261/ninevincent_1430122791768m7oO1_JPEG/kakao_1.jpg?type=w2',
   );
@@ -119,6 +120,7 @@ const CallScreen = ({ route, navigation }: CallScreenProps) => {
             id,
             alarmId,
             userType,
+            sound,
           },
         },
       ],

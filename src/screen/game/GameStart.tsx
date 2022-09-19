@@ -16,6 +16,7 @@ import theme from '../../theme/theme';
 import alardinApi from '../../utils/alardinApi';
 import RtmEngine from 'agora-react-native-rtm';
 import Config from 'react-native-config';
+import Sound from 'react-native-sound';
 
 export type GameStartProps = StackScreenProps<RootStackParamList, 'GameStart'>;
 interface WebViewMessageType {
@@ -42,7 +43,7 @@ const WebBox = styled(Box)`
 let client: RtmEngine = new RtmEngine();
 
 const GameStart = ({ route, navigation }: GameStartProps) => {
-  const { alarmId, userType } = route.params;
+  const { alarmId, userType, sound } = route.params;
   const [gameData, setGameData] = useState<IGameTokenData>();
   const [allAttend, setAllAttend] = useState<boolean>(false);
   const [steadyMe, setSteadyMe] = useState<boolean | null>(null);
@@ -238,6 +239,7 @@ const GameStart = ({ route, navigation }: GameStartProps) => {
   };
 
   useEffect(() => {
+    sound.stop();
     initialRtmAgoraEngine();
     if (!agora.joinSucceed) {
       joinChannel()

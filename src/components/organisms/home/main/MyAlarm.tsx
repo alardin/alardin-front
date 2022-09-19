@@ -16,6 +16,7 @@ interface IMyAlarmProps {
 
 const CustomContainer = styled(Container)`
   margin: 24px 0;
+  min-height: 240px;
 `;
 
 const Title = styled(Text)`
