@@ -10,14 +10,23 @@
 		00E356F31AD99517003FC87E /* AlardinAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* AlardinAppTests.m */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		3DE01DC6B1719F54A5C1B22B /* libPods-AlardinApp-AlardinAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FDA90FE29C77596B0CE3AFAB /* libPods-AlardinApp-AlardinAppTests.a */; };
-		9AF3D41F100116B72E0A9E98 /* libPods-AlardinApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B436364464CA657998F61054 /* libPods-AlardinApp.a */; };
+		1B9285D6CF5FD8ABE2C268EB /* libPods-AlardinApp-AlardinAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 804D35799071A269D9F61216 /* libPods-AlardinApp-AlardinAppTests.a */; };
 		DD473D5A28CF31A10097D1F9 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD473D5928CF31A10097D1F9 /* StoreKit.framework */; };
 		DD473D5F28D19C130097D1F9 /* test_two.wav in Resources */ = {isa = PBXBuildFile; fileRef = DD473D5E28D19C130097D1F9 /* test_two.wav */; };
 		DD473D6128D19C320097D1F9 /* test_mp3.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DD473D6028D19C320097D1F9 /* test_mp3.mp3 */; };
 		DD473D6528D1AC180097D1F9 /* test_alarm.wav in Resources */ = {isa = PBXBuildFile; fileRef = DD473D6428D1AC170097D1F9 /* test_alarm.wav */; };
 		DD473D6728D1AC460097D1F9 /* test_rooster.wav in Resources */ = {isa = PBXBuildFile; fileRef = DD473D6628D1AC460097D1F9 /* test_rooster.wav */; };
+		DDA591FA28DC3884001B31BA /* test-22.wav in Resources */ = {isa = PBXBuildFile; fileRef = DDA591F928DC3884001B31BA /* test-22.wav */; };
+		DDD8647528F0B560006D33A9 /* Pretendard-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DDD8647128F0B55F006D33A9 /* Pretendard-Bold.ttf */; };
+		DDD8647628F0B560006D33A9 /* Pretendard-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DDD8647228F0B560006D33A9 /* Pretendard-SemiBold.ttf */; };
+		DDD8647728F0B560006D33A9 /* Pretendard-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DDD8647328F0B560006D33A9 /* Pretendard-Regular.ttf */; };
+		DDD8647828F0B560006D33A9 /* Pretendard-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DDD8647428F0B560006D33A9 /* Pretendard-Thin.ttf */; };
+		DDD8647F28F1E4F1006D33A9 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = DDD8647D28F1E4F1006D33A9 /* fonts */; };
+		DDD8648028F1E4F1006D33A9 /* css in Resources */ = {isa = PBXBuildFile; fileRef = DDD8647E28F1E4F1006D33A9 /* css */; };
+		DDD8648328F1E501006D33A9 /* src in Resources */ = {isa = PBXBuildFile; fileRef = DDD8648228F1E501006D33A9 /* src */; };
+		DDD8648528F1E51A006D33A9 /* twigitizer_game in Resources */ = {isa = PBXBuildFile; fileRef = DDD8648428F1E51A006D33A9 /* twigitizer_game */; };
 		DDDB396A289598C30055ED6B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DDDB3969289598C30055ED6B /* GoogleService-Info.plist */; };
+		E73BA9548EDC5A7845D759F1 /* libPods-AlardinApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F0CF403E50BE1696F03BB1A /* libPods-AlardinApp.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,23 +43,25 @@
 		00E356EE1AD99517003FC87E /* AlardinAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AlardinAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* AlardinAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AlardinAppTests.m; sourceTree = "<group>"; };
-		0FB020FEEEE8FF31073EE706 /* Pods-AlardinApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlardinApp.debug.xcconfig"; path = "Target Support Files/Pods-AlardinApp/Pods-AlardinApp.debug.xcconfig"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* AlardinApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AlardinApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = AlardinApp/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = AlardinApp/AppDelegate.mm; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = AlardinApp/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = AlardinApp/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = AlardinApp/main.m; sourceTree = "<group>"; };
-		7A2582043AB7B4CEA57902FE /* Pods-AlardinApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlardinApp.release.xcconfig"; path = "Target Support Files/Pods-AlardinApp/Pods-AlardinApp.release.xcconfig"; sourceTree = "<group>"; };
-		7F81B55E3F52575B1A97D766 /* Pods-AlardinApp-AlardinAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlardinApp-AlardinAppTests.release.xcconfig"; path = "Target Support Files/Pods-AlardinApp-AlardinAppTests/Pods-AlardinApp-AlardinAppTests.release.xcconfig"; sourceTree = "<group>"; };
+		2F0CF403E50BE1696F03BB1A /* libPods-AlardinApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AlardinApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6F505413AF0C61927A16D46B /* Pods-AlardinApp-AlardinAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlardinApp-AlardinAppTests.release.xcconfig"; path = "Target Support Files/Pods-AlardinApp-AlardinAppTests/Pods-AlardinApp-AlardinAppTests.release.xcconfig"; sourceTree = "<group>"; };
+		7B3C396BF0BC4064ED0819DC /* Pods-AlardinApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlardinApp.debug.xcconfig"; path = "Target Support Files/Pods-AlardinApp/Pods-AlardinApp.debug.xcconfig"; sourceTree = "<group>"; };
+		804D35799071A269D9F61216 /* libPods-AlardinApp-AlardinAppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AlardinApp-AlardinAppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = AlardinApp/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		8BC8FBEBA92263A1B48EC08D /* Pods-AlardinApp-AlardinAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlardinApp-AlardinAppTests.debug.xcconfig"; path = "Target Support Files/Pods-AlardinApp-AlardinAppTests/Pods-AlardinApp-AlardinAppTests.debug.xcconfig"; sourceTree = "<group>"; };
-		B436364464CA657998F61054 /* libPods-AlardinApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AlardinApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A40B13C30144E2D941D72545 /* Pods-AlardinApp-AlardinAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlardinApp-AlardinAppTests.debug.xcconfig"; path = "Target Support Files/Pods-AlardinApp-AlardinAppTests/Pods-AlardinApp-AlardinAppTests.debug.xcconfig"; sourceTree = "<group>"; };
+		ADF9E36C74CF81DE2DABD880 /* Pods-AlardinApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlardinApp.release.xcconfig"; path = "Target Support Files/Pods-AlardinApp/Pods-AlardinApp.release.xcconfig"; sourceTree = "<group>"; };
 		DD473D5928CF31A10097D1F9 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		DD473D5E28D19C130097D1F9 /* test_two.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = test_two.wav; sourceTree = "<group>"; };
 		DD473D6028D19C320097D1F9 /* test_mp3.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = test_mp3.mp3; sourceTree = "<group>"; };
 		DD473D6428D1AC170097D1F9 /* test_alarm.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = test_alarm.wav; path = ../../../Downloads/test_alarm.wav; sourceTree = "<group>"; };
 		DD473D6628D1AC460097D1F9 /* test_rooster.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = test_rooster.wav; sourceTree = "<group>"; };
+		DDA591F928DC3884001B31BA /* test-22.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "test-22.wav"; sourceTree = "<group>"; };
 		DDA6BD5628954163006BC492 /* AlardinApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = AlardinApp.entitlements; path = AlardinApp/AlardinApp.entitlements; sourceTree = "<group>"; };
 		DDBDBEC52897EFDA00ACFF5A /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		DDBDBEC82897F63B00ACFF5A /* AlardinApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "AlardinApp-Bridging-Header.h"; path = "AlardinApp/AlardinApp-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -70,9 +81,16 @@
 		DDC9F50A289A3C1400CD8CCE /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = SimpleLineIcons.ttf; path = "../../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
 		DDC9F50B289A3C1400CD8CCE /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = MaterialCommunityIcons.ttf; path = "../../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
 		DDC9F50C289A3C1400CD8CCE /* EvilIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = EvilIcons.ttf; path = "../../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
+		DDD8647128F0B55F006D33A9 /* Pretendard-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.ttf"; sourceTree = "<group>"; };
+		DDD8647228F0B560006D33A9 /* Pretendard-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-SemiBold.ttf"; sourceTree = "<group>"; };
+		DDD8647328F0B560006D33A9 /* Pretendard-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.ttf"; sourceTree = "<group>"; };
+		DDD8647428F0B560006D33A9 /* Pretendard-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Thin.ttf"; sourceTree = "<group>"; };
+		DDD8647D28F1E4F1006D33A9 /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fonts; sourceTree = "<group>"; };
+		DDD8647E28F1E4F1006D33A9 /* css */ = {isa = PBXFileReference; lastKnownFileType = folder; path = css; sourceTree = "<group>"; };
+		DDD8648228F1E501006D33A9 /* src */ = {isa = PBXFileReference; lastKnownFileType = folder; path = src; sourceTree = "<group>"; };
+		DDD8648428F1E51A006D33A9 /* twigitizer_game */ = {isa = PBXFileReference; lastKnownFileType = folder; path = twigitizer_game; sourceTree = "<group>"; };
 		DDDB3969289598C30055ED6B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		FDA90FE29C77596B0CE3AFAB /* libPods-AlardinApp-AlardinAppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AlardinApp-AlardinAppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,7 +98,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3DE01DC6B1719F54A5C1B22B /* libPods-AlardinApp-AlardinAppTests.a in Frameworks */,
+				1B9285D6CF5FD8ABE2C268EB /* libPods-AlardinApp-AlardinAppTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -88,8 +106,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9AF3D41F100116B72E0A9E98 /* libPods-AlardinApp.a in Frameworks */,
 				DD473D5A28CF31A10097D1F9 /* StoreKit.framework in Frameworks */,
+				E73BA9548EDC5A7845D759F1 /* libPods-AlardinApp.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -133,8 +151,8 @@
 			children = (
 				DD473D5928CF31A10097D1F9 /* StoreKit.framework */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				B436364464CA657998F61054 /* libPods-AlardinApp.a */,
-				FDA90FE29C77596B0CE3AFAB /* libPods-AlardinApp-AlardinAppTests.a */,
+				2F0CF403E50BE1696F03BB1A /* libPods-AlardinApp.a */,
+				804D35799071A269D9F61216 /* libPods-AlardinApp-AlardinAppTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -149,6 +167,8 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				DDD8647A28F1E4A6006D33A9 /* games */,
+				DDA591F928DC3884001B31BA /* test-22.wav */,
 				DD473D6428D1AC170097D1F9 /* test_alarm.wav */,
 				DD473D6028D19C320097D1F9 /* test_mp3.mp3 */,
 				DD473D6628D1AC460097D1F9 /* test_rooster.wav */,
@@ -180,10 +200,10 @@
 		BBD78D7AC51CEA395F1C20DB /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				0FB020FEEEE8FF31073EE706 /* Pods-AlardinApp.debug.xcconfig */,
-				7A2582043AB7B4CEA57902FE /* Pods-AlardinApp.release.xcconfig */,
-				8BC8FBEBA92263A1B48EC08D /* Pods-AlardinApp-AlardinAppTests.debug.xcconfig */,
-				7F81B55E3F52575B1A97D766 /* Pods-AlardinApp-AlardinAppTests.release.xcconfig */,
+				7B3C396BF0BC4064ED0819DC /* Pods-AlardinApp.debug.xcconfig */,
+				ADF9E36C74CF81DE2DABD880 /* Pods-AlardinApp.release.xcconfig */,
+				A40B13C30144E2D941D72545 /* Pods-AlardinApp-AlardinAppTests.debug.xcconfig */,
+				6F505413AF0C61927A16D46B /* Pods-AlardinApp-AlardinAppTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -191,6 +211,10 @@
 		DDC9F4FC289A3B7900CD8CCE /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				DDD8647128F0B55F006D33A9 /* Pretendard-Bold.ttf */,
+				DDD8647328F0B560006D33A9 /* Pretendard-Regular.ttf */,
+				DDD8647228F0B560006D33A9 /* Pretendard-SemiBold.ttf */,
+				DDD8647428F0B560006D33A9 /* Pretendard-Thin.ttf */,
 				DDC9F500289A3C1400CD8CCE /* AntDesign.ttf */,
 				DDC9F508289A3C1400CD8CCE /* Entypo.ttf */,
 				DDC9F50C289A3C1400CD8CCE /* EvilIcons.ttf */,
@@ -211,6 +235,41 @@
 			path = Fonts;
 			sourceTree = "<group>";
 		};
+		DDD8647A28F1E4A6006D33A9 /* games */ = {
+			isa = PBXGroup;
+			children = (
+				DDD8647B28F1E4B7006D33A9 /* single */,
+			);
+			path = games;
+			sourceTree = "<group>";
+		};
+		DDD8647B28F1E4B7006D33A9 /* single */ = {
+			isa = PBXGroup;
+			children = (
+				DDD8648428F1E51A006D33A9 /* twigitizer_game */,
+				DDD8647C28F1E4E4006D33A9 /* lib */,
+			);
+			path = single;
+			sourceTree = "<group>";
+		};
+		DDD8647C28F1E4E4006D33A9 /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				DDD8648128F1E4F8006D33A9 /* images */,
+				DDD8647E28F1E4F1006D33A9 /* css */,
+				DDD8647D28F1E4F1006D33A9 /* fonts */,
+			);
+			path = lib;
+			sourceTree = "<group>";
+		};
+		DDD8648128F1E4F8006D33A9 /* images */ = {
+			isa = PBXGroup;
+			children = (
+				DDD8648228F1E501006D33A9 /* src */,
+			);
+			path = images;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -218,12 +277,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "AlardinAppTests" */;
 			buildPhases = (
-				18955BFED038ABA4182087FD /* [CP] Check Pods Manifest.lock */,
+				AE60DDDF31EE19E9547FE2E6 /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
-				8C3D449E85A9E6F86222C179 /* [CP] Embed Pods Frameworks */,
-				941B1BDC8913581C2BF472B0 /* [CP] Copy Pods Resources */,
+				72C25E1BA76F3E25BECF6F51 /* [CP] Embed Pods Frameworks */,
+				19E7FBD55BCE3CEEFB0F5E66 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -239,15 +298,15 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "AlardinApp" */;
 			buildPhases = (
-				214BC4E300D95C2740B49CBD /* [CP] Check Pods Manifest.lock */,
+				9F043CABD24F972305C5F3FA /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				1310307D0055484FCD6E476B /* [CP] Embed Pods Frameworks */,
-				03E5CA66B515FA46FFD3D6A0 /* [CP] Copy Pods Resources */,
-				B67B43F4722FF31CE0D93A68 /* [CP-User] [RNFB] Core Configuration */,
+				CF4348FBB89349265296BD31 /* [CP] Embed Pods Frameworks */,
+				3588A2C830832D79A83A1F2C /* [CP] Copy Pods Resources */,
+				E78D2C6EA5521274568354AF /* [CP-User] [RNFB] Core Configuration */,
 			);
 			buildRules = (
 			);
@@ -306,11 +365,20 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DDD8648028F1E4F1006D33A9 /* css in Resources */,
+				DDD8647F28F1E4F1006D33A9 /* fonts in Resources */,
+				DDD8647628F0B560006D33A9 /* Pretendard-SemiBold.ttf in Resources */,
+				DDD8648328F1E501006D33A9 /* src in Resources */,
 				DD473D6128D19C320097D1F9 /* test_mp3.mp3 in Resources */,
 				DD473D6528D1AC180097D1F9 /* test_alarm.wav in Resources */,
+				DDD8648528F1E51A006D33A9 /* twigitizer_game in Resources */,
 				DD473D5F28D19C130097D1F9 /* test_two.wav in Resources */,
 				DD473D6728D1AC460097D1F9 /* test_rooster.wav in Resources */,
+				DDD8647728F0B560006D33A9 /* Pretendard-Regular.ttf in Resources */,
+				DDD8647828F0B560006D33A9 /* Pretendard-Thin.ttf in Resources */,
+				DDA591FA28DC3884001B31BA /* test-22.wav in Resources */,
 				DDDB396A289598C30055ED6B /* GoogleService-Info.plist in Resources */,
+				DDD8647528F0B560006D33A9 /* Pretendard-Bold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -333,7 +401,24 @@
 			shellPath = /bin/sh;
 			shellScript = "set -e\n\nWITH_ENVIRONMENT=\"../node_modules/react-native/scripts/xcode/with-environment.sh\"\nREACT_NATIVE_XCODE=\"../node_modules/react-native/scripts/react-native-xcode.sh\"\n\n/bin/sh -c \"$WITH_ENVIRONMENT $REACT_NATIVE_XCODE\"\n";
 		};
-		03E5CA66B515FA46FFD3D6A0 /* [CP] Copy Pods Resources */ = {
+		19E7FBD55BCE3CEEFB0F5E66 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AlardinApp-AlardinAppTests/Pods-AlardinApp-AlardinAppTests-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AlardinApp-AlardinAppTests/Pods-AlardinApp-AlardinAppTests-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AlardinApp-AlardinAppTests/Pods-AlardinApp-AlardinAppTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3588A2C830832D79A83A1F2C /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -350,46 +435,24 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AlardinApp/Pods-AlardinApp-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		1310307D0055484FCD6E476B /* [CP] Embed Pods Frameworks */ = {
+		72C25E1BA76F3E25BECF6F51 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AlardinApp/Pods-AlardinApp-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-AlardinApp-AlardinAppTests/Pods-AlardinApp-AlardinAppTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AlardinApp/Pods-AlardinApp-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-AlardinApp-AlardinAppTests/Pods-AlardinApp-AlardinAppTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AlardinApp/Pods-AlardinApp-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AlardinApp-AlardinAppTests/Pods-AlardinApp-AlardinAppTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		18955BFED038ABA4182087FD /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-AlardinApp-AlardinAppTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		214BC4E300D95C2740B49CBD /* [CP] Check Pods Manifest.lock */ = {
+		9F043CABD24F972305C5F3FA /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -411,41 +474,46 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		8C3D449E85A9E6F86222C179 /* [CP] Embed Pods Frameworks */ = {
+		AE60DDDF31EE19E9547FE2E6 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AlardinApp-AlardinAppTests/Pods-AlardinApp-AlardinAppTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-AlardinApp-AlardinAppTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CF4348FBB89349265296BD31 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AlardinApp/Pods-AlardinApp-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AlardinApp-AlardinAppTests/Pods-AlardinApp-AlardinAppTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-AlardinApp/Pods-AlardinApp-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AlardinApp-AlardinAppTests/Pods-AlardinApp-AlardinAppTests-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AlardinApp/Pods-AlardinApp-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		941B1BDC8913581C2BF472B0 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AlardinApp-AlardinAppTests/Pods-AlardinApp-AlardinAppTests-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AlardinApp-AlardinAppTests/Pods-AlardinApp-AlardinAppTests-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AlardinApp-AlardinAppTests/Pods-AlardinApp-AlardinAppTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		B67B43F4722FF31CE0D93A68 /* [CP-User] [RNFB] Core Configuration */ = {
+		E78D2C6EA5521274568354AF /* [CP-User] [RNFB] Core Configuration */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -510,7 +578,7 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8BC8FBEBA92263A1B48EC08D /* Pods-AlardinApp-AlardinAppTests.debug.xcconfig */;
+			baseConfigurationReference = A40B13C30144E2D941D72545 /* Pods-AlardinApp-AlardinAppTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -537,7 +605,7 @@
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7F81B55E3F52575B1A97D766 /* Pods-AlardinApp-AlardinAppTests.release.xcconfig */;
+			baseConfigurationReference = 6F505413AF0C61927A16D46B /* Pods-AlardinApp-AlardinAppTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
@@ -561,7 +629,7 @@
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0FB020FEEEE8FF31073EE706 /* Pods-AlardinApp.debug.xcconfig */;
+			baseConfigurationReference = 7B3C396BF0BC4064ED0819DC /* Pods-AlardinApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -590,7 +658,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7A2582043AB7B4CEA57902FE /* Pods-AlardinApp.release.xcconfig */;
+			baseConfigurationReference = ADF9E36C74CF81DE2DABD880 /* Pods-AlardinApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;

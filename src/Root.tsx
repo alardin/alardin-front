@@ -20,7 +20,7 @@ const Root = () => {
     }
   }, [toggleStorybook]);
 
-  // return storybookActive ? <Storybook /> : <App />;
+  // return <Storybook />;
   return (
     <RecoilRoot>
       <App />

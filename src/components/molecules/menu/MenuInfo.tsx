@@ -9,20 +9,18 @@ interface IMenuInfoProps {
 }
 
 const CustomBox = styled(Box)`
-  padding: 12px 8px;
+  height: 60px;
+  padding: 0 16px;
   justify-content: space-between;
   align-items: center;
-`;
-
-const CustomText = styled(Text)`
-  font-size: 18px;
+  background-color: white;
 `;
 
 const MenuInfo = ({ title, value }: IMenuInfoProps) => {
   return (
     <CustomBox row>
-      <CustomText>{title}</CustomText>
-      <CustomText>{value}</CustomText>
+      <Text>{title}</Text>
+      <Text>{value}</Text>
     </CustomBox>
   );
 };

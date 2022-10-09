@@ -1,10 +1,13 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import { IMyProfile } from '../../../recoil/authorization';
+import theme from '../../../theme/theme';
 import Box from '../../atoms/box/Box';
 import Container from '../../atoms/container/Container';
 import ProfileIcon from '../../atoms/profile/ProfileIcon';
+import Text from '../../atoms/text/Text';
 import ProfileText from '../../molecules/menu/ProfileText';
+import LoadingComponent from './LoadingComponent';
 
 interface IProfileBox {
   premium: boolean;
@@ -12,54 +15,38 @@ interface IProfileBox {
 }
 
 const LeftBox = styled(Box)`
-  flex: 1;
+  flex: 1.5;
   justify-content: center;
   align-items: center;
-`;
-
-const MiddleBox = styled(Box)`
-  flex: 2;
-  justify-content: center;
-  padding-left: 12px;
 `;
 
 const RightBox = styled(Box)`
-  flex: 1;
-  justify-content: center;
+  flex: 4;
+  flex-direction: row;
   align-items: center;
-`;
-
-const ShareIcon = styled.Image`
-  width: 48px;
-  height: 48px;
-  border-radius: 64px;
 `;
 
 const ProfileBox = ({ premium, profile }: IProfileBox) => {
   return (
-    <Container>
-      <Box width="100%" height="120px" row colorName="white">
-        <LeftBox>
-          <ProfileIcon size={64} uri={profile.thumbnail_image_url} />
-        </LeftBox>
-        <MiddleBox>
-          <ProfileText
-            grade={premium}
-            name={profile.nickname}
-            id={profile.id}
-            email={profile.email}
-          />
-        </MiddleBox>
-        <RightBox>
-          <ShareIcon
-            resizeMode="center"
-            source={{
-              uri: 'https://blog.kakaocdn.net/dn/Sq4OD/btqzlkr13eD/dYwFnscXEA6YIOHckdPDDk/img.jpg',
-            }}
-          />
-        </RightBox>
-      </Box>
-    </Container>
+    <Box width="100%" height="120px" row bgColor={theme.color.white}>
+      {Object.keys(profile).length !== 0 ? (
+        <>
+          <LeftBox>
+            <ProfileIcon size={64} uri={profile.thumbnail_image_url} />
+          </LeftBox>
+          <RightBox>
+            <ProfileText
+              grade={premium}
+              name={profile.nickname}
+              id={profile.id}
+              email={profile.email}
+            />
+          </RightBox>
+        </>
+      ) : (
+        <LoadingComponent />
+      )}
+    </Box>
   );
 };
 

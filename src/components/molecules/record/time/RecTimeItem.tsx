@@ -1,60 +1,89 @@
 import React from 'react';
 import styled from 'styled-components/native';
+import theme from '../../../../theme/theme';
 import Box from '../../../atoms/box/Box';
 import ProfileIcon from '../../../atoms/profile/ProfileIcon';
 import Text from '../../../atoms/text/Text';
 import { IRecTimeItem } from '../../../templates/record/TRecordTime';
 
 const ItemBox = styled(Box)`
-  padding: 16px 0;
+  padding: 18px 4px 12px 4px;
+  flex-direction: column;
 `;
 
 const ProfileBox = styled(Box)`
-  flex: 1.5;
+  flex: 1;
+  justify-content: center;
 `;
 
 const TextBox = styled(Box)`
-  flex: 4;
+  flex: 3;
+  padding-left: 12px;
   justify-content: center;
 `;
 
 const GameBox = styled(Box)`
-  flex: 1.5;
+  flex: 1;
+  align-items: flex-end;
 `;
 
 const PaddingText = styled(Text)`
-  padding: 4px 0;
+  padding-bottom: 12px;
+  justify-content: center;
+  align-self: center;
+`;
+
+const TopBox = styled(Box)`
+  flex-direction: row;
+  justify-content: space-between;
+`;
+
+const BottomBox = styled(Box)`
+  flex-direction: row;
+`;
+
+const CustomText = styled(Text)`
+  padding: 2px 0;
 `;
 
 const RecTimeItem = ({ Alarm_result }: IRecTimeItem) => {
   const opponentName =
-    Alarm_result.Alarm && Alarm_result.Alarm.Members[1].nickname;
+    Alarm_result.Alarm && Alarm_result.Alarm.Members[0].nickname;
   const opponentImage =
-    Alarm_result.Alarm && Alarm_result.Alarm.Members[1].thumbnail_image_url;
+    Alarm_result.Alarm && Alarm_result.Alarm.Members[0].thumbnail_image_url;
 
   const gameIcon = Alarm_result.Game && Alarm_result.Game.thumbnail_url;
   return (
     <ItemBox row>
-      <ProfileBox center>
-        <ProfileIcon size={52} uri={opponentImage} />
-      </ProfileBox>
-      <TextBox>
-        <PaddingText size="small" options="semiBold">
-          {opponentName}
-        </PaddingText>
-        <Text
-          size="xsmall"
-          colorName="lightGray">{`시작 시간: ${Alarm_result.start_time}`}</Text>
-        <Text
-          size="xsmall"
-          colorName="lightGray">{`종료 시간: ${Alarm_result.end_time}`}</Text>
-      </TextBox>
-      <GameBox center>
-        <ProfileIcon size={36} uri={gameIcon} />
-        <PaddingText size="xsmall" colorName="lightGray" options="semiBold">
+      <TopBox>
+        <PaddingText options="semiBold">{opponentName}</PaddingText>
+        <PaddingText
+          size="s"
+          colorName={theme.color.primary_600}
+          options="semiBold">
           수정 필요
         </PaddingText>
-      </GameBox>
+      </TopBox>
+      <BottomBox>
+        <ProfileBox>
+          <ProfileIcon size={56} uri={opponentImage} />
+        </ProfileBox>
+        <TextBox>
+          <CustomText
+            size="s"
+            colorName={
+              theme.color.gray_600
+            }>{`시작 시간: ${Alarm_result.start_time}`}</CustomText>
+          <CustomText
+            size="s"
+            colorName={
+              theme.color.gray_600
+            }>{`종료 시간: ${Alarm_result.end_time}`}</CustomText>
+        </TextBox>
+        <GameBox>
+          <ProfileIcon size={56} uri={gameIcon} />
+        </GameBox>
+      </BottomBox>
     </ItemBox>
   );
 };

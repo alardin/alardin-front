@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import Button from '../../atoms/button/Button';
 import Container from '../../atoms/container/Container';
 import { MaterialTopTabBarProps } from '@react-navigation/material-top-tabs';
 import Text from '../../atoms/text/Text';
@@ -13,18 +12,16 @@ const TabContainer = styled(Container)`
   flex-direction: row;
 `;
 
-const TabButton = styled(Button)<ITabStyleProps>`
+const TabButton = styled.TouchableHighlight<ITabStyleProps>`
   margin-right: 8px;
   padding: 4px 16px;
   background-color: ${({ theme, isFocused }) =>
-    isFocused ? theme.color.black : theme.color.white};
-  /* border: ${({ theme, isFocused }) =>
-    `1px solid ${isFocused ? 'transparent' : theme.color.black}`}; */
+    isFocused ? theme.color.gray_900 : theme.color.white};
 `;
 
 const TabText = styled(Text)<ITabStyleProps>`
   color: ${({ theme, isFocused }) =>
-    isFocused ? theme.color.white : theme.color.black};
+    isFocused ? theme.color.white : theme.color.gray_900};
 `;
 
 const TabBar = ({ state, navigation }: MaterialTopTabBarProps) => {

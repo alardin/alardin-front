@@ -8,46 +8,41 @@ import Box from '../../atoms/box/Box';
 import Container from '../../atoms/container/Container';
 import Text from '../../atoms/text/Text';
 import GameShopIcon from '../../molecules/shop/game/GameShopIcon';
+import themeColor from '../../../theme/theme';
+import { fetchGames } from '../../../hooks/useShopData';
 
 interface IGameShopProps {
   data: IGameMetaType[];
 }
 
 const Title = styled(Text)`
-  margin-bottom: 12px;
+  margin-bottom: 20px;
 `;
 
 const ListBox = styled(Box)`
-  padding: 24px 8px;
-  flex: 1;
-  flex-direction: row;
+  padding: 18px;
   flex-wrap: wrap;
-  align-items: center;
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
+  flex-direction: row;
+  border: ${({ theme }) => `1px solid ${theme.color.gray_300}`};
+  background-color: white;
+  min-height: 140px;
 `;
 
-const AdBox = styled(Box)`
-  height: 80px;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-`;
+const resource = fetchGames();
 
-const GameShopList = ({ data }: IGameShopProps) => {
+const GameShopList = () => {
+  const { data }: IGameShopProps = resource.gameList.read();
   return (
     <Container>
-      <Title textType="subTitle" options="bold">
-        게임 목록
-      </Title>
-      <ListBox row colorName="white">
+      <Title options="bold">게임 목록</Title>
+      <ListBox row bgColor={themeColor.color.white}>
         {data.map((item, index) => {
           return (
             <View
               key={`icon_${index}`}
               style={{
                 width: '25%',
-                paddingHorizontal: 4,
-                marginBottom: 24,
+                marginVertical: 8,
               }}>
               <GameShopIcon
                 text={item.name}
@@ -58,7 +53,6 @@ const GameShopList = ({ data }: IGameShopProps) => {
           );
         })}
       </ListBox>
-      <AdBox colorName="green"></AdBox>
     </Container>
   );
 };

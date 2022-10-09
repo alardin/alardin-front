@@ -14,35 +14,24 @@ export interface INotifyDataType {
   type: 'event' | 'mate' | 'announce' | 'local';
   content: string;
   date: string;
+  senderId?: number;
+  nickname?: string;
+  thumbnail_image_url?: string;
 }
-
-const CustomContianer = styled(Container)`
-  margin: 24px 0;
-  height: 95%;
-`;
-
-const ItemBox = styled(Box)`
-  margin-bottom: 12px;
-`;
 
 const NotifyList = ({ notifyData }: INotifyListProps) => {
   const renderItem: ListRenderItem<INotifyDataType> = ({ item }) => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     return (
-      <ItemBox>
+      <>
         {item.type === 'mate' ? (
           <MateNotifyItem {...{ ...item }} />
         ) : (
           <EventNotifyItem {...{ ...item }} />
         )}
-      </ItemBox>
+      </>
     );
   };
-  return (
-    <CustomContianer options="zero">
-      <FlatList data={notifyData} renderItem={renderItem} />
-    </CustomContianer>
-  );
+  return <FlatList data={notifyData} renderItem={renderItem} />;
 };
 
 export default NotifyList;

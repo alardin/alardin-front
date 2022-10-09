@@ -9,6 +9,11 @@ import AlarmInfo from '../../../molecules/home/main/AlarmInfo';
 import { IAlarmInfoData } from '../../../../recoil/home/alarmList';
 import { Loadable } from 'recoil';
 import { Placeholder, Fade, PlaceholderLine } from 'rn-placeholder';
+import Box from '../../../atoms/box/Box';
+import MoreIcon from '../../../../assets/icons/ic-more.svg';
+import AlarmPlus from '../../../molecules/home/main/AlarmPlus';
+import theme from '../../../../theme/theme';
+import LoadingComponent from './LoadingComponent';
 
 interface IMyAlarmProps {
   data: Loadable<IAlarmInfoData[]>;
@@ -19,40 +24,40 @@ const CustomContainer = styled(Container)`
   min-height: 240px;
 `;
 
-const Title = styled(Text)`
-  padding-bottom: 12px;
+const Title = styled(Box)`
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 20px;
 `;
 
 const MyAlarm = ({ data }: IMyAlarmProps) => {
+  console.log(`check item`);
+  console.log(data);
   return (
     <CustomContainer>
-      <Title textType="subTitle" options="semiBold">
-        참여하고 있는 알람
+      <Title>
+        <Text options="semiBold">참여하고 있는 알람</Text>
+        <MoreIcon width={24} height={24} fill={theme.color.gray_600} />
       </Title>
       {data.state === 'hasValue' ? (
-        data.contents.map((props, index) => (
-          <View
-            key={`alarm_${index}`}
-            style={index !== data.contents.length - 1 && { marginBottom: 8 }}>
-            <AlarmInfo {...props} />
-          </View>
-        ))
+        data.contents.length !== 0 ? (
+          data.contents.map((props, index) => (
+            <View
+              key={`alarm_${index}`}
+              style={index !== data.contents.length - 1 && { marginBottom: 8 }}>
+              <AlarmInfo {...props} />
+            </View>
+          ))
+        ) : (
+          <AlarmPlus />
+        )
       ) : data.state === 'loading' ? (
-        <Placeholder Animation={Fade}>
-          <PlaceholderLine
-            style={{
-              width: '100%',
-              height: 88,
-              marginBottom: 4,
-              borderRadius: 12,
-            }}
-          />
-          <PlaceholderLine
-            style={{ width: '100%', height: 88, borderRadius: 12 }}
-          />
-        </Placeholder>
+        <>
+          <LoadingComponent type="item" />
+          <LoadingComponent type="item" />
+        </>
       ) : (
-        <Text>Error!</Text>
+        <AlarmPlus />
       )}
     </CustomContainer>
   );

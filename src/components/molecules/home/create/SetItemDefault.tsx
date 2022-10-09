@@ -3,65 +3,59 @@
 import React from 'react';
 import Box from '../../../atoms/box/Box';
 import Text from '../../../atoms/text/Text';
-import Button from '../../../atoms/button/Button';
 import styled from 'styled-components/native';
-import Icon from 'react-native-vector-icons/Ionicons';
-import theme from '../../../../theme/theme';
 import { ISettingData } from '../../../../recoil/home/alarmSettings';
+import themeColor from '../../../../theme/theme';
+
+import DownIcon from '../../../../assets/icons/ic-down.svg';
+// import UpIcon from '../../../../assets/icons/ic-up.svg';
+
+import { Platform, TouchableOpacity } from 'react-native';
+import ItemPicker from '../../../../screen/ItemPicker';
 
 interface IItemProps {
   name: string;
-  icon: string;
   keyValue: keyof ISettingData;
   inputLabel: ISettingData;
   onPress: () => void;
 }
 
-const LeftBox = styled(Box)`
-  flex: 1;
-  align-items: center;
-`;
-
-const RightBox = styled(Button)`
-  flex: 1.5;
-  align-items: flex-end;
-`;
-
 const CustomBox = styled(Box)`
+  height: 120px;
+  justify-content: center;
+`;
+
+const Title = styled(Text)`
+  margin: 12px 0;
+`;
+
+const BottomBox = styled(Box)`
+  padding: 12px;
   justify-content: space-between;
-  padding: 12px 18px;
+  align-items: center;
+  border: ${({ theme }) => `1px solid ${theme.color.gray_200}`};
 `;
 
 const SetItemDefault = ({
   name,
-  icon,
   keyValue,
   inputLabel,
   onPress,
 }: IItemProps) => {
   const textValue = inputLabel[keyValue];
   return (
-    <CustomBox row>
-      <LeftBox row>
-        <Icon
-          style={{ marginRight: 12 }}
-          name={icon}
-          color={theme.color.black}
-          size={32}
-        />
-        <Text>{name}</Text>
-      </LeftBox>
-      <RightBox height="100%" onPress={onPress}>
-        <Box center row>
-          <Text options="semiBold">{textValue}</Text>
-          <Icon
-            style={{ marginLeft: 8 }}
-            name="chevron-down-outline"
-            color={theme.color.black}
-            size={32}
-          />
-        </Box>
-      </RightBox>
+    <CustomBox>
+      <Title>{name}</Title>
+      <TouchableOpacity onPress={onPress}>
+        <BottomBox
+          width="100%"
+          height="56px"
+          bgColor={themeColor.color.white}
+          row>
+          <Text>{textValue}</Text>
+          <DownIcon width={24} height={24} fill={themeColor.color.gray_600} />
+        </BottomBox>
+      </TouchableOpacity>
     </CustomBox>
   );
 };

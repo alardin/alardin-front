@@ -1,7 +1,5 @@
 import React from 'react';
-import { useImperativeHandle } from 'react';
 import { TextInputProps } from 'react-native';
-import { isSearchBarAvailableForCurrentPlatform } from 'react-native-screens';
 import styled from 'styled-components/native';
 
 export interface ITextInputProps extends TextInputProps {
@@ -25,6 +23,9 @@ export interface ITextInputProps extends TextInputProps {
 }
 
 const DefaultTextInput = styled.TextInput<ITextInputProps>`
+  border-radius: 8px;
+  font-family: 'Pretendard-Regular';
+  border: ${({ theme }) => `1px solid ${theme.color.gray_100}`};
   text-align: ${({ textAlign }) =>
     textAlign === 'right'
       ? 'right'
@@ -39,10 +40,8 @@ const DefaultTextInput = styled.TextInput<ITextInputProps>`
       : 'padding-left: 8px'};
   ${({ width }) => `width: ${width}`};
   ${({ height }) => `height: ${height}`};
-  border-radius: ${({ theme }) => theme.shape.rectangle};
-  color: ${({ theme }) => theme.color.black};
-  background-color: ${({ theme, colorName }) =>
-    colorName ? theme.color[colorName] : 'transparent'};
+  color: ${({ theme }) => theme.color.gray_700};
+  background-color: ${({ theme }) => theme.color.gray_100};
 `;
 
 const InputText = ({

@@ -1,6 +1,17 @@
 import { atom, selector } from 'recoil';
 import alardinApi from '../../utils/alardinApi';
 import {
+  checkAlarmScheduler,
+  clearAlarmScheduler,
+  getAlarmScheduler,
+} from '../../utils/alarm/alarmScheduler';
+import {
+  cleanOldAlarmItems,
+  clearAlarmList,
+  getAlarmList,
+  syncAlarmList,
+} from '../../utils/alarm/alarmStorage';
+import {
   convertRepeatDay,
   convertTime,
 } from '../../utils/home/convertDateTime';
@@ -36,9 +47,30 @@ const apiAlarmList = selector({
     get(token);
     get(alarmListRefresh);
 
-    const response = await alardinApi.get('/users/joined-alarms');
-    const joinedAlarms: IAlarmInfoData[] = response.data.data.joinedAlarms;
-    return joinedAlarms;
+    // clearAlarmList();
+    // clearAlarmScheduler();
+    try {
+      const response = await alardinApi.get('/users/joined-alarms');
+      const {
+        joinedAlarms,
+        hostedAlarms,
+      }: { joinedAlarms: IAlarmInfoData[]; hostedAlarms: IAlarmInfoData[] } =
+        response.data.data;
+
+      if (joinedAlarms) {
+        await syncAlarmList(joinedAlarms);
+      }
+
+      const resultList = await getAlarmList();
+      console.log('storage');
+      console.log(resultList);
+      await cleanOldAlarmItems();
+      checkAlarmScheduler(resultList);
+      getAlarmScheduler();
+      return resultList;
+    } catch (err) {
+      console.log(`cannot connect to server, bring xstorage info`);
+    }
   },
 });
 
@@ -93,10 +125,18 @@ export const matesAttendAlarmList = selector<IAlarmInfoData[]>({
   key: 'matesAttendAlarmList',
   get: async ({ get }) => {
     get(alarmListRefresh);
+    const myAlarmList = get(myAttendAlarmList);
+
     const response = await alardinApi.get('/mate/alarms');
     const matesAlarmList: IAlarmInfoData[] = response.data.data;
 
-    const convertData = matesAlarmList.map(data => {
+    console.log('mates alarms');
+    console.log(matesAlarmList);
+
+    const removeJoinedAlarm = matesAlarmList.filter(
+      mateAlarm => !myAlarmList.some(myAlarm => mateAlarm.id === myAlarm.id),
+    );
+    const convertData = removeJoinedAlarm.map(data => {
       const time = data.time ? convertTime(data.time) : data.time;
       return {
         ...data,

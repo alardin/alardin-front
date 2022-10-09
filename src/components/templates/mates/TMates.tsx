@@ -19,11 +19,18 @@ import Button from '../../atoms/button/Button';
 import { addFriendsAccess } from '@react-native-seoul/kakao-login';
 import { renewalTokenByAgreement } from '../../../recoil/authorization';
 import EncryptedStorage from 'react-native-encrypted-storage';
+import MatesNavigation from '../../../navigation/top/MatesNavigation';
+import styled from 'styled-components/native';
 
-export interface IMateListDataType {
+interface IMateListDataTyp {
   kakaoFriends: IMembersDataType[];
   mates: IMembersDataType[];
 }
+
+const CustomContainer = styled(Container)`
+  width: 100%;
+  height: 100%;
+`;
 
 const TMates = () => {
   const [matesList, setMatesList] = useState<IMateListDataType>(
@@ -99,17 +106,18 @@ const TMates = () => {
 
   return (
     <SafeAreaView>
-      <Container>
+      <CustomContainer>
         <Header />
+        <MatesNavigation />
         <RegisteredMate matesList={matesList.mates} />
         {isKakaoAgree ? (
           <UnregisteredMate matesList={matesList.kakaoFriends} />
         ) : (
           <Button
             width="100%"
-            height="48px"
-            colorName="black"
+            height="l"
             center
+            options="primary"
             onPress={requestKakaoAgreement}>
             친구 목록 추가 동의
           </Button>
@@ -117,7 +125,7 @@ const TMates = () => {
         <BottomScreen {...{ visible, setVisible }}>
           <MateConfirm {...{ setRefreshData }} />
         </BottomScreen>
-      </Container>
+      </CustomContainer>
     </SafeAreaView>
   );
 };

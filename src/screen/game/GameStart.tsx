@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable react-native/no-inline-styles */
 
 import { StackScreenProps } from '@react-navigation/stack';
 import React, { useEffect, useRef, useState } from 'react';
-import { SafeAreaView } from 'react-native';
+import { AppState, SafeAreaView } from 'react-native';
 import WebView from 'react-native-webview';
 import { WebViewMessageEvent } from 'react-native-webview/lib/WebViewTypes';
 import { useRecoilState, useRecoilValue } from 'recoil';
@@ -16,7 +17,8 @@ import theme from '../../theme/theme';
 import alardinApi from '../../utils/alardinApi';
 import RtmEngine from 'agora-react-native-rtm';
 import Config from 'react-native-config';
-import Sound from 'react-native-sound';
+import { toastEnable } from '../../utils/Toast';
+import PushNotification from 'react-native-push-notification';
 
 export type GameStartProps = StackScreenProps<RootStackParamList, 'GameStart'>;
 interface WebViewMessageType {
@@ -28,7 +30,7 @@ interface IGameTokenData {
   rtcToken: string;
   rtmToken: string;
   uid: string;
-  user: object;
+  user: object[];
   channelName: string;
 }
 
@@ -43,7 +45,13 @@ const WebBox = styled(Box)`
 let client: RtmEngine = new RtmEngine();
 
 const GameStart = ({ route, navigation }: GameStartProps) => {
-  const { alarmId, userType, sound } = route.params;
+  const { id, alarmId } = route.params;
+
+  const appState = useRef(AppState.currentState);
+  const [appStateVisible, setAppStateVisible] = useState(appState.current);
+
+  const [timer, setTimer] = useState<boolean>(false);
+  const [userType, setUserType] = useState<number>(0);
   const [gameData, setGameData] = useState<IGameTokenData>();
   const [allAttend, setAllAttend] = useState<boolean>(false);
   const [steadyMe, setSteadyMe] = useState<boolean | null>(null);
@@ -55,6 +63,7 @@ const GameStart = ({ route, navigation }: GameStartProps) => {
 
   const [checkSucess, setCheckSuccess] = useState<boolean>(false);
 
+  let limitUntilStart: any;
   let webViewRef = useRef<WebView>();
 
   const handleSetRef = (_ref: any) => {
@@ -68,7 +77,9 @@ const GameStart = ({ route, navigation }: GameStartProps) => {
       const { channelId } = evt;
       console.log('someone has joined!');
       client.getMembers(channelId).then(members => {
+        setUserType(members.length - 1);
         if (members.length === 2) {
+          //
           setTimeout(
             () =>
               client
@@ -105,6 +116,7 @@ const GameStart = ({ route, navigation }: GameStartProps) => {
       if (message.text === 'ALL_ATTEND') {
         console.log(`Attend: ${message.text}`);
         setAllAttend(true);
+        clearTimeout(limitUntilStart);
       }
     });
 
@@ -117,39 +129,55 @@ const GameStart = ({ route, navigation }: GameStartProps) => {
     webViewRef.current?.postMessage(
       JSON.stringify({
         type: 'BACKGROUND_COLOR',
-        message: { backgroudColor: `${theme.color.lightSlate}` },
+        message: { backgroudColor: `${theme.color.gray_100}` },
       }),
     );
   };
 
   const sendNeedGameStart = () => {
+    console.log('userType: ' + userType);
     console.log(`checkfsdaf: ${JSON.stringify(gameData?.user)}`);
     webViewRef.current?.postMessage(
       JSON.stringify({
         type: 'GAME_START',
-        message: { ...gameData?.user },
+        message: { ...gameData?.user[userType] },
       }),
     );
   };
 
   const requestStartData = async () => {
     const res = await alardinApi.post(`/game/start?alarmId=${alarmId}`);
-    const { rtmToken, rtcToken, uid, channelName, userA, userB } =
-      res.data.data;
-    console.log('A');
-    console.log(userA);
-    console.log('B');
-    console.log(userB);
+    console.log(res.data.data);
+    const {
+      rtmToken,
+      rtcToken,
+      channelName,
+      player1Images,
+      player2Images,
+      player1AnswerIndex,
+      player2AnswerIndex,
+    } = res.data.data;
     setGameData({
       rtmToken,
       rtcToken,
-      uid,
-      user: userType === 'A' ? { ...userA } : { ...userB },
+      uid: String(id),
+      user: [
+        {
+          subject: player2Images[player1AnswerIndex],
+          images: player1Images,
+          answer: player1Images[player2AnswerIndex],
+        },
+        {
+          subject: player1Images[player2AnswerIndex],
+          images: player2Images,
+          answer: player2Images[player1AnswerIndex],
+        },
+      ],
       channelName,
     });
     setAgora(prevState => ({ ...prevState, channelName }));
     console.log(`state: ${channelName}`);
-    return { rtmToken, rtcToken, uid, channelName };
+    return { rtmToken, rtcToken, uid: String(id), channelName };
   };
 
   const leaveChannel = async (gameNum: number) => {
@@ -164,6 +192,8 @@ const GameStart = ({ route, navigation }: GameStartProps) => {
   };
 
   const switchMicrophone = () => {
+    console.log('check mic');
+    console.log(agora.openMicrophone);
     engine
       ?.enableLocalAudio(!agora.openMicrophone)
       .then(() => {
@@ -176,6 +206,8 @@ const GameStart = ({ route, navigation }: GameStartProps) => {
   };
 
   const switchSpeakerphone = () => {
+    console.log('speaker phone');
+    console.log(agora.enableSpeakerphone);
     engine?.setEnableSpeakerphone(!agora.enableSpeakerphone).then(() => {
       setAgora(prevState => ({
         ...prevState,
@@ -214,9 +246,17 @@ const GameStart = ({ route, navigation }: GameStartProps) => {
         console.log(message.gameId);
         await alardinApi.post('/game/save', {
           ...message,
-          trial: message.trial + 1,
+          Game_channel_id: Number(gameData?.channelName),
+          Alarm_id: alarmId,
         });
         await leaveChannel(message.gameId);
+        return;
+      case 'TIME_OUT':
+        console.log('time out!!');
+        navigation.reset({
+          index: 0,
+          routes: [{ name: 'GameEnd', params: { gameId: 0 } }],
+        });
         return;
       default:
         console.log(message);
@@ -239,8 +279,46 @@ const GameStart = ({ route, navigation }: GameStartProps) => {
   };
 
   useEffect(() => {
-    sound.stop();
+    if (!timer) {
+      limitUntilStart = setTimeout(() => setTimer(true), 1000 * 60);
+    } else {
+      toastEnable({
+        text: '사용자가 접속하지 않아 싱글 플레이 모드로 전환합니다',
+        duration: 'LONG',
+      });
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'SingleGameStart', params: { gameId: 2 } }],
+      });
+    }
+    return () => clearTimeout(limitUntilStart);
+  }, [timer]);
+
+  useEffect(() => {
+    // sound.stop();
     initialRtmAgoraEngine();
+    const unsubscribeAppState = AppState.addEventListener(
+      'change',
+      nextAppState => {
+        if (
+          appState.current.match(/inactive|background/) &&
+          nextAppState === 'active'
+        ) {
+          console.log('App has come to the foreground!');
+        }
+
+        if (nextAppState === 'background') {
+          PushNotification.localNotification({
+            title: '앗! 게임이 아직 진행중입니다!!',
+            message:
+              '사용자께서 게임에 참여하고 있는 않는 상황을 감지했습니다. 다시 게임에 참여해주세요!',
+          });
+        }
+        appState.current = nextAppState;
+        setAppStateVisible(appState.current);
+        console.log('AppState', appState.current);
+      },
+    );
     if (!agora.joinSucceed) {
       joinChannel()
         .then(() => {
@@ -258,6 +336,12 @@ const GameStart = ({ route, navigation }: GameStartProps) => {
           console.log(`the device can't connect to the channel id : ${err}`);
         });
     }
+    return () => {
+      unsubscribeAppState.remove();
+      engine?.leaveChannel();
+      client.leaveChannel(agora.channelName);
+      client?.logout();
+    };
   }, []);
 
   useEffect(() => {
@@ -289,10 +373,6 @@ const GameStart = ({ route, navigation }: GameStartProps) => {
         );
         setSteadyMe(null);
         setSteadyOther(null);
-        // setGamePlayState(prevState => ({
-        //   ...prevState,
-        //   otherUserSuccess: { me: null, other: null },
-        // }));
       }
     }
   }, [steadyOther, steadyMe]);
@@ -300,7 +380,7 @@ const GameStart = ({ route, navigation }: GameStartProps) => {
   return (
     <SafeAreaView>
       <CustomContianer options="zero">
-        <WebBox width="100%" height="100%" colorName="black">
+        <WebBox width="100%" height="100%">
           {checkSucess && <Text>Success! Wait for other player!</Text>}
           <WebView
             originWhitelist={['*']}
@@ -308,7 +388,7 @@ const GameStart = ({ route, navigation }: GameStartProps) => {
             onMessage={handleMessage}
             onLoad={handleInitialGame}
             javaScriptEnabled
-            source={{ uri: 'http://3.38.235.20:3000' }}
+            source={{ uri: 'http://192.168.0.13:3030' }}
             style={{
               flex: 1,
             }}

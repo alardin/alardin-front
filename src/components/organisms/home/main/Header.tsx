@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Icon from 'react-native-vector-icons/FontAwesome5';
 import styled from 'styled-components/native';
-import { TouchableOpacity } from 'react-native';
 import Container from '../../../atoms/container/Container';
 import Text from '../../../atoms/text/Text';
 import NextAlarm, {
@@ -13,41 +11,29 @@ import {
   convertDate,
   convertTime,
 } from '../../../../utils/home/convertDateTime';
-import { useNavigation } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../../../../navigation/stack/StackNavigation';
 import { Loadable } from 'recoil';
+import theme from '../../../../theme/theme';
+import LoadingComponent from './LoadingComponent';
 
 interface IHeaderProps {
   lastestAlarm: Loadable<IAlarmInfoData>;
 }
 
-type IMatesNavigation = StackNavigationProp<RootStackParamList, 'Mates'>;
-
 const LeftContainer = styled(Container)`
   flex: 4;
 `;
 
-const RightContainer = styled(Container)`
-  flex: 1;
-  align-items: center;
-  min-height: 120px;
-`;
-
-const Title = styled(Text)`
-  padding-bottom: 8px;
+const LabelBox = styled(Box)`
+  border-radius: 32px;
+  padding: 6px 10px;
+  margin-bottom: 12px;
 `;
 
 const Header = ({ lastestAlarm }: IHeaderProps) => {
-  const navigation = useNavigation<IMatesNavigation>();
   const [nextData, setNextData] = useState<INextAlarmProps>({
     date: undefined,
     time: undefined,
   });
-
-  const naivgateMates = () => {
-    navigation.navigate('Mates');
-  };
 
   useEffect(() => {
     setNextData({
@@ -57,9 +43,7 @@ const Header = ({ lastestAlarm }: IHeaderProps) => {
           : '',
       ),
       time: convertTime(
-        lastestAlarm.state === 'hasValue'
-          ? String(lastestAlarm.contents.time)
-          : '',
+        lastestAlarm.state === 'hasValue' ? lastestAlarm.contents.time : '',
       ),
     });
   }, [lastestAlarm]);
@@ -67,18 +51,32 @@ const Header = ({ lastestAlarm }: IHeaderProps) => {
   return (
     <Box row>
       <LeftContainer>
-        <Title options="semiBold">다음 알람</Title>
+        <LabelBox
+          width="90px"
+          height="32px"
+          bgColor={theme.color.primary_50}
+          center>
+          <Text size="s" colorName={theme.color.primary_500} options="semiBold">
+            다음 알람
+          </Text>
+        </LabelBox>
         {lastestAlarm.state === 'loading' ? (
-          <Text>Loading...</Text>
+          <LoadingComponent type="text" />
         ) : (
-          <NextAlarm date={nextData.date} time={nextData.time} />
+          <NextAlarm
+            date={
+              lastestAlarm.state === 'hasError'
+                ? '정보를 불러오는데'
+                : nextData.date
+            }
+            time={
+              lastestAlarm.state === 'hasError'
+                ? '문제가 생겼습니다'
+                : nextData.time
+            }
+          />
         )}
       </LeftContainer>
-      <RightContainer>
-        <TouchableOpacity onPress={naivgateMates}>
-          <Icon name="user-plus" size={28} />
-        </TouchableOpacity>
-      </RightContainer>
     </Box>
   );
 };

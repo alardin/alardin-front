@@ -3,60 +3,58 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import Box from '../box/Box';
+import ProfileIc from '../../../assets/icons/ic-profile.svg';
+import themeColor from '../../../theme/theme';
 
 export interface IProfileIconProps {
   size: number;
   position?: 'absolute';
   arrow?: { top?: number; left?: number; right?: number; bottom?: number };
   zIndex?: number;
+  isMargin?: boolean;
   uri?: string;
 }
 
 const CircleBox = styled(Box)<IProfileIconProps>`
+  justify-content: center;
+  align-items: center;
+  border-radius: 18px;
+  background-color: ${({ theme }) => theme.color.gray_100};
   position: ${({ position }) =>
     position === 'absolute' ? 'absolute' : 'relative'};
   width: ${({ size }) => `${size}px`};
   height: ${({ size }) => `${size}px`};
-  border-radius: ${({ size }) => `${size - 4}px`};
-  border: 2px solid ${({ theme }) => theme.color.skyBlue};
+  ${({ isMargin }) => isMargin && 'margin: 2px'};
   ${({ zIndex }) => zIndex && `zIndex: ${zIndex}`};
-  ${({ arrow }) => {
-    let result: string = '';
-    if (arrow) {
-      arrow.top && (result += `top: ${arrow.top}px `);
-      arrow.right && (result += `right: ${arrow.right}px `);
-      arrow.left && (result += `left: ${arrow.left}px `);
-      arrow.bottom && (result += `bottom: ${arrow.bottom}px `);
-    }
-    return result;
-  }}
 `;
 
 const ImageFile = styled.Image<IProfileIconProps>`
-  width: ${({ size }) => `${size - 7}px`};
-  height: ${({ size }) => `${size - 7}px`};
+  border-radius: 18px;
+  width: ${({ size }) => `${size}px`};
+  height: ${({ size }) => `${size}px`};
   position: absolute;
-  border-radius: ${({ size }) => `${size - 4}px`};
-  top: 1.5px;
-  left: 1.5px;
 `;
 
 const ProfileIcon = ({
   position,
   arrow,
   zIndex,
+  isMargin,
   size,
   uri,
   ...rest
 }: IProfileIconProps) => {
-  const sourceUrl = uri
-    ? { uri }
-    : require('../../../assets/images/sample-profile.jpeg');
   return (
-    <CircleBox
-      {...{ position, arrow, zIndex, size, ...rest }}
-      colorName="white">
-      <ImageFile source={sourceUrl} {...{ size }} />
+    <CircleBox {...{ position, arrow, zIndex, isMargin, size, ...rest }}>
+      {uri ? (
+        <ImageFile source={{ uri }} {...{ size }} />
+      ) : (
+        <ProfileIc
+          width={Math.floor(size * 0.6)}
+          height={Math.floor(size * 0.6)}
+          fill={themeColor.color.gray_700}
+        />
+      )}
     </CircleBox>
   );
 };

@@ -12,13 +12,14 @@ export const initialSummaryData = {
 };
 
 export interface ISummaryData {
-  id: number;
+  id: number | string;
   is_repeated: string;
   time: string | undefined;
   Game_id: string;
   is_private: boolean;
   player: string;
   type?: string;
+  name?: string;
 }
 
 export const summaryData = atom<ISummaryData>({

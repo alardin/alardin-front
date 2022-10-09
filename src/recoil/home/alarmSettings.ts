@@ -78,14 +78,17 @@ export const apiGameMetaData = selector({
     // const response = await alardinApi.get('/game', {
     //   params: { skip: 0, take: 100 },
     // });
-    const response = await alardinApi.get('/assets/games');
-    const gameDataList: IGameMetaType[] = response.data.data;
-    console.log(`api game: ${gameDataList}`);
-    const gameData = gameDataList.map(({ name, id }: IGameMetaType) => ({
-      label: name,
-      value: String(id),
-    }));
-    return gameData;
+    try {
+      const response = await alardinApi.get('/assets/games');
+      const gameDataList: IGameMetaType[] = response.data.data;
+      const gameData = gameDataList.map(({ name, id }: IGameMetaType) => ({
+        label: name,
+        value: String(id),
+      }));
+      return gameData;
+    } catch (err) {
+      return [{ label: '없음(오프라인 모드)', value: '0' }];
+    }
   },
 });
 

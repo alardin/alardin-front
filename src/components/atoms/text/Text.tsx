@@ -4,36 +4,26 @@ import { TextProps } from 'react-native';
 import styled from 'styled-components/native';
 
 export interface ITextProps extends TextProps {
-  size?:
-    | 'xxlarge'
-    | 'xlarge'
-    | 'large'
-    | 'medium'
-    | 'small'
-    | 'xsmall'
-    | 'xxsmall';
-  colorName?:
-    | 'white'
-    | 'lightGray'
-    | 'lightSlate'
-    | 'black'
-    | 'red'
-    | 'pink'
-    | 'green'
-    | 'darkGray'
-    | 'lightOrange'
-    | 'skyBlue';
+  size?: 'xxs' | 'xs' | 's' | 'm' | 'l' | 'xl' | 'xxl';
   position?: 'absolute';
+  colorName?: string;
   arrow?: { top?: number; left?: number; right?: number; bottom?: number };
-  textType?: 'title' | 'subTitle' | 'comment' | 'reference';
   options?: 'bold' | 'semiBold' | 'light';
-  shadow?: boolean;
+  highlight?: boolean;
   children?: React.ReactNode;
 }
 
 const DefaultText = styled.Text<ITextProps>`
   font-weight: ${({ theme, options }) =>
     options ? theme.fontWeight[options] : theme.fontWeight.default};
+  font-family: ${({ options }) =>
+    options === 'bold'
+      ? 'Pretendard-Bold'
+      : options === 'semiBold'
+      ? 'Pretendard-SemiBold'
+      : options === 'light'
+      ? 'Pretendard-Thin'
+      : 'Pretendard-Regular'};
   position: ${({ position }) =>
     position === 'absolute' ? 'absolute' : 'relative'};
   ${({ arrow }) => {
@@ -45,60 +35,34 @@ const DefaultText = styled.Text<ITextProps>`
       arrow.bottom && (result += `bottom: ${arrow.bottom}px `);
     }
     return result;
-  }};
-  ${({ theme, textType }) => {
-    let value = 'font-size: ';
-    switch (textType) {
-      case 'title':
-        value += theme.fontSize.large;
-        break;
-      case 'subTitle':
-        value += theme.fontSize.medium;
-        break;
-      case 'comment':
-        value += theme.fontSize.xsmall;
-        break;
-      case 'reference':
-        value += theme.fontSize.xsmall + ` color: ${theme.color.lightGray}`;
-        break;
-      default:
-        value += theme.fontSize.small;
-        break;
-    }
-    return value;
-  }};
-  ${({ theme, size }) => size && `font-size: ${theme.fontSize[size]}`};
-  ${({ theme, colorName }) => colorName && `color: ${theme.color[colorName]}`};
-  ${({ theme, shadow }) =>
-    shadow &&
-    `
-    shadow-color: ${theme.shadow.text.color} 
-    shadow-offset: ${theme.shadow.text.offest.x} ${theme.shadow.text.offest.y}} 
-    shadow-opacity: ${theme.shadow.text.opacity} 
-    shadow-radius: ${theme.shadow.text.radius}; 
-  `};
+  }}
+  ${({ theme, size }) =>
+    size
+      ? `font-size: ${theme.size.font[size]}`
+      : `font-size: ${theme.size.font.m}`};
+  ${({ theme, colorName }) =>
+    colorName ? `color: ${colorName}` : `color: ${theme.color.gray_900}`};
+  z-index: 1000;
 `;
 
 const Text = ({
   size,
-  colorName,
-  textType,
   options,
   position,
   arrow,
-  shadow,
+  colorName,
+  highlight,
   children,
   ...rest
 }: ITextProps) => (
   <DefaultText
     {...{
       size,
-      colorName,
-      textType,
       options,
       position,
       arrow,
-      shadow,
+      highlight,
+      colorName,
       ...rest,
     }}>
     {children}

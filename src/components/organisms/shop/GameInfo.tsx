@@ -3,10 +3,10 @@ import { SafeAreaView } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
 import { IGameMetaType } from '../../../recoil/home/alarmSettings';
+import alardinApi from '../../../utils/alardinApi';
 import Button from '../../atoms/button/Button';
 import Container from '../../atoms/container/Container';
 import Description from '../../molecules/shop/game/Description';
-import Header from '../../molecules/shop/game/Header';
 import ScreenShots from '../../molecules/shop/game/ScreenShots';
 
 export interface IGameInfoData {
@@ -20,14 +20,14 @@ const ConfirmButton = styled(Button)`
 `;
 
 const GameInfo = ({ game, gameScreenshots }: IGameInfoData) => {
+  console.log(game);
   return (
     <SafeAreaView>
       <Container>
         <ScrollView>
-          <Header title={game.name} />
           <Description descript={game.description} />
           <ScreenShots images={gameScreenshots} />
-          <ConfirmButton width="100%" height="48px" colorName="black" center>
+          <ConfirmButton width="100%" height="l" options="primary" center>
             게임 구매
           </ConfirmButton>
         </ScrollView>

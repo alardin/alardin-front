@@ -1,12 +1,23 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable react-native/no-inline-styles */
 
-import { KakaoOAuthToken, login } from '@react-native-seoul/kakao-login';
+import {
+  KakaoOAuthToken,
+  login,
+  unlink,
+} from '@react-native-seoul/kakao-login';
 import React from 'react';
 import messaging from '@react-native-firebase/messaging';
 import Box from '../components/atoms/box/Box';
 import Button from '../components/atoms/button/Button';
-import { Image, ImageBackground, SafeAreaView } from 'react-native';
+import {
+  Alert,
+  Image,
+  ImageBackground,
+  SafeAreaView,
+  TouchableHighlight,
+  TouchableOpacity,
+} from 'react-native';
 import styled from 'styled-components/native';
 import Text from '../components/atoms/text/Text';
 import Container from '../components/atoms/container/Container';
@@ -23,7 +34,10 @@ const TopBox = styled(Box)`
 
 const BottomBox = styled(Box)`
   height: 40%;
+  justify-content: center;
 `;
+
+const LoginButton = styled.TouchableOpacity``;
 
 const Login = () => {
   const setAuthorization = useSetRecoilState(token);
@@ -34,6 +48,18 @@ const Login = () => {
     console.log(accessToken, scopes);
     const deviceToken = await messaging().getToken();
     console.log(`Device Token: ${deviceToken}`);
+
+    if (
+      !scopes.includes('profile_image') ||
+      !scopes.includes('account_email')
+    ) {
+      Alert.alert(
+        '최소 동의 조건',
+        '앱을 이용하기 위해서 최소 "프로필 사진", "이메일 항목"에 대해 동의해주셔야 합니다.',
+      );
+      await unlink();
+      return;
+    }
 
     if (accessToken && refreshToken && deviceToken) {
       axios({
@@ -84,17 +110,17 @@ const Login = () => {
             style={{ width: 120, height: 120, marginBottom: 20 }}
             source={require('../assets/images/clock.png')}
           />
-          <Text textType="title" options="semiBold">
+          <Text size="xl" options="semiBold">
             Alardin
           </Text>
         </TopBox>
-        <BottomBox center>
-          <Button width="90%" height="48px" center onPress={handlePress}>
+        <BottomBox>
+          <LoginButton onPress={handlePress}>
             <ImageBackground
-              style={{ width: '100%', height: '100%' }}
+              style={{ width: '100%', height: 56 }}
               source={require('../assets/images/kakao_login_large_wide.png')}
             />
-          </Button>
+          </LoginButton>
         </BottomBox>
       </Container>
     </SafeAreaView>

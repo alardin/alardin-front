@@ -1,17 +1,24 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { Platform } from 'react-native';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components/native';
 import {
   settingData,
   settingLabel,
 } from '../../../../recoil/home/alarmSettings';
-import { pickerMode } from '../../../../recoil/picker';
-import Box from '../../../atoms/box/Box';
+import { pickerClicked, pickerMode } from '../../../../recoil/picker';
+import { dateToTimeString } from '../../../../utils/home/convertDateTime';
+import {
+  asPickerFormat,
+  BUTTON_HEIGHT,
+  VIEW_WIDTH,
+} from '../../../../utils/timePickerUtils';
 import Container from '../../../atoms/container/Container';
-import Text from '../../../atoms/text/Text';
+import SetItemBoolean from '../../../molecules/home/create/SetItemBoolean';
 import SetItemDays from '../../../molecules/home/create/SetItemDays';
 import SetItemDefault from '../../../molecules/home/create/SetItemDefault';
 import SetItemInput from '../../../molecules/home/create/SetItemInput';
+import TimePicker from './TimePicker';
 
 interface IAlarmSettingsProps {
   setVisible: React.Dispatch<React.SetStateAction<boolean>>;
@@ -21,63 +28,78 @@ const CustomContainer = styled(Container)`
   margin: 20px 0;
 `;
 
-const Title = styled(Text)`
-  padding-bottom: 12px;
-`;
-
 const AlarmSettings = ({ setVisible }: IAlarmSettingsProps) => {
+  const [androidPicker, setAndroidPicker] = useRecoilState(pickerClicked);
   const setPickerMode = useSetRecoilState(pickerMode);
   const [setting, setSetting] = useRecoilState(settingData);
   const inputLabel = useRecoilValue(settingLabel);
 
+  const [time, setTime] = useState(asPickerFormat(new Date()));
+
   const metaData = [
-    { name: '시간', keyValue: 'time', icon: 'alarm-outline' },
+    { name: '알람방 이름', keyValue: 'name', icon: 'happy-outline' },
+    { name: '', keyValue: 'days', icon: '' },
     {
-      name: '알람 소리',
+      name: '알람음',
       keyValue: 'music_name',
       icon: 'musical-notes-outline',
     },
     { name: '게임', keyValue: 'Game_id', icon: 'game-controller-outline' },
-    { name: '반복', keyValue: 'is_repeated', icon: 'repeat-outline' },
-    { name: '', keyValue: 'days', icon: '' },
-    { name: '제목', keyValue: 'name', icon: 'happy-outline' },
+    { name: '', keyValue: 'is_private', icon: '' },
   ];
 
   const handlePicker = (mode: string) => {
     setPickerMode(mode);
-    setVisible(true);
+    if (Platform.OS === 'ios') {
+      setVisible(true);
+    } else {
+      setAndroidPicker(androidPicker + 1);
+    }
   };
+
+  useEffect(() => {
+    setSetting(prevState => ({ ...prevState, time: dateToTimeString(time) }));
+  }, [time]);
 
   return (
     <CustomContainer>
-      <Title textType="subTitle" options="semiBold">
-        알람 설정
-      </Title>
-      <Box colorName="white" isPadding>
-        {metaData.map((item, index) =>
-          index === 5 ? (
-            <SetItemInput
-              key={`item_${index}`}
-              text={setting.name}
-              onChangeText={setSetting}
-              {...{ ...item }}
-            />
-          ) : index === 4 ? (
-            <SetItemDays
-              key={`item_${index}`}
-              display={inputLabel.is_repeated as string}
-              setSetting={setSetting}
-            />
-          ) : (
-            <SetItemDefault
-              key={`item_${index}`}
-              onPress={() => handlePicker(item.keyValue)}
-              inputLabel={inputLabel}
-              {...{ ...item }}
-            />
-          ),
-        )}
-      </Box>
+      <TimePicker
+        value={time}
+        onChange={setTime}
+        width={VIEW_WIDTH}
+        buttonHeight={BUTTON_HEIGHT}
+        visibleCount={3}
+      />
+      {metaData.map((item, index) =>
+        index === 0 ? (
+          <SetItemInput
+            key={`item_${index}`}
+            text={setting.name}
+            onChangeText={setSetting}
+            {...{ ...item }}
+          />
+        ) : index === 1 ? (
+          <SetItemDays
+            key={`item_${index}`}
+            display={inputLabel.is_repeated as string}
+            setSetting={setSetting}
+          />
+        ) : index === 4 ? (
+          <SetItemBoolean
+            key={`item_${index}`}
+            isPrivate={setting.is_private}
+            setSetting={setSetting}
+            disabled
+          />
+        ) : (
+          <SetItemDefault
+            key={`item_${index}`}
+            onPress={() => handlePicker(item.keyValue)}
+            inputLabel={inputLabel}
+            {...{ ...item }}
+          />
+        ),
+      )}
     </CustomContainer>
   );
 };

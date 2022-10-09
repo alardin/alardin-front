@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+	<title>Twigitizer</title>
+	<meta charset="utf-8" name="viewport" content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width">
+	<link rel="stylesheet" type="text/css" href="../lib/css/common.css">
+	<link rel="stylesheet" type="text/css" href="./css/game.css">
+</head>
+<body>
+	<div class="game-app">
+		<div class="game">
+			<div class="grid">
+				<div class="question">
+					<div class="question-info">
+						<p>2개 이상의 공을 연산하여</p>
+						<p>두 자리 수를 20개 만드세요</p>
+					</div>
+					<div class="question-number">
+						<div class="num-one"><p>0</p></div>
+						<div class="num-two"><p>0</p></div>
+						<div class="num-three"><p>0</p></div>
+						<div class="num-four"><p>0</p></div>
+					</div>
+					<div class="user-answers">
+						<div class="user-correct">
+							<div class="user-correct-answer"></div>
+							<div class="user-correct-explain"></div>
+						</div>
+						<div>
+							<input type="text" class="user-input" placeholder="00" readonly/>
+						</div>
+					</div>
+					<!--20개의 그리드 생성은 하드코딩이므로 js단에서 넣도록 한다.-->
+				</div>
+				<div class="calculator">
+					<!--4*3의 그리드를 만드는 과정 또한 js단에서 넣도록 한다.-->
+				</div>
+				<div class="answer">
+					<div class="warning-watch hidden">
+						<div class="lock-image"></div>
+						<div class="lock-remain"><p>00:00</p></div>
+					</div>
+					<div class="check"><p>0</p></div>
+					<div class="stop-watch">
+						<div class="clock-image"></div>
+						<div class="timer"><p>00:00</p></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="game-info"></div>
+		<div class="game-over">
+		</div>
+	</div>
+	<script type="text/javascript" src="./js/clock.js" charset="utf-8"></script>
+	<script type="text/javascript" src="./js/game.js" charset="utf-8"></script>
+	
+</body>
+
+</html>

@@ -22,8 +22,7 @@ const TNotify = () => {
   });
 
   return (
-    <Container>
-      <Header />
+    <Container options="zero">
       <NotifyList notifyData={notifyArr} />
       <BottomScreen {...{ visible, setVisible }}>
         <NotifyConfirm />

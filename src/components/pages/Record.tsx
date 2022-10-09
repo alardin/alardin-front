@@ -3,7 +3,6 @@ import { SafeAreaView } from 'react-native';
 import styled from 'styled-components/native';
 import RecordNavigation from '../../navigation/top/RecordNavigation';
 import Container from '../atoms/container/Container';
-import Header from '../molecules/record/Header';
 
 const CustomContainer = styled(Container)`
   width: 100%;
@@ -12,8 +11,7 @@ const CustomContainer = styled(Container)`
 
 const Record = () => (
   <SafeAreaView>
-    <CustomContainer>
-      <Header />
+    <CustomContainer options="zero">
       <RecordNavigation />
     </CustomContainer>
   </SafeAreaView>

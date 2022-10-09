@@ -2,7 +2,8 @@
 
 import { StackScreenProps } from '@react-navigation/stack';
 import React, { useEffect, useState } from 'react';
-import { SafeAreaView, ScrollView } from 'react-native';
+import { Alert, Platform, SafeAreaView, ScrollView } from 'react-native';
+import PushNotification from 'react-native-push-notification';
 import {
   useRecoilState,
   useRecoilValueLoadable,
@@ -21,13 +22,22 @@ import {
 import { summaryData } from '../../../recoil/home/summary';
 import BottomScreen from '../../../screen/BottomScreen';
 import Pickers from '../../../screen/Pickers';
+import theme from '../../../theme/theme';
 import alardinApi from '../../../utils/alardinApi';
-import { convertTime } from '../../../utils/home/convertDateTime';
+import { addAlarmScheduler } from '../../../utils/alarm/alarmScheduler';
+import { addAlarmList, getAlarmList } from '../../../utils/alarm/alarmStorage';
+import {
+  alarmItemtoDate,
+  convertTime,
+} from '../../../utils/home/convertDateTime';
 import Button from '../../atoms/button/Button';
 import Container from '../../atoms/container/Container';
 import Text from '../../atoms/text/Text';
+import SetItemDefault from '../../molecules/home/create/SetItemDefault';
+import SetItemInput from '../../molecules/home/create/SetItemInput';
 import AlarmSettings from '../../organisms/home/create/AlarmSettings';
 import Header from '../../organisms/home/create/Header';
+import StatusScreen from '../../organisms/home/create/StatusScreen';
 import Summary from '../../organisms/home/create/Summary';
 
 type IAlarmCreateScreen = StackScreenProps<RootStackParamList, 'AlarmCreate'>;
@@ -36,37 +46,31 @@ const ConfirmButton = styled(Button)`
   margin-top: 20px;
 `;
 
-const TCreate = ({ route, navigation }: IAlarmCreateScreen) => {
-  const { type } = route.params;
+const TCreate = ({ navigation }: IAlarmCreateScreen) => {
   const [visible, setVisible] = useState<boolean>(false);
-  const setSummary = useSetRecoilState(summaryData);
   const [setting, setSetting] = useRecoilState(settingData);
   const [inputLabel, setInputLabel] = useRecoilState(settingLabel);
   const gameList = useRecoilValueLoadable(gameMetaData);
 
   const refreshData = useSetRecoilState(alarmListRefresh);
 
-  const requestData = () => {
+  const requestData = async () => {
+    if (setting.name === '') {
+      Alert.alert(
+        '알람방 생성 실패',
+        '알람방 제목명을 10자 이하로 작성해주세요.',
+      );
+    }
     console.log(setting);
-    alardinApi
-      .post('/alarm', { ...setting })
-      .then(() => {
-        refreshData(v => v + 1);
-        navigation.goBack();
-      })
-      .catch(err => console.log(err));
+    try {
+      await alardinApi.post('/alarm', { ...setting });
+    } catch (err) {
+      console.log('did not upload!');
+    } finally {
+      refreshData(v => v + 1);
+      navigation.goBack();
+    }
   };
-
-  useEffect(() => {
-    setSummary({
-      id: 0,
-      is_repeated: '0',
-      time: inputLabel.time,
-      Game_id: inputLabel.Game_id,
-      is_private: false,
-      player: '',
-    });
-  }, [inputLabel]);
 
   useEffect(() => {
     console.log(gameList.contents);
@@ -83,42 +87,49 @@ const TCreate = ({ route, navigation }: IAlarmCreateScreen) => {
         is_repeated: pickerMetaData[2].data[0].label,
         music_name: pickerMetaData[0].data[0].label,
         Game_id: gameList.contents[0].label,
+        name: '',
       });
     }
   }, [gameList]);
 
   return (
     <SafeAreaView>
-      <ScrollView>
-        <Container>
-          <Header title="알람방 생성" id={1} />
-          {gameList.state === 'loading' ? (
-            <Text>Loading...</Text>
-          ) : gameList.state === 'hasError' ? (
-            <Text>Error...</Text>
-          ) : (
-            <>
-              <Summary {...{ type }} />
+      {gameList.state === 'loading' ? (
+        <StatusScreen type="loading" />
+      ) : gameList.state === 'hasError' ? (
+        <StatusScreen type="error" />
+      ) : (
+        <>
+          <ScrollView contentContainerStyle={{ backgroundColor: 'white' }}>
+            <Container>
               <AlarmSettings {...{ setVisible }} />
               <ConfirmButton
                 width="100%"
-                height="48px"
-                colorName="black"
+                height="xl"
+                options="primary"
                 center
                 onPress={requestData}>
                 알람 등록
               </ConfirmButton>
-            </>
+            </Container>
+          </ScrollView>
+          {Platform.OS === 'ios' ? (
+            <BottomScreen {...{ visible, setVisible }}>
+              <Pickers
+                selectedValue={setting}
+                setSelectedValue={setSetting}
+                {...{ setVisible, inputLabel, setInputLabel }}
+              />
+            </BottomScreen>
+          ) : (
+            <Pickers
+              selectedValue={setting}
+              setSelectedValue={setSetting}
+              {...{ setVisible, inputLabel, setInputLabel }}
+            />
           )}
-        </Container>
-      </ScrollView>
-      <BottomScreen {...{ visible, setVisible }}>
-        <Pickers
-          selectedValue={setting}
-          setSelectedValue={setSetting}
-          {...{ setVisible, inputLabel, setInputLabel }}
-        />
-      </BottomScreen>
+        </>
+      )}
     </SafeAreaView>
   );
 };
