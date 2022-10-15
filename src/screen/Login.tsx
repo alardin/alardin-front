@@ -25,6 +25,7 @@ import appleAuth, {
 } from '@invertase/react-native-apple-authentication';
 import 'react-native-get-random-values';
 import { v4 as uuid } from 'uuid';
+import KakaoButton from '../components/molecules/other/KakaoButton';
 
 const TopBox = styled(Box)`
   height: 60%;
@@ -35,16 +36,29 @@ const BottomBox = styled(Box)`
   justify-content: center;
 `;
 
-const LoginButton = styled.TouchableOpacity`
-  width: 100%;
-  margin-bottom: 16px;
-`;
-
 const Login = () => {
   const setAuthorization = useSetRecoilState(token);
   const setMyProfile = useSetRecoilState(myProfile);
 
-  const handlePress = async () => {
+  const successLoginHandler = async (status: any, data: any, scopes?: any) => {
+    console.log('access token');
+    console.log(data);
+    if (status === 'SUCCESS') {
+      setAuthorization(data);
+      await EncryptedStorage.setItem('scopes', JSON.stringify(scopes));
+
+      alardinApi.get('/users').then(async (my: any) => {
+        const profileData: IMyProfile = my.data.data;
+        await EncryptedStorage.setItem(
+          'myProfile',
+          JSON.stringify(profileData),
+        );
+        setMyProfile(profileData);
+      });
+    }
+  };
+
+  const loginWithKakao = async () => {
     const { accessToken, refreshToken, scopes }: KakaoOAuthToken =
       await login();
     console.log(accessToken, scopes);
@@ -78,22 +92,7 @@ const Login = () => {
       })
         .then(async res => {
           const { status, data } = res.data;
-
-          console.log('access token');
-          console.log(data);
-          if (status === 'SUCCESS') {
-            setAuthorization(data);
-            await EncryptedStorage.setItem('scopes', JSON.stringify(scopes));
-
-            alardinApi.get('/users').then(async (my: any) => {
-              const profileData: IMyProfile = my.data.data;
-              await EncryptedStorage.setItem(
-                'myProfile',
-                JSON.stringify(profileData),
-              );
-              setMyProfile(profileData);
-            });
-          }
+          successLoginHandler(status, data, scopes);
         })
         .catch(err => console.log(err));
     }
@@ -128,7 +127,10 @@ const Login = () => {
           nonce,
           deviceToken,
         },
-      }).then(res => console.log(res));
+      }).then(res => {
+        const { status, data } = res.data;
+        successLoginHandler(status, data);
+      });
     }
   };
 
@@ -144,18 +146,13 @@ const Login = () => {
             Alardin
           </Text>
         </TopBox>
-        <BottomBox>
-          <LoginButton onPress={handlePress}>
-            <Image
-              style={{ width: '100%', height: 56, borderRadius: 6 }}
-              source={require('../assets/images/kakao_login_large_wide.png')}
-            />
-          </LoginButton>
+        <BottomBox center>
+          <KakaoButton onPress={loginWithKakao} />
           {Platform.OS === 'ios' && (
             <AppleButton
               buttonStyle={AppleButton.Style.BLACK}
               buttonType={AppleButton.Type.DEFAULT}
-              style={{ width: '100%', height: 56 }}
+              style={{ width: '98%', height: 56 }}
               onPress={loginWithApple}
             />
           )}

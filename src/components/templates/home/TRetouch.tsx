@@ -2,7 +2,7 @@
 
 import { StackScreenProps } from '@react-navigation/stack';
 import React, { useEffect, useState } from 'react';
-import { Alert, SafeAreaView, ScrollView } from 'react-native';
+import { Alert, Platform, SafeAreaView, ScrollView } from 'react-native';
 import {
   useRecoilState,
   useRecoilValueLoadable,
@@ -10,14 +10,13 @@ import {
 } from 'recoil';
 import styled from 'styled-components/native';
 import { RootStackParamList } from '../../../navigation/stack/StackNavigation';
+import { alarmListRefresh } from '../../../recoil/home/alarmList';
 import {
   gameMetaData,
   initialRecoilSetting,
-  pickerMetaData,
   settingData,
   settingLabel,
 } from '../../../recoil/home/alarmSettings';
-import { summaryData } from '../../../recoil/home/summary';
 import BottomScreen from '../../../screen/BottomScreen';
 import Pickers from '../../../screen/Pickers';
 import alardinApi from '../../../utils/alardinApi';
@@ -25,10 +24,8 @@ import { convertTime } from '../../../utils/home/convertDateTime';
 import Box from '../../atoms/box/Box';
 import Button from '../../atoms/button/Button';
 import Container from '../../atoms/container/Container';
-import Text from '../../atoms/text/Text';
 import AlarmSettings from '../../organisms/home/create/AlarmSettings';
-import Header from '../../organisms/home/create/Header';
-import Summary from '../../organisms/home/create/Summary';
+import StatusScreen from '../../organisms/home/create/StatusScreen';
 
 type IAlarmRetouchScreen = StackScreenProps<RootStackParamList, 'AlarmRetouch'>;
 
@@ -48,85 +45,99 @@ const TRetouch = ({ route, navigation }: IAlarmRetouchScreen) => {
     is_private,
     music_name,
     music_volume,
-    max_members,
+    max_member,
+    Host,
     Game,
-    Members,
     name,
   } = route.params;
   const [visible, setVisible] = useState<boolean>(false);
-  const setSummary = useSetRecoilState(summaryData);
   const [setting, setSetting] = useRecoilState(settingData);
   const [inputLabel, setInputLabel] = useRecoilState(settingLabel);
   const gameList = useRecoilValueLoadable(gameMetaData);
 
-  const requestData = () => {
-    alardinApi
-      .put('/alarm', { ...setting })
-      .then(() => {
-        navigation.reset({
-          index: 0,
-          routes: [{ name: 'BottomNavigation' }],
-        });
-      })
-      .catch(err => console.log(err.response.code));
+  const refreshData = useSetRecoilState(alarmListRefresh);
+
+  const requestData = async () => {
+    if (setting.name === '') {
+      Alert.alert(
+        '알람방 생성 실패',
+        '알람방 제목명을 10자 이하로 작성해주세요.',
+      );
+      return;
+    }
+    console.log(setting);
+    try {
+      await alardinApi.put('/alarm', { ...setting });
+      // await alardinApi.post(`/alarm/message/member/${id}`, {
+      //   title: `${time} 알람 수정 발생`,
+      //   body: `${Host.nickname}님께서 ${time} 알람방을 수정했습니다.`,
+      //   data: {
+      //     type: 'ROOM_ALARM',
+      //     message: JSON.stringify({
+      //       type: 'room',
+      //       content: `${Host.nickname}님께서 ${time} 알람방을 수정했습니다.`,
+      //       date: new Date(Date.now()).toISOString(),
+      //     }),
+      //   },
+      // });
+    } catch (err) {
+      console.log('did not upload!');
+    } finally {
+      refreshData(v => v + 1);
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'BottomNavigation' }],
+      });
+    }
   };
 
   useEffect(() => {
-    setSummary({
-      id,
-      is_repeated,
-      time,
-      is_private,
-      player: Members[0].nickname,
-      Game_id: Game.name,
-    });
-  }, [inputLabel]);
-
-  useEffect(() => {
     if (gameList.state === 'hasValue') {
-      // console.log(Members);
       setSetting({
         time,
         is_private,
         is_repeated,
         name,
         music_volume,
-        max_members,
+        max_member,
         music_name,
         Game_id: Game.id,
       });
       setInputLabel({
-        ...initialRecoilSetting,
         time: convertTime(initialRecoilSetting.time),
-        is_repeated: pickerMetaData[2].data[0].label,
-        music_name: pickerMetaData[0].data[0].label,
-        Game_id: gameList.contents[0].label,
+        is_private,
+        name,
+        is_repeated: is_repeated,
+        music_name,
+        Game_id: Game.id,
       });
     }
   }, [gameList]);
 
   return (
     <SafeAreaView>
-      <Header title="알람방 수정" id={id} />
-      <ScrollView>
-        {gameList.state === 'loading' ? (
-          <Text>Loading...</Text>
-        ) : gameList.state === 'hasError' ? (
-          <Text>Error...</Text>
-        ) : (
-          <Container>
-            <Summary type="create" />
-            <AlarmSettings {...{ setVisible }} />
-            <ButtonBox center>
-              <ConfirmButton
-                width="100%"
-                height="48px"
-                colorName="black"
-                center
-                onPress={requestData}>
-                알람 수정
-              </ConfirmButton>
-            </ButtonBox>
+      {gameList.state === 'loading' ? (
+        <StatusScreen type="loading" />
+      ) : gameList.state === 'hasError' ? (
+        <StatusScreen type="error" />
+      ) : (
+        <>
+          <ScrollView>
+            <Container>
+              <AlarmSettings {...{ setVisible }} />
+              <ButtonBox center>
+                <ConfirmButton
+                  width="100%"
+                  height="xl"
+                  options="primary"
+                  center
+                  onPress={requestData}>
+                  알람 수정
+                </ConfirmButton>
+              </ButtonBox>
+            </Container>
+          </ScrollView>
+          {Platform.OS === 'ios' ? (
             <BottomScreen {...{ visible, setVisible }}>
               <Pickers
                 selectedValue={setting}
@@ -134,9 +145,15 @@ const TRetouch = ({ route, navigation }: IAlarmRetouchScreen) => {
                 {...{ setVisible, inputLabel, setInputLabel }}
               />
             </BottomScreen>
-          </Container>
-        )}
-      </ScrollView>
+          ) : (
+            <Pickers
+              selectedValue={setting}
+              setSelectedValue={setSetting}
+              {...{ setVisible, inputLabel, setInputLabel }}
+            />
+          )}
+        </>
+      )}
     </SafeAreaView>
   );
 };

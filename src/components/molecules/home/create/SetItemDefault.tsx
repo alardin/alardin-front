@@ -10,8 +10,7 @@ import themeColor from '../../../../theme/theme';
 import DownIcon from '../../../../assets/icons/ic-down.svg';
 // import UpIcon from '../../../../assets/icons/ic-up.svg';
 
-import { Platform, TouchableOpacity } from 'react-native';
-import ItemPicker from '../../../../screen/ItemPicker';
+import { TouchableOpacity } from 'react-native';
 
 interface IItemProps {
   name: string;
@@ -42,7 +41,7 @@ const SetItemDefault = ({
   inputLabel,
   onPress,
 }: IItemProps) => {
-  const textValue = inputLabel[keyValue];
+  const textValue = String(inputLabel[keyValue]);
   return (
     <CustomBox>
       <Title>{name}</Title>

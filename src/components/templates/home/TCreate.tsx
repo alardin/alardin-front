@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 /* eslint-disable @typescript-eslint/naming-convention */
 
 import { StackScreenProps } from '@react-navigation/stack';
@@ -47,6 +48,7 @@ const TCreate = ({ navigation }: IAlarmCreateScreen) => {
         '알람방 생성 실패',
         '알람방 제목명을 10자 이하로 작성해주세요.',
       );
+      return;
     }
     console.log(setting);
     try {

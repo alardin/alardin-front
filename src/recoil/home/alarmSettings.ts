@@ -39,15 +39,7 @@ export const pickerMetaData = [
 ];
 
 export interface ISettingData {
-  time: string;
-  is_private: boolean;
-  is_repeated: string;
-  name: string;
-  Game_id: string;
-  music_name: string;
-  music_volume: number;
-  max_member: number;
-  expired_at: Date;
+  [key: string]: any;
 }
 
 export interface ISettingState {
@@ -62,6 +54,7 @@ export const initialRecoilSetting = {
   name: '',
   music_volume: 90,
   max_member: 2,
+  expired_at: dateToTimeString(new Date()),
 };
 
 export const initialSetting = {
@@ -118,7 +111,7 @@ export const settingData = atom<ISettingData>({
 export const settingLabel = atom<ISettingData>({
   key: 'settingLabel',
   default: {
-    time: convertTime(dateToTimeString(new Date())),
+    time: String(convertTime(dateToTimeString(new Date()))),
     is_private: false,
     is_repeated: pickerMetaData[2].data[0].label,
     Game_id: pickerMetaData[1].data[0].label,

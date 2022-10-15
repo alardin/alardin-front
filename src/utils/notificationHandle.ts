@@ -67,6 +67,7 @@ const notificationHandle = ({ data }: FirebaseMessagingTypes.RemoteMessage) => {
         storeNotification('default', message);
         return;
       case 'ROOM_ALARM':
+        storeNotification('default', message);
         return;
       case 'NOTICE_ALARM':
         storeNotification('default', message);
