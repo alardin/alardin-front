@@ -8,24 +8,17 @@ export interface ITextInputProps extends TextInputProps {
   height?: string;
   border?: boolean;
   ref?: React.MutableRefObject<any>;
-  colorName?:
-    | 'white'
-    | 'lightGray'
-    | 'lightSlate'
-    | 'black'
-    | 'red'
-    | 'pink'
-    | 'green'
-    | 'darkGray'
-    | 'lightOrange'
-    | 'skyBlue';
   children?: JSX.Element;
+  placeholder?: string;
+  error?: boolean;
 }
 
 const DefaultTextInput = styled.TextInput<ITextInputProps>`
+  font-size: 17px;
   border-radius: 8px;
   font-family: 'Pretendard-Regular';
-  border: ${({ theme }) => `1px solid ${theme.color.gray_100}`};
+  border: ${({ theme, error }) =>
+    `1px solid ${error ? theme.color.function_error : theme.color.gray_100}`};
   text-align: ${({ textAlign }) =>
     textAlign === 'right'
       ? 'right'
@@ -40,8 +33,9 @@ const DefaultTextInput = styled.TextInput<ITextInputProps>`
       : 'padding-left: 8px'};
   ${({ width }) => `width: ${width}`};
   ${({ height }) => `height: ${height}`};
-  color: ${({ theme }) => theme.color.gray_700};
-  background-color: ${({ theme }) => theme.color.gray_100};
+  color: ${({ theme }) => theme.color.gray_900};
+  background-color: ${({ theme, error }) =>
+    error ? theme.color.white : theme.color.gray_100};
 `;
 
 const InputText = ({
@@ -50,13 +44,15 @@ const InputText = ({
   border,
   ref,
   textAlign,
-  colorName,
+  placeholder,
+  error,
   children,
   ...rest
 }: ITextInputProps) => {
   return (
     <DefaultTextInput
-      {...{ width, height, border, textAlign, colorName, ...rest, ref }}>
+      placeholder={placeholder}
+      {...{ width, height, border, textAlign, error, ...rest, ref }}>
       {children}
     </DefaultTextInput>
   );

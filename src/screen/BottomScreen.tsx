@@ -13,7 +13,7 @@ const CustomContainer = styled(Container)`
   border-top-left-radius: 32px;
   border-top-right-radius: 32px;
   position: absolute;
-  background-color: aliceblue;
+  background-color: ${({ theme }) => theme.color.gray_200};
   width: 100%;
   height: 320px;
   right: 0px;

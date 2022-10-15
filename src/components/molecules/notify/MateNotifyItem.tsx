@@ -75,18 +75,26 @@ const MateNotifyItem = ({
 }: IMateNotifyItemProps) => {
   const mateRefresher = useSetRecoilState(mateRefresh);
   const handlePress = async (response: `ACCEPT` | `REJECT`) => {
-    response === 'ACCEPT'
-      ? await alardinApi.post('/mate/response', {
-          senderId: Number(id),
-          response,
-        })
-      : await alardinApi.delete(
-          '/mate/request',
-          await alardinApi.post('/mate/response', {
-            senderId: Number(id),
-            response,
+    if (response === 'ACCEPT') {
+      await alardinApi.post('/mate/response', {
+        senderId: Number(id),
+        response,
+      });
+      await alardinApi.post(`/alarm/message/member/${id}`, {
+        title: `${myName}님의 알람방 참가`,
+        body: `${myName}님께서 ${time} 알람방에 참가하였습니다.`,
+        data: {
+          type: 'ROOM_ALARM',
+          message: JSON.stringify({
+            type: 'room',
+            content: `${myName}님께서 ${time} 알람방에 참가하였습니다.`,
+            date: new Date(Date.now()).toISOString(),
           }),
-        );
+        },
+      });
+    } else {
+      await alardinApi.delete('/mate/request');
+    }
     mateRefresher(v => v + 1);
   };
 

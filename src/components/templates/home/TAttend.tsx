@@ -1,16 +1,13 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable @typescript-eslint/naming-convention */
 
 import { StackScreenProps } from '@react-navigation/stack';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Alert, SafeAreaView, ScrollView } from 'react-native';
-import {
-  useRecoilState,
-  useRecoilValueLoadable,
-  useSetRecoilState,
-} from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import styled from 'styled-components/native';
 import { RootStackParamList } from '../../../navigation/stack/StackNavigation';
-import { IMyProfile, myProfile } from '../../../recoil/authorization';
+import { IMyProfile } from '../../../recoil/authorization';
 import bottomVisible from '../../../recoil/bottomVisible';
 import { alarmListRefresh } from '../../../recoil/home/alarmList';
 import { summaryData } from '../../../recoil/home/summary';
@@ -72,20 +69,21 @@ const TAttend = ({ route, navigation }: IAlarmAttendScreen) => {
   }, []);
 
   const navigateRetouch = () => {
-    NetInfo.fetch().then(state =>
-      state.isConnected
-        ? Alert.alert(
-            '미지원 기능',
-            '해당 기능은 아직 미지원 상태입니다. 추후에 개선하겠습니다.',
-          )
-        : // ? navigation.navigate('AlarmRetouch', {
-          //     ...route.params,
-          //  ㅈ })
-          toastEnable({
-            text: '오프라인 모드에서는 사용하실 수 없는 기능입니다',
-            duration: 'LONG',
-          }),
-    );
+    Host_id === profileData.id
+      ? NetInfo.fetch().then(state =>
+          state.isConnected
+            ? navigation.navigate('AlarmRetouch', {
+                ...route.params,
+              })
+            : toastEnable({
+                text: '오프라인 모드에서는 사용하실 수 없는 기능입니다',
+                duration: 'LONG',
+              }),
+        )
+      : toastEnable({
+          text: '해당 기능을 사용할 수 있는 권한이 없습니다',
+          duration: 'LONG',
+        });
   };
 
   const requestDelete = () => {
@@ -93,12 +91,25 @@ const TAttend = ({ route, navigation }: IAlarmAttendScreen) => {
     console.log(id);
     alardinApi
       .delete(`/alarm/${id}`)
-      .then(() => {
+      .then(async () => {
         refreshData(v => v + 1);
         navigation.reset({
           index: 0,
           routes: [{ name: 'BottomNavigation' }],
         });
+        // await alardinApi
+        //   .post(`/alarm/message/host/${id}`, {
+        //     title: `${time} 알람 삭제 발생`,
+        //     body: `${Host.nickname}님께서 ${time} 알람방을 삭제했습니다.`,
+        //     data: {
+        //       type: 'ROOM_ALARM',
+        //       message: JSON.stringify({
+        //         type: 'room',
+        //         content: `${Host.nickname}님께서 ${time} 알람방을 삭제했습니다.`,
+        //         date: new Date(Date.now()).toISOString(),
+        //       }),
+        //     },
+        //   })
       })
       .catch(err => {
         if (err.response.status === 403) {
