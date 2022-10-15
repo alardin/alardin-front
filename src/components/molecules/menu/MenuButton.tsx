@@ -1,9 +1,10 @@
 import React from 'react';
-import Icon from 'react-native-vector-icons/Ionicons';
+import { TouchableOpacity } from 'react-native';
 import styled from 'styled-components/native';
 import Box from '../../atoms/box/Box';
-import Button from '../../atoms/button/Button';
 import Text from '../../atoms/text/Text';
+import MoreIcon from '../../../assets/icons/ic-more.svg';
+import theme from '../../../theme/theme';
 
 interface IMenuButtonProps {
   type: string;
@@ -12,25 +13,23 @@ interface IMenuButtonProps {
 }
 
 const CustomBox = styled(Box)`
-  padding: 12px 8px;
+  height: 60px;
+  padding: 0 16px;
   justify-content: space-between;
   align-items: center;
-`;
-
-const CustomText = styled(Text)`
-  font-size: 18px;
+  background-color: white;
 `;
 
 const MenuButton = ({ title, type, handlePress }: IMenuButtonProps) => {
   return (
-    <Button onPress={handlePress}>
+    <TouchableOpacity onPress={handlePress}>
       <CustomBox row>
-        <CustomText>{title}</CustomText>
+        <Text>{title}</Text>
         {type === 'button_no-icon' && (
-          <Icon name="chevron-forward-outline" size={20} color="black" />
+          <MoreIcon width={20} height={20} fill={theme.color.gray_900} />
         )}
       </CustomBox>
-    </Button>
+    </TouchableOpacity>
   );
 };
 

@@ -1,5 +1,8 @@
+/* eslint-disable @typescript-eslint/naming-convention */
+
 import { useEffect, useState } from 'react';
 import { IAlarmInfoData } from '../recoil/home/alarmList';
+import { alarmItemtoDate } from '../utils/home/convertDateTime';
 
 const useNextAlarm = (alarmData: IAlarmInfoData[]) => {
   const [data, setData] = useState<IAlarmInfoData>({
@@ -8,8 +11,10 @@ const useNextAlarm = (alarmData: IAlarmInfoData[]) => {
     is_repeated: '',
     is_private: false,
     music_volume: 0,
-    max_members: 0,
+    max_member: 0,
     Game: { id: 0, name: '', thumbnail_url: '' },
+    Host: { id: 0, nickname: '', thumbnail_image_url: '' },
+    Host_id: 0,
     Members: [],
     music_name: '',
     created_at: '',
@@ -17,16 +22,20 @@ const useNextAlarm = (alarmData: IAlarmInfoData[]) => {
   });
 
   useEffect(() => {
-    let result: IAlarmInfoData = { ...alarmData[0] };
-    alarmData.forEach(aData => {
-      if (result.created_at === aData.created_at) {
-        const rTime = Date.parse(`Wed, 09 Aug 1995 ${result.time}:00`);
-        const aTime = Date.parse(`Wed, 09 Aug 1995 ${aData.time}:00`);
-        if (rTime > aTime) result = aData;
-      }
-      if (result.created_at > aData.created_at) result = aData;
+    const checkDate = alarmData.map(alarm => {
+      const { is_repeated, time } = alarm;
+      return alarmItemtoDate({ is_repeated, time: String(time) });
     });
-    setData(result);
+
+    const sortedArr = checkDate
+      .sort((a, b) => Number(a) - Number(b))
+      .filter(alarm => new Date(Date.now()) < alarm)
+      .map(date => {
+        const num = checkDate.indexOf(date);
+        return alarmData[num];
+      });
+
+    setData(sortedArr[0]);
   }, [alarmData]);
   return data;
 };

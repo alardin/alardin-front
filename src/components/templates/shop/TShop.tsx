@@ -1,54 +1,72 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { ScrollView } from 'react-native';
+import styled from 'styled-components/native';
+import { IMyProfile } from '../../../recoil/authorization';
 import { IGameMetaType } from '../../../recoil/home/alarmSettings';
 import CenterScreen from '../../../screen/CenterScreen';
 import alardinApi from '../../../utils/alardinApi';
 import UserCoin from '../../molecules/shop/user/UserCoin';
-import UserGame from '../../molecules/shop/user/UserGame';
 import GameShopList from '../../organisms/shop/GameShopList';
-import Header from '../../organisms/shop/Header';
 import PremiumBuy from '../../organisms/shop/PremiumBuy';
-import UserList from '../../organisms/shop/UserList';
+import ShopProfile, { IUserAssetData } from '../../organisms/shop/ShopProfile';
 
-interface IUserAssetData {
-  coin: number;
-  isPremium: boolean;
-  totalGames: number;
+interface IShopState {
+  gameList: IGameMetaType[];
+  userAsset: IUserAssetData;
+  profile: IMyProfile;
 }
 
+const CustomScrollView = styled.ScrollView`
+  padding: 8px;
+  height: 100%;
+`;
+
 const TShop = () => {
+  const apiPath = ['/assets', '/game', '/users'];
+  const [loading, setLoading] = useState<boolean>(false);
   const [visible, setVisible] = useState<boolean>(false);
-  const [userAsset, setUserAsset] = useState<IUserAssetData>(
-    {} as IUserAssetData,
-  );
-  const [gameList, setGameList] = useState<IGameMetaType[]>([]);
+  const [shopState, setShopState] = useState<IShopState>({
+    gameList: [],
+    profile: {} as IMyProfile,
+    userAsset: {} as IUserAssetData,
+  });
 
   useEffect(() => {
-    axios.all([alardinApi.get('/assets'), alardinApi.get('/game')]).then(
-      axios.spread((res1, res2) => {
+    axios.all(apiPath.map(path => alardinApi.get(path))).then(
+      axios.spread((res1, res2, res3) => {
         const { asset, games } = res1.data.data;
-        const { data } = res2.data;
-        setUserAsset({
-          coin: asset.coin,
-          isPremium: asset.is_premium,
-          totalGames: games.length,
+        const gamelist = res2.data.data;
+        const user = res3.data.data;
+        setShopState({
+          userAsset: {
+            coin: asset.coin,
+            isPremium: asset.is_premium,
+            totalGames: games.length,
+          },
+          gameList: gamelist,
+          profile: user,
         });
-        setGameList(data);
       }),
     );
+    return () =>
+      setShopState({
+        gameList: [],
+        profile: {} as IMyProfile,
+        userAsset: {} as IUserAssetData,
+      });
   }, []);
 
   return (
     <>
-      <Header isPremium={userAsset.isPremium} setVisible={setVisible} />
-      <ScrollView nestedScrollEnabled={true}>
-        <UserList>
-          <UserCoin coin={userAsset.coin} />
-          <UserGame totalGames={userAsset.totalGames} />
-        </UserList>
-        <GameShopList data={gameList} />
-      </ScrollView>
+      <CustomScrollView nestedScrollEnabled={true}>
+        <ShopProfile
+          profile={shopState.profile}
+          asset={shopState.userAsset}
+          setVisible={setVisible}
+        />
+        <UserCoin asset={shopState.userAsset} />
+        <GameShopList data={shopState.gameList} />
+      </CustomScrollView>
       <CenterScreen visible={visible} setVisible={setVisible}>
         <PremiumBuy />
       </CenterScreen>

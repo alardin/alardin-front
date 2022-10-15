@@ -1,9 +1,11 @@
 import React, { useCallback, useState } from 'react';
 import { FlatList, ListRenderItem, RefreshControl } from 'react-native';
 import styled from 'styled-components/native';
+import themeColor from '../../../../theme/theme';
 import alardinApi from '../../../../utils/alardinApi';
 import Box from '../../../atoms/box/Box';
 import Container from '../../../atoms/container/Container';
+import NoItem from '../../../molecules/other/NoItem';
 import RecCountItem from '../../../molecules/record/count/RecCountItem';
 import RecCountTitle from '../../../molecules/record/count/RecCountTitle';
 import { IRecCountItem } from '../../../templates/record/TRecordCount';
@@ -11,46 +13,58 @@ import { IRecCountItem } from '../../../templates/record/TRecordCount';
 interface IRecCountListProps {
   data: IRecCountItem[];
   setData: React.Dispatch<React.SetStateAction<IRecCountItem[]>>;
+  loading: boolean;
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const TimeBox = styled(Box)`
-  padding: 8px 12px;
-  margin-bottom: 16px;
+const CustomContainer = styled(Container)`
+  height: 100%;
 `;
 
-const RecCountList = ({ data, setData }: IRecCountListProps) => {
-  const [refreshing, setRefreshing] = useState<boolean>(false);
+const CountBox = styled(Box)`
+  padding: 10px;
+  margin-bottom: 20px;
+  border: ${({ theme }) => `1px solid ${theme.color.gray_200}`};
+`;
 
+const RecCountList = ({
+  data,
+  setData,
+  loading,
+  setLoading,
+}: IRecCountListProps) => {
   const onRefresh = useCallback(() => {
-    setRefreshing(true);
+    setLoading(true);
     setTimeout(() => {
       alardinApi.get('/users/history-count').then(res => {
         setData(res.data.data);
       });
-      setRefreshing(false);
+      setLoading(false);
     }, 1000);
   }, []);
 
   const renderItem: ListRenderItem<IRecCountItem> = ({ item }) => (
-    <TimeBox colorName="white">
-      <RecCountTitle
-        name={item.nickname}
-        playCount={item.playCount}
-        profileImage={item.thumbnail_image_url}
-      />
+    <CountBox bgColor={themeColor.color.white}>
+      <RecCountTitle name={item.nickname} playCount={item.playCount} />
       <RecCountItem {...item} />
-    </TimeBox>
+    </CountBox>
   );
 
   return (
-    <Container>
-      <FlatList
-        data={data}
-        renderItem={renderItem}
-        showsVerticalScrollIndicator={false}
-        refreshControl={<RefreshControl {...{ refreshing, onRefresh }} />}
-      />
-    </Container>
+    <CustomContainer>
+      {data.length !== 0 ? (
+        <FlatList
+          data={data}
+          renderItem={renderItem}
+          showsVerticalScrollIndicator={false}
+          refreshControl={
+            <RefreshControl refreshing={loading} onRefresh={onRefresh} />
+          }
+        />
+      ) : (
+        <NoItem title="알람 기록" />
+      )}
+    </CustomContainer>
   );
 };
 

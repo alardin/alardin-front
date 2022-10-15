@@ -10,7 +10,6 @@ interface ICenterScreenProps {
 }
 
 const CustomContainer = styled(Container)`
-  border-radius: 32px;
   position: absolute;
   background-color: rgba(0, 0, 0, 0.8);
   width: 100%;

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable @typescript-eslint/naming-convention */
 
 import { atom, selector } from 'recoil';
@@ -36,44 +37,67 @@ export interface IAuthorization {
   appRefreshToken: string;
 }
 
-const defaultToken = selector({
-  key: 'defaultToken',
-  get: async () => {
-    const appAccessJson = await EncryptedStorage.getItem('appAccessToken');
-    const appRefreshJson = await EncryptedStorage.getItem('appRefreshToken');
-    if (appAccessJson && appRefreshJson) {
-      console.log('login found!');
-      const access = JSON.parse(appAccessJson);
-      const refresh = JSON.parse(appRefreshJson);
-      return {
-        appAccessToken: access.appAccessToken,
-        appRefreshToken: refresh.appRefreshToken,
-      } as IAuthorization;
-    }
-    return {} as IAuthorization;
-  },
-});
-
-const defaultProfile = selector({
-  key: 'defaultProfile',
-  get: async () => {
-    const profileJson = await EncryptedStorage.getItem('myProfile');
-    if (profileJson) {
-      const myProfile = JSON.parse(profileJson);
-      return { ...myProfile };
-    }
-    return {} as IMyProfile;
-  },
-});
-
 export const token = atom({
   key: 'token',
-  default: defaultToken,
+  default: {} as IAuthorization,
+  effects: [
+    ({ setSelf, onSet, trigger }) => {
+      const loadPersisted = async () => {
+        const savedValue = await Promise.all([
+          EncryptedStorage.getItem('appAccessToken'),
+          EncryptedStorage.getItem('appRefreshToken'),
+        ]);
+
+        if (savedValue[0] !== null && savedValue[1] !== null) {
+          const access = JSON.parse(savedValue[0]);
+          const refresh = JSON.parse(savedValue[1]);
+          setSelf({
+            appAccessToken: access.appAccessToken,
+            appRefreshToken: refresh.appRefreshToken,
+          });
+        }
+      };
+
+      // Asynchronously set the persisted data
+      if (trigger === 'get') {
+        loadPersisted();
+      }
+
+      onSet((newValue, _, isReset) => {
+        if (isReset) {
+          EncryptedStorage.removeItem('appAccessToken');
+          EncryptedStorage.removeItem('appRefreshToken');
+        } else {
+          EncryptedStorage.setItem(
+            'appAccessToken',
+            JSON.stringify({ appAccessToken: newValue.appAccessToken }),
+          );
+          EncryptedStorage.setItem(
+            'appRefreshToken',
+            JSON.stringify({ appRefreshToken: newValue.appRefreshToken }),
+          );
+        }
+      });
+    },
+  ],
 });
 
 export const myProfile = atom({
   key: 'myProfile',
-  default: defaultProfile,
+  default: {} as IMyProfile,
+  effects: [
+    ({ setSelf, onSet }) => {
+      EncryptedStorage.getItem('myProfile').then(
+        savedValue => savedValue !== null && setSelf(JSON.parse(savedValue)),
+      );
+
+      onSet((newValue, _, isReset) => {
+        isReset
+          ? EncryptedStorage.removeItem('myProfile')
+          : EncryptedStorage.setItem('myProfile', JSON.stringify(newValue));
+      });
+    },
+  ],
 });
 
 export const renewalTokenByAgreement = selector<KakaoOAuthToken>({

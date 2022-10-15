@@ -2,7 +2,7 @@
 
 import { StackScreenProps } from '@react-navigation/stack';
 import React, { useEffect, useState } from 'react';
-import { SafeAreaView, ScrollView } from 'react-native';
+import { Alert, SafeAreaView, ScrollView } from 'react-native';
 import {
   useRecoilState,
   useRecoilValueLoadable,
@@ -68,16 +68,7 @@ const TRetouch = ({ route, navigation }: IAlarmRetouchScreen) => {
           routes: [{ name: 'BottomNavigation' }],
         });
       })
-      .catch(err => console.log(err));
-  };
-
-  const requestDelete = () => {
-    alardinApi.delete('/alarm', { ...setting }).then(() => {
-      navigation.reset({
-        index: 0,
-        routes: [{ name: 'BottomNavigation' }],
-      });
-    });
+      .catch(err => console.log(err.response.code));
   };
 
   useEffect(() => {
@@ -93,7 +84,7 @@ const TRetouch = ({ route, navigation }: IAlarmRetouchScreen) => {
 
   useEffect(() => {
     if (gameList.state === 'hasValue') {
-      console.log(gameList.contents);
+      // console.log(Members);
       setSetting({
         time,
         is_private,
@@ -127,14 +118,6 @@ const TRetouch = ({ route, navigation }: IAlarmRetouchScreen) => {
             <Summary type="create" />
             <AlarmSettings {...{ setVisible }} />
             <ButtonBox center>
-              <ConfirmButton
-                width="100%"
-                height="48px"
-                colorName="red"
-                center
-                onPress={requestDelete}>
-                알람 삭제
-              </ConfirmButton>
               <ConfirmButton
                 width="100%"
                 height="48px"

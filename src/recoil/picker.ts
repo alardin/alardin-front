@@ -16,6 +16,11 @@ export const pickerMode = atom<string>({
   default: '',
 });
 
+export const pickerClicked = atom<number>({
+  key: 'pickerClicked',
+  default: 0,
+});
+
 export const pickerList = selector<IPickerObject>({
   key: 'pickerList',
   get: async ({ get }) => {

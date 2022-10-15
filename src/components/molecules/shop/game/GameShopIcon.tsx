@@ -1,23 +1,26 @@
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import React from 'react';
+import { Image, TouchableOpacity } from 'react-native';
 import styled from 'styled-components/native';
 import { RootStackParamList } from '../../../../navigation/stack/StackNavigation';
 import Box from '../../../atoms/box/Box';
-import Button from '../../../atoms/button/Button';
 import Text from '../../../atoms/text/Text';
+import GameDefaultIcon from '../../../../assets/icons/ic-game.svg';
+import themeColor from '../../../../theme/theme';
 
 type IGameInfoNavigation = StackNavigationProp<RootStackParamList, 'GameInfo'>;
 
 interface IGameShopIconProps {
   text: string;
-  icon: string;
+  icon?: string;
   id: number;
 }
 
-const GameIcon = styled.Image`
-  width: 40px;
-  height: 40px;
+const GameIcon = styled(Box)`
+  width: 56px;
+  height: 56px;
+  background-color: ${({ theme }) => theme.color.gray_200};
 `;
 
 const GameText = styled(Text)`
@@ -31,12 +34,22 @@ const GameShopIcon = ({ text, icon, id }: IGameShopIconProps) => {
     navigation.navigate('GameInfo', { gameId: id });
   };
   return (
-    <Button onPress={handlePress}>
-      <Box center>
-        <GameIcon source={{ uri: icon }} />
-        <GameText textType="comment">{text}</GameText>
-      </Box>
-    </Button>
+    <Box radius={12} center>
+      <TouchableOpacity onPress={handlePress}>
+        <GameIcon center>
+          {icon ? (
+            <Image source={{ uri: icon }} />
+          ) : (
+            <GameDefaultIcon
+              width={32}
+              height={32}
+              fill={themeColor.color.gray_400}
+            />
+          )}
+        </GameIcon>
+      </TouchableOpacity>
+      <GameText size="xs">{text}</GameText>
+    </Box>
   );
 };
 

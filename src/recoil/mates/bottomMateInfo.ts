@@ -1,5 +1,5 @@
 import { atom } from 'recoil';
-import { IMateListDataType } from '../../components/templates/mates/TMates';
+import { IMateListDataType } from '../../navigation/top/MatesNavigation';
 
 interface IBottomMateInfoProps extends IMateListDataType {
   type: string;

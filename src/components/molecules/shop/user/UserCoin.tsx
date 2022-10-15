@@ -3,31 +3,35 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import styled from 'styled-components/native';
 import Box from '../../../atoms/box/Box';
 import Text from '../../../atoms/text/Text';
+import theme from '../../../../theme/theme';
+import { IUserAssetData } from '../../../organisms/shop/ShopProfile';
 
 interface IUserCoinProps {
-  coin: number;
+  asset: IUserAssetData;
 }
 
 const CustomBox = styled(Box)`
   justify-content: space-between;
   align-items: center;
-  height: 72px;
+  height: 60px;
   padding: 0 18px;
-  margin: 4px 0;
+  margin-top: 8px;
+  margin-bottom: 40px;
 `;
 
 const IconText = styled(Text)`
   margin-left: 8px;
 `;
 
-const UserCoin = ({ coin }: IUserCoinProps) => {
+const UserCoin = ({ asset }: IUserCoinProps) => {
+  const { coin } = asset;
   return (
-    <CustomBox colorName="white" row>
+    <CustomBox bgColor={theme.color.white} row>
+      <Text options="semiBold">보유한 알람 코인</Text>
       <Box row center>
+        <IconText options="semiBold">{`${coin} `}</IconText>
         <Icon name="coins" size={20} color="#FFD700" />
-        <IconText options="semiBold">회원 등급</IconText>
       </Box>
-      <Text options="semiBold">{`${coin} G`}</Text>
     </CustomBox>
   );
 };

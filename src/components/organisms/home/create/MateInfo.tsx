@@ -16,22 +16,20 @@ const CustomContainer = styled(Container)`
 `;
 
 const Title = styled(Text)`
-  padding-bottom: 12px;
+  padding-bottom: 20px;
 `;
 
-const CustomScrollBox = styled.ScrollView<ScrollViewProps>`
-  padding: 4px;
-`;
+const CustomScrollBox = styled.ScrollView<ScrollViewProps>``;
 
 const MarginView = styled.View`
-  margin: 0 8px;
+  margin-right: 8px;
 `;
 
 const MateInfo = ({ members }: IMateInfoProps) => {
   return (
     <CustomContainer>
-      <Title textType="subTitle" options="semiBold">
-        메이트 인원
+      <Title size="l" options="semiBold">
+        같이 참여하는 메이트
       </Title>
       <CustomScrollBox horizontal showsHorizontalScrollIndicator={false}>
         {members.map((member, index) => (

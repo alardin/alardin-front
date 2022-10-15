@@ -1,41 +1,35 @@
-import React from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components/native';
 import { IMembersDataType } from '../../../recoil/home/members';
 import Box from '../../atoms/box/Box';
 import Container from '../../atoms/container/Container';
-import Text from '../../atoms/text/Text';
-import FriendInfo from '../../molecules/mates/FriendInfo';
+import EncryptedStorage from 'react-native-encrypted-storage';
+import RegisterUser from '../../molecules/mates/RegisterUser';
 
 interface IRegisteredMateProps {
   matesList: IMembersDataType[];
 }
 
-const CustomContainer = styled(Container)`
-  margin: 24px 0;
-`;
-
-const Title = styled(Text)`
-  padding-bottom: 12px;
-`;
-
-const MarginBox = styled(Box)`
-  margin-bottom: 8px;
-`;
-
 const RegisteredMate = ({ matesList }: IRegisteredMateProps) => {
+  const [myId, setMyId] = useState<number>(0);
+  const bringUserId = useCallback(async () => {
+    const profileJson = await EncryptedStorage.getItem('myProfile');
+    if (profileJson) {
+      const { id } = JSON.parse(profileJson);
+      setMyId(id);
+    }
+  }, []);
+
+  useEffect(() => {
+    bringUserId();
+  }, []);
+
   return (
-    <CustomContainer>
-      <Title textType="subTitle" options="semiBold">
-        등록된 메이트
-      </Title>
-      <Box>
-        {matesList?.map((mate, index) => (
-          <MarginBox key={`friend_${index}`}>
-            <FriendInfo {...mate} />
-          </MarginBox>
-        ))}
-      </Box>
-    </CustomContainer>
+    <Box>
+      {matesList?.map((mate, index) => {
+        return <RegisterUser mate={mate} myId={myId} key={`friend_${index}`} />;
+      })}
+    </Box>
   );
 };
 

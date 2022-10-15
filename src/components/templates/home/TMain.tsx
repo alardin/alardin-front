@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { RefreshControl, SafeAreaView, ScrollView } from 'react-native';
 import Container from '../../atoms/container/Container';
 import {
@@ -11,6 +11,7 @@ import Header from '../../organisms/home/main/Header';
 import MatesAlarm from '../../organisms/home/main/MatesAlarm';
 import MyAlarm from '../../organisms/home/main/MyAlarm';
 import { useRecoilValueLoadable, useSetRecoilState } from 'recoil';
+import CirclePlus from '../../molecules/home/main/CirclePlus';
 
 const TMain = () => {
   const [refreshing, setRefreshing] = useState<boolean>(false);
@@ -37,6 +38,7 @@ const TMain = () => {
           <MatesAlarm data={matesAttendAlarm} />
         </Container>
       </ScrollView>
+      {myAttendAlarm.contents.length !== 0 && <CirclePlus />}
     </SafeAreaView>
   );
 };

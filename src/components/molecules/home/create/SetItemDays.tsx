@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { SetterOrUpdater, useSetRecoilState } from 'recoil';
+import { SetterOrUpdater } from 'recoil';
 import styled from 'styled-components/native';
-import { summaryData } from '../../../../recoil/home/summary';
 import Box from '../../../atoms/box/Box';
 import CheckBox from '../../../atoms/checkbox/CheckBox';
+import Text from '../../../atoms/text/Text';
 
 //  0 ~ 6 -> 일 ~ 토요일
 
@@ -12,11 +12,19 @@ interface ISetItemDaysProps {
   setSetting: SetterOrUpdater<any>;
 }
 
+const CustomBox = styled(Box)`
+  height: 120px;
+  justify-content: center;
+`;
+
+const Title = styled(Text)`
+  margin: 12px 0;
+`;
+
 const DaysBox = styled(Box)<Omit<ISetItemDaysProps, 'setSetting'>>`
   justify-content: space-around;
   align-items: center;
-  padding: 12px 18px;
-  ${({ display }) => display === '아니요' && `display: none`}
+  padding: 12px 0;
 `;
 
 const SetItemDays = ({ display, setSetting }: ISetItemDaysProps) => {
@@ -24,41 +32,38 @@ const SetItemDays = ({ display, setSetting }: ISetItemDaysProps) => {
   const [checked, setChecked] = useState<boolean[]>(
     Array.from({ length: 8 }, () => false),
   );
-  const setSummary = useSetRecoilState(summaryData);
+  // const setSummary = useSetRecoilState(summaryData);
 
   useEffect(() => {
     const daysArr = checked
       .map((day, index) => day && index)
       .filter(value => typeof value === 'number');
-    console.log(daysArr);
     const convertDays = daysArr.length === 0 ? '0' : daysArr.join('');
     setSetting((prevState: any) => ({
       ...prevState,
       is_repeated: convertDays,
     }));
-    setSummary(prevState => ({
-      ...prevState,
-      is_repeated: daysArr.map(day => dayText[day - 1]).join(', '),
-    }));
   }, [checked]);
 
   return (
-    <DaysBox width="100%" height="50px" display={display} row>
-      {dayText.map((value, index) => (
-        <CheckBox
-          key={`day_${index}`}
-          width="28px"
-          height="28px"
-          rounded
-          colorName="black"
-          index={index + 1}
-          checked={checked[index + 1]}
-          setChecked={setChecked}
-          center>
-          {value}
-        </CheckBox>
-      ))}
-    </DaysBox>
+    <CustomBox>
+      <Title>반복</Title>
+      <DaysBox width="100%" height="50px" display={display} row>
+        {dayText.map((value, index) => (
+          <CheckBox
+            key={`day_button_${index}`}
+            width="42px"
+            height="42px"
+            index={index + 1}
+            checked={checked[index + 1]}
+            type="array"
+            setChecked={setChecked}
+            center>
+            {value}
+          </CheckBox>
+        ))}
+      </DaysBox>
+    </CustomBox>
   );
 };
 

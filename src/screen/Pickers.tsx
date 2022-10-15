@@ -2,7 +2,7 @@ import React, { Suspense } from 'react';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components/native';
 import Button from '../components/atoms/button/Button';
-import { pickerMode } from '../recoil/picker';
+import { pickerClicked, pickerMode } from '../recoil/picker';
 import DatePickerModal from './DatePicker';
 import ItemPicker from './ItemPicker';
 
@@ -25,34 +25,24 @@ const Pickers = ({
   inputLabel,
   setInputLabel,
 }: IPickersProps<any, any>) => {
-  const mode = useRecoilValue(pickerMode);
+  const clicked = useRecoilValue(pickerClicked);
   return (
     <>
       <Suspense>
-        {mode === 'time' ? (
-          <DatePickerModal
-            {...{
-              selectedValue,
-              setSelectedValue,
-              inputLabel,
-              setInputLabel,
-            }}
-          />
-        ) : (
-          <ItemPicker
-            {...{
-              selectedValue,
-              setSelectedValue,
-              inputLabel,
-              setInputLabel,
-            }}
-          />
-        )}
+        <ItemPicker
+          {...{
+            clicked,
+            selectedValue,
+            setSelectedValue,
+            inputLabel,
+            setInputLabel,
+          }}
+        />
       </Suspense>
       <ConfirmButton
-        colorName="black"
         width="90%"
-        height="48px"
+        height="l"
+        options="primary"
         center
         onPress={() => setVisible && setVisible(false)}>
         등록

@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components/native';
 import Container from '../../../atoms/container/Container';
 import Text from '../../../atoms/text/Text';
 
@@ -7,16 +8,19 @@ export interface INextAlarmProps {
   time: string | undefined;
 }
 
+const CustomText = styled(Text)`
+  padding: 4px 0px;
+`;
+
 const NextAlarm = ({ date, time }: INextAlarmProps) => {
-  console.log(date, time);
   return (
     <Container options="zero">
-      <Text textType="title" options="bold">
-        {date ? date : `지금 알람을`}
-      </Text>
-      <Text textType="title" options="bold">
-        {time ? `${time}입니다` : `생성하세요`}
-      </Text>
+      <CustomText size="xl" options="semiBold">
+        {date ? date : `메이트와 함께`}
+      </CustomText>
+      <CustomText size="xl" options="semiBold">
+        {time ? `${time}입니다` : `알람에 참여해요!`}
+      </CustomText>
     </Container>
   );
 };

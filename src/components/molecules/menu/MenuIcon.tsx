@@ -1,4 +1,5 @@
 import React from 'react';
+import { TouchableOpacity } from 'react-native';
 import styled from 'styled-components/native';
 import Box from '../../atoms/box/Box';
 import Button from '../../atoms/button/Button';
@@ -21,14 +22,12 @@ const MenuText = styled(Text)`
 
 const MenuIcon = ({ text, icon }: IMenuIconProps) => {
   return (
-    <Button>
+    <TouchableOpacity>
       <Box center>
         <MenuImage source={{ uri: icon }} />
-        <MenuText textType="comment" options="semiBold">
-          {text}
-        </MenuText>
+        <MenuText options="semiBold">{text}</MenuText>
       </Box>
-    </Button>
+    </TouchableOpacity>
   );
 };
 

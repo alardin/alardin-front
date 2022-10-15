@@ -4,8 +4,9 @@ import Box from '../../../atoms/box/Box';
 import Container from '../../../atoms/container/Container';
 import Text from '../../../atoms/text/Text';
 import ProfileIcon from '../../../atoms/profile/ProfileIcon';
-import Button from '../../../atoms/button/Button';
 import { IMembersDataType } from '../../../../recoil/home/members';
+import { TouchableOpacity } from 'react-native';
+import themeColor from '../../../../theme/theme';
 
 const CustomContainer = styled(Container)`
   justify-content: center;
@@ -16,43 +17,25 @@ const CustomProfileIcon = styled(ProfileIcon)`
   margin-bottom: 14px;
 `;
 
-const StateCircle = styled(Box)`
-  width: 10px;
-  height: 10px;
-  margin-right: 4px;
-  border-radius: 50px;
-  background-color: ${({ theme }) => theme.color.green};
+const CustomBox = styled(Box)`
+  padding: 32px;
+  border: ${({ theme }) => `2px solid ${theme.color.gray_200}`};
 `;
 
-const StateBox = styled(Box)`
-  justify-content: center;
-  align-items: center;
-  margin-top: 12px;
-`;
-
-const MateMember = ({
-  id,
-  nickname,
-  thumbnail_image_url,
-}: IMembersDataType) => {
+const MateMember = ({ nickname, thumbnail_image_url }: IMembersDataType) => {
   return (
-    <Button width="140px" height="180px">
-      <Box width="100%" height="100%" colorName="white" shadow center>
+    <TouchableOpacity disabled>
+      <CustomBox
+        width="100%"
+        height="160px"
+        bgColor={themeColor.color.white}
+        center>
         <CustomContainer>
           <CustomProfileIcon size={50} uri={thumbnail_image_url} />
-          <Text textType="comment" options="semiBold">
-            {`#${id}`}
-          </Text>
-          <Text textType="subTitle" options="bold">
-            {nickname}
-          </Text>
-          <StateBox row>
-            <StateCircle />
-            <Text textType="comment">참여중</Text>
-          </StateBox>
+          <Text options="semiBold">{nickname}</Text>
         </CustomContainer>
-      </Box>
-    </Button>
+      </CustomBox>
+    </TouchableOpacity>
   );
 };
 

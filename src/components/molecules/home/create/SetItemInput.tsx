@@ -4,11 +4,9 @@ import {
   NativeSyntheticEvent,
   TextInputChangeEventData,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
 import { SetterOrUpdater } from 'recoil';
 import styled from 'styled-components/native';
 import { ISettingData } from '../../../../recoil/home/alarmSettings';
-import theme from '../../../../theme/theme';
 import Box from '../../../atoms/box/Box';
 import InputText from '../../../atoms/input/InputText';
 import Text from '../../../atoms/text/Text';
@@ -21,18 +19,16 @@ interface IItemProps<T> {
 }
 
 const CustomBox = styled(Box)`
-  justify-content: space-between;
-  padding: 12px 18px;
+  height: 120px;
+  justify-content: center;
 `;
 
-const CustomInputBox = styled(Box)`
-  justify-content: flex-end;
-  align-items: flex-end;
+const Title = styled(Text)`
+  margin: 12px 0;
 `;
 
 const SetItemInput = ({
   name,
-  icon,
   text,
   onChangeText,
 }: IItemProps<SetterOrUpdater<ISettingData>>) => {
@@ -48,26 +44,14 @@ const SetItemInput = ({
     onChangeText(prevState => ({ ...prevState, name: value }));
   };
   return (
-    <CustomBox row>
-      <Box row center>
-        <Icon
-          style={{ marginRight: 12 }}
-          name={icon}
-          color={theme.color.black}
-          size={32}
-        />
-        <Text>{name}</Text>
-      </Box>
-      <CustomInputBox height="100%" row>
-        <InputText
-          textAlign="right"
-          width="180px"
-          height="100%"
-          colorName="lightSlate"
-          value={text}
-          onChange={handleChangeText}
-        />
-      </CustomInputBox>
+    <CustomBox>
+      <Title>{name}</Title>
+      <InputText
+        width="100%"
+        height="52px"
+        value={text}
+        onChange={handleChangeText}
+      />
     </CustomBox>
   );
 };

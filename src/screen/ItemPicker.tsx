@@ -1,10 +1,16 @@
 import { Picker } from '@react-native-picker/picker';
-import React from 'react';
-import { SetterOrUpdater, useRecoilValue, useSetRecoilState } from 'recoil';
+import React, { useEffect, useRef } from 'react';
+import {
+  SetterOrUpdater,
+  useRecoilState,
+  useRecoilValue,
+  useSetRecoilState,
+} from 'recoil';
 import { summaryData } from '../recoil/home/summary';
-import { pickerList } from '../recoil/picker';
+import { pickerClicked, pickerList } from '../recoil/picker';
 
 interface IItemPickerProps {
+  clicked: any;
   selectedValue: any;
   inputLabel: any;
   setSelectedValue: SetterOrUpdater<any>;
@@ -12,16 +18,28 @@ interface IItemPickerProps {
 }
 
 const ItemPicker = ({
+  clicked,
   selectedValue,
   setSelectedValue,
   inputLabel,
   setInputLabel,
 }: IItemPickerProps) => {
   const recoilResult = useRecoilValue(pickerList);
+  const pickerReset = useSetRecoilState(pickerClicked);
   const setSummary = useSetRecoilState(summaryData);
+  const pickerRef = useRef<any>();
+
+  useEffect(() => {
+    if (clicked) {
+      pickerRef.current?.focus();
+    }
+    return () => pickerReset(0);
+  }, [clicked]);
 
   return (
     <Picker
+      mode="dialog"
+      ref={pickerRef}
       selectedValue={
         typeof selectedValue === 'object'
           ? selectedValue[recoilResult.type]

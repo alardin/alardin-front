@@ -1,47 +1,70 @@
-import React from 'react';
+/* eslint-disable react-native/no-inline-styles */
+
+import React, { useEffect, useState } from 'react';
 import { FlatList, ListRenderItem } from 'react-native';
-import styled from 'styled-components/native';
-import Box from '../../atoms/box/Box';
-import Container from '../../atoms/container/Container';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { defaultNotify, mateNotifyList } from '../../../recoil/notify/notify';
+import { isTrashMode } from '../../../recoil/notify/trashMode';
 import EventNotifyItem from '../../molecules/notify/EventNotifyItem';
 import MateNotifyItem from '../../molecules/notify/MateNotifyItem';
 
 interface INotifyListProps {
-  notifyData: INotifyDataType[];
+  type: 'default' | 'mate';
 }
 
 export interface INotifyDataType {
   type: 'event' | 'mate' | 'announce' | 'local';
   content: string;
   date: string;
+  senderId?: number;
+  nickname?: string;
+  thumbnail_image_url?: string;
+  isHidden?: boolean;
 }
 
-const CustomContianer = styled(Container)`
-  margin: 24px 0;
-  height: 95%;
-`;
+const NotifyList = ({ type }: INotifyListProps) => {
+  const [notifyData, setNotifyData] = useRecoilState(
+    type === 'default' ? defaultNotify : mateNotifyList,
+  );
+  const [checkingArray, setCheckingArray] = useState<boolean[]>(
+    Array(100).fill(false),
+  );
+  const trashMode = useRecoilValue(isTrashMode);
 
-const ItemBox = styled(Box)`
-  margin-bottom: 12px;
-`;
+  useEffect(() => {
+    if (isTrashMode && type === 'default') {
+      const filterTrashArr = notifyData.filter(
+        (_, index) => !checkingArray[index],
+      );
+      setNotifyData([...filterTrashArr]);
+    } else {
+      setCheckingArray(Array(100).fill(false));
+    }
+  }, [trashMode]);
 
-const NotifyList = ({ notifyData }: INotifyListProps) => {
-  const renderItem: ListRenderItem<INotifyDataType> = ({ item }) => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+  const renderItem: ListRenderItem<INotifyDataType> = ({ item, index }) => {
     return (
-      <ItemBox>
+      <>
         {item.type === 'mate' ? (
           <MateNotifyItem {...{ ...item }} />
         ) : (
-          <EventNotifyItem {...{ ...item }} />
+          <EventNotifyItem
+            keyNumber={index}
+            value={checkingArray[index]}
+            handler={setCheckingArray}
+            isHidden={trashMode}
+            {...{ ...item }}
+          />
         )}
-      </ItemBox>
+      </>
     );
   };
   return (
-    <CustomContianer options="zero">
-      <FlatList data={notifyData} renderItem={renderItem} />
-    </CustomContianer>
+    <FlatList
+      data={notifyData}
+      renderItem={renderItem}
+      contentContainerStyle={{ height: '100%' }}
+    />
   );
 };
 

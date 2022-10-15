@@ -23,12 +23,12 @@ const IconText = styled(Text)`
 
 const UserGame = ({ totalGames }: IUserGameProps) => {
   return (
-    <CustomBox colorName="white" row>
+    <CustomBox bgColor={theme.color.white} row>
       <Box row center>
         <Icon
           name="game-controller-outline"
           size={20}
-          color={theme.color.green}
+          color={theme.color.gray_700}
         />
         <IconText options="semiBold">보유 게임 개수</IconText>
       </Box>

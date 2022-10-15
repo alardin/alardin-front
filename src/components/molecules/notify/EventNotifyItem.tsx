@@ -1,69 +1,104 @@
 import React from 'react';
-import Icon from 'react-native-vector-icons/Ionicons';
 import styled from 'styled-components/native';
 import theme from '../../../theme/theme';
+import { convertNotifyDate } from '../../../utils/home/convertDateTime';
 import Box from '../../atoms/box/Box';
-import Label from '../../atoms/label/Label';
+import CheckBox from '../../atoms/checkbox/CheckBox';
+import ProfileIcon from '../../atoms/profile/ProfileIcon';
 import Text from '../../atoms/text/Text';
 import { INotifyDataType } from '../../organisms/notify/NotifyList';
 
-const NotifyBox = styled(Box)`
-  justify-content: space-between;
-  align-items: center;
-`;
+interface IEventNotfiyProps extends INotifyDataType {
+  keyNumber: number;
+  value: boolean;
+  handler: React.Dispatch<React.SetStateAction<boolean[]>>;
+}
+
+const NotifyBox = styled(Box)``;
 
 const IconBox = styled(Box)`
   flex: 1.5;
-  height: 100%;
+  justify-content: center;
+  align-items: center;
 `;
 
 const TextBox = styled(Box)`
-  flex: 4;
-  height: 100%;
+  flex: 3;
   justify-content: center;
   padding-left: 4px;
+`;
+
+const CheckContainer = styled(Box)`
+  flex: 1;
+  padding-top: 20px;
+  align-items: center;
 `;
 
 const Content = styled(Text)`
   padding-bottom: 4px;
 `;
 
-const CountBox = styled(Box)`
-  flex: 1;
-  height: 100%;
-  margin-top: 16px;
-  align-items: center;
-`;
+const EventNotifyItem = ({
+  type,
+  content,
+  date,
+  isHidden,
+  value,
+  keyNumber,
+  handler,
+}: IEventNotfiyProps) => {
+  // const [checked, setChecked] = useState<boolean>(false);
+  const convertTypeMessage = (noticeType: string) => {
+    let result: string = '';
+    switch (noticeType) {
+      case 'NOTICE':
+        result = '더 다양한 소식으로 돌아오겠습니다!';
+        break;
+      case 'EVENT':
+        result = 'Alardin에서 많은 혜택을 누리세요~';
+        break;
+    }
+    return { result };
+  };
 
-const EventNotifyItem = ({ type, content, date }: INotifyDataType) => {
+  const { result } = convertTypeMessage(type);
+
   return (
-    <NotifyBox width="100%" height="56px" row>
-      <IconBox center>
-        <Label width={48} height={48} colorName="white" rounded shadow>
-          <Icon
-            size={24}
-            color={theme.color.black}
-            name={
-              type === 'announce'
-                ? 'megaphone-outline'
-                : type === 'event'
-                ? 'newspaper-outline'
-                : 'rocket-outline'
-            }
-          />
-        </Label>
+    <NotifyBox width="100%" height="100px" bgColor={theme.color.white} row>
+      <IconBox>
+        <ProfileIcon
+          size={64}
+          local={
+            type === 'mate'
+              ? require('../../../assets/icons/ic-users.svg')
+              : type === 'announce'
+              ? require('../../../assets/icons/ic-announce.png')
+              : type === 'event'
+              ? require('../../../assets/icons/ic-event.png')
+              : require('../../../assets/icons/ic-info.png')
+          }
+        />
       </IconBox>
       <TextBox>
-        <Content textType="comment" options="semiBold">
+        <Content size="s" options="semiBold">
           {content}
         </Content>
-        <Text textType="comment">{date}</Text>
+        <Content size="s">{result}</Content>
+        <Text size="xs">{convertNotifyDate(date)}</Text>
       </TextBox>
-      <CountBox>
-        <Label width={28} height={28} colorName="red">
-          3
-        </Label>
-      </CountBox>
+      <CheckContainer>
+        <CheckBox
+          border
+          checked={value}
+          setChecked={handler}
+          index={keyNumber}
+          type="array"
+          width="18px"
+          height="18px"
+          style={{ display: isHidden ? 'none' : 'flex' }}
+          rounded
+        />
+      </CheckContainer>
     </NotifyBox>
   );
 };

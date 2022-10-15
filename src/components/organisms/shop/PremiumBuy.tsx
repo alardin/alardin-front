@@ -1,5 +1,7 @@
 import React from 'react';
+import { Alert } from 'react-native';
 import styled from 'styled-components/native';
+import theme from '../../../theme/theme';
 import Box from '../../atoms/box/Box';
 import Button from '../../atoms/button/Button';
 import Text from '../../atoms/text/Text';
@@ -45,26 +47,32 @@ const CommentText = styled(Text)`
 `;
 
 const PremiumBuy = () => {
+  const handlePress = () => {
+    Alert.alert('미지원 기능', '해당 기능은 아직 지원되지 않습니다.');
+  };
   return (
-    <PremiumBox colorName="white">
+    <PremiumBox bgColor={theme.color.white}>
       <PremiumImage
         source={{ uri: 'https://thumbs.dreamstime.com/b/sleep-8047886.jpg' }}
       />
       <MiddleBox>
-        <Title textType="subTitle" options="semiBold">
+        <Title size="l" options="semiBold">
           1달의 학원 비용으로 {'\n'}1년의 아침을 제공합니다
         </Title>
-        <SubText>🎮 모든 게임을 잠금 해제</SubText>
-        <SubText>👩‍❤️‍👨 메이트 슬롯 추가</SubText>
-        <SubText>🖼 앱 광고 배너 추가</SubText>
+        <SubText size="s">🎮 모든 게임을 잠금 해제</SubText>
+        <SubText size="s">👩‍❤️‍👨 메이트 슬롯 추가</SubText>
+        <SubText size="s">🖼 앱 광고 배너 추가</SubText>
       </MiddleBox>
       <BottomBox>
-        <Button width="95%" height="48px" colorName="skyBlue" center>
+        <Button
+          width="95%"
+          height="l"
+          options="primary"
+          center
+          onPress={handlePress}>
           프리미엄 구독
         </Button>
-        <CommentText textType="comment">
-          ₩5,000/월, 인앱 결제로 진행됩니다
-        </CommentText>
+        <CommentText size="xs">₩5,000/월, 인앱 결제로 진행됩니다</CommentText>
       </BottomBox>
     </PremiumBox>
   );

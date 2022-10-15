@@ -34,6 +34,7 @@ const TGame = ({ route }: IGameInfoScreen) => {
       .catch(err => {
         console.log(err);
       });
+    return () => setGameData({} as IGameInfoData);
   }, []);
 
   return <GameInfo {...gameData} />;

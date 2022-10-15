@@ -1,22 +1,31 @@
 import React from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import styled from 'styled-components/native';
 import theme from '../../../theme/theme';
-import Button from '../button/Button';
 
 interface IStarProps {
   checked: boolean;
   handleChecked: () => void;
 }
 
+const StarButton = styled.TouchableHighlight`
+  justify-content: center;
+  align-items: center;
+  margin: 0 4px;
+`;
+
 const Star = ({ checked, handleChecked }: IStarProps) => {
   return (
-    <Button center onPress={handleChecked}>
+    <StarButton
+      onPress={handleChecked}
+      activeOpacity={0.5}
+      underlayColor={theme.color.white}>
       {checked ? (
-        <Icon name="star" color={theme.color.yellow} size={48} />
+        <Icon name="star" color={theme.color.primary_500} size={40} />
       ) : (
-        <Icon name="star-o" color={theme.color.yellow} size={48} />
+        <Icon name="star-o" color={theme.color.primary_500} size={40} />
       )}
-    </Button>
+    </StarButton>
   );
 };
 

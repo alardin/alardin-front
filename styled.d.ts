@@ -1,13 +1,12 @@
 import 'styled-components';
-import { Color, FontSize, FontWeight, Shadow, Shape } from './src/theme/theme';
+import { ButtonTheme, Color, FontWeight, Size } from './src/theme/theme';
 
 declare module 'styled-components' {
   export interface DefaultTheme {
-    fontSize: readonly FontSize;
+    size: readonly Size;
     fontWeight: readonly FontWeight;
     color: readonly Color;
-    shape: readonly Shape;
-    shapeSize: readonly ShapeSize;
-    shadow: readonly Shadow;
+    button: readonly ButtonTheme;
+    padding: readonly Padding;
   }
 }

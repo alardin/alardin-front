@@ -9,7 +9,7 @@ import { useNavigation } from '@react-navigation/native';
 
 interface IHeaderProps {
   title: string;
-  id: number;
+  id: number | string;
 }
 
 const LeftContainer = styled(Container)`

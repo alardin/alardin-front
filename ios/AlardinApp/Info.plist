@@ -2,8 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>BGTaskSchedulerPermittedIdentifiers</key>
+	<array>
+		<string>com.transistorsoft.alarmUpdate</string>
+	</array>
 	<key>CFBundleDevelopmentRegion</key>
-	<string>en</string>
+	<string>kr</string>
 	<key>CFBundleDisplayName</key>
 	<string>AlardinApp</string>
 	<key>CFBundleExecutable</key>
@@ -72,6 +76,10 @@
 		<string>SimpleLineIcons.ttf</string>
 		<string>Octicons.ttf</string>
 		<string>Zocial.ttf</string>
+		<string>Pretendard-Bold.ttf</string>
+		<string>Pretendard-Regular.ttf</string>
+		<string>Pretendard-SemiBold.ttf</string>
+		<string>Pretendard-Thin.ttf</string>
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>
@@ -91,6 +99,10 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>CFBundleAllowMixedLocalizations</key>
+	<true/>
+	<key>CodePushDeploymentKey</key>
+	<string>${CODEPUSH_KEY}</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 </dict>

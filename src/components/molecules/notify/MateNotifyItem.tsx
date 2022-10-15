@@ -1,67 +1,137 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import React from 'react';
-import { useSetRecoilState } from 'recoil';
 import styled from 'styled-components/native';
-import bottomVisible from '../../../recoil/bottomVisible';
+import alardinApi from '../../../utils/alardinApi';
 import Box from '../../atoms/box/Box';
 import Button from '../../atoms/button/Button';
-import Label from '../../atoms/label/Label';
 import ProfileIcon from '../../atoms/profile/ProfileIcon';
 import Text from '../../atoms/text/Text';
-import { INotifyDataType } from '../../organisms/notify/NotifyList';
+import themeColor from '../../../theme/theme';
 
-const NotifyBox = styled(Box)`
-  justify-content: space-between;
-  align-items: center;
+import KakaoIcon from '../../../assets/icons/ic-kakao.svg';
+import { useSetRecoilState } from 'recoil';
+import { mateRefresh } from '../../../recoil/mates/mateRefresh';
+
+interface IMateNotifyItemProps extends IMateNotifyItemData {
+  type: 'request' | 'response';
+}
+
+export interface IMateNotifyItemData {
+  id: number;
+  nickname: string;
+  sended_at: string;
+  thumbnail_image_url: string;
+}
+
+const InfoBox = styled(Box)`
+  padding: 20px;
 `;
 
-const ProfileBox = styled(Box)`
-  flex: 1.5;
-  height: 100%;
+const LeftBox = styled(Box)`
+  flex: 3;
+`;
+
+const RightBox = styled(Box)`
+  flex: 1;
+  justify-content: center;
+  align-items: flex-end;
 `;
 
 const TextBox = styled(Box)`
-  flex: 4;
-  height: 100%;
+  padding-left: 16px;
   justify-content: center;
-  padding-left: 4px;
 `;
 
-const Content = styled(Text)`
-  padding-bottom: 4px;
-`;
-
-const CountBox = styled(Box)`
-  flex: 1;
-  height: 100%;
-  margin-top: 16px;
+const CurrentTextBox = styled(Box)`
   align-items: center;
 `;
 
-const MateNotifyItem = ({ content, date }: INotifyDataType) => {
-  const setVisible = useSetRecoilState(bottomVisible);
-  const handlePress = () => {
-    setVisible(true);
+const NameText = styled(Text)`
+  width: 90%;
+  margin-bottom: 6px;
+`;
+
+const FriendTypeText = styled(Text)`
+  margin-left: 4px;
+`;
+
+const DeleteButton = styled(Button)`
+  margin-top: 8px;
+`;
+
+const CustomProfileIcon = styled(ProfileIcon)`
+  align-self: center;
+`;
+
+const RequestingText = styled(Text)`
+  margin-right: 4px;
+`;
+
+const MateNotifyItem = ({
+  id,
+  nickname,
+  thumbnail_image_url,
+  type,
+}: IMateNotifyItemProps) => {
+  const mateRefresher = useSetRecoilState(mateRefresh);
+  const handlePress = async (response: `ACCEPT` | `REJECT`) => {
+    response === 'ACCEPT'
+      ? await alardinApi.post('/mate/response', {
+          senderId: Number(id),
+          response,
+        })
+      : await alardinApi.delete(
+          '/mate/request',
+          await alardinApi.post('/mate/response', {
+            senderId: Number(id),
+            response,
+          }),
+        );
+    mateRefresher(v => v + 1);
   };
 
   return (
-    <Button onPress={handlePress}>
-      <NotifyBox width="100%" height="64px" row>
-        <ProfileBox center>
-          <ProfileIcon size={48} />
-        </ProfileBox>
+    <InfoBox
+      width="100%"
+      height="120px"
+      bgColor={themeColor.color.white}
+      noRadius
+      row>
+      <LeftBox row>
+        <CustomProfileIcon size={60} uri={thumbnail_image_url} />
         <TextBox>
-          <Content textType="comment" options="semiBold">
-            {content}
-          </Content>
-          <Text textType="comment">{date}</Text>
+          <NameText options="semiBold">{nickname}</NameText>
+          <CurrentTextBox row>
+            <KakaoIcon />
+            <FriendTypeText size="s">카카오톡 친구</FriendTypeText>
+          </CurrentTextBox>
         </TextBox>
-        <CountBox>
-          <Label width={28} height={28} colorName="red">
-            3
-          </Label>
-        </CountBox>
-      </NotifyBox>
-    </Button>
+      </LeftBox>
+      <RightBox>
+        {type === 'request' ? (
+          <RequestingText size="xs" options="bold">
+            메이트 요청중
+          </RequestingText>
+        ) : (
+          <Button
+            width="56px"
+            height="s"
+            options="primary"
+            center
+            onPress={() => handlePress('ACCEPT')}>
+            수락
+          </Button>
+        )}
+        <DeleteButton
+          width={type === 'request' ? '75px' : '56px'}
+          height="s"
+          options="destructive"
+          center
+          onPress={() => handlePress('REJECT')}>
+          {type === 'request' ? '요청 취소' : '거절'}
+        </DeleteButton>
+      </RightBox>
+    </InfoBox>
   );
 };
 
