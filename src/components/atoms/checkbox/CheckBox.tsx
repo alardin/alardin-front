@@ -12,25 +12,29 @@ export interface ICheckBoxProps extends TouchableHighlightProps {
   center?: boolean;
   checked: boolean;
   type: string;
-  index?: number;
+  index: number;
+  border?: boolean;
   setChecked: React.Dispatch<React.SetStateAction<any>>;
   children?: JSX.Element | JSX.Element[] | string | number;
   storyChecked?: boolean;
 }
 
 const DefaultButton = styled.TouchableHighlight<ICheckBoxProps>`
+  padding: 4px;
   border-radius: 9px;
   ${({ width }) => width && `width: ${width}`}
   ${({ height }) => height && `height: ${height}`}
   ${({ center }) => center && `justify-content: center align-items: center`};
+  ${({ theme, border }) =>
+    border && `border: 1px solid ${theme.color.gray_500}`}
   background-color: ${({ theme, checked }) =>
     checked ? theme.color.primary_400 : theme.color.gray_100};
 `;
 
 const ButtonText = styled.Text<ICheckBoxProps>`
+  font-family: 'Pretendard-Regular';
   ${({ theme }) =>
     `font-size: ${theme.size.font.m} font-weight: ${theme.fontWeight.default}`};
-  font-family: 'Pretendard-Regular';
   color: ${({ theme, checked, index, type }) =>
     type === 'array' && checked
       ? theme.color.white
@@ -38,7 +42,7 @@ const ButtonText = styled.Text<ICheckBoxProps>`
       ? theme.color.tag_red
       : index === 7
       ? theme.color.tag_blue
-      : theme.color.gray_900}};
+      : theme.color.gray_900};
 `;
 
 const CheckBox = ({
@@ -48,6 +52,7 @@ const CheckBox = ({
   rounded,
   children,
   checked,
+  border,
   index,
   type,
   setChecked,
@@ -61,13 +66,16 @@ const CheckBox = ({
         center,
         rounded,
         type,
+        border,
         checked,
+        index,
+        setChecked,
         ...rest,
       }}
       activeOpacity={0.6}
       underlayColor={themeColor.color.primary_200}
       onPress={() => {
-        type === 'array' && index
+        type === 'array'
           ? setChecked((prevState: any) => {
               const changeState = [...prevState];
               changeState[index] = !changeState[index];

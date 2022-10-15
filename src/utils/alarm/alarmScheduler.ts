@@ -28,10 +28,10 @@ export const addAlarmScheduler = async ({
   const jsonProfile = await EncryptedStorage.getItem('myProfile');
   const { id } = jsonProfile ? JSON.parse(jsonProfile) : { id: 0 };
 
-  const platformDate =
-    Platform.OS === 'android'
-      ? Date.now() + diffSecond * 1000
-      : Date.now() + diffSecond * 1000;
+  const platformDate = Date.now() + diffSecond * 1000;
+  // Platform.OS === 'android'
+  //   ? Date.now() + diffSecond * 1000
+  //   : Date.now() + diffSecond * 1000;
 
   for (let i = 0; i < 14; i++) {
     PushNotification.localNotificationSchedule({
@@ -42,6 +42,7 @@ export const addAlarmScheduler = async ({
       date: new Date(platformDate + i * 5 * 1000),
       playSound: true,
       soundName,
+      vibration: 1000,
       allowWhileIdle: true,
       userInfo: {
         type: 'ALARM_START',
@@ -70,6 +71,7 @@ export const checkAlarmScheduler = (alarmList: IAlarmInfoData[]) => {
 
     const sortedArr = checkDate
       .sort((a, b) => Number(a) - Number(b))
+      .filter(alarm => new Date(Date.now()) < alarm)
       .map(date => {
         const num = checkDate.indexOf(date);
         return alarmList[num];

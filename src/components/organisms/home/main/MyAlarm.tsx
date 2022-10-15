@@ -8,7 +8,6 @@ import Text from '../../../atoms/text/Text';
 import AlarmInfo from '../../../molecules/home/main/AlarmInfo';
 import { IAlarmInfoData } from '../../../../recoil/home/alarmList';
 import { Loadable } from 'recoil';
-import { Placeholder, Fade, PlaceholderLine } from 'rn-placeholder';
 import Box from '../../../atoms/box/Box';
 import MoreIcon from '../../../../assets/icons/ic-more.svg';
 import AlarmPlus from '../../../molecules/home/main/AlarmPlus';
@@ -31,8 +30,6 @@ const Title = styled(Box)`
 `;
 
 const MyAlarm = ({ data }: IMyAlarmProps) => {
-  console.log(`check item`);
-  console.log(data);
   return (
     <CustomContainer>
       <Title>
@@ -41,13 +38,19 @@ const MyAlarm = ({ data }: IMyAlarmProps) => {
       </Title>
       {data.state === 'hasValue' ? (
         data.contents.length !== 0 ? (
-          data.contents.map((props, index) => (
-            <View
-              key={`alarm_${index}`}
-              style={index !== data.contents.length - 1 && { marginBottom: 8 }}>
-              <AlarmInfo {...props} />
-            </View>
-          ))
+          data.contents.map((props, index) => {
+            console.log(`check item`);
+            console.log(props);
+            return (
+              <View
+                key={`alarm_${index}`}
+                style={
+                  index !== data.contents.length - 1 && { marginBottom: 8 }
+                }>
+                <AlarmInfo {...props} />
+              </View>
+            );
+          })
         ) : (
           <AlarmPlus />
         )

@@ -50,14 +50,14 @@ const RecCountItem = ({
         <MiddleText
           size="s"
           colorName={
-            theme.color.gray_500
+            theme.color.gray_600
           }>{`성공 횟수: ${successCount}회`}</MiddleText>
-        <MiddleText size="s" colorName={theme.color.gray_500}>
+        <MiddleText size="s" colorName={theme.color.gray_600}>
           {`실패 횟수: ${failCount}회`}
         </MiddleText>
       </MiddleBox>
       <RightBox>
-        <Text size="s" colorName={theme.color.gray_500}>
+        <Text size="s" colorName={theme.color.gray_600}>
           메이트 디데이
         </Text>
         <DdateText size="m" options="semiBold">{`D+${mateDue}`}</DdateText>

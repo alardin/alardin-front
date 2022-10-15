@@ -4,10 +4,11 @@ import { logout, unlink } from '@react-native-seoul/kakao-login';
 import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { ScrollView } from 'react-native-gesture-handler';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import {
   IAuthorization,
   IMyProfile,
+  myProfile,
   token,
 } from '../../../recoil/authorization';
 import AdBox from '../../organisms/menu/AdBox';
@@ -18,6 +19,7 @@ import axios from 'axios';
 
 const TMenu = () => {
   const navigation = useNavigation<any>();
+  const me = useRecoilValue(myProfile);
 
   const setAuthorization = useSetRecoilState(token);
   const handleLogout = async () => {
@@ -39,7 +41,7 @@ const TMenu = () => {
   };
 
   const handlePressOne = () => {
-    navigation.navigate('SingleGameStart', { id: 0, alarmId: 0 });
+    // navigation.navigate('SingleGameStart', { id: me.id, alarmId: 0 });
     // soundAlarm();
     // navigation.navigate({
     //   name: 'CallScreen',
@@ -65,7 +67,12 @@ const TMenu = () => {
     {
       type: 'button_no-icon',
       key: '공지사항',
-      handlePress: () => navigation.navigate('WebScreen'),
+      handlePress: () =>
+        navigation.navigate('CallScreen', { id: me.id, alarmId: 51 }),
+      // navigation.navigate('WebScreen', {
+      //   mode: 'WEB',
+      //   uri: 'https://www.google.com',
+      // }),
     },
     {
       type: 'button_no-icon',

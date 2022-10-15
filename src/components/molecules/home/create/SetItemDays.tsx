@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { SetterOrUpdater, useSetRecoilState } from 'recoil';
+import { SetterOrUpdater } from 'recoil';
 import styled from 'styled-components/native';
-import { summaryData } from '../../../../recoil/home/summary';
 import Box from '../../../atoms/box/Box';
 import CheckBox from '../../../atoms/checkbox/CheckBox';
 import Text from '../../../atoms/text/Text';
@@ -39,7 +38,6 @@ const SetItemDays = ({ display, setSetting }: ISetItemDaysProps) => {
     const daysArr = checked
       .map((day, index) => day && index)
       .filter(value => typeof value === 'number');
-    console.log(daysArr);
     const convertDays = daysArr.length === 0 ? '0' : daysArr.join('');
     setSetting((prevState: any) => ({
       ...prevState,

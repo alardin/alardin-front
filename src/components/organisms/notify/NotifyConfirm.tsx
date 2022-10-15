@@ -38,28 +38,26 @@ const NotifyConfirm = () => {
     <CustomBox height="100%">
       <ProfileIcon size={82} uri={thumbnail_image_url} />
       <TextBox>
-        <Text textType="subTitle" options="semiBold">
+        <Text options="semiBold">
           {type === 'alarm'
             ? `${nickname}님께서 알라미 메이트로 신청했습니다.`
             : `${nickname}님께서 OO 알람방에 초대했습니다.`}
         </Text>
-        <Text textType="subTitle" options="semiBold">
-          요청을 수락하시겠습니까?
-        </Text>
+        <Text options="semiBold">요청을 수락하시겠습니까?</Text>
       </TextBox>
       <Box row>
         <CustomButton
           width="45%"
-          height="46px"
-          colorName="red"
+          height="m"
+          options="destructive"
           center
           onPress={handleCancel}>
           거절
         </CustomButton>
         <CustomButton
           width="45%"
-          height="46px"
-          colorName="green"
+          height="m"
+          options="primary"
           center
           onPress={handleConfirm}>
           수락

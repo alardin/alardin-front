@@ -17,47 +17,4 @@ const alardinApi = axios.create({
   },
 });
 
-alardinApi.interceptors.request.use(async config => {
-  const tokenJson = await EncryptedStorage.getItem('appAccessToken');
-  if (tokenJson && config.headers) {
-    const token = JSON.parse(tokenJson);
-    config.headers['Authorization'] = `Bearer ${token.appAccessToken}`;
-    return config;
-  }
-});
-
-alardinApi.interceptors.response.use(
-  response => response,
-  async error => {
-    const { config } = error;
-    const tokenJson = await EncryptedStorage.getItem('appRefreshToken');
-    console.log(`response error code : ${error.response.status}`);
-    if (tokenJson && error.response.status === 401) {
-      console.log(`checked token json`);
-      const { appRefreshToken } = JSON.parse(tokenJson);
-      console.log(`retry`);
-      checkRefresh = true;
-      axios({
-        method: 'GET',
-        url: `${Config.ENDPOINT}/api/users/refresh`,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        params: {
-          refreshToken: appRefreshToken,
-        },
-      }).then(async res => {
-        const { appAccessToken } = res.data.data;
-        await EncryptedStorage.setItem(
-          'appAccessToken',
-          JSON.stringify({ appAccessToken }),
-        );
-        config.headers.Authorization = `Bearer ${appAccessToken}`;
-        return alardinApi.request(config);
-      });
-    }
-    return Promise.reject(error);
-  },
-);
-
 export default alardinApi;

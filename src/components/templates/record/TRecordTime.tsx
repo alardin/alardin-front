@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable @typescript-eslint/dot-notation */
 /* eslint-disable @typescript-eslint/naming-convention */
@@ -21,6 +22,7 @@ export interface IRecTimeItem {
     start_time: string;
     end_time: string;
     trial: number;
+    play_time: number;
     Game: {
       name: string;
       thumbnail_url: string;
@@ -170,6 +172,7 @@ const TRecordTime = () => {
   useEffect(() => {
     setLoading(true);
     alardinApi.get('/users/history').then(res => {
+      console.log(JSON.stringify(res.data.data));
       const tempHash = new Map();
       const tempArr = [];
       res.data.data.map((record: IRecTimeItem) => {
@@ -213,11 +216,13 @@ const TRecordTime = () => {
           markingType="period"
           onDayPress={handleDate}
           markedDates={markedDates}
+          style={{ borderTopLeftRadius: 8, borderTopRightRadius: 8 }}
         />
         <Button
           width="100%"
           height="l"
           center
+          style={{ borderBottomLeftRadius: 8, borderBottomRightRadius: 8 }}
           options="primary_fill"
           onPress={handleSubmit}>
           확인

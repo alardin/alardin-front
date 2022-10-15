@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, ListRenderItem } from 'react-native';
+import { ListRenderItem } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
 import Box from '../../../atoms/box/Box';
@@ -31,13 +31,13 @@ const Title = styled(Text)`
 
 const ScreenShots = ({ images }: IScreenShotsProps) => {
   const renderItem: ListRenderItem<string> = ({ item }) => (
-    <ScreenShotBox colorName="white" style={{ marginRight: 24 }}>
+    <ScreenShotBox bgColor="#fffff" style={{ marginRight: 24 }}>
       <ScreenShotImage source={{ uri: item }} />
     </ScreenShotBox>
   );
   return (
     <CustomContainer>
-      <Title textType="title" options="semiBold">
+      <Title size="l" options="semiBold">
         스크린샷
       </Title>
       <Box row>

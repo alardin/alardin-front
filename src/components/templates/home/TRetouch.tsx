@@ -84,7 +84,7 @@ const TRetouch = ({ route, navigation }: IAlarmRetouchScreen) => {
 
   useEffect(() => {
     if (gameList.state === 'hasValue') {
-      console.log(Members);
+      // console.log(Members);
       setSetting({
         time,
         is_private,

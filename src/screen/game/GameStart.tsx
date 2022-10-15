@@ -17,8 +17,8 @@ import theme from '../../theme/theme';
 import alardinApi from '../../utils/alardinApi';
 import RtmEngine from 'agora-react-native-rtm';
 import Config from 'react-native-config';
-import { toastEnable } from '../../utils/Toast';
 import PushNotification from 'react-native-push-notification';
+import sendGameData from '../../utils/sendGameData';
 
 export type GameStartProps = StackScreenProps<RootStackParamList, 'GameStart'>;
 interface WebViewMessageType {
@@ -30,7 +30,7 @@ interface IGameTokenData {
   rtcToken: string;
   rtmToken: string;
   uid: string;
-  user: object[];
+  gameData: [{ [key: string]: any }];
   channelName: string;
 }
 
@@ -52,7 +52,7 @@ const GameStart = ({ route, navigation }: GameStartProps) => {
 
   const [timer, setTimer] = useState<boolean>(false);
   const [userType, setUserType] = useState<number>(0);
-  const [gameData, setGameData] = useState<IGameTokenData>();
+  const [gameDataState, setGameDataState] = useState<IGameTokenData>();
   const [allAttend, setAllAttend] = useState<boolean>(false);
   const [steadyMe, setSteadyMe] = useState<boolean | null>(null);
   const [steadyOther, setSteadyOther] = useState<boolean | null>(null);
@@ -73,20 +73,20 @@ const GameStart = ({ route, navigation }: GameStartProps) => {
   const initialRtmAgoraEngine = async () => {
     await client.createInstance(Config.AGORA_APP_ID);
 
+    console.log('create instance');
+    console.log(client);
+
     client?.addListener('ChannelMemberJoined', evt => {
       const { channelId } = evt;
       console.log('someone has joined!');
       client.getMembers(channelId).then(members => {
         setUserType(members.length - 1);
         if (members.length === 2) {
+          // total_members로 변경 필요
           //
-          setTimeout(
-            () =>
-              client
-                ?.sendMessage(channelId, { text: 'ALL_ATTEND' }, {})
-                .then(() => setAllAttend(true)),
-            1500,
-          );
+          client
+            ?.sendMessage(channelId, { text: 'ALL_ATTEND' }, {})
+            .then(() => setAllAttend(true));
         }
       });
     });
@@ -99,25 +99,30 @@ const GameStart = ({ route, navigation }: GameStartProps) => {
       if (message.text === 'SUCCESS') {
         console.log('상대방이 성공함');
         setSteadyOther(true);
-        // setGamePlayState(prevState => ({
-        //   ...prevState,
-        //   otherUserSuccess: { ...prevState.otherUserSuccess, other: true },
-        // }));
+        return;
       }
       if (message.text === 'FAIL') {
         console.log('상대방이 실패함');
         setSteadyOther(false);
-        // setGamePlayState(prevState => ({
-        //   ...prevState,
-        //   otherUserSuccess: { ...prevState.otherUserSuccess, other: false },
-        // }));
+        return;
       }
 
       if (message.text === 'ALL_ATTEND') {
         console.log(`Attend: ${message.text}`);
         setAllAttend(true);
         clearTimeout(limitUntilStart);
+        return;
       }
+
+      console.log('누군가로부터 메세지를 받음');
+      const clientMessage = JSON.parse(message.text);
+      webViewRef.current?.postMessage(
+        JSON.stringify({
+          type: 'USER_MESSAGE',
+          message: { user: clientMessage.user, text: clientMessage.text },
+        }),
+      );
+      return;
     });
 
     client?.addListener('MessageReceived', () => {
@@ -136,43 +141,32 @@ const GameStart = ({ route, navigation }: GameStartProps) => {
 
   const sendNeedGameStart = () => {
     console.log('userType: ' + userType);
-    console.log(`checkfsdaf: ${JSON.stringify(gameData?.user)}`);
+    const convertData = sendGameData(1, gameDataState?.gameData, userType);
+    console.log(gameDataState?.gameData);
+    console.log(convertData[userType]);
     webViewRef.current?.postMessage(
       JSON.stringify({
         type: 'GAME_START',
-        message: { ...gameData?.user[userType] },
+        // message: {
+        //   currentUser: String.fromCharCode(65 + userType),
+        //   images: [...gameDataState?.gameData[0].images],
+        // },
+        message: convertData ? { ...convertData[userType] } : {}, // Picoke 게임일 경우
       }),
     );
   };
 
   const requestStartData = async () => {
     const res = await alardinApi.post(`/game/start?alarmId=${alarmId}`);
-    console.log(res.data.data);
-    const {
-      rtmToken,
-      rtcToken,
-      channelName,
-      player1Images,
-      player2Images,
-      player1AnswerIndex,
-      player2AnswerIndex,
-    } = res.data.data;
-    setGameData({
+    console.log(`alarm id`);
+    console.log(JSON.stringify(res.data.data));
+    const { rtmToken, rtcToken, channelName, gameData, Game_id } =
+      res.data.data;
+    setGameDataState({
       rtmToken,
       rtcToken,
       uid: String(id),
-      user: [
-        {
-          subject: player2Images[player1AnswerIndex],
-          images: player1Images,
-          answer: player1Images[player2AnswerIndex],
-        },
-        {
-          subject: player1Images[player2AnswerIndex],
-          images: player2Images,
-          answer: player2Images[player1AnswerIndex],
-        },
-      ],
+      gameData,
       channelName,
     });
     setAgora(prevState => ({ ...prevState, channelName }));
@@ -227,35 +221,34 @@ const GameStart = ({ route, navigation }: GameStartProps) => {
           client?.sendMessage(agora.channelName, { text: 'SUCCESS' }, {});
           setCheckSuccess(true);
           setSteadyMe(true);
-          // setGamePlayState(prevState => ({
-          //   ...prevState,
-          //   otherUserSuccess: { ...prevState.otherUserSuccess, me: true },
-          // }));
         } else {
           client?.sendMessage(agora.channelName, { text: 'FAIL' }, {});
           setCheckSuccess(false);
           setSteadyMe(false);
-          // setGamePlayState(prevState => ({
-          //   ...prevState,
-          //   otherUserSuccess: { ...prevState.otherUserSuccess, me: false },
-          // }));
         }
+        return;
+      case 'SEND_MESSAGE':
+        client?.sendMessage(
+          agora.channelName,
+          { text: JSON.stringify({ user: message.user, text: message.text }) },
+          {},
+        );
         return;
       case 'OUTPUT_DATA':
         console.log(`game id`);
-        console.log(message.gameId);
+        console.log(message.Game_id);
         await alardinApi.post('/game/save', {
           ...message,
-          Game_channel_id: Number(gameData?.channelName),
+          // Game_channel_id: Number(gameData?.channelName),
           Alarm_id: alarmId,
         });
-        await leaveChannel(message.gameId);
+        await leaveChannel(message.Game_id);
         return;
       case 'TIME_OUT':
         console.log('time out!!');
         navigation.reset({
           index: 0,
-          routes: [{ name: 'GameEnd', params: { gameId: 0 } }],
+          routes: [{ name: 'GameEnd', params: { gameId: message.Game_id } }],
         });
         return;
       default:
@@ -266,36 +259,41 @@ const GameStart = ({ route, navigation }: GameStartProps) => {
 
   const joinChannel = async () => {
     const { rtcToken, rtmToken, uid, channelName } = await requestStartData();
-    console.log(`join: ${channelName}`);
+
+    console.log('uid');
+    console.log(uid);
     await engine
       ?.joinChannel(rtcToken, channelName, null, Number(uid))
       .catch(err => console.log(err.response.data));
-    client?.loginV2(uid, rtmToken).then(() => {
-      console.log(`login!!`);
-      client
-        .joinChannel(channelName)
-        .then(() => console.log('channel ok, ' + channelName));
-    });
+    console.log(client);
+    client
+      ?.loginV2(uid, rtmToken)
+      .then(() => {
+        console.log(`login!!`);
+        client
+          .joinChannel(channelName)
+          .then(() => console.log('channel ok, ' + channelName));
+      })
+      .catch(err => console.log(err));
   };
 
   useEffect(() => {
-    if (!timer) {
-      limitUntilStart = setTimeout(() => setTimer(true), 1000 * 60);
-    } else {
-      toastEnable({
-        text: '사용자가 접속하지 않아 싱글 플레이 모드로 전환합니다',
-        duration: 'LONG',
-      });
-      navigation.reset({
-        index: 0,
-        routes: [{ name: 'SingleGameStart', params: { gameId: 2 } }],
-      });
-    }
-    return () => clearTimeout(limitUntilStart);
+    // if (!timer) {
+    //   limitUntilStart = setTimeout(() => setTimer(true), 1000 * 60);
+    // } else {
+    //   toastEnable({
+    //     text: '사용자가 접속하지 않아 싱글 플레이 모드로 전환합니다',
+    //     duration: 'LONG',
+    //   });
+    //   navigation.reset({
+    //     index: 0,
+    //     routes: [{ name: 'SingleGameStart', params: { gameId: 2 } }],
+    //   });
+    // }
+    // return () => clearTimeout(limitUntilStart);
   }, [timer]);
 
   useEffect(() => {
-    // sound.stop();
     initialRtmAgoraEngine();
     const unsubscribeAppState = AppState.addEventListener(
       'change',
@@ -320,6 +318,7 @@ const GameStart = ({ route, navigation }: GameStartProps) => {
       },
     );
     if (!agora.joinSucceed) {
+      console.log('start channel');
       joinChannel()
         .then(() => {
           console.log('rtc joined!');
@@ -388,7 +387,8 @@ const GameStart = ({ route, navigation }: GameStartProps) => {
             onMessage={handleMessage}
             onLoad={handleInitialGame}
             javaScriptEnabled
-            source={{ uri: 'http://192.168.0.13:3030' }}
+            scrollEnabled={false}
+            source={{ uri: 'http://172.16.101.173:3030' }}
             style={{
               flex: 1,
             }}

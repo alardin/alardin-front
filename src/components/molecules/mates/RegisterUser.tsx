@@ -13,6 +13,8 @@ import { TouchableOpacity } from 'react-native';
 import MoreIcon from '../../../assets/icons/ic-more.svg';
 import OptionIcon from '../../../assets/icons/ic-option.svg';
 import DeleteButton from '../other/DeleteButton';
+import { mateRefresh } from '../../../recoil/mates/mateRefresh';
+import { useSetRecoilState } from 'recoil';
 
 interface IFriendInfoProps {
   mate: IMembersDataType;
@@ -51,6 +53,7 @@ const CustomProfileIcon = styled(ProfileIcon)`
 `;
 
 const RegisterUser = ({ mate, myId }: IFriendInfoProps) => {
+  const mateRefresher = useSetRecoilState(mateRefresh);
   const [openDelete, setOpenDelete] = useState<boolean>(false);
   const { id, kakao_id, thumbnail_image_url, nickname } = mate;
 
@@ -61,8 +64,9 @@ const RegisterUser = ({ mate, myId }: IFriendInfoProps) => {
     }, 5000);
   };
 
-  const handlePress = () => {
-    alardinApi.delete('/mate', { data: { id: myId, mateId: id } });
+  const handlePress = async () => {
+    await alardinApi.delete('/mate', { data: { id: myId, mateId: id } });
+    mateRefresher(v => v + 1);
   };
 
   return (

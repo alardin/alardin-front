@@ -23,12 +23,7 @@ export interface IGameMetaType {
 export const pickerMetaData = [
   {
     type: 'music_name',
-    data: [
-      { label: '기본', value: 'default' },
-      { label: '바닷 소리', value: 'beach' },
-      { label: '강아지 소리', value: 'dog' },
-      { label: '고양이 소리', value: 'cat' },
-    ],
+    data: [{ label: '닭 울음소리', value: 'rooster' }],
   },
   {
     type: 'Game_id',
@@ -44,7 +39,15 @@ export const pickerMetaData = [
 ];
 
 export interface ISettingData {
-  [key: string]: any;
+  time: string;
+  is_private: boolean;
+  is_repeated: string;
+  name: string;
+  Game_id: string;
+  music_name: string;
+  music_volume: number;
+  max_member: number;
+  expired_at: Date;
 }
 
 export interface ISettingState {
@@ -87,7 +90,7 @@ export const apiGameMetaData = selector({
       }));
       return gameData;
     } catch (err) {
-      return [{ label: '없음(오프라인 모드)', value: '0' }];
+      return [{ label: '자동(오프라인 모드)', value: '0' }];
     }
   },
 });
@@ -108,6 +111,7 @@ export const settingData = atom<ISettingData>({
     music_name: pickerMetaData[0].data[0].value,
     music_volume: 90,
     max_member: 2,
+    expired_at: '',
   },
 });
 

@@ -8,6 +8,7 @@ import NextAlarm, {
 import Box from '../../../atoms/box/Box';
 import { IAlarmInfoData } from '../../../../recoil/home/alarmList';
 import {
+  alarmItemtoDate,
   convertDate,
   convertTime,
 } from '../../../../utils/home/convertDateTime';
@@ -31,21 +32,25 @@ const LabelBox = styled(Box)`
 
 const Header = ({ lastestAlarm }: IHeaderProps) => {
   const [nextData, setNextData] = useState<INextAlarmProps>({
-    date: undefined,
-    time: undefined,
+    date: '',
+    time: '',
   });
 
   useEffect(() => {
-    setNextData({
-      date: convertDate(
-        lastestAlarm.state === 'hasValue'
-          ? lastestAlarm.contents.created_at
-          : '',
-      ),
-      time: convertTime(
-        lastestAlarm.state === 'hasValue' ? lastestAlarm.contents.time : '',
-      ),
-    });
+    if (lastestAlarm.state === 'hasValue' && lastestAlarm.contents.time) {
+      const { is_repeated, time } = lastestAlarm.contents;
+      const convertDateTime = alarmItemtoDate({ is_repeated, time });
+      setNextData({
+        date: convertDate(
+          `${convertDateTime.getFullYear()}-${
+            convertDateTime.getMonth() + 1
+          }-${convertDateTime.getDate()}`,
+        ),
+        time: convertTime(
+          lastestAlarm.state === 'hasValue' ? lastestAlarm.contents.time : '',
+        ),
+      });
+    }
   }, [lastestAlarm]);
 
   return (
@@ -63,18 +68,7 @@ const Header = ({ lastestAlarm }: IHeaderProps) => {
         {lastestAlarm.state === 'loading' ? (
           <LoadingComponent type="text" />
         ) : (
-          <NextAlarm
-            date={
-              lastestAlarm.state === 'hasError'
-                ? '정보를 불러오는데'
-                : nextData.date
-            }
-            time={
-              lastestAlarm.state === 'hasError'
-                ? '문제가 생겼습니다'
-                : nextData.time
-            }
-          />
+          <NextAlarm date={nextData.date} time={nextData.time} />
         )}
       </LeftContainer>
     </Box>

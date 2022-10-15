@@ -2,11 +2,11 @@
 
 import { StackScreenProps } from '@react-navigation/stack';
 import React, { useState } from 'react';
-import { Image } from 'react-native';
 import styled from 'styled-components/native';
 import Box from '../../components/atoms/box/Box';
 import Button from '../../components/atoms/button/Button';
 import Container from '../../components/atoms/container/Container';
+import HighlightedText from '../../components/atoms/text/HighlightedText';
 import Text from '../../components/atoms/text/Text';
 import Rating from '../../components/molecules/other/Rating';
 import { RootStackParamList } from '../../navigation/stack/StackNavigation';
@@ -43,10 +43,6 @@ const EndButton = styled(Button)`
   width: 100%;
 `;
 
-const HightLightText = styled(Text)`
-  margin: 4px 0;
-`;
-
 const GameEnd = ({ route, navigation }: GameEndProps) => {
   const { gameId } = route.params;
   console.log(route.params);
@@ -66,15 +62,26 @@ const GameEnd = ({ route, navigation }: GameEndProps) => {
           <Text size="l">좋은 하루 보내세요</Text>
         </TextBox>
       </TopBox>
-      {gameId !== 0 && (
-        <BottomBox>
-          <TextBox>
-            <Text>게임은 어떠셨나요?</Text>
-            <HightLightText size="l">평가를 남겨주세요!</HightLightText>
-          </TextBox>
-          <Rating {...{ setRatingScore }} />
-        </BottomBox>
-      )}
+      <BottomBox>
+        <TextBox>
+          <Text>게임은 어떠셨나요?</Text>
+          <HighlightedText size="l">평가를 남겨주세요!</HighlightedText>
+        </TextBox>
+        <Rating {...{ setRatingScore }} />
+      </BottomBox>
+      <Button
+        width="100%"
+        height="l"
+        options="sub"
+        center
+        onPress={() =>
+          navigation.reset({
+            index: 0,
+            routes: [{ name: 'BottomNavigation' }],
+          })
+        }>
+        다음에 할래요
+      </Button>
       <EndButton
         width="100%"
         height="xl"

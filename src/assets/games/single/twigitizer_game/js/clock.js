@@ -23,23 +23,29 @@ const clockChange = () => {
   playSeconds += 1;
   if (playSeconds > 60 * 5) {
     // 5분 시간 초과로 RN한테 시간 초과했다고 전달하기!!
-    const startedTime = new Date(Date.now());
+    const startedTime = new Date(Date.now())
+      .toISOString()
+      .replace(/[T]/g, ' ')
+      .replace(/[Z]/g, '');
     startedTime.setMinutes(startedTime.getMinutes() - 5);
     if (window.ReactNativeWebView) {
       const result = JSON.stringify({
         type: 'TIME_OUT',
         message: {
           start_time: startedTime.toISOString(),
-          end_time: new Date().toISOString(),
+          end_time: new Date(Date.now())
+            .toISOString()
+            .replace(/[T]/g, ' ')
+            .replace(/[Z]/g, ''),
           data: {
             play_time: 300, //플레이시간
             trial: 1, //실패 횟수
             data: {
               // optional keys
-              is_cleared: false,
               is_bot_used: false, //봇 개입 여부
             },
           },
+          is_cleared: false,
           Game_channel_id: 0,
           Game_id: 2, //진행한 게임
         },

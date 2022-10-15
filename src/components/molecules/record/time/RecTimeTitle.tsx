@@ -3,7 +3,7 @@ import styled from 'styled-components/native';
 import Box from '../../../atoms/box/Box';
 import Text from '../../../atoms/text/Text';
 
-import UpIcon from '../../../../assets/icons/ic-up.svg';
+// import UpIcon from '../../../../assets/icons/ic-up.svg';
 import DownIcon from '../../../../assets/icons/ic-down.svg';
 import themeColor from '../../../../theme/theme';
 

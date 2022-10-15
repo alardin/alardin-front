@@ -3,7 +3,7 @@
 
 import { StackScreenProps } from '@react-navigation/stack';
 import React, { useEffect, useRef, useState } from 'react';
-import { AppState, SafeAreaView } from 'react-native';
+import { AppState, Platform, SafeAreaView } from 'react-native';
 import PushNotification from 'react-native-push-notification';
 import WebView from 'react-native-webview';
 import { WebViewMessageEvent } from 'react-native-webview/lib/WebViewTypes';
@@ -11,6 +11,9 @@ import styled from 'styled-components/native';
 import Box from '../../components/atoms/box/Box';
 import Container from '../../components/atoms/container/Container';
 import { RootStackParamList } from '../../navigation/stack/StackNavigation';
+import NetInfo from '@react-native-community/netinfo';
+import alardinApi from '../../utils/alardinApi';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export type GameStartProps = StackScreenProps<
   RootStackParamList,
@@ -30,8 +33,8 @@ const WebBox = styled(Box)`
   width: 100%;
 `;
 
-const SingleGameStart = ({ navigation }: GameStartProps) => {
-  //   const { id, alarmId } = route.params;
+const SingleGameStart = ({ route, navigation }: GameStartProps) => {
+  const { alarmId } = route.params;
   const appState = useRef(AppState.currentState);
   const [appStateVisible, setAppStateVisible] = useState(appState.current);
 
@@ -49,6 +52,14 @@ const SingleGameStart = ({ navigation }: GameStartProps) => {
       case 'OUTPUT_DATA':
         console.log(`game id`);
         console.log(message.gameId);
+        NetInfo.fetch().then(
+          async state =>
+            state.isConnected &&
+            (await alardinApi.post('/game/save', {
+              ...message,
+              Alarm_id: alarmId,
+            })),
+        );
         navigation.reset({
           index: 0,
           routes: [{ name: 'SingleGameEnd', params: { gameId: 2 } }],
@@ -93,6 +104,14 @@ const SingleGameStart = ({ navigation }: GameStartProps) => {
     return () => unsubscribeAppState.remove();
   }, []);
 
+  const sourcePath =
+    Platform.OS === 'ios'
+      ? require('../../assets/games/single/test/index.html')
+      : {
+          uri: 'file:///android_asset/games/single/twigitizer_game/index.html',
+          baseUrl: 'file:///android_asset/games/single',
+        };
+
   return (
     <SafeAreaView>
       <CustomContianer options="zero">
@@ -103,8 +122,7 @@ const SingleGameStart = ({ navigation }: GameStartProps) => {
             onMessage={handleMessage}
             javaScriptEnabled
             domStorageEnabled
-            source={require('../../assets/games/single/test/index.html')}
-            // source={require('../../assets/games/single/twigitizer_game/index.html')}
+            source={sourcePath}
             style={{
               flex: 1,
             }}

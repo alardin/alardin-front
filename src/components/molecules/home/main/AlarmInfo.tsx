@@ -60,8 +60,16 @@ const ProfileImageBox = styled(Box)`
 `;
 
 const AlarmInfo = (props: IAlarmInfoProps) => {
-  const { is_private, Members, Game, time, name, max_member, is_repeated } =
-    props;
+  const {
+    is_private,
+    Host,
+    Members,
+    Game,
+    time,
+    name,
+    max_member,
+    is_repeated,
+  } = props;
   const [today, setToday] = useState<boolean>(false);
 
   const splitedTime = time?.split(' ');
@@ -78,7 +86,7 @@ const AlarmInfo = (props: IAlarmInfoProps) => {
   }, [time]);
 
   return (
-    <TouchableOpacity {...props} onPress={handlePress}>
+    <TouchableOpacity onPress={handlePress}>
       <InfoBox width="100%" height="140px" bgColor={themeColor.color.white} row>
         <LeftContainer options="zero">
           <Text size="s">{String(name)}</Text>
@@ -93,7 +101,7 @@ const AlarmInfo = (props: IAlarmInfoProps) => {
               : '내일'}
           </Text>
           <RoomInfoBox row>
-            <Text size="s">{`${Members[Members.length - 1].nickname}`}</Text>
+            <Text size="s">{Host ? Host.nickname : '미확인'}</Text>
             <TextLine />
             <Text size="s">{`맴버 ${Members.length}/${String(
               max_member,

@@ -71,7 +71,7 @@ const AttendConfirm = ({
       setVisible(false);
       refreshAlarmList(v => v + 1);
       navigation.goBack();
-      await alardinApi.post(`/alarm/message/${id}`, {
+      await alardinApi.post(`/alarm/message/member/${id}`, {
         title: '알람방 참가',
         body: `${myName}님께서 ${time} 알람에 참가하였습니다.`,
         data: {},

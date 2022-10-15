@@ -4,7 +4,11 @@ import styled from 'styled-components/native';
 import Box from '../../../atoms/box/Box';
 import Text from '../../../atoms/text/Text';
 import theme from '../../../../theme/theme';
-import { fetchAssets } from '../../../../hooks/useShopData';
+import { IUserAssetData } from '../../../organisms/shop/ShopProfile';
+
+interface IUserCoinProps {
+  asset: IUserAssetData;
+}
 
 const CustomBox = styled(Box)`
   justify-content: space-between;
@@ -19,15 +23,13 @@ const IconText = styled(Text)`
   margin-left: 8px;
 `;
 
-const resource = fetchAssets();
-
-const UserCoin = () => {
-  const { asset } = resource.userAssets.read();
+const UserCoin = ({ asset }: IUserCoinProps) => {
+  const { coin } = asset;
   return (
     <CustomBox bgColor={theme.color.white} row>
       <Text options="semiBold">보유한 알람 코인</Text>
       <Box row center>
-        <IconText options="semiBold">{`${asset.coin} `}</IconText>
+        <IconText options="semiBold">{`${coin} `}</IconText>
         <Icon name="coins" size={20} color="#FFD700" />
       </Box>
     </CustomBox>

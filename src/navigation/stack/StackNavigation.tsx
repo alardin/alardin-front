@@ -19,7 +19,7 @@ import Loading from '../../screen/Loading';
 import TGame from '../../components/templates/shop/TGame';
 import WebScreen from '../../screen/WebScreen';
 import Mates from '../../components/pages/Mates';
-import { Share, TouchableOpacity } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 
 import BackIcon from '../../assets/icons/ic-back.svg';
 import ShareIcon from '../../assets/icons/ic-share.svg';
@@ -29,6 +29,8 @@ import ChatIcon from '../../assets/icons/ic-chat.svg';
 import Box from '../../components/atoms/box/Box';
 import SingleGameStart from '../../screen/game/SingleGameStart';
 import SingleGameEnd from '../../screen/game/SingleGameEnd';
+import { sendCommerce } from '@react-native-seoul/kakao-login';
+import shareOnKakao from '../../utils/shareOnKakao';
 
 interface IAlarmAttendStackProps extends IAlarmInfoProps {
   type: string;
@@ -61,10 +63,7 @@ export type RootStackParamList = {
   };
   CallScreen: {
     id: number;
-    thumbnail_image_url: string;
     alarmId: number;
-    nickname: string;
-    userType: string;
   };
   Mates: undefined;
   Loading: undefined;
@@ -139,7 +138,7 @@ const StackNavigation = () => {
                   style={{ marginHorizontal: 8 }}
                 />
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => console.log('kakao share link')}>
+              <TouchableOpacity onPress={shareOnKakao}>
                 <ChatIcon
                   width={28}
                   height={28}

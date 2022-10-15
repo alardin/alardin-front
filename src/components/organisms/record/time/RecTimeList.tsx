@@ -30,9 +30,9 @@ const RecTimeList = ({ data, setData }: IRecTimeListProps) => {
   const onRefresh = useCallback(() => {
     setRefreshing(true);
     setTimeout(() => {
-      // alardinApi.get('/users/history').then(res => {
-      //   setData(res.data.data);
-      // });
+      alardinApi.get('/users/history').then(res => {
+        setData(res.data.data);
+      });
       setRefreshing(false);
     }, 1000);
   }, []);
@@ -40,10 +40,7 @@ const RecTimeList = ({ data, setData }: IRecTimeListProps) => {
   const renderItem: ListRenderItem<IRecTimeState> = ({ item }) => (
     <TimeBox bgColor={themeColor.color.white}>
       <RecTimeTitle date={item.date} />
-      <LineBox
-        bgColor={themeColor.color.gray_300}
-        width="100%"
-        height="1px"></LineBox>
+      <LineBox bgColor={themeColor.color.gray_300} width="100%" height="1px" />
       {item.records.map((record, index) => (
         <RecTimeItem key={`record_${index}`} {...record} />
       ))}
@@ -52,17 +49,18 @@ const RecTimeList = ({ data, setData }: IRecTimeListProps) => {
 
   return (
     <Container>
-      {/* {data.length === 0 ? (
+      {data.length === 0 ? (
         <NoItem title="알람 기록" />
-      ) : ( */}
-      <FlatList
-        contentContainerStyle={{ paddingBottom: 40 }}
-        data={data}
-        renderItem={renderItem}
-        showsVerticalScrollIndicator={false}
-        keyExtractor={(_, index) => `records_${index}`}
-        refreshControl={<RefreshControl {...{ refreshing, onRefresh }} />}
-      />
+      ) : (
+        <FlatList
+          contentContainerStyle={{ paddingBottom: 40 }}
+          data={data}
+          renderItem={renderItem}
+          showsVerticalScrollIndicator={false}
+          keyExtractor={(_, index) => `records_${index}`}
+          refreshControl={<RefreshControl {...{ refreshing, onRefresh }} />}
+        />
+      )}
     </Container>
   );
 };

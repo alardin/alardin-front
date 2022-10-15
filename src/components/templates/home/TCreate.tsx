@@ -3,7 +3,6 @@
 import { StackScreenProps } from '@react-navigation/stack';
 import React, { useEffect, useState } from 'react';
 import { Alert, Platform, SafeAreaView, ScrollView } from 'react-native';
-import PushNotification from 'react-native-push-notification';
 import {
   useRecoilState,
   useRecoilValueLoadable,
@@ -19,26 +18,14 @@ import {
   settingData,
   settingLabel,
 } from '../../../recoil/home/alarmSettings';
-import { summaryData } from '../../../recoil/home/summary';
 import BottomScreen from '../../../screen/BottomScreen';
 import Pickers from '../../../screen/Pickers';
-import theme from '../../../theme/theme';
 import alardinApi from '../../../utils/alardinApi';
-import { addAlarmScheduler } from '../../../utils/alarm/alarmScheduler';
-import { addAlarmList, getAlarmList } from '../../../utils/alarm/alarmStorage';
-import {
-  alarmItemtoDate,
-  convertTime,
-} from '../../../utils/home/convertDateTime';
+import { convertTime } from '../../../utils/home/convertDateTime';
 import Button from '../../atoms/button/Button';
 import Container from '../../atoms/container/Container';
-import Text from '../../atoms/text/Text';
-import SetItemDefault from '../../molecules/home/create/SetItemDefault';
-import SetItemInput from '../../molecules/home/create/SetItemInput';
 import AlarmSettings from '../../organisms/home/create/AlarmSettings';
-import Header from '../../organisms/home/create/Header';
 import StatusScreen from '../../organisms/home/create/StatusScreen';
-import Summary from '../../organisms/home/create/Summary';
 
 type IAlarmCreateScreen = StackScreenProps<RootStackParamList, 'AlarmCreate'>;
 

@@ -1,8 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import Box from '../../../atoms/box/Box';
-import Button from '../../../atoms/button/Button';
-import Container from '../../../atoms/container/Container';
 import Text from '../../../atoms/text/Text';
 import FilterButton from './FilterButton';
 

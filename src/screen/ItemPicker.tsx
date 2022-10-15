@@ -31,7 +31,6 @@ const ItemPicker = ({
 
   useEffect(() => {
     if (clicked) {
-      console.log(clicked);
       pickerRef.current?.focus();
     }
     return () => pickerReset(0);

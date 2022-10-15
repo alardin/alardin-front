@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import React from 'react';
 import styled from 'styled-components/native';
 import alardinApi from '../../../utils/alardinApi';
@@ -5,10 +6,22 @@ import Box from '../../atoms/box/Box';
 import Button from '../../atoms/button/Button';
 import ProfileIcon from '../../atoms/profile/ProfileIcon';
 import Text from '../../atoms/text/Text';
-import { INotifyDataType } from '../../organisms/notify/NotifyList';
 import themeColor from '../../../theme/theme';
 
 import KakaoIcon from '../../../assets/icons/ic-kakao.svg';
+import { useSetRecoilState } from 'recoil';
+import { mateRefresh } from '../../../recoil/mates/mateRefresh';
+
+interface IMateNotifyItemProps extends IMateNotifyItemData {
+  type: 'request' | 'response';
+}
+
+export interface IMateNotifyItemData {
+  id: number;
+  nickname: string;
+  sended_at: string;
+  thumbnail_image_url: string;
+}
 
 const InfoBox = styled(Box)`
   padding: 20px;
@@ -34,6 +47,7 @@ const CurrentTextBox = styled(Box)`
 `;
 
 const NameText = styled(Text)`
+  width: 90%;
   margin-bottom: 6px;
 `;
 
@@ -49,16 +63,31 @@ const CustomProfileIcon = styled(ProfileIcon)`
   align-self: center;
 `;
 
+const RequestingText = styled(Text)`
+  margin-right: 4px;
+`;
+
 const MateNotifyItem = ({
-  content,
-  date,
-  senderId,
-  thumbnail_image_url,
+  id,
   nickname,
-}: INotifyDataType) => {
-  const handlePress = async (response: 'ACCEPT' | 'REJECT') => {
-    const data = { senderId: Number(senderId), response };
-    await alardinApi.post('/mate/response', data);
+  thumbnail_image_url,
+  type,
+}: IMateNotifyItemProps) => {
+  const mateRefresher = useSetRecoilState(mateRefresh);
+  const handlePress = async (response: `ACCEPT` | `REJECT`) => {
+    response === 'ACCEPT'
+      ? await alardinApi.post('/mate/response', {
+          senderId: Number(id),
+          response,
+        })
+      : await alardinApi.delete(
+          '/mate/request',
+          await alardinApi.post('/mate/response', {
+            senderId: Number(id),
+            response,
+          }),
+        );
+    mateRefresher(v => v + 1);
   };
 
   return (
@@ -79,21 +108,27 @@ const MateNotifyItem = ({
         </TextBox>
       </LeftBox>
       <RightBox>
-        <Button
-          width="88px"
-          height="s"
-          options="primary"
-          center
-          onPress={() => handlePress('ACCEPT')}>
-          메이트 요청중, 수락
-        </Button>
+        {type === 'request' ? (
+          <RequestingText size="xs" options="bold">
+            메이트 요청중
+          </RequestingText>
+        ) : (
+          <Button
+            width="56px"
+            height="s"
+            options="primary"
+            center
+            onPress={() => handlePress('ACCEPT')}>
+            수락
+          </Button>
+        )}
         <DeleteButton
-          width="88px"
+          width={type === 'request' ? '75px' : '56px'}
           height="s"
           options="destructive"
           center
           onPress={() => handlePress('REJECT')}>
-          요청 취소, 거절
+          {type === 'request' ? '요청 취소' : '거절'}
         </DeleteButton>
       </RightBox>
     </InfoBox>

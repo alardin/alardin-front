@@ -5,11 +5,9 @@ import { View } from 'react-native';
 import styled from 'styled-components/native';
 import { IGameMetaType } from '../../../recoil/home/alarmSettings';
 import Box from '../../atoms/box/Box';
-import Container from '../../atoms/container/Container';
 import Text from '../../atoms/text/Text';
 import GameShopIcon from '../../molecules/shop/game/GameShopIcon';
 import themeColor from '../../../theme/theme';
-import { fetchGames } from '../../../hooks/useShopData';
 
 interface IGameShopProps {
   data: IGameMetaType[];
@@ -28,12 +26,9 @@ const ListBox = styled(Box)`
   min-height: 140px;
 `;
 
-const resource = fetchGames();
-
-const GameShopList = () => {
-  const { data }: IGameShopProps = resource.gameList.read();
+const GameShopList = ({ data }: IGameShopProps) => {
   return (
-    <Container>
+    <>
       <Title options="bold">게임 목록</Title>
       <ListBox row bgColor={themeColor.color.white}>
         {data.map((item, index) => {
@@ -53,7 +48,7 @@ const GameShopList = () => {
           );
         })}
       </ListBox>
-    </Container>
+    </>
   );
 };
 

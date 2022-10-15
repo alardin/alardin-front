@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { AppState, PermissionsAndroid, Platform } from 'react-native';
+import React, { useCallback, useEffect } from 'react';
+import { PermissionsAndroid, Platform, StatusBar } from 'react-native';
 import messaging from '@react-native-firebase/messaging';
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { useSetRecoilState } from 'recoil';
@@ -9,6 +9,7 @@ import { ThemeProvider } from 'styled-components/native';
 import StackNavigation from './navigation/stack/StackNavigation';
 import { navigationRef } from './navigation/RootNavigation';
 
+import CodePush from 'react-native-code-push';
 import 'react-native-gesture-handler';
 import theme from './theme/theme';
 import checkNotifyType from './utils/checkNotifyType';
@@ -27,7 +28,7 @@ import { checkAlarmScheduler } from './utils/alarm/alarmScheduler';
 import notificationHandle from './utils/notificationHandle';
 import { toastEnable } from './utils/Toast';
 import NetInfo from '@react-native-community/netinfo';
-import PushNotification from 'react-native-push-notification';
+import useInterceptor from './hooks/useInterceptor';
 
 const navTheme = {
   ...DefaultTheme,
@@ -109,9 +110,8 @@ const initialBackgroundStatus = async () => {
 };
 
 const App = () => {
+  useInterceptor();
   const setIsNotify = useSetRecoilState(isNotify);
-  const appState = useRef(AppState.currentState);
-  const [appStateVisible, setAppStateVisible] = useState(appState.current);
 
   const handleMessage = useCallback(() => {
     messaging().onNotificationOpenedApp(remoteMessage => {
@@ -155,28 +155,9 @@ const App = () => {
         });
       }
     });
-    AppState.addEventListener('memoryWarning', () => {
-      console.log('Device running out of memory!');
-    });
-    const unsubscribeAppState = AppState.addEventListener(
-      'change',
-      nextAppState => {
-        if (
-          appState.current.match(/inactive|background/) &&
-          nextAppState === 'active'
-        ) {
-          console.log('App has come to the foreground!');
-        }
-
-        appState.current = nextAppState;
-        setAppStateVisible(appState.current);
-        console.log('AppState', appState.current);
-      },
-    );
     // Unsubscribe
     return () => {
       unsubscribeNetInfo();
-      unsubscribeAppState.remove();
     };
   }, []);
 
@@ -196,10 +177,22 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <NavigationContainer ref={navigationRef} theme={navTheme}>
+        <StatusBar animated={true} barStyle="dark-content" />
         <StackNavigation />
       </NavigationContainer>
     </ThemeProvider>
   );
 };
 
-export default App;
+const codePushOptions = {
+  checkFrequency: CodePush.CheckFrequency.ON_APP_START,
+  updateDialog: {
+    title: '...',
+    optionalUpdateMessage: '...',
+    optionalInstallButtonLabel: '업데이트',
+    optionalIgnoreButtonLabel: '아니요.',
+  },
+  installMode: CodePush.InstallMode.IMMEDIATE,
+};
+
+export default CodePush(codePushOptions)(App);

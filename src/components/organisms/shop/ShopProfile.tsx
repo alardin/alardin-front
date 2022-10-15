@@ -6,9 +6,17 @@ import ProfileIcon from '../../atoms/profile/ProfileIcon';
 import Text from '../../atoms/text/Text';
 import PremiumLabel from '../../molecules/shop/user/PremiumLabel';
 import theme from '../../../theme/theme';
-import { fetchAssets, fetchUser } from '../../../hooks/useShopData';
+import { IMyProfile } from '../../../recoil/authorization';
+
+export interface IUserAssetData {
+  coin: number;
+  isPremium: boolean;
+  totalGames: number;
+}
 
 interface IHeaderProps {
+  asset: IUserAssetData;
+  profile: IMyProfile;
   setVisible: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
@@ -46,12 +54,9 @@ const LabelBox = styled(Box)`
   margin-left: 8px;
 `;
 
-const resourceUser = fetchUser();
-const resourceAssets = fetchAssets();
-
-const ShopProfile = ({ setVisible }: IHeaderProps) => {
-  const { nickname, thumbnail_image_url } = resourceUser.profile.read();
-  const { asset } = resourceAssets.userAssets.read();
+const ShopProfile = ({ asset, profile, setVisible }: IHeaderProps) => {
+  const { isPremium } = asset;
+  const { nickname, thumbnail_image_url } = profile;
   return (
     <CustomContainer>
       <LeftBox>
@@ -67,11 +72,11 @@ const ShopProfile = ({ setVisible }: IHeaderProps) => {
                 size="s"
                 colorName={theme.color.gray_700}
                 options="semiBold">
-                {asset.isPremium ? '프리미엄' : '일반'}
+                {isPremium ? '프리미엄' : '일반'}
               </Text>
             </LabelBox>
           </GradeBox>
-          <PremiumLabel isPremium={asset.isPremium} setVisible={setVisible} />
+          <PremiumLabel isPremium={isPremium} setVisible={setVisible} />
         </TextBox>
       </RightBox>
     </CustomContainer>

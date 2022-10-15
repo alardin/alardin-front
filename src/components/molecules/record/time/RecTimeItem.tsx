@@ -1,6 +1,10 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import theme from '../../../../theme/theme';
+import {
+  convertIsoStringTime,
+  convertTotalGameTime,
+} from '../../../../utils/home/convertDateTime';
 import Box from '../../../atoms/box/Box';
 import ProfileIcon from '../../../atoms/profile/ProfileIcon';
 import Text from '../../../atoms/text/Text';
@@ -47,10 +51,9 @@ const CustomText = styled(Text)`
 `;
 
 const RecTimeItem = ({ Alarm_result }: IRecTimeItem) => {
-  const opponentName =
-    Alarm_result.Alarm && Alarm_result.Alarm.Members[0].nickname;
-  const opponentImage =
-    Alarm_result.Alarm && Alarm_result.Alarm.Members[0].thumbnail_image_url;
+  const { Alarm, start_time, end_time, play_time, data } = Alarm_result;
+  const opponentName = Alarm && Alarm.Members[0].nickname;
+  const opponentImage = Alarm && Alarm.Members[0].thumbnail_image_url;
 
   const gameIcon = Alarm_result.Game && Alarm_result.Game.thumbnail_url;
   return (
@@ -61,7 +64,7 @@ const RecTimeItem = ({ Alarm_result }: IRecTimeItem) => {
           size="s"
           colorName={theme.color.primary_600}
           options="semiBold">
-          수정 필요
+          {convertTotalGameTime(data.play_time)}
         </PaddingText>
       </TopBox>
       <BottomBox>
@@ -73,12 +76,12 @@ const RecTimeItem = ({ Alarm_result }: IRecTimeItem) => {
             size="s"
             colorName={
               theme.color.gray_600
-            }>{`시작 시간: ${Alarm_result.start_time}`}</CustomText>
+            }>{`시작 시간: ${convertIsoStringTime(start_time)}`}</CustomText>
           <CustomText
             size="s"
             colorName={
               theme.color.gray_600
-            }>{`종료 시간: ${Alarm_result.end_time}`}</CustomText>
+            }>{`종료 시간: ${convertIsoStringTime(end_time)}`}</CustomText>
         </TextBox>
         <GameBox>
           <ProfileIcon size={56} uri={gameIcon} />

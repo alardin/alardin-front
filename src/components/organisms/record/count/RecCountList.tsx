@@ -33,17 +33,13 @@ const RecCountList = ({
   loading,
   setLoading,
 }: IRecCountListProps) => {
-  const [refreshing, setRefreshing] = useState<boolean>(false);
-
   const onRefresh = useCallback(() => {
-    setRefreshing(true);
     setLoading(true);
     setTimeout(() => {
       alardinApi.get('/users/history-count').then(res => {
         setData(res.data.data);
       });
       setLoading(false);
-      setRefreshing(false);
     }, 1000);
   }, []);
 
@@ -61,7 +57,9 @@ const RecCountList = ({
           data={data}
           renderItem={renderItem}
           showsVerticalScrollIndicator={false}
-          refreshControl={<RefreshControl {...{ refreshing, onRefresh }} />}
+          refreshControl={
+            <RefreshControl refreshing={loading} onRefresh={onRefresh} />
+          }
         />
       ) : (
         <NoItem title="알람 기록" />

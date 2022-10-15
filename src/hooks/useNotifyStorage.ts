@@ -1,30 +1,16 @@
-import { useCallback, useEffect, useState } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useEffect } from 'react';
 import { INotifyDataType } from '../components/organisms/notify/NotifyList';
+import { useRecoilState } from 'recoil';
+import { defaultNotify } from '../recoil/notify/notify';
 
 const useNotifyStorage = (newNotify?: INotifyDataType) => {
-  const [data, setData] = useState<INotifyDataType[]>([]);
-
-  const storageRefesh = useCallback(async () => {
-    console.log('test');
-    const storageJson = await AsyncStorage.getItem('notifyStorage');
-    if (storageJson) {
-      const storage = JSON.parse(storageJson);
-      setData(storage);
-    }
-  }, []);
+  const [data, setData] = useRecoilState(defaultNotify);
 
   useEffect(() => {
     if (newNotify) {
-      storageRefesh();
-      setData(prevState => [...prevState, newNotify]);
-      AsyncStorage.setItem('notifyStorage', JSON.stringify(data));
+      setData(prevState => [newNotify, ...prevState]);
     }
   }, [newNotify]);
-
-  useEffect(() => {
-    storageRefesh();
-  }, []);
 
   return data;
 };

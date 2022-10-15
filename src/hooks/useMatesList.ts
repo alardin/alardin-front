@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react';
+import { useRecoilValue } from 'recoil';
 import { IMateListDataType } from '../navigation/top/MatesNavigation';
+import { mateRefresh } from '../recoil/mates/mateRefresh';
 import alardinApi from '../utils/alardinApi';
 
 const useMatesList = (parmas: 'kakaoFriends' | 'mates') => {
+  const refresher = useRecoilValue(mateRefresh);
   const [data, setData] = useState<IMateListDataType>({} as IMateListDataType);
 
   useEffect(() => {
@@ -25,7 +28,7 @@ const useMatesList = (parmas: 'kakaoFriends' | 'mates') => {
       });
     });
     return () => setData({} as IMateListDataType);
-  }, []);
+  }, [refresher]);
 
   return data[parmas];
 };

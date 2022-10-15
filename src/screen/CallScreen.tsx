@@ -1,13 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import RtcEngine, { ChannelProfile } from 'react-native-agora';
 import Container from '../components/atoms/container/Container';
-import Button from '../components/atoms/button/Button';
 import Config from 'react-native-config';
 import Box from '../components/atoms/box/Box';
 import Text from '../components/atoms/text/Text';
-import Icon from 'react-native-vector-icons/Ionicons';
 import styled from 'styled-components/native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { RootStackParamList } from '../navigation/stack/StackNavigation';
@@ -18,6 +16,10 @@ import { deleteAlarmScheduler } from '../utils/alarm/alarmScheduler';
 import { useNetInfo } from '@react-native-community/netinfo';
 import Sound from 'react-native-sound';
 import { toastEnable } from '../utils/Toast';
+
+import CloseIcon from '../assets/icons/ic-cancel.svg';
+import alardinApi from '../utils/alardinApi';
+import { minuteStringCheck } from '../utils/home/convertDateTime';
 
 export type CallScreenProps = StackScreenProps<
   RootStackParamList,
@@ -40,8 +42,14 @@ export interface ICheckMembersSuccess {
 
 const CustomContainer = styled(Container)`
   height: 100%;
+  background-image: '../';
   justify-content: space-between;
   align-items: center;
+`;
+
+const ContainerBackground = styled.ImageBackground`
+  width: 100%;
+  height: 100%;
 `;
 
 const TopBox = styled(Box)`
@@ -50,6 +58,31 @@ const TopBox = styled(Box)`
 
 const BottomBox = styled(Box)`
   flex: 1;
+`;
+
+const CloseButton = styled.TouchableHighlight`
+  width: 80px;
+  height: 80px;
+  border-radius: 100px;
+  justify-content: center;
+  align-items: center;
+  background-color: ${({ theme }) => theme.color.function_success};
+`;
+
+const TimeMainText = styled(Text)`
+  margin: 2px 0;
+  font-size: 50px;
+  color: ${({ theme }) => theme.color.white};
+`;
+
+const TimeText = styled(Text)`
+  margin: 2px 0;
+  color: ${({ theme }) => theme.color.white};
+`;
+
+const TitleText = styled(Text)`
+  margin-top: 20px;
+  color: ${({ theme }) => theme.color.white};
 `;
 
 let engine: RtcEngine;
@@ -132,15 +165,18 @@ const CallScreen = ({ route, navigation }: CallScreenProps) => {
     setTimeout(() => {
       soundAlarm();
     }, 1000);
-    netInfo.isConnected && initialAgoraEngine();
     for (let i = 0; i < 14; i++) {
       deleteAlarmScheduler(alarmId * 1000 + i);
     }
     deleteAlarmItem(alarmId);
+    if (netInfo.isConnected) {
+      initialAgoraEngine();
+      alardinApi.delete('/');
+    }
+    return () => sound.stop();
   }, []);
 
   const handleCall = () => {
-    sound.pause();
     if (netInfo.isConnected) {
       navigation.reset({
         index: 0,
@@ -176,29 +212,31 @@ const CallScreen = ({ route, navigation }: CallScreenProps) => {
 
   const dayString = ['일', '월', '화', '수', '목', '금', '토'];
   const currentDateTime = new Date(Date.now());
-  const timeText = `${currentDateTime.getHours()}:${currentDateTime.getMinutes()}`;
+  const timeText = `${currentDateTime.getHours()}:${minuteStringCheck(
+    currentDateTime.getMinutes(),
+  )}`;
   const dateText = `${
     currentDateTime.getMonth() + 1
   }월 ${currentDateTime.getDate()}일 ${
     dayString[currentDateTime.getDay()]
   }요일`;
   return (
-    <CustomContainer>
-      <TopBox width="100%" center>
-        <Text>{timeText}</Text>
-        <Text>{dateText}</Text>
-        <Text>알람</Text>
-      </TopBox>
-      <BottomBox width="100%" center>
-        <Button
-          width="100px"
-          height="l"
-          options="primary"
-          center
-          onPress={handleCall}>
-          <Icon name="call-outline" color="white" size={48} />
-        </Button>
-      </BottomBox>
+    <CustomContainer options="zero">
+      <ContainerBackground
+        source={require('../assets/images/alarm_background.jpg')}>
+        <TopBox width="100%" center>
+          <TimeMainText options="bold">{timeText}</TimeMainText>
+          <TimeText size="xl" options="bold">
+            {dateText}
+          </TimeText>
+          <TitleText size="l">알람</TitleText>
+        </TopBox>
+        <BottomBox width="100%" center>
+          <CloseButton onPress={handleCall}>
+            <CloseIcon width={48} height={48} fill="#ffffff" />
+          </CloseButton>
+        </BottomBox>
+      </ContainerBackground>
     </CustomContainer>
   );
 };

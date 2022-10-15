@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/naming-convention */
+
 import { atom, selector } from 'recoil';
 import alardinApi from '../../utils/alardinApi';
 import {
@@ -25,13 +27,19 @@ export interface IAlarmInfoData {
   is_private: boolean;
   music_name: string;
   music_volume: number;
-  max_members: number;
+  max_member: number;
   created_at: string;
   Game: {
     id: number;
     name: string;
     thumbnail_url: string;
   };
+  Host: {
+    id: number;
+    nickname: string;
+    thumbnail_image_url: string;
+  };
+  Host_id: number;
   Members: IMembersDataType[];
   name: string;
 }
@@ -47,8 +55,6 @@ const apiAlarmList = selector({
     get(token);
     get(alarmListRefresh);
 
-    // clearAlarmList();
-    // clearAlarmScheduler();
     try {
       const response = await alardinApi.get('/users/joined-alarms');
       const {
@@ -56,6 +62,11 @@ const apiAlarmList = selector({
         hostedAlarms,
       }: { joinedAlarms: IAlarmInfoData[]; hostedAlarms: IAlarmInfoData[] } =
         response.data.data;
+
+      console.log(`joinedAlarms`);
+      console.log(joinedAlarms);
+      console.log(`hostedAlarms`);
+      console.log(hostedAlarms);
 
       if (joinedAlarms) {
         await syncAlarmList(joinedAlarms);
@@ -131,7 +142,7 @@ export const matesAttendAlarmList = selector<IAlarmInfoData[]>({
     const matesAlarmList: IAlarmInfoData[] = response.data.data;
 
     console.log('mates alarms');
-    console.log(matesAlarmList);
+    // console.log(matesAlarmList);
 
     const removeJoinedAlarm = matesAlarmList.filter(
       mateAlarm => !myAlarmList.some(myAlarm => mateAlarm.id === myAlarm.id),

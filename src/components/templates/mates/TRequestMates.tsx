@@ -1,22 +1,43 @@
 import React from 'react';
-import { useRecoilState } from 'recoil';
-import useMateNotify from '../../../hooks/useMateNotify';
+import { useRecoilState, useRecoilValueLoadable } from 'recoil';
 import bottomVisible from '../../../recoil/bottomVisible';
+import { mateNotifyList } from '../../../recoil/notify/notify';
 import BottomScreen from '../../../screen/BottomScreen';
+import MateNotifyItem, {
+  IMateNotifyItemData,
+} from '../../molecules/notify/MateNotifyItem';
 import NoItem from '../../molecules/other/NoItem';
 import NotifyConfirm from '../../organisms/notify/NotifyConfirm';
-import NotifyList from '../../organisms/notify/NotifyList';
 
 const TRequestMates = () => {
-  const notifyArr = useMateNotify();
+  const notifyArr = useRecoilValueLoadable(mateNotifyList);
   const [visible, setVisible] = useRecoilState(bottomVisible);
 
   return (
     <>
-      {notifyArr.length !== 0 ? (
-        <NotifyList notifyData={notifyArr} />
+      {notifyArr.state === 'hasValue' ? (
+        <>
+          {notifyArr.contents.requestISent.map(
+            (item: IMateNotifyItemData, index: number) => (
+              <MateNotifyItem
+                key={`request_${index}`}
+                type="request"
+                {...item}
+              />
+            ),
+          )}
+          {notifyArr.contents.responseIReceived.map(
+            (item: IMateNotifyItemData, index: number) => (
+              <MateNotifyItem
+                key={`response_${index}`}
+                type="response"
+                {...item}
+              />
+            ),
+          )}
+        </>
       ) : (
-        <NoItem title="요청" />
+        notifyArr.state === 'loading' && <NoItem title="요청" />
       )}
       <BottomScreen {...{ visible, setVisible }}>
         <NotifyConfirm />

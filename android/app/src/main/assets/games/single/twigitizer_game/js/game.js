@@ -1,5 +1,8 @@
 const outputData = {
-  start_time: new Date().toISOString(),
+  start_time: new Date(Date.now())
+    .toISOString()
+    .replace(/[T]/g, ' ')
+    .replace(/[Z]/g, ''),
   end_time: '2022-07-22:09:03:00',
   data: {
     play_time: 180, //플레이시간
@@ -7,10 +10,10 @@ const outputData = {
     data: {
       // optional keys
       is_bot_used: false, //봇 개입 여부
-      is_cleared: false,
     },
   },
   Game_channel_id: 0,
+  is_cleared: false,
   Game_id: 2, //진행한 게임
 };
 
@@ -211,11 +214,14 @@ const startGame = () => {
 };
 
 const makeOutputData = () => {
-  outputData.end_time = new Date().toISOString();
+  outputData.end_time = new Date(Date.now())
+    .toISOString()
+    .replace(/[T]/g, ' ')
+    .replace(/[Z]/g, '');
   outputData.data.play_time = playSeconds - 1;
   outputData.data.trial = failCount;
   outputData.Game_id = 2;
-  outputData.data.data.is_cleared = true;
+  outputData.is_cleared = true;
 };
 
 // 아래에 있는 함수들은 적절한 위치에 실행 시킬 것!

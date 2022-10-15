@@ -6,8 +6,11 @@ import Box from '../../../atoms/box/Box';
 import Container from '../../../atoms/container/Container';
 import Text from '../../../atoms/text/Text';
 import themeColor from '../../../../theme/theme';
+import HighlightedText from '../../../atoms/text/HighlightedText';
 
-const CustomContainer = styled(Container)``;
+const CustomContainer = styled(Container)`
+  position: relative;
+`;
 
 const CustomText = styled(Text)`
   margin: 2px 0;
@@ -21,6 +24,10 @@ const PrivateBox = styled(Box)`
   margin-top: 28px;
   margin-bottom: 18px;
   padding: 6px 10px;
+`;
+
+const CustomHighlightedText = styled(HighlightedText)`
+  margin: 4px 0;
 `;
 
 const SummaryText = ({
@@ -51,16 +58,17 @@ const SummaryText = ({
           {is_private ? '비공개' : '공개'}
         </Text>
       </PrivateBox>
-      <CustomText size="xl">
+
+      <CustomHighlightedText size="xl">
         {!(is_repeated === '없음' || is_repeated === '0')
           ? `매주 ${is_repeated}`
           : today
           ? '오늘'
           : '내일'}
-      </CustomText>
-      <CustomText size="xl">{time}</CustomText>
+      </CustomHighlightedText>
+      <CustomHighlightedText size="xl">{time}</CustomHighlightedText>
       <TextBox row>
-        <CustomText size="xl">{Game_id}</CustomText>
+        <CustomHighlightedText size="xl">{Game_id}</CustomHighlightedText>
         <CustomText size="xl">로 깨워드려요!</CustomText>
       </TextBox>
     </CustomContainer>

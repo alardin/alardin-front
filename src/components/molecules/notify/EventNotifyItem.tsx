@@ -1,16 +1,23 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components/native';
 import theme from '../../../theme/theme';
 import { convertNotifyDate } from '../../../utils/home/convertDateTime';
 import Box from '../../atoms/box/Box';
 import CheckBox from '../../atoms/checkbox/CheckBox';
+import ProfileIcon from '../../atoms/profile/ProfileIcon';
 import Text from '../../atoms/text/Text';
 import { INotifyDataType } from '../../organisms/notify/NotifyList';
+
+interface IEventNotfiyProps extends INotifyDataType {
+  keyNumber: number;
+  value: boolean;
+  handler: React.Dispatch<React.SetStateAction<boolean[]>>;
+}
 
 const NotifyBox = styled(Box)``;
 
 const IconBox = styled(Box)`
-  flex: 1;
+  flex: 1.5;
   justify-content: center;
   align-items: center;
 `;
@@ -21,14 +28,28 @@ const TextBox = styled(Box)`
   padding-left: 4px;
 `;
 
+const CheckContainer = styled(Box)`
+  flex: 1;
+  padding-top: 20px;
+  align-items: center;
+`;
+
 const Content = styled(Text)`
   padding-bottom: 4px;
 `;
 
-const EventNotifyItem = ({ type, content, date }: INotifyDataType) => {
-  const [checked, setChecked] = useState<boolean>(false);
+const EventNotifyItem = ({
+  type,
+  content,
+  date,
+  isHidden,
+  value,
+  keyNumber,
+  handler,
+}: IEventNotfiyProps) => {
+  // const [checked, setChecked] = useState<boolean>(false);
   const convertTypeMessage = (noticeType: string) => {
-    let result = '';
+    let result: string = '';
     switch (noticeType) {
       case 'NOTICE':
         result = '더 다양한 소식으로 돌아오겠습니다!';
@@ -37,28 +58,47 @@ const EventNotifyItem = ({ type, content, date }: INotifyDataType) => {
         result = 'Alardin에서 많은 혜택을 누리세요~';
         break;
     }
-    return result;
+    return { result };
   };
+
+  const { result } = convertTypeMessage(type);
+
   return (
     <NotifyBox width="100%" height="100px" bgColor={theme.color.white} row>
       <IconBox>
-        <Box width="52px" height="52px" bgColor={theme.color.gray_300}></Box>
+        <ProfileIcon
+          size={64}
+          local={
+            type === 'mate'
+              ? require('../../../assets/icons/ic-users.svg')
+              : type === 'announce'
+              ? require('../../../assets/icons/ic-announce.png')
+              : type === 'event'
+              ? require('../../../assets/icons/ic-event.png')
+              : require('../../../assets/icons/ic-info.png')
+          }
+        />
       </IconBox>
       <TextBox>
         <Content size="s" options="semiBold">
           {content}
         </Content>
-        <Content size="s">{convertTypeMessage(type)}</Content>
+        <Content size="s">{result}</Content>
         <Text size="xs">{convertNotifyDate(date)}</Text>
       </TextBox>
-      <CheckBox
-        checked={checked}
-        setChecked={setChecked}
-        type="boolean"
-        width="14px"
-        height="14px"
-        rounded
-      />
+      <CheckContainer>
+        <CheckBox
+          border
+          checked={value}
+          setChecked={handler}
+          index={keyNumber}
+          type="array"
+          width="18px"
+          height="18px"
+          style={{ display: isHidden ? 'none' : 'flex' }}
+          rounded
+        />
+      </CheckContainer>
     </NotifyBox>
   );
 };

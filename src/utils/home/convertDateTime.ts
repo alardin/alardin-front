@@ -17,15 +17,20 @@ export const convertNotifyDay = (day: number) => {
 export const convertDate = (dateString: string) => {
   if (dateString !== '' && dateString) {
     const date = new Date(dateString);
-    const today = new Date();
+    const today = new Date(Date.now());
+    console.log(date);
+    console.log(today);
     const [dMonth, dDate, dDay] = [
       date.getMonth() + 1,
-      date.getDate() + 1,
+      date.getDate(),
       convertNotifyDay(date.getDay()),
     ];
-    const leftDate = Math.abs(today.getDate() - dDate);
     const changeComment = () => {
-      if (leftDate === 0) return '오늘';
+      const leftDate = Math.floor(
+        (date.getTime() - today.getTime()) / (1000 * 60 * 60 * 24),
+      );
+      console.log(leftDate);
+      if (leftDate <= 0) return '오늘';
       if (leftDate === 1) return '내일';
       if (leftDate === 2) return '내일 모레';
       if (leftDate >= 3 && leftDate <= 5) return `${leftDate}일 후`;
@@ -42,15 +47,16 @@ export const convertNotifyDate = (dateString: string) => {
     const today = new Date();
     const [dMonth, dDate, dDay] = [
       date.getMonth() + 1,
-      date.getDate() + 1,
+      date.getDate(),
       convertNotifyDay(date.getDay()),
     ];
-    const leftDate = Math.abs(date.getDate() - today.getDate());
+
+    const leftDate = date.getDate() - today.getDate();
     const changeComment = () => {
       if (leftDate === 0) return '오늘';
-      if (leftDate === 1) return '어제';
-      if (leftDate === 2) return '그저께';
-      if (leftDate >= 3 && leftDate <= 5) return `${leftDate}일 전`;
+      if (leftDate === -1) return '어제';
+      if (leftDate === -2) return '그저께';
+      if (leftDate >= -3 && leftDate <= -5) return `${leftDate}일 전`;
       return `${dMonth}월 ${dDate}일(${dDay})`;
     };
     return changeComment();
@@ -116,6 +122,24 @@ export const convertRepeatDay = (days: string) => {
   return convertDays.join('');
 };
 
+export const convertIsoStringTime = (iso: string) => {
+  const isoToDate = new Date(iso);
+  isoToDate.setHours(
+    isoToDate.getHours() - Math.floor(isoToDate.getTimezoneOffset() / 60),
+  );
+  return isoToDate
+    .toISOString()
+    .replace(/[Z]/g, '')
+    .split('T')[1]
+    .split('.')[0];
+};
+
+export const convertTotalGameTime = (gameSecond: number) => {
+  const minute = Math.floor(gameSecond / 60);
+  const second = Math.floor(gameSecond % 60);
+  return `${minute}분 ${minuteStringCheck(second)}초`;
+};
+
 export const alarmItemtoDate = ({
   is_repeated,
   time,
@@ -140,6 +164,7 @@ export const alarmItemtoDate = ({
     if (isTodayCheck) {
       convertDateType.setDate(convertDateType.getDate() + 1);
     }
+    console.log(convertDateType);
     return convertDateType;
   }
 

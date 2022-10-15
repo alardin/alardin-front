@@ -1,12 +1,11 @@
 import React from 'react';
 import { SafeAreaView } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
 import styled from 'styled-components/native';
 import { IGameMetaType } from '../../../recoil/home/alarmSettings';
-import alardinApi from '../../../utils/alardinApi';
-import Button from '../../atoms/button/Button';
 import Container from '../../atoms/container/Container';
 import Description from '../../molecules/shop/game/Description';
+import GameDetails from '../../molecules/shop/game/GameDetails';
+import GameProfile from '../../molecules/shop/game/GameProfile';
 import ScreenShots from '../../molecules/shop/game/ScreenShots';
 
 export interface IGameInfoData {
@@ -14,23 +13,34 @@ export interface IGameInfoData {
   gameScreenshots: string[];
 }
 
-const ConfirmButton = styled(Button)`
-  margin-top: 20px;
-  margin-bottom: 40px;
+const CustomScrollView = styled.ScrollView`
+  height: 100%;
 `;
 
 const GameInfo = ({ game, gameScreenshots }: IGameInfoData) => {
-  console.log(game);
+  const {
+    name,
+    category,
+    price,
+    description,
+    thumbnail_url,
+    rating,
+    min_player,
+    max_player,
+  } = game;
   return (
     <SafeAreaView>
       <Container>
-        <ScrollView>
-          <Description descript={game.description} />
+        <CustomScrollView>
+          <GameProfile {...{ name, price, thumbnail_url }} />
+          <GameDetails
+            minPlayer={min_player}
+            maxPlayer={max_player}
+            {...{ category, rating }}
+          />
+          <Description descript={description} />
           <ScreenShots images={gameScreenshots} />
-          <ConfirmButton width="100%" height="l" options="primary" center>
-            게임 구매
-          </ConfirmButton>
-        </ScrollView>
+        </CustomScrollView>
       </Container>
     </SafeAreaView>
   );

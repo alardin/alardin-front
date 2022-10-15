@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
 import { StackScreenProps } from '@react-navigation/stack';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Alert, SafeAreaView, ScrollView } from 'react-native';
 import {
   useRecoilState,
@@ -10,7 +10,7 @@ import {
 } from 'recoil';
 import styled from 'styled-components/native';
 import { RootStackParamList } from '../../../navigation/stack/StackNavigation';
-import { myProfile } from '../../../recoil/authorization';
+import { IMyProfile, myProfile } from '../../../recoil/authorization';
 import bottomVisible from '../../../recoil/bottomVisible';
 import { alarmListRefresh } from '../../../recoil/home/alarmList';
 import { summaryData } from '../../../recoil/home/summary';
@@ -24,6 +24,7 @@ import MateInfo from '../../organisms/home/create/MateInfo';
 import Summary from '../../organisms/home/create/Summary';
 import NetInfo from '@react-native-community/netinfo';
 import { toastEnable } from '../../../utils/Toast';
+import EncryptedStorage from 'react-native-encrypted-storage';
 
 type IAlarmAttendScreen = StackScreenProps<RootStackParamList, 'AlarmAttend'>;
 
@@ -46,16 +47,29 @@ const TAttend = ({ route, navigation }: IAlarmAttendScreen) => {
     is_private,
     Game,
     time,
+    Host,
+    Host_id,
     Members,
     name,
-    max_members,
+    max_member,
   } = route.params;
   const setSummary = useSetRecoilState(summaryData);
   const refreshData = useSetRecoilState(alarmListRefresh);
-  const profileData = useRecoilValueLoadable(myProfile);
   const [visible, setVisible] = useRecoilState(bottomVisible);
+  const [isHost, setIsHost] = useState<boolean>(false);
+  const [profileData, setProfileData] = useState<any>({} as IMyProfile);
   const [checkMeAttend, setCheckMeAttend] = useState<number>(0);
-  const isFull = Members.length === max_members;
+  const isFull = Members.length === max_member;
+
+  console.log(Host);
+
+  const ProfileCallback = useCallback(async () => {
+    const profileJson = await EncryptedStorage.getItem('myProfile');
+    if (profileJson) {
+      const convertProfile = JSON.parse(profileJson);
+      setProfileData(convertProfile);
+    }
+  }, []);
 
   const navigateRetouch = () => {
     NetInfo.fetch().then(state =>
@@ -75,14 +89,11 @@ const TAttend = ({ route, navigation }: IAlarmAttendScreen) => {
   };
 
   const requestDelete = () => {
+    console.log('alarmId');
+    console.log(id);
     alardinApi
       .delete(`/alarm/${id}`)
-      .then(async () => {
-        await alardinApi.post(`/alarm/message/${id}`, {
-          title: '알람방 삭제',
-          body: `방장의 권한으로 ${time} 알람이 삭제되었습니다.`,
-          data: {},
-        });
+      .then(() => {
         refreshData(v => v + 1);
         navigation.reset({
           index: 0,
@@ -95,14 +106,15 @@ const TAttend = ({ route, navigation }: IAlarmAttendScreen) => {
             text: '해당 기능을 사용할 수 있는 권한이 없습니다',
             duration: 'LONG',
           });
-        } else {
-          toastEnable({
-            text: '오프라인 모드에서는 사용하실 수 없는 기능입니다',
-            duration: 'LONG',
-          });
         }
+        console.log(err);
       });
   };
+
+  useEffect(() => {
+    ProfileCallback();
+    console.log(id);
+  }, []);
 
   useEffect(() => {
     setSummary(prevState => ({
@@ -118,8 +130,9 @@ const TAttend = ({ route, navigation }: IAlarmAttendScreen) => {
   }, [route]);
 
   useEffect(() => {
+    setIsHost(Host_id === profileData.id);
     setCheckMeAttend(
-      Members.filter(memeber => memeber.id === profileData.contents.id).length,
+      Members.filter(memeber => memeber.id === profileData.id).length,
     );
   }, [profileData]);
 
@@ -131,7 +144,9 @@ const TAttend = ({ route, navigation }: IAlarmAttendScreen) => {
             <Summary type="attend" />
           </TopBox>
           <BottomBox>
-            {profileData.state === 'hasValue' && <MateInfo members={Members} />}
+            {Object.keys(profileData).length !== 0 && (
+              <MateInfo members={Members} />
+            )}
             <Box>
               <Button
                 width="100%"
@@ -143,13 +158,13 @@ const TAttend = ({ route, navigation }: IAlarmAttendScreen) => {
                     ? navigateRetouch()
                     : isFull
                     ? Alert.alert(
-                        `최대 참가할 수 있는 인원이 ${max_members}명입니다`,
+                        `최대 참가할 수 있는 인원이 ${max_member}명입니다`,
                       )
                     : setVisible(true)
                 }>
-                {checkMeAttend === 1 ? `알람 수정` : `알람 참가`}
+                {isHost && checkMeAttend === 1 ? `알람 수정` : `알람 참가`}
               </Button>
-              {Members[Members.length - 1].id === profileData.contents.id && (
+              {isHost && (
                 <ConfirmButton
                   width="100%"
                   height="xl"
@@ -168,7 +183,7 @@ const TAttend = ({ route, navigation }: IAlarmAttendScreen) => {
               time={String(time)}
               isRepeated={is_repeated}
               gameName={Game.name}
-              myName={profileData.contents.nickname}
+              myName={profileData.nickname}
             />
           </CenterScreen>
         </ScrollView>

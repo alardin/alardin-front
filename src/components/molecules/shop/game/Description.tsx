@@ -18,7 +18,7 @@ const Title = styled(Text)`
 const Description = ({ descript }: IDescriptionProps) => {
   return (
     <CustomContainer>
-      <Title textType="title" options="semiBold">
+      <Title size="l" options="semiBold">
         요약
       </Title>
       <Text>{descript}</Text>

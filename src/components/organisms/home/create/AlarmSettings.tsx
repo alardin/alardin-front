@@ -7,7 +7,10 @@ import {
   settingLabel,
 } from '../../../../recoil/home/alarmSettings';
 import { pickerClicked, pickerMode } from '../../../../recoil/picker';
-import { dateToTimeString } from '../../../../utils/home/convertDateTime';
+import {
+  alarmItemtoDate,
+  dateToTimeString,
+} from '../../../../utils/home/convertDateTime';
 import {
   asPickerFormat,
   BUTTON_HEIGHT,
@@ -58,7 +61,14 @@ const AlarmSettings = ({ setVisible }: IAlarmSettingsProps) => {
   };
 
   useEffect(() => {
-    setSetting(prevState => ({ ...prevState, time: dateToTimeString(time) }));
+    setSetting(prevState => ({
+      ...prevState,
+      time: dateToTimeString(time),
+      expired_at: alarmItemtoDate({
+        is_repeated: setting.is_repeated,
+        time: dateToTimeString(time),
+      }),
+    }));
   }, [time]);
 
   return (

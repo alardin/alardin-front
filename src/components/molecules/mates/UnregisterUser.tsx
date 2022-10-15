@@ -11,6 +11,8 @@ import themeColor from '../../../theme/theme';
 
 import KakaoIcon from '../../../assets/icons/ic-kakao.svg';
 import Button from '../../atoms/button/Button';
+import { useSetRecoilState } from 'recoil';
+import { mateRefresh } from '../../../recoil/mates/mateRefresh';
 
 interface IFriendInfoProps {
   mate: IMembersDataType;
@@ -57,11 +59,12 @@ const CustomProfileIcon = styled(ProfileIcon)`
 `;
 
 const UnregisterUser = ({ mate }: IFriendInfoProps) => {
+  const mateRefresher = useSetRecoilState(mateRefresh);
   const { kakao_id, thumbnail_image_url, nickname } = mate;
 
-  const handlePress = () => {
-    console.log(kakao_id);
-    alardinApi.post(`/mate?targetUserId=${kakao_id}`);
+  const handlePress = async () => {
+    await alardinApi.post(`/mate?targetUserId=${kakao_id}`);
+    mateRefresher(v => v + 1);
   };
 
   return (

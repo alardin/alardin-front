@@ -9,15 +9,7 @@ import {
 import React from 'react';
 import messaging from '@react-native-firebase/messaging';
 import Box from '../components/atoms/box/Box';
-import Button from '../components/atoms/button/Button';
-import {
-  Alert,
-  Image,
-  ImageBackground,
-  SafeAreaView,
-  TouchableHighlight,
-  TouchableOpacity,
-} from 'react-native';
+import { Alert, Image, Platform, SafeAreaView } from 'react-native';
 import styled from 'styled-components/native';
 import Text from '../components/atoms/text/Text';
 import Container from '../components/atoms/container/Container';
@@ -27,6 +19,12 @@ import EncryptedStorage from 'react-native-encrypted-storage';
 import { useSetRecoilState } from 'recoil';
 import { IMyProfile, myProfile, token } from '../recoil/authorization';
 import alardinApi from '../utils/alardinApi';
+import appleAuth, {
+  appleAuthAndroid,
+  AppleButton,
+} from '@invertase/react-native-apple-authentication';
+import 'react-native-get-random-values';
+import { v4 as uuid } from 'uuid';
 
 const TopBox = styled(Box)`
   height: 60%;
@@ -37,11 +35,15 @@ const BottomBox = styled(Box)`
   justify-content: center;
 `;
 
-const LoginButton = styled.TouchableOpacity``;
+const LoginButton = styled.TouchableOpacity`
+  width: 100%;
+  margin-bottom: 16px;
+`;
 
 const Login = () => {
   const setAuthorization = useSetRecoilState(token);
   const setMyProfile = useSetRecoilState(myProfile);
+
   const handlePress = async () => {
     const { accessToken, refreshToken, scopes }: KakaoOAuthToken =
       await login();
@@ -64,7 +66,7 @@ const Login = () => {
     if (accessToken && refreshToken && deviceToken) {
       axios({
         method: 'POST',
-        url: `${Config.ENDPOINT}/api/users/auth`,
+        url: `${Config.ENDPOINT}/api/auth/kakao`,
         headers: {
           'Content-Type': 'application/json',
         },
@@ -76,18 +78,13 @@ const Login = () => {
       })
         .then(async res => {
           const { status, data } = res.data;
+
+          console.log('access token');
+          console.log(data);
           if (status === 'SUCCESS') {
             setAuthorization(data);
             await EncryptedStorage.setItem('scopes', JSON.stringify(scopes));
-            console.log(data);
-            await EncryptedStorage.setItem(
-              'appAccessToken',
-              JSON.stringify({ appAccessToken: data.appAccessToken }),
-            );
-            await EncryptedStorage.setItem(
-              'appRefreshToken',
-              JSON.stringify({ appRefreshToken: data.appRefreshToken }),
-            );
+
             alardinApi.get('/users').then(async (my: any) => {
               const profileData: IMyProfile = my.data.data;
               await EncryptedStorage.setItem(
@@ -99,6 +96,39 @@ const Login = () => {
           }
         })
         .catch(err => console.log(err));
+    }
+  };
+
+  const loginWithApple = async () => {
+    const deviceToken = await messaging().getToken();
+    console.log(`Device Token: ${deviceToken}`);
+
+    const appleAuthRequestResponse = await appleAuth.performRequest({
+      requestedOperation: appleAuth.Operation.LOGIN,
+      requestedScopes: [appleAuth.Scope.FULL_NAME, appleAuth.Scope.EMAIL],
+    });
+
+    const credentialState = await appleAuth.getCredentialStateForUser(
+      appleAuthRequestResponse.user,
+    );
+
+    if (credentialState === appleAuth.State.AUTHORIZED) {
+      const { email, fullName, identityToken, nonce } =
+        appleAuthRequestResponse;
+      axios({
+        method: 'POST',
+        url: `${Config.ENDPOINT}/api/auth/apple`,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        data: {
+          email,
+          fullName,
+          identityToken,
+          nonce,
+          deviceToken,
+        },
+      }).then(res => console.log(res));
     }
   };
 
@@ -116,11 +146,19 @@ const Login = () => {
         </TopBox>
         <BottomBox>
           <LoginButton onPress={handlePress}>
-            <ImageBackground
-              style={{ width: '100%', height: 56 }}
+            <Image
+              style={{ width: '100%', height: 56, borderRadius: 6 }}
               source={require('../assets/images/kakao_login_large_wide.png')}
             />
           </LoginButton>
+          {Platform.OS === 'ios' && (
+            <AppleButton
+              buttonStyle={AppleButton.Style.BLACK}
+              buttonType={AppleButton.Type.DEFAULT}
+              style={{ width: '100%', height: 56 }}
+              onPress={loginWithApple}
+            />
+          )}
         </BottomBox>
       </Container>
     </SafeAreaView>
