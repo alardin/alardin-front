@@ -17,7 +17,12 @@ import axios from 'axios';
 import Config from 'react-native-config';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import { useSetRecoilState } from 'recoil';
-import { IMyProfile, myProfile, token } from '../recoil/authorization';
+import {
+  IMyProfile,
+  loginPlatform,
+  myProfile,
+  token,
+} from '../recoil/authorization';
 import alardinApi from '../utils/alardinApi';
 import appleAuth, {
   appleAuthAndroid,
@@ -39,6 +44,7 @@ const BottomBox = styled(Box)`
 const Login = () => {
   const setAuthorization = useSetRecoilState(token);
   const setMyProfile = useSetRecoilState(myProfile);
+  const setLoginPlatform = useSetRecoilState(loginPlatform);
 
   const successLoginHandler = async (status: any, data: any, scopes?: any) => {
     console.log('access token');
@@ -92,6 +98,7 @@ const Login = () => {
       })
         .then(async res => {
           const { status, data } = res.data;
+          setLoginPlatform('kakao');
           successLoginHandler(status, data, scopes);
         })
         .catch(err => console.log(err));
@@ -129,6 +136,7 @@ const Login = () => {
         },
       }).then(res => {
         const { status, data } = res.data;
+        setLoginPlatform('apple');
         successLoginHandler(status, data);
       });
     }

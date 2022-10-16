@@ -8,5 +8,4 @@ declare module '*.svg' {
 }
 
 declare module 'loadsh';
-
 declare module 'react-native-animate-number';

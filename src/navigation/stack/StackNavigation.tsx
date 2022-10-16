@@ -10,8 +10,12 @@ import CallScreen from '../../screen/CallScreen';
 import RtcEngine from 'react-native-agora';
 import RtmEngine from 'agora-react-native-rtm';
 import { IAlarmInfoProps } from '../../components/molecules/home/main/AlarmInfo';
-import { useRecoilValueLoadable } from 'recoil';
-import { token } from '../../recoil/authorization';
+import {
+  useRecoilValue,
+  useRecoilValueLoadable,
+  useSetRecoilState,
+} from 'recoil';
+import { myProfile, token } from '../../recoil/authorization';
 
 import TRetouch from '../../components/templates/home/TRetouch';
 import { IAlarmInfoData } from '../../recoil/home/alarmList';
@@ -23,14 +27,15 @@ import { TouchableOpacity } from 'react-native';
 
 import BackIcon from '../../assets/icons/ic-back.svg';
 import ShareIcon from '../../assets/icons/ic-share.svg';
+import AddFriendsIcon from '../../assets/icons/ic-add-profile.svg';
 import theme from '../../theme/theme';
 import sharingAlarm from '../../utils/sharingAlarm';
 import ChatIcon from '../../assets/icons/ic-chat.svg';
 import Box from '../../components/atoms/box/Box';
 import SingleGameStart from '../../screen/game/SingleGameStart';
 import SingleGameEnd from '../../screen/game/SingleGameEnd';
-import { sendCommerce } from '@react-native-seoul/kakao-login';
 import shareOnKakao from '../../utils/shareOnKakao';
+import centerVisible from '../../recoil/mates/centerVisible';
 
 interface IAlarmAttendStackProps extends IAlarmInfoProps {
   type: string;
@@ -80,6 +85,9 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const StackNavigation = () => {
   const auth = useRecoilValueLoadable(token);
+  const me = useRecoilValue(myProfile);
+  const setMateVisible = useSetRecoilState(centerVisible);
+
   return (
     <Stack.Navigator initialRouteName="Login">
       {!auth?.contents.appAccessToken ? (
@@ -138,7 +146,8 @@ const StackNavigation = () => {
                   style={{ marginHorizontal: 8 }}
                 />
               </TouchableOpacity>
-              <TouchableOpacity onPress={shareOnKakao}>
+              <TouchableOpacity
+                onPress={() => shareOnKakao('alarm', me.nickname)}>
                 <ChatIcon
                   width={28}
                   height={28}
@@ -153,7 +162,15 @@ const StackNavigation = () => {
       <Stack.Screen
         name="AlarmRetouch"
         component={TRetouch}
-        options={{ headerShown: false }}
+        options={({ navigation }) => ({
+          headerTitle: '알람방 수정',
+          headerTitleAlign: 'center',
+          headerLeft: () => (
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <BackIcon width={28} height={28} />
+            </TouchableOpacity>
+          ),
+        })}
       />
       <Stack.Screen
         name="GameStart"
@@ -189,6 +206,16 @@ const StackNavigation = () => {
           headerLeft: () => (
             <TouchableOpacity onPress={() => navigation.goBack()}>
               <BackIcon width={28} height={28} />
+            </TouchableOpacity>
+          ),
+          headerRight: () => (
+            <TouchableOpacity onPress={() => setMateVisible(true)}>
+              <AddFriendsIcon
+                width={28}
+                height={28}
+                fill={theme.color.gray_900}
+                style={{ marginHorizontal: 8 }}
+              />
             </TouchableOpacity>
           ),
           headerShadowVisible: false,

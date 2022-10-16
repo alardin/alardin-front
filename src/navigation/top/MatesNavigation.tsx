@@ -1,15 +1,14 @@
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import React, { useCallback, useEffect, useState } from 'react';
+import React from 'react';
 import TRegisterMates from '../../components/templates/mates/TRegisterMates';
 import TRequestMates from '../../components/templates/mates/TRequestMates';
 import TUnregisterMates from '../../components/templates/mates/TUnregisterMates';
-import EncryptedStorage from 'react-native-encrypted-storage';
 import { IMembersDataType } from '../../recoil/home/members';
 import theme from '../../theme/theme';
 
 export type RootRecordParamList = {
   Register: undefined;
-  Unregister: { isKakaoAgree: boolean; kakaoFriends: IMembersDataType[] };
+  Unregister: undefined;
   Request: undefined;
 };
 
@@ -21,22 +20,6 @@ export interface IMateListDataType {
 const Tab = createMaterialTopTabNavigator<RootRecordParamList>();
 
 const MatesNavigation = () => {
-  const [matesList] = useState<IMateListDataType>({} as IMateListDataType);
-  const [isKakaoAgree, setIsKakaoAgree] = useState<boolean>(true);
-  const bringStorageScopes = useCallback(async () => {
-    const jsonScopes = await EncryptedStorage.getItem('scopes');
-    if (jsonScopes) {
-      const scopes = JSON.parse(jsonScopes);
-      console.log(scopes);
-      setIsKakaoAgree(scopes.includes('friends'));
-    }
-  }, []);
-
-  useEffect(() => {
-    bringStorageScopes();
-    return () => setIsKakaoAgree(true);
-  }, []);
-
   return (
     <Tab.Navigator
       initialRouteName="Register"
@@ -56,7 +39,6 @@ const MatesNavigation = () => {
         name="Unregister"
         component={TUnregisterMates}
         options={{ title: '미동록된 메이트' }}
-        initialParams={{ isKakaoAgree, kakaoFriends: matesList.kakaoFriends }}
       />
       <Tab.Screen
         name="Request"

@@ -1,5 +1,5 @@
 import React from 'react';
-import { TextInputProps } from 'react-native';
+import { Keyboard, TextInputProps } from 'react-native';
 import styled from 'styled-components/native';
 
 export interface ITextInputProps extends TextInputProps {

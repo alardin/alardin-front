@@ -28,48 +28,47 @@ const useInterceptor = () => {
 
   const responseInterceptor = alardinApi.interceptors.response.use(
     response => response,
-    // async error => {
-    //   const { config } = error;
-    //   console.log('error');
-    //   console.log(JSON.stringify(error));
-    //   if (error.response.status === 401) {
-    //     toastEnable({
-    //       text: '인증이 만료되어 재발급을 요청합니다',
-    //       duration: 'SHORT',
-    //     });
-    //     const refreshTokenStorage = await EncryptedStorage.getItem(
-    //       'appRefreshToken',
-    //     );
-    //     console.log('appRefreshToken');
-    //     console.log(refreshTokenStorage);
-    //     if (refreshTokenStorage) {
-    //       const parseRefreshToken = JSON.parse(refreshTokenStorage);
-    //       axios({
-    //         method: 'GET',
-    //         url: `${Config.ENDPOINT}/api/users/refresh`,
-    //         headers: {
-    //           'Content-Type': 'application/json',
-    //           'Refresh-Token': parseRefreshToken.appRefreshToken,
-    //         },
-    //       })
-    //         .then(async (res: any) => {
-    //           const { appAccessToken, appRefreshToken } = res.data.data;
-    //           setUserToken({ appAccessToken, appRefreshToken });
-    //           config.headers.Authorization = `Bearer ${appAccessToken}`;
-    //         })
-    //         .catch(() => {
-    //           toastEnable({
-    //             text: '인증을 재발급하지 못했습니다. 로그인을 다시 시도해보세요.',
-    //             duration: 'SHORT',
-    //           });
-    //           return Promise.reject(error);
-    //         });
-    //     }
-
-    //     // return alardinApi.request(config);
-    //   }
-    //   return Promise.reject(error);
-    // },
+    async error => {
+      const { config } = error;
+      console.log('error');
+      console.log(JSON.stringify(error));
+      if (error.response.status === 401) {
+        toastEnable({
+          text: '인증이 만료되어 재발급을 요청합니다',
+          duration: 'SHORT',
+        });
+        const refreshTokenStorage = await EncryptedStorage.getItem(
+          'appRefreshToken',
+        );
+        console.log('appRefreshToken');
+        console.log(refreshTokenStorage);
+        if (refreshTokenStorage) {
+          const parseRefreshToken = JSON.parse(refreshTokenStorage);
+          axios({
+            method: 'GET',
+            url: `${Config.ENDPOINT}/api/users/refresh`,
+            headers: {
+              'Content-Type': 'application/json',
+              'Refresh-Token': parseRefreshToken.appRefreshToken,
+            },
+          })
+            .then(async (res: any) => {
+              const { appAccessToken, appRefreshToken } = res.data.data;
+              setUserToken({ appAccessToken, appRefreshToken });
+              config.headers.Authorization = `Bearer ${appAccessToken}`;
+            })
+            .catch(() => {
+              toastEnable({
+                text: '인증을 재발급하지 못했습니다. 로그인을 다시 시도해보세요.',
+                duration: 'SHORT',
+              });
+              return Promise.reject(error);
+            });
+          return alardinApi.request(config);
+        }
+      }
+      return Promise.reject(error);
+    },
   );
 
   useEffect(() => {

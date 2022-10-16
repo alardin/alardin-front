@@ -1,6 +1,6 @@
 import { FirebaseMessagingTypes } from '@react-native-firebase/messaging';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { navigate, navigationRef } from '../navigation/RootNavigation';
+import StoreNotification from '../recoil/notify/storageNotify';
 
 // export interface NotificationType {
 //   messageId: string;
@@ -9,22 +9,27 @@ import { navigate, navigationRef } from '../navigation/RootNavigation';
 //   from: string;
 // }
 
-const storeNotification = (type: 'default' | 'mate', message: string) => {
-  const storagePath = type === 'mate' ? 'mateRequestStorage' : 'notifyStorage';
-  let notifyArr: any = [];
-  const convertMessage = JSON.parse(message);
-  console.log(convertMessage);
-  AsyncStorage.getItem(storagePath).then(value => {
-    if (value) {
-      const convertArr = JSON.parse(value);
-      notifyArr = [...convertArr, convertMessage];
-      AsyncStorage.setItem(storagePath, JSON.stringify(notifyArr));
-    } else {
-      AsyncStorage.setItem(storagePath, JSON.stringify([convertMessage]));
-    }
-    return notifyArr;
-  });
-};
+// const storeNotification = (type: 'default' | 'mate', message: string) => {
+//   // const storagePath = type === 'mate' ? 'mateRequestStorage' : 'notifyStorage';
+//   console.log('string message');
+//   console.log(message);
+//   const storagePath = 'notifyStorage';
+//   let notifyArr: any = [];
+//   console.log('parsed');
+//   const convertMessage = JSON.parse(message);
+//   console.log(convertMessage);
+
+//   AsyncStorage.getItem(storagePath).then(value => {
+//     if (value) {
+//       const convertArr = JSON.parse(value);
+//       notifyArr = [convertMessage, ...convertArr];
+//       AsyncStorage.setItem(storagePath, JSON.stringify(notifyArr));
+//     } else {
+//       AsyncStorage.setItem(storagePath, JSON.stringify([convertMessage]));
+//     }
+//     return notifyArr;
+//   });
+// };
 
 const notificationHandle = ({ data }: FirebaseMessagingTypes.RemoteMessage) => {
   if (data && Object.keys(data).length !== 0) {
@@ -62,15 +67,6 @@ const notificationHandle = ({ data }: FirebaseMessagingTypes.RemoteMessage) => {
             1000,
           );
         }
-        return;
-      case 'MATE_ALARM':
-        storeNotification('default', message);
-        return;
-      case 'ROOM_ALARM':
-        storeNotification('default', message);
-        return;
-      case 'NOTICE_ALARM':
-        storeNotification('default', message);
         return;
       default:
         return;

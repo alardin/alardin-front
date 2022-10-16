@@ -9,6 +9,7 @@ import {
 import { pickerClicked, pickerMode } from '../../../../recoil/picker';
 import {
   alarmItemtoDate,
+  convertIsRepeat,
   dateToTimeString,
 } from '../../../../utils/home/convertDateTime';
 import {
@@ -91,7 +92,7 @@ const AlarmSettings = ({ setVisible }: IAlarmSettingsProps) => {
         ) : index === 1 ? (
           <SetItemDays
             key={`item_${index}`}
-            display={inputLabel.is_repeated as string}
+            display={convertIsRepeat(inputLabel.is_repeated) as string}
             setSetting={setSetting}
           />
         ) : index === 4 ? (

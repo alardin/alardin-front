@@ -7,6 +7,7 @@ import { defaultNotify, mateNotifyList } from '../../../recoil/notify/notify';
 import { isTrashMode } from '../../../recoil/notify/trashMode';
 import EventNotifyItem from '../../molecules/notify/EventNotifyItem';
 import MateNotifyItem from '../../molecules/notify/MateNotifyItem';
+import NoItem from '../../molecules/other/NoItem';
 
 interface INotifyListProps {
   type: 'default' | 'mate';
@@ -23,16 +24,16 @@ export interface INotifyDataType {
 }
 
 const NotifyList = ({ type }: INotifyListProps) => {
-  const [notifyData, setNotifyData] = useRecoilState(
-    type === 'default' ? defaultNotify : mateNotifyList,
-  );
+  const [notifyData, setNotifyData] = useRecoilState(defaultNotify);
   const [checkingArray, setCheckingArray] = useState<boolean[]>(
     Array(100).fill(false),
   );
   const trashMode = useRecoilValue(isTrashMode);
 
+  console.log(notifyData);
+
   useEffect(() => {
-    if (isTrashMode && type === 'default') {
+    if (isTrashMode) {
       const filterTrashArr = notifyData.filter(
         (_, index) => !checkingArray[index],
       );
@@ -44,25 +45,20 @@ const NotifyList = ({ type }: INotifyListProps) => {
 
   const renderItem: ListRenderItem<INotifyDataType> = ({ item, index }) => {
     return (
-      <>
-        {item.type === 'mate' ? (
-          <MateNotifyItem {...{ ...item }} />
-        ) : (
-          <EventNotifyItem
-            keyNumber={index}
-            value={checkingArray[index]}
-            handler={setCheckingArray}
-            isHidden={trashMode}
-            {...{ ...item }}
-          />
-        )}
-      </>
+      <EventNotifyItem
+        keyNumber={index}
+        value={checkingArray[index]}
+        handler={setCheckingArray}
+        isHidden={trashMode}
+        {...{ ...item }}
+      />
     );
   };
   return (
     <FlatList
       data={notifyData}
       renderItem={renderItem}
+      ListEmptyComponent={() => <NoItem title="알림" />}
       contentContainerStyle={{ height: '100%' }}
     />
   );

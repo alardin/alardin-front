@@ -45,6 +45,7 @@ const EventNotifyItem = ({
   isHidden,
   value,
   keyNumber,
+  thumbnail_image_url,
   handler,
 }: IEventNotfiyProps) => {
   // const [checked, setChecked] = useState<boolean>(false);
@@ -61,29 +62,37 @@ const EventNotifyItem = ({
     return { result };
   };
 
-  const { result } = convertTypeMessage(type);
+  // const { result } = convertTypeMessage(type);
+  const convertProps =
+    type === 'mate'
+      ? { uri: thumbnail_image_url }
+      : type === 'announce'
+      ? { local: require('../../../assets/icons/ic-announce.png') }
+      : type === 'event'
+      ? { local: require('../../../assets/icons/ic-event.png') }
+      : { local: require('../../../assets/icons/ic-info.png') };
 
   return (
     <NotifyBox width="100%" height="100px" bgColor={theme.color.white} row>
       <IconBox>
         <ProfileIcon
           size={64}
-          local={
-            type === 'mate'
-              ? require('../../../assets/icons/ic-users.svg')
-              : type === 'announce'
-              ? require('../../../assets/icons/ic-announce.png')
-              : type === 'event'
-              ? require('../../../assets/icons/ic-event.png')
-              : require('../../../assets/icons/ic-info.png')
-          }
+          {...convertProps}
+          // local={
+          //   type === 'mate'
+          //     ? { uri: thumbnail_image_url }
+          //     : type === 'announce'
+          //     ? require('../../../assets/icons/ic-announce.png')
+          //     : type === 'event'
+          //     ? require('../../../assets/icons/ic-event.png')
+          //     : require('../../../assets/icons/ic-info.png')
+          // }
         />
       </IconBox>
       <TextBox>
         <Content size="s" options="semiBold">
           {content}
         </Content>
-        <Content size="s">{result}</Content>
         <Text size="xs">{convertNotifyDate(date)}</Text>
       </TextBox>
       <CheckContainer>

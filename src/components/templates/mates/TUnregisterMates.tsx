@@ -4,27 +4,27 @@ import UnregisteredMate from '../../organisms/mates/UnregisteredMate';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import AcceptFriends from '../../molecules/mates/AcceptFriends';
 import InviteFriends from '../../molecules/mates/InviteFriends';
+import { useRecoilValue } from 'recoil';
+import { loginPlatform } from '../../../recoil/authorization';
 
 const TUnregisterMates = () => {
-  const [isKakaoAgree, setIsKakaoAgree] = useState<boolean>(true);
-
-  const bringStorageScopes = useCallback(async () => {
-    const jsonScopes = await EncryptedStorage.getItem('scopes');
-    if (jsonScopes) {
-      const scopes = JSON.parse(jsonScopes);
-      console.log(scopes);
-      setIsKakaoAgree(scopes.includes('friends'));
-    }
-  }, []);
+  const userPlatform = useRecoilValue(loginPlatform);
+  const [isKakaoAgree, setIsKakaoAgree] = useState<boolean>(false);
 
   const kakaoFriends = useMatesList('kakaoFriends');
 
   useEffect(() => {
-    bringStorageScopes();
-    return () => setIsKakaoAgree(true);
+    if (userPlatform === 'kakao') {
+      EncryptedStorage.getItem('scopes').then(jsonScopes => {
+        if (jsonScopes) {
+          const scopes = JSON.parse(jsonScopes);
+          console.log(scopes);
+          setIsKakaoAgree(scopes.includes('friends'));
+        }
+      });
+    }
+    return () => setIsKakaoAgree(false);
   }, []);
-
-  console.log(kakaoFriends);
 
   return (
     <>

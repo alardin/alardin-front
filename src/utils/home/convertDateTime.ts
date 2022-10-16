@@ -9,6 +9,12 @@ export const convertDay = (day: number) => {
   return day === 0 ? '없음' : dayString[day];
 };
 
+export const convertIsRepeat = (repeatStr: string) => {
+  const dayString = ['월', '화', '수', '목', '금', '토', '일'];
+  const checkArr = repeatStr.split(',');
+  return checkArr.map(day => dayString.indexOf(day) + 1).join('');
+};
+
 export const convertNotifyDay = (day: number) => {
   const dayString = ['일', '월', '화', '수', '목', '금', '토'];
   return dayString[day];

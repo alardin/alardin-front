@@ -126,7 +126,6 @@ export const myAttendAlarmList = selector<IAlarmInfoData[]>({
     const convertData = joinedAlarms.map(data => ({
       ...data,
       is_repeated: convertRepeatDay(data.is_repeated),
-      time: data.time ? convertTime(data.time) : data.time,
     }));
     return convertData;
   },
@@ -148,11 +147,9 @@ export const matesAttendAlarmList = selector<IAlarmInfoData[]>({
       mateAlarm => !myAlarmList.some(myAlarm => mateAlarm.id === myAlarm.id),
     );
     const convertData = removeJoinedAlarm.map(data => {
-      const time = data.time ? convertTime(data.time) : data.time;
       return {
         ...data,
         is_repeated: convertRepeatDay(data.is_repeated),
-        time,
       };
     });
     return convertData;
