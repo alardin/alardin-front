@@ -11,7 +11,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../../../../navigation/stack/StackNavigation';
 import { TouchableOpacity } from 'react-native';
 import themeColor from '../../../../theme/theme';
-import { isToday } from '../../../../utils/home/convertDateTime';
+import { convertTime, isToday } from '../../../../utils/home/convertDateTime';
 
 type IAlarmAttendNavigation = StackNavigationProp<
   RootStackParamList,
@@ -72,7 +72,7 @@ const AlarmInfo = (props: IAlarmInfoProps) => {
   } = props;
   const [today, setToday] = useState<boolean>(false);
 
-  const splitedTime = time?.split(' ');
+  const splitedTime = convertTime(time)?.split(' ');
 
   const navigation = useNavigation<IAlarmAttendNavigation>();
   const handlePress = () => {
@@ -81,7 +81,7 @@ const AlarmInfo = (props: IAlarmInfoProps) => {
 
   useEffect(() => {
     if (time) {
-      setToday(isToday(time));
+      setToday(isToday(convertTime(time)));
     }
   }, [time]);
 

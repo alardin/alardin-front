@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 import bottomVisible from '../../../recoil/bottomVisible';
@@ -22,7 +22,8 @@ const TextBox = styled(Box)`
 `;
 
 const NotifyConfirm = () => {
-  const setVisible = useSetRecoilState(bottomVisible);
+  const [, setVisible] = useState<boolean>(false);
+  // const setVisible = useSetRecoilState(bottomVisible);
   const { type, nickname, thumbnail_image_url } =
     useRecoilValue(bottomNotifyInfo);
 

@@ -50,6 +50,11 @@ const Header = ({ lastestAlarm }: IHeaderProps) => {
           lastestAlarm.state === 'hasValue' ? lastestAlarm.contents.time : '',
         ),
       });
+    } else {
+      setNextData({
+        date: '',
+        time: '',
+      });
     }
   }, [lastestAlarm]);
 

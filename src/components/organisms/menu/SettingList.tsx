@@ -3,7 +3,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import Box from '../../atoms/box/Box';
-import Container from '../../atoms/container/Container';
 import MenuButton from '../../molecules/menu/MenuButton';
 import MenuInfo from '../../molecules/menu/MenuInfo';
 

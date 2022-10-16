@@ -37,6 +37,7 @@ const useNextAlarm = (alarmData: IAlarmInfoData[]) => {
 
     setData(sortedArr[0]);
   }, [alarmData]);
+
   return data;
 };
 

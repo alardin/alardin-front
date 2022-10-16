@@ -1,9 +1,5 @@
-import { addFriendsAccess } from '@react-native-seoul/kakao-login';
 import React from 'react';
-import { useSetRecoilState } from 'recoil';
 import styled from 'styled-components/native';
-import { renewalTokenByAgreement } from '../../../recoil/authorization';
-import EncryptedStorage from 'react-native-encrypted-storage';
 import theme from '../../../theme/theme';
 import Box from '../../atoms/box/Box';
 import Button from '../../atoms/button/Button';

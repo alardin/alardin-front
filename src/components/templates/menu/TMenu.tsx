@@ -8,6 +8,7 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import {
   IAuthorization,
   IMyProfile,
+  loginPlatform,
   myProfile,
   token,
 } from '../../../recoil/authorization';
@@ -16,17 +17,25 @@ import ProfileBox from '../../organisms/menu/ProfileBox';
 import SettingList from '../../organisms/menu/SettingList';
 import alardinApi from '../../../utils/alardinApi';
 import axios from 'axios';
+import SwitchList from '../../organisms/menu/SwitchList';
 
 const TMenu = () => {
   const navigation = useNavigation<any>();
   const me = useRecoilValue(myProfile);
 
+  const [profile, setProfile] = useState<IMyProfile>({} as IMyProfile);
+  const [isPremium, setIsPremium] = useState<boolean>(false);
+
+  console.log(me);
   const setAuthorization = useSetRecoilState(token);
+  const setLoginPlatform = useSetRecoilState(loginPlatform);
+
   const handleLogout = async () => {
     await EncryptedStorage.removeItem('appAccessToken');
     await EncryptedStorage.removeItem('appRefreshToken');
     // await AsyncStorage.removeItem('notifyStorage');
     setAuthorization({} as IAuthorization);
+    setLoginPlatform('none');
     await logout();
   };
 
@@ -37,31 +46,29 @@ const TMenu = () => {
       await AsyncStorage.removeItem('notifyStorage');
       await unlink();
       setAuthorization({} as IAuthorization);
+      setLoginPlatform('none');
     });
   };
 
-  const handlePressOne = () => {
-    // navigation.navigate('SingleGameStart', { id: me.id, alarmId: 0 });
-    // soundAlarm();
-    // navigation.navigate({
-    //   name: 'CallScreen',
-    //   params: {
-    //     id: 2,
-    //     alarmId: 44,
-    //     nickname: '이상혁',
-    //     userType: 'A',
-    //     thumbnail_image_url:
-    //       'http://k.kakaocdn.net/dn/y4RJA/btqDmsGeqzy/gHEgXJJQgp5paxkG1PU8m0/img_110x110.jpg',
-    //   },
-    // });
-    // console.log('notify');
-    // PushNotification.localNotification({
-    //   channelId: 'alardin-channel-id',
-    //   title: 'Notification Test',
-    //   message: '하이루~~',
-    //   playSound: false,
-    // });
-  };
+  const swtichItems = [
+    {
+      title: '프로필 공개 설정',
+      value: profile.is_private,
+      handler: async (args: any) => {
+        const { nickname, bio, profile_image_url, thumbnail_image_url } =
+          profile;
+        console.log(args, profile);
+        const response = await alardinApi.post('/users/edit', {
+          nickname,
+          bio,
+          profile_image_url,
+          thumbnail_image_url,
+          is_private: args,
+        });
+        console.log(response);
+      },
+    },
+  ];
 
   const appItems = [
     {
@@ -70,8 +77,8 @@ const TMenu = () => {
       handlePress: () =>
         navigation.navigate('CallScreen', { id: me.id, alarmId: 51 }),
       // navigation.navigate('WebScreen', {
-      //   mode: 'WEB',
-      //   uri: 'https://www.google.com',
+      // mode: 'WEB',
+      // uri: 'https://www.google.com',
       // }),
     },
     {
@@ -86,7 +93,20 @@ const TMenu = () => {
     {
       type: 'button_no-icon',
       key: '개인정보 처리방침',
-      handlePress: () => navigation.navigate('WebScreen', { mode: 'POLICY' }),
+      handlePress: () =>
+        navigation.navigate('WebScreen', {
+          mode: 'WEB',
+          uri: 'https://alard.in/terms/personal',
+        }),
+    },
+    {
+      type: 'button_no-icon',
+      key: '서비스이용약관',
+      handlePress: () =>
+        navigation.navigate('WebScreen', {
+          mode: 'WEB',
+          uri: 'https://alard.in/terms/service',
+        }),
     },
     { type: 'info', key: '앱 버전', value: '1.0.0' },
     {
@@ -100,9 +120,6 @@ const TMenu = () => {
       handlePress: handleLogout,
     },
   ];
-
-  const [profile, setProfile] = useState<IMyProfile>({} as IMyProfile);
-  const [isPremium, setIsPremium] = useState<boolean>(false);
 
   useEffect(() => {
     axios.all([alardinApi.get('/users'), alardinApi.get('/assets')]).then(
@@ -119,6 +136,9 @@ const TMenu = () => {
     <>
       <ScrollView>
         <ProfileBox premium={isPremium} profile={profile} />
+        {Object.keys(profile).length !== 0 && (
+          <SwitchList title="앱 설정" data={swtichItems} />
+        )}
         <SettingList title="앱 설정" data={appItems} />
         <AdBox />
       </ScrollView>

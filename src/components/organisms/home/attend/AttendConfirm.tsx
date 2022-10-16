@@ -86,6 +86,9 @@ const AttendConfirm = ({
     });
   };
 
+  const leftLabels = ['시간', '반복', '게임'];
+  const rightLabels = [time, isRepeated, gameName];
+
   return (
     <CustomBox
       width="95%"
@@ -98,24 +101,14 @@ const AttendConfirm = ({
       </TopBox>
       <BottomBox bgColor={theme.color.gray_100}>
         <RoomText options="semiBold">{name}</RoomText>
-        <TextBox>
-          <Text size="s" colorName={theme.color.gray_600}>
-            시간
-          </Text>
-          <Text size="s">{time}</Text>
-        </TextBox>
-        <TextBox>
-          <Text size="s" colorName={theme.color.gray_600}>
-            반복
-          </Text>
-          <Text size="s">{isRepeated}</Text>
-        </TextBox>
-        <TextBox>
-          <Text size="s" colorName={theme.color.gray_600}>
-            게임
-          </Text>
-          <Text size="s">{gameName}</Text>
-        </TextBox>
+        {rightLabels.map((value, index) => (
+          <TextBox key={`label_${index}`}>
+            <Text size="s" colorName={theme.color.gray_600}>
+              {leftLabels[index]}
+            </Text>
+            <Text size="s">{value}</Text>
+          </TextBox>
+        ))}
       </BottomBox>
       <Box row>
         <CustomButton

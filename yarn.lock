@@ -2636,6 +2636,11 @@
   "resolved" "https://registry.npmjs.org/@types/json5/-/json5-0.0.29.tgz"
   "version" "0.0.29"
 
+"@types/lodash@^4.14.186":
+  "integrity" "sha512-eHcVlLXP0c2FlMPm56ITode2AgLMSa6aJ05JTTbYbI+7EMkCEE5qk2E41d5g2lCVTqRe0GnnRFurmlCsDODrPw=="
+  "resolved" "https://registry.npmjs.org/@types/lodash/-/lodash-4.14.186.tgz"
+  "version" "4.14.186"
+
 "@types/node@*":
   "integrity" "sha512-KcfkBq9H4PI6Vpu5B/KoPeuVDAbmi+2mDBqGPGUgoL7yXQtcWGu2vJWmmRkneWK3Rh0nIAX192Aa87AqKHYChQ=="
   "resolved" "https://registry.npmjs.org/@types/node/-/node-18.6.2.tgz"
@@ -11627,11 +11632,6 @@
   "integrity" "sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA=="
   "resolved" "https://registry.npmjs.org/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz"
   "version" "3.0.4"
-
-"react-native-admob-native-ads@^0.6.0":
-  "integrity" "sha512-KBqdks/+LawXncQXb6kIUBhiOlkcK95o5jrKFjsUTaoudqzYvynI8gv/eBLjBT0p28G/BV2pzI9gEbnyLQ0NpQ=="
-  "resolved" "https://registry.npmjs.org/react-native-admob-native-ads/-/react-native-admob-native-ads-0.6.0.tgz"
-  "version" "0.6.0"
 
 "react-native-agora@^3.7.1":
   "integrity" "sha512-meArJ8YQoZZb4UP2qZEAGWtEJYu/LrOcD/d0sH5BIhwKWZzuLYwN6E/hzlYnd4iWDbuPvaW0dgKCN/RgsoAr3A=="

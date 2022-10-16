@@ -8,6 +8,9 @@ import axios from 'axios';
 import Config from 'react-native-config';
 import alardinApi from '../utils/alardinApi';
 import { KakaoOAuthToken } from '@react-native-seoul/kakao-login';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+export type LoginPlatformType = 'kakao' | 'google' | 'apple' | 'none';
 
 export interface IMyProfile {
   id: number;
@@ -22,6 +25,7 @@ export interface IMyProfile {
   age_range: string;
   gender: string;
   is_admin: boolean;
+  is_private: boolean;
   device_token: string;
   refresh_token: string;
   kakao_access_token: string;
@@ -95,6 +99,24 @@ export const myProfile = atom({
         isReset
           ? EncryptedStorage.removeItem('myProfile')
           : EncryptedStorage.setItem('myProfile', JSON.stringify(newValue));
+      });
+    },
+  ],
+});
+
+export const loginPlatform = atom<LoginPlatformType>({
+  key: 'loginPlatform',
+  default: 'none',
+  effects: [
+    ({ setSelf, onSet }) => {
+      AsyncStorage.getItem('loginPlatform').then(
+        savedValue => savedValue !== null && setSelf(JSON.parse(savedValue)),
+      );
+
+      onSet((newValue, _, isReset) => {
+        isReset
+          ? AsyncStorage.removeItem('loginPlatform')
+          : AsyncStorage.setItem('loginPlatform', JSON.stringify(newValue));
       });
     },
   ],

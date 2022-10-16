@@ -59,6 +59,7 @@ const TAttend = ({ route, navigation }: IAlarmAttendScreen) => {
   const isFull = Members.length === max_member;
 
   console.log(Host);
+  console.log(time);
 
   const ProfileCallback = useCallback(async () => {
     const profileJson = await EncryptedStorage.getItem('myProfile');
@@ -97,19 +98,6 @@ const TAttend = ({ route, navigation }: IAlarmAttendScreen) => {
           index: 0,
           routes: [{ name: 'BottomNavigation' }],
         });
-        // await alardinApi
-        //   .post(`/alarm/message/host/${id}`, {
-        //     title: `${time} 알람 삭제 발생`,
-        //     body: `${Host.nickname}님께서 ${time} 알람방을 삭제했습니다.`,
-        //     data: {
-        //       type: 'ROOM_ALARM',
-        //       message: JSON.stringify({
-        //         type: 'room',
-        //         content: `${Host.nickname}님께서 ${time} 알람방을 삭제했습니다.`,
-        //         date: new Date(Date.now()).toISOString(),
-        //       }),
-        //     },
-        //   })
       })
       .catch(err => {
         if (err.response.status === 403) {

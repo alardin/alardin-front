@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 /* eslint-disable @typescript-eslint/naming-convention */
 
 import { StackScreenProps } from '@react-navigation/stack';
@@ -14,13 +15,17 @@ import { alarmListRefresh } from '../../../recoil/home/alarmList';
 import {
   gameMetaData,
   initialRecoilSetting,
+  pickerMetaData,
   settingData,
   settingLabel,
 } from '../../../recoil/home/alarmSettings';
 import BottomScreen from '../../../screen/BottomScreen';
 import Pickers from '../../../screen/Pickers';
 import alardinApi from '../../../utils/alardinApi';
-import { convertTime } from '../../../utils/home/convertDateTime';
+import {
+  convertIsRepeat,
+  convertTime,
+} from '../../../utils/home/convertDateTime';
 import Box from '../../atoms/box/Box';
 import Button from '../../atoms/button/Button';
 import Container from '../../atoms/container/Container';
@@ -30,11 +35,7 @@ import StatusScreen from '../../organisms/home/create/StatusScreen';
 type IAlarmRetouchScreen = StackScreenProps<RootStackParamList, 'AlarmRetouch'>;
 
 const ConfirmButton = styled(Button)`
-  margin: 10px 0;
-`;
-
-const ButtonBox = styled(Box)`
-  margin-bottom: 80px;
+  margin-top: 20px;
 `;
 
 const TRetouch = ({ route, navigation }: IAlarmRetouchScreen) => {
@@ -44,7 +45,6 @@ const TRetouch = ({ route, navigation }: IAlarmRetouchScreen) => {
     is_repeated,
     is_private,
     music_name,
-    music_volume,
     max_member,
     Host,
     Game,
@@ -67,19 +67,7 @@ const TRetouch = ({ route, navigation }: IAlarmRetouchScreen) => {
     }
     console.log(setting);
     try {
-      await alardinApi.put('/alarm', { ...setting });
-      // await alardinApi.post(`/alarm/message/member/${id}`, {
-      //   title: `${time} 알람 수정 발생`,
-      //   body: `${Host.nickname}님께서 ${time} 알람방을 수정했습니다.`,
-      //   data: {
-      //     type: 'ROOM_ALARM',
-      //     message: JSON.stringify({
-      //       type: 'room',
-      //       content: `${Host.nickname}님께서 ${time} 알람방을 수정했습니다.`,
-      //       date: new Date(Date.now()).toISOString(),
-      //     }),
-      //   },
-      // });
+      await alardinApi.put(`/alarm/${id}`, { ...setting });
     } catch (err) {
       console.log('did not upload!');
     } finally {
@@ -96,20 +84,23 @@ const TRetouch = ({ route, navigation }: IAlarmRetouchScreen) => {
       setSetting({
         time,
         is_private,
-        is_repeated,
         name,
-        music_volume,
         max_member,
         music_name,
+        is_repeated:
+          is_repeated === '없음' ? '0' : convertIsRepeat(is_repeated),
         Game_id: Game.id,
+        music_volume: 90,
       });
       setInputLabel({
-        time: convertTime(initialRecoilSetting.time),
+        time: initialRecoilSetting.time,
         is_private,
         name,
-        is_repeated: is_repeated,
-        music_name,
-        Game_id: Game.id,
+        is_repeated,
+        music_name: pickerMetaData[0].data.filter(
+          item => item.value === music_name,
+        )[0].label,
+        Game_id: Game.name,
       });
     }
   }, [gameList]);
@@ -122,19 +113,17 @@ const TRetouch = ({ route, navigation }: IAlarmRetouchScreen) => {
         <StatusScreen type="error" />
       ) : (
         <>
-          <ScrollView>
+          <ScrollView contentContainerStyle={{ backgroundColor: 'white' }}>
             <Container>
               <AlarmSettings {...{ setVisible }} />
-              <ButtonBox center>
-                <ConfirmButton
-                  width="100%"
-                  height="xl"
-                  options="primary"
-                  center
-                  onPress={requestData}>
-                  알람 수정
-                </ConfirmButton>
-              </ButtonBox>
+              <ConfirmButton
+                width="100%"
+                height="xl"
+                options="primary"
+                center
+                onPress={requestData}>
+                알람 수정
+              </ConfirmButton>
             </Container>
           </ScrollView>
           {Platform.OS === 'ios' ? (

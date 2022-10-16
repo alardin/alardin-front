@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components/native';
 import { ISummaryData } from '../../../../recoil/home/summary';
-import { isToday } from '../../../../utils/home/convertDateTime';
+import { convertTime, isToday } from '../../../../utils/home/convertDateTime';
 import Box from '../../../atoms/box/Box';
 import Container from '../../../atoms/container/Container';
 import Text from '../../../atoms/text/Text';
@@ -40,7 +40,7 @@ const SummaryText = ({
   const [today, setToday] = useState<boolean>(false);
   useEffect(() => {
     if (time) {
-      setToday(isToday(time));
+      setToday(isToday(convertTime(time) && convertTime(time)));
     }
   }, [time]);
 
@@ -66,7 +66,9 @@ const SummaryText = ({
           ? '오늘'
           : '내일'}
       </CustomHighlightedText>
-      <CustomHighlightedText size="xl">{time}</CustomHighlightedText>
+      <CustomHighlightedText size="xl">
+        {convertTime(time)}
+      </CustomHighlightedText>
       <TextBox row>
         <CustomHighlightedText size="xl">{Game_id}</CustomHighlightedText>
         <CustomText size="xl">로 깨워드려요!</CustomText>
