@@ -31,6 +31,12 @@ import appleAuth, {
 import 'react-native-get-random-values';
 import { v4 as uuid } from 'uuid';
 import KakaoButton from '../components/molecules/other/KakaoButton';
+import AlardinIcon from '../assets/icons/ic_alardin.svg';
+import AlardinText from '../assets/icons/ic_alardin_text.svg';
+
+const CustomContainer = styled.SafeAreaView`
+  background-color: ${({ theme }) => theme.color.primary_600};
+`;
 
 const TopBox = styled(Box)`
   height: 60%;
@@ -121,6 +127,7 @@ const Login = () => {
     if (credentialState === appleAuth.State.AUTHORIZED) {
       const { email, fullName, identityToken, nonce } =
         appleAuthRequestResponse;
+      console.log(email, fullName);
       axios({
         method: 'POST',
         url: `${Config.ENDPOINT}/api/auth/apple`,
@@ -143,16 +150,11 @@ const Login = () => {
   };
 
   return (
-    <SafeAreaView>
+    <CustomContainer>
       <Container>
         <TopBox center>
-          <Image
-            style={{ width: 120, height: 120, marginBottom: 20 }}
-            source={require('../assets/images/clock.png')}
-          />
-          <Text size="xl" options="semiBold">
-            Alardin
-          </Text>
+          <AlardinIcon width={120} height={120} fill="#FFFFFF" />
+          <AlardinText width={120} height={64} fill="#172E48" />
         </TopBox>
         <BottomBox center>
           <KakaoButton onPress={loginWithKakao} />
@@ -166,7 +168,7 @@ const Login = () => {
           )}
         </BottomBox>
       </Container>
-    </SafeAreaView>
+    </CustomContainer>
   );
 };
 

@@ -81,7 +81,7 @@ const MateNotifyItem = ({
         response,
       });
     } else {
-      await alardinApi.delete('/mate/request');
+      await alardinApi.delete(`/mate/request?receiverId=${Number(id)}`);
     }
     mateRefresher(v => v + 1);
   };

@@ -30,6 +30,7 @@ interface IGameTokenData {
   rtcToken: string;
   rtmToken: string;
   uid: string;
+  gameId: number;
   gameData: [{ [key: string]: any }];
   channelName: string;
 }
@@ -57,11 +58,13 @@ const GameStart = ({ route, navigation }: GameStartProps) => {
   const [steadyMe, setSteadyMe] = useState<boolean | null>(null);
   const [steadyOther, setSteadyOther] = useState<boolean | null>(null);
 
-  const engine = useRecoilValue(rtcEngine);
+  const [engine, setEngine] = useRecoilState(rtcEngine);
   const [agora, setAgora] = useRecoilState(rtcState);
   // const [gamePlayState, setGamePlayState] = useRecoilState(gameState);
 
   const [checkSucess, setCheckSuccess] = useState<boolean>(false);
+
+  console.log(engine);
 
   let limitUntilStart: any;
   let webViewRef = useRef<WebView>();
@@ -71,7 +74,9 @@ const GameStart = ({ route, navigation }: GameStartProps) => {
   };
 
   const initialRtmAgoraEngine = async () => {
-    await client.createInstance(Config.AGORA_APP_ID);
+    await client
+      .createInstance(Config.AGORA_APP_ID)
+      .catch(err => console.log(`create instance error: ${err}`));
 
     console.log('create instance');
     console.log(client);
@@ -141,9 +146,14 @@ const GameStart = ({ route, navigation }: GameStartProps) => {
 
   const sendNeedGameStart = () => {
     console.log('userType: ' + userType);
-    const convertData = sendGameData(1, gameDataState?.gameData, userType);
     console.log(gameDataState?.gameData);
-    console.log(convertData[userType]);
+    const convertData = sendGameData(
+      gameDataState?.gameId,
+      gameDataState?.gameData,
+      userType,
+    );
+    console.log('user cehcking');
+    console.log(convertData);
     webViewRef.current?.postMessage(
       JSON.stringify({
         type: 'GAME_START',
@@ -151,6 +161,17 @@ const GameStart = ({ route, navigation }: GameStartProps) => {
         //   currentUser: String.fromCharCode(65 + userType),
         //   images: [...gameDataState?.gameData[0].images],
         // },
+        // message: {
+        //   subject:
+        //     gameDataState?.gameData[0].images[
+        //       gameDataState?.gameData[gameDataState?.gameData.length - 1].answerIndex
+        //     ],
+        //   images: gameDataState?.gameData[gameDataState?.gameData.length - 1].images,
+        //   answer:
+        //     gameDataState?.gameData[gameDataState?.gameData.length - 1].images[
+        //       gameDataState?.gameData[0].answerIndex
+        //     ],
+        // }
         message: convertData ? { ...convertData[userType] } : {}, // Picoke 게임일 경우
       }),
     );
@@ -165,20 +186,41 @@ const GameStart = ({ route, navigation }: GameStartProps) => {
     setGameDataState({
       rtmToken,
       rtcToken,
+      gameId: Game_id,
       uid: String(id),
       gameData,
       channelName,
     });
     setAgora(prevState => ({ ...prevState, channelName }));
     console.log(`state: ${channelName}`);
-    return { rtmToken, rtcToken, uid: String(id), channelName };
+    return {
+      rtmToken,
+      rtcToken,
+      uid: String(id),
+      channelName,
+      gameId: Game_id,
+    };
   };
 
   const leaveChannel = async (gameNum: number) => {
-    await engine?.leaveChannel();
-    await client?.leaveChannel(agora.channelName);
-    client?.logout();
-    setAgora(prevState => ({ ...prevState, peerIds: [], joinSucceed: false }));
+    engine
+      ?.leaveChannel()
+      .catch(err => console.log(`error from engine leavechannel: ${err}`));
+    client
+      ?.leaveChannel(agora.channelName)
+      .then(() =>
+        client?.logout().catch(err => console.log(`error from logout: ${err}`)),
+      )
+      .catch(err => console.log(`error from client leavechannel: ${err}`));
+    setEngine(undefined);
+    setAgora({
+      channelName: '',
+      joinSucceed: false,
+      openMicrophone: true,
+      enableSpeakerphone: true,
+      playEffect: false,
+      peerIds: [],
+    });
     navigation.reset({
       index: 0,
       routes: [{ name: 'GameEnd', params: { gameId: gameNum } }],
@@ -188,26 +230,30 @@ const GameStart = ({ route, navigation }: GameStartProps) => {
   const switchMicrophone = () => {
     console.log('check mic');
     console.log(agora.openMicrophone);
-    engine
-      ?.enableLocalAudio(!agora.openMicrophone)
-      .then(() => {
-        setAgora(prevState => ({
-          ...prevState,
-          openMicrophone: !agora.openMicrophone,
-        }));
-      })
-      .catch(err => console.log(err));
+    if (agora.openMicrophone === false) {
+      engine
+        ?.enableLocalAudio(!agora.openMicrophone)
+        .then(() => {
+          setAgora(prevState => ({
+            ...prevState,
+            openMicrophone: !agora.openMicrophone,
+          }));
+        })
+        .catch(err => console.log(err));
+    }
   };
 
   const switchSpeakerphone = () => {
     console.log('speaker phone');
     console.log(agora.enableSpeakerphone);
-    engine?.setEnableSpeakerphone(!agora.enableSpeakerphone).then(() => {
-      setAgora(prevState => ({
-        ...prevState,
-        enableSpeakerphone: !agora.openMicrophone,
-      }));
-    });
+    if (!engine?.isSpeakerphoneEnabled()) {
+      engine?.setEnableSpeakerphone(!agora.enableSpeakerphone).then(() => {
+        setAgora(prevState => ({
+          ...prevState,
+          enableSpeakerphone: !agora.openMicrophone,
+        }));
+      });
+    }
   };
 
   const handleMessage = async ({
@@ -236,10 +282,17 @@ const GameStart = ({ route, navigation }: GameStartProps) => {
         return;
       case 'OUTPUT_DATA':
         console.log(`game id`);
-        console.log(message.Game_id);
+        console.log({
+          ...message,
+          Game_id: gameDataState?.gameId,
+          is_cleared: true,
+          Alarm_id: alarmId,
+        });
+
         await alardinApi.post('/game/save', {
           ...message,
-          // Game_channel_id: Number(gameData?.channelName),
+          Game_id: gameDataState?.gameId,
+          is_cleared: true,
           Alarm_id: alarmId,
         });
         await leaveChannel(message.Game_id);
@@ -270,11 +323,13 @@ const GameStart = ({ route, navigation }: GameStartProps) => {
       ?.loginV2(uid, rtmToken)
       .then(() => {
         console.log(`login!!`);
+        console.log(channelName);
         client
-          .joinChannel(channelName)
-          .then(() => console.log('channel ok, ' + channelName));
+          ?.joinChannel(channelName)
+          .then(() => console.log('channel ok, ' + channelName))
+          .catch(err => console.log(`error from client joinchannel: ${err}`));
       })
-      .catch(err => console.log(err));
+      .catch(err => console.log(`loginV2 error: ${err}`));
   };
 
   useEffect(() => {
@@ -322,14 +377,8 @@ const GameStart = ({ route, navigation }: GameStartProps) => {
       joinChannel()
         .then(() => {
           console.log('rtc joined!');
-          if (!agora.openMicrophone) {
-            console.log(agora.openMicrophone);
-            switchMicrophone();
-          }
-          if (!agora.enableSpeakerphone) {
-            console.log(agora.openMicrophone);
-            switchSpeakerphone();
-          }
+          switchMicrophone();
+          switchSpeakerphone();
         })
         .catch(err => {
           console.log(`the device can't connect to the channel id : ${err}`);
@@ -337,9 +386,6 @@ const GameStart = ({ route, navigation }: GameStartProps) => {
     }
     return () => {
       unsubscribeAppState.remove();
-      engine?.leaveChannel();
-      client.leaveChannel(agora.channelName);
-      client?.logout();
     };
   }, []);
 
@@ -388,7 +434,7 @@ const GameStart = ({ route, navigation }: GameStartProps) => {
             onLoad={handleInitialGame}
             javaScriptEnabled
             scrollEnabled={false}
-            source={{ uri: 'http://172.16.101.173:3030' }}
+            source={{ uri: 'http://192.168.0.13:3030' }}
             style={{
               flex: 1,
             }}

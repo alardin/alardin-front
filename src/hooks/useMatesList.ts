@@ -11,21 +11,25 @@ const useMatesList = (parmas: 'kakaoFriends' | 'mates') => {
   useEffect(() => {
     alardinApi.get('/mate').then(res => {
       const responseData = res.data.data;
-      const matesThumbnails = responseData.mates.map(
-        (friends: any) => friends.nickname,
-      );
-      const convertKakaoData = responseData.kakaoFriends.map((friend: any) => ({
-        kakao_id: friend.id,
-        thumbnail_image_url: friend.profile_thumbnail_image,
-        nickname: friend.profile_nickname,
-      }));
-      const filteredKakao = convertKakaoData.filter(
-        (friend: any) => !matesThumbnails.includes(friend.nickname),
-      );
-      setData({
-        kakaoFriends: filteredKakao,
-        mates: responseData.mates,
-      });
+      if (responseData) {
+        const matesThumbnails = responseData.mates.map(
+          (friends: any) => friends.nickname,
+        );
+        const convertKakaoData = responseData.kakaoFriends?.map(
+          (friend: any) => ({
+            kakao_id: friend.id,
+            thumbnail_image_url: friend.profile_thumbnail_image,
+            nickname: friend.profile_nickname,
+          }),
+        );
+        const filteredKakao = convertKakaoData?.filter(
+          (friend: any) => !matesThumbnails.includes(friend.nickname),
+        );
+        setData({
+          kakaoFriends: filteredKakao,
+          mates: responseData.mates,
+        });
+      }
     });
     return () => setData({} as IMateListDataType);
   }, [refresher]);

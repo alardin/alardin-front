@@ -71,7 +71,4 @@ buck-out/
 .env.development
 .env.production
 
-# lock
-package-lock.json
-
 ios/tmp.xcconfig

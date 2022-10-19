@@ -8,7 +8,9 @@ import Text from '../../../atoms/text/Text';
 interface IGameProfileProps {
   name: string;
   thumbnail_url: string;
+  isPaid: boolean;
   price: number;
+  setVisible: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const CustomBox = styled(Box)`
@@ -30,10 +32,21 @@ const TextBox = styled(Box)`
 `;
 
 const ConfirmButton = styled(Button)`
-  margin-top: 20px;
+  margin-top: 8px;
 `;
 
-const GameProfile = ({ name, thumbnail_url, price }: IGameProfileProps) => {
+const GameProfile = ({
+  name,
+  thumbnail_url,
+  price,
+  isPaid,
+  setVisible,
+}: IGameProfileProps) => {
+  const handlePress = async () => {
+    setVisible(true);
+  };
+
+  const priceText = isPaid ? '구매 완료' : price === 0 ? '무료' : `${price} G`;
   return (
     <CustomBox row>
       <LeftContainer>
@@ -41,9 +54,14 @@ const GameProfile = ({ name, thumbnail_url, price }: IGameProfileProps) => {
       </LeftContainer>
       <TextBox>
         <Text options="semiBold">{name}</Text>
-        <Text size="s">{`알람코인 : ${price}`}</Text>
-        <ConfirmButton width="80px" height="s" options="primary" center>
-          게임 구매
+        <ConfirmButton
+          width="80px"
+          height="s"
+          options="primary"
+          center
+          disabled={isPaid}
+          onPress={handlePress}>
+          {priceText}
         </ConfirmButton>
       </TextBox>
     </CustomBox>

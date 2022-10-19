@@ -32,6 +32,7 @@ import StoreNotification from './recoil/notify/storageNotify';
 
 import { LogBox } from 'react-native';
 import _ from 'lodash';
+import SplashScreen from 'react-native-splash-screen';
 
 LogBox.ignoreLogs(['componentWillUpdate']);
 const _console = _.clone(console);
@@ -149,6 +150,12 @@ const App = () => {
   useEffect(() => {
     handleMessage();
   }, [handleMessage]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      SplashScreen.hide();
+    }, 1000);
+  }, []);
 
   useEffect(() => {
     requestUserPermission();

@@ -1,15 +1,17 @@
-#import <Firebase.h>
 #import "AppDelegate.h"
-#import <RNKakaoLogins.h>
 
 #import <React/RCTBridge.h>
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
+#import "RNSplashScreen.h"
 
 #import <React/RCTAppSetupUtils.h>
 
 #import <UserNotifications/UserNotifications.h>
 #import <RNCPushNotificationIOS.h>
+
+#import <Firebase.h>
+#import <RNKakaoLogins.h>
 
 #import <AVFoundation/AVFoundation.h>
 #import <TSBackgroundFetch/TSBackgroundFetch.h>
@@ -71,7 +73,7 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
        center.delegate = self;
      }
    }];
-
+  
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
   UIViewController *rootViewController = [UIViewController new];
   rootViewController.view = rootView;
@@ -82,7 +84,8 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
   [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
   // [REQUIRED] Register BackgroundFetch
   [[TSBackgroundFetch sharedInstance] didFinishLaunching];
-  
+
+  [RNSplashScreen show];
   return YES;
 }
 

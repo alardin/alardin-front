@@ -11,6 +11,7 @@ import { toastEnable } from '../utils/Toast';
 import EncryptedStorage from 'react-native-encrypted-storage';
 
 const useInterceptor = () => {
+  // EncryptedStorage.clear();
   const [userToken, setUserToken] = useRecoilState(token);
 
   const requestInterceptor = alardinApi.interceptors.request.use(
@@ -53,18 +54,26 @@ const useInterceptor = () => {
             },
           })
             .then(async (res: any) => {
+              console.log('bring new accesss token');
               const { appAccessToken, appRefreshToken } = res.data.data;
               setUserToken({ appAccessToken, appRefreshToken });
+              await EncryptedStorage.setItem(
+                'appAccessToken',
+                JSON.stringify({ appAccessToken }),
+              );
+              console.log('new access token');
+              console.log(appAccessToken);
+              axios.defaults.headers.common.Authorization = `Bearer ${appAccessToken}`;
               config.headers.Authorization = `Bearer ${appAccessToken}`;
+              console.log('ready for request');
+              // return alardinApi.request(config);
             })
             .catch(() => {
               toastEnable({
                 text: '인증을 재발급하지 못했습니다. 로그인을 다시 시도해보세요.',
                 duration: 'SHORT',
               });
-              return Promise.reject(error);
             });
-          return alardinApi.request(config);
         }
       }
       return Promise.reject(error);

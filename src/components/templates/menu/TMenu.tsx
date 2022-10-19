@@ -4,7 +4,7 @@ import { logout, unlink } from '@react-native-seoul/kakao-login';
 import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { ScrollView } from 'react-native-gesture-handler';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import {
   IAuthorization,
   IMyProfile,
@@ -28,15 +28,17 @@ const TMenu = () => {
 
   console.log(me);
   const setAuthorization = useSetRecoilState(token);
-  const setLoginPlatform = useSetRecoilState(loginPlatform);
+  const [loginPlat, setLoginPlatform] = useRecoilState(loginPlatform);
 
   const handleLogout = async () => {
     await EncryptedStorage.removeItem('appAccessToken');
     await EncryptedStorage.removeItem('appRefreshToken');
     // await AsyncStorage.removeItem('notifyStorage');
     setAuthorization({} as IAuthorization);
+    if (loginPlat === 'kakao') {
+      await logout();
+    }
     setLoginPlatform('none');
-    await logout();
   };
 
   const handleExit = async () => {
@@ -75,7 +77,7 @@ const TMenu = () => {
       type: 'button_no-icon',
       key: '공지사항',
       handlePress: () =>
-        navigation.navigate('CallScreen', { id: me.id, alarmId: 51 }),
+        navigation.navigate('CallScreen', { id: me.id, alarmId: 57 }),
       // navigation.navigate('WebScreen', {
       // mode: 'WEB',
       // uri: 'https://www.google.com',

@@ -37,6 +37,7 @@ const InputSearch = ({ text, setText, setSearchResult }: IInputSearchProps) => {
       const response = await alardinApi.get('/mate/search', {
         params: { keyword: value },
       });
+      console.log(response.data.data);
       setSearchResult(response.data.data);
       console.log(value);
     }
@@ -52,7 +53,7 @@ const InputSearch = ({ text, setText, setSearchResult }: IInputSearchProps) => {
         value={text}
         autoFocus
         onChange={handleSearch}
-        placeholder="메이트의 소셜ID를 입력해주세요"
+        placeholder="메이트의 이름을 입력해주세요"
       />
     </CustomBox>
   );

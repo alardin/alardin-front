@@ -1,6 +1,7 @@
 import React from 'react';
-import { ListRenderItem } from 'react-native';
+import { Image, ListRenderItem } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
+import { SvgUri } from 'react-native-svg';
 import styled from 'styled-components/native';
 import Box from '../../../atoms/box/Box';
 import Container from '../../../atoms/container/Container';

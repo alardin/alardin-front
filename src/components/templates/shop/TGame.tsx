@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
+
 import { StackScreenProps } from '@react-navigation/stack';
 import React, { useEffect, useState } from 'react';
 import { RootStackParamList } from '../../../navigation/stack/StackNavigation';
@@ -8,7 +10,8 @@ import GameInfo, { IGameInfoData } from '../../organisms/shop/GameInfo';
 type IGameInfoScreen = StackScreenProps<RootStackParamList, 'GameInfo'>;
 
 const TGame = ({ route }: IGameInfoScreen) => {
-  const { gameId } = route.params;
+  const { gameId, isPaid } = route.params;
+  const [visible, setVisible] = useState<boolean>(false);
   const [gameData, setGameData] = useState<IGameInfoData>({
     game: {
       id: 0,
@@ -26,18 +29,26 @@ const TGame = ({ route }: IGameInfoScreen) => {
   });
 
   useEffect(() => {
-    alardinApi
-      .get(`/game/${gameId}`)
-      .then(res => {
-        setGameData(res.data.data);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-    return () => setGameData({} as IGameInfoData);
-  }, []);
+    !visible &&
+      alardinApi
+        .get(`/game/${gameId}`)
+        .then(res => {
+          console.log(res.data.data);
+          setGameData(res.data.data);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+  }, [visible]);
 
-  return <GameInfo {...gameData} />;
+  return (
+    <GameInfo
+      {...gameData}
+      isPaid={isPaid}
+      visible={visible}
+      setVisible={setVisible}
+    />
+  );
 };
 
 export default TGame;

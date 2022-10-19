@@ -6,7 +6,7 @@ import TUnregisterMates from '../../components/templates/mates/TUnregisterMates'
 import { IMembersDataType } from '../../recoil/home/members';
 import theme from '../../theme/theme';
 
-export type RootRecordParamList = {
+export type RootMatesParamList = {
   Register: undefined;
   Unregister: undefined;
   Request: undefined;
@@ -17,7 +17,7 @@ export interface IMateListDataType {
   mates: IMembersDataType[];
 }
 
-const Tab = createMaterialTopTabNavigator<RootRecordParamList>();
+const Tab = createMaterialTopTabNavigator<RootMatesParamList>();
 
 const MatesNavigation = () => {
   return (

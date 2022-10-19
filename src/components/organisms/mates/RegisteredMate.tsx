@@ -5,6 +5,8 @@ import Box from '../../atoms/box/Box';
 import Container from '../../atoms/container/Container';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import RegisterUser from '../../molecules/mates/RegisterUser';
+import InviteFriends from '../../molecules/mates/InviteFriends';
+import NoItem from '../../molecules/other/NoItem';
 
 interface IRegisteredMateProps {
   matesList: IMembersDataType[];
@@ -26,9 +28,13 @@ const RegisteredMate = ({ matesList }: IRegisteredMateProps) => {
 
   return (
     <Box>
-      {matesList?.map((mate, index) => {
-        return <RegisterUser mate={mate} myId={myId} key={`friend_${index}`} />;
-      })}
+      {matesList.length === 0 ? (
+        <NoItem title="등록된 메이트" />
+      ) : (
+        matesList?.map((mate, index) => (
+          <RegisterUser mate={mate} myId={myId} key={`friend_${index}`} />
+        ))
+      )}
     </Box>
   );
 };

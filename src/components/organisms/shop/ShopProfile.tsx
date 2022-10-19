@@ -12,6 +12,7 @@ export interface IUserAssetData {
   coin: number;
   isPremium: boolean;
   totalGames: number;
+  myGames: [];
 }
 
 interface IHeaderProps {

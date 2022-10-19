@@ -15,6 +15,7 @@ interface IGameShopIconProps {
   text: string;
   icon?: string;
   id: number;
+  isPaid: boolean;
 }
 
 const GameIcon = styled(Box)`
@@ -28,17 +29,18 @@ const GameText = styled(Text)`
   text-align: center;
 `;
 
-const GameShopIcon = ({ text, icon, id }: IGameShopIconProps) => {
+const GameShopIcon = ({ text, icon, id, isPaid }: IGameShopIconProps) => {
   const navigation = useNavigation<IGameInfoNavigation>();
   const handlePress = () => {
-    navigation.navigate('GameInfo', { gameId: id });
+    navigation.navigate('GameInfo', { gameId: id, isPaid });
   };
+  console.log(icon);
   return (
     <Box radius={12} center>
       <TouchableOpacity onPress={handlePress}>
         <GameIcon center>
           {icon ? (
-            <Image source={{ uri: icon }} />
+            <Image source={{ uri: icon, width: 36, height: 36 }} />
           ) : (
             <GameDefaultIcon
               width={32}

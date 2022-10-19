@@ -74,6 +74,7 @@ export type RootStackParamList = {
   Loading: undefined;
   GameInfo: {
     gameId: number;
+    isPaid: boolean;
   };
   WebScreen: {
     mode: string;

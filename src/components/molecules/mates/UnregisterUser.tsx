@@ -60,10 +60,16 @@ const CustomProfileIcon = styled(ProfileIcon)`
 
 const UnregisterUser = ({ mate }: IFriendInfoProps) => {
   const mateRefresher = useSetRecoilState(mateRefresh);
-  const { kakao_id, thumbnail_image_url, nickname } = mate;
+  const { id, kakao_id, thumbnail_image_url, nickname } = mate;
+
+  const requestBody = id
+    ? `?receiverId=${id}`
+    : `/kakao?receiverKakaoId=${kakao_id}`;
 
   const handlePress = async () => {
-    await alardinApi.post(`/mate?targetUserId=${kakao_id}`);
+    console.log(requestBody);
+    const result = await alardinApi.post(`/mate${requestBody}`);
+    console.log(result);
     mateRefresher(v => v + 1);
   };
 

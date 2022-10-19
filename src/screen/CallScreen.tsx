@@ -85,17 +85,19 @@ const TitleText = styled(Text)`
   color: ${({ theme }) => theme.color.white};
 `;
 
-let engine: RtcEngine;
+// let engine: RtcEngine;
 
 const CallScreen = ({ route, navigation }: CallScreenProps) => {
   const { id, alarmId } = route.params;
 
+  const [engine, setEngine] = useRecoilState(rtcEngine);
   const [agora, setAgora] = useRecoilState(rtcState);
-  const setEngine = useSetRecoilState(rtcEngine);
   const netInfo = useNetInfo();
 
   const initialAgoraEngine = async () => {
-    engine = await RtcEngine.create(Config.AGORA_APP_ID);
+    setEngine(await RtcEngine.create(Config.AGORA_APP_ID));
+    console.log(`cehck engine`);
+    console.log(engine);
     await engine?.enableAudio();
     await engine?.setChannelProfile(ChannelProfile.Game);
 
@@ -132,7 +134,6 @@ const CallScreen = ({ route, navigation }: CallScreenProps) => {
         joinSucceed: true,
       }));
     });
-    setEngine(engine);
   };
 
   const sound = new Sound('test_rooster.wav', Sound.MAIN_BUNDLE, err => {
@@ -162,19 +163,14 @@ const CallScreen = ({ route, navigation }: CallScreenProps) => {
   };
 
   useEffect(() => {
-    setTimeout(() => {
-      soundAlarm();
-    }, 1000);
+    console.log(netInfo.isConnected);
+    if (netInfo.isConnected) {
+      initialAgoraEngine();
+    }
     for (let i = 0; i < 14; i++) {
       deleteAlarmScheduler(alarmId * 1000 + i);
     }
-    deleteAlarmItem(alarmId);
-    if (netInfo.isConnected) {
-      initialAgoraEngine();
-      alardinApi.delete('/');
-    }
-    return () => sound.stop();
-  }, []);
+  }, [netInfo]);
 
   const handleCall = () => {
     if (netInfo.isConnected) {

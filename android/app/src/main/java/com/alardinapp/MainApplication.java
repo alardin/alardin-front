@@ -2,6 +2,8 @@ package com.alardinapp;
 
 import android.app.Application;
 import android.content.Context;
+
+import com.dooboolab.kakaologins.RNKakaoLoginsPackage;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
 import com.facebook.react.ReactInstanceManager;

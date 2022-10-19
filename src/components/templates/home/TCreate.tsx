@@ -6,6 +6,7 @@ import React, { useEffect, useState } from 'react';
 import { Alert, Platform, SafeAreaView, ScrollView } from 'react-native';
 import {
   useRecoilState,
+  useRecoilStateLoadable,
   useRecoilValueLoadable,
   useSetRecoilState,
 } from 'recoil';
@@ -13,6 +14,7 @@ import styled from 'styled-components/native';
 import { RootStackParamList } from '../../../navigation/stack/StackNavigation';
 import { alarmListRefresh } from '../../../recoil/home/alarmList';
 import {
+  apiGameMetaData,
   gameMetaData,
   initialRecoilSetting,
   pickerMetaData,
@@ -38,7 +40,7 @@ const TCreate = ({ navigation }: IAlarmCreateScreen) => {
   const [visible, setVisible] = useState<boolean>(false);
   const [setting, setSetting] = useRecoilState(settingData);
   const [inputLabel, setInputLabel] = useRecoilState(settingLabel);
-  const gameList = useRecoilValueLoadable(gameMetaData);
+  const [gameList, setGameList] = useRecoilStateLoadable(gameMetaData);
 
   const refreshData = useSetRecoilState(alarmListRefresh);
 
@@ -62,20 +64,25 @@ const TCreate = ({ navigation }: IAlarmCreateScreen) => {
   };
 
   useEffect(() => {
-    console.log(gameList.contents);
     if (gameList.state === 'hasValue') {
+      console.log('hasValue');
+      console.log(gameList.contents);
       setSetting({
         ...initialRecoilSetting,
         is_repeated: pickerMetaData[2].data[0].value,
         music_name: pickerMetaData[0].data[0].value,
-        Game_id: gameList.contents[0].value,
+        Game_id:
+          gameList.contents.length === 0 ? 0 : gameList.contents[0].value,
       });
       setInputLabel({
         ...initialRecoilSetting,
         time: convertTime(initialRecoilSetting.time),
         is_repeated: pickerMetaData[2].data[0].label,
         music_name: pickerMetaData[0].data[0].label,
-        Game_id: gameList.contents[0].label,
+        Game_id:
+          gameList.contents.length === 0
+            ? '보유하신 게임이 없습니다'
+            : gameList.contents[0].label,
         name: '',
       });
     }

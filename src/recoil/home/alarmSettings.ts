@@ -48,7 +48,7 @@ export interface ISettingState {
 }
 
 export const initialRecoilSetting = {
-  time: dateToTimeString(new Date()),
+  time: '12:00',
   is_private: false,
   is_repeated: '0',
   name: '',
@@ -77,6 +77,7 @@ export const apiGameMetaData = selector({
     try {
       const response = await alardinApi.get('/assets/games');
       const gameDataList: IGameMetaType[] = response.data.data;
+      console.log(response.data.data);
       const gameData = gameDataList.map(({ name, id }: IGameMetaType) => ({
         label: name,
         value: String(id),

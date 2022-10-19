@@ -1,4 +1,5 @@
-import { sendFeed } from '@react-native-seoul/kakao-login';
+import KakaoShareLink from 'react-native-kakao-share-link';
+// import { sendFeed } from '@react-native-seoul/kakao-login';
 import { Alert, Platform } from 'react-native';
 
 export const beMyFriendTemplate = {
@@ -93,7 +94,7 @@ const shareOnKakao = async (
 
   if (Platform.OS === 'ios') {
     try {
-      const response = await sendFeed(
+      const response = await KakaoShareLink.sendFeed(
         type === 'mate'
           ? {
               ...beMyFriendTemplate,

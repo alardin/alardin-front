@@ -11,6 +11,7 @@ import themeColor from '../../../theme/theme';
 
 interface IGameShopProps {
   data: IGameMetaType[];
+  myGames: IGameMetaType[];
 }
 
 const Title = styled(Text)`
@@ -26,12 +27,14 @@ const ListBox = styled(Box)`
   min-height: 140px;
 `;
 
-const GameShopList = ({ data }: IGameShopProps) => {
+const GameShopList = ({ data, myGames }: IGameShopProps) => {
   return (
     <>
       <Title options="bold">게임 목록</Title>
       <ListBox row bgColor={themeColor.color.white}>
         {data.map((item, index) => {
+          console.log(myGames.map(game => game.id).includes(item.id));
+          const isPaid = myGames.map(game => game.id).includes(item.id);
           return (
             <View
               key={`icon_${index}`}
@@ -43,6 +46,7 @@ const GameShopList = ({ data }: IGameShopProps) => {
                 text={item.name}
                 icon={item.thumbnail_url}
                 id={item.id}
+                isPaid={isPaid}
               />
             </View>
           );

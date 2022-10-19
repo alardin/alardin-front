@@ -22,7 +22,7 @@ import EncryptedStorage from 'react-native-encrypted-storage';
 import MatesNavigation from '../../../navigation/top/MatesNavigation';
 import styled from 'styled-components/native';
 
-interface IMateListDataTyp {
+interface IMateListDataType {
   kakaoFriends: IMembersDataType[];
   mates: IMembersDataType[];
 }
