@@ -1,9 +1,18 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 
 import React, { useCallback, useEffect } from 'react';
-import { PermissionsAndroid, Platform, StatusBar } from 'react-native';
+import {
+  PermissionsAndroid,
+  Platform,
+  StatusBar,
+  useColorScheme,
+} from 'react-native';
 import messaging from '@react-native-firebase/messaging';
-import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
+import {
+  DarkTheme,
+  DefaultTheme,
+  NavigationContainer,
+} from '@react-navigation/native';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { ThemeProvider } from 'styled-components/native';
 import StackNavigation from './navigation/stack/StackNavigation';
@@ -35,19 +44,12 @@ import _ from 'lodash';
 import SplashScreen from 'react-native-splash-screen';
 
 LogBox.ignoreLogs(['componentWillUpdate']);
+LogBox.ignoreLogs(['new NativeEventEmitter']);
 const _console = _.clone(console);
 console.warn = message => {
   if (message.indexOf('componentWillUpdate') <= -1) {
     _console.warn(message);
   }
-};
-
-const navTheme = {
-  ...DefaultTheme,
-  colors: {
-    ...DefaultTheme.colors,
-    background: theme.color.gray_100,
-  },
 };
 
 const requestUserPermission = async () => {
@@ -122,10 +124,20 @@ const initialBackgroundStatus = async () => {
 };
 
 const App = () => {
+  const scheme = useColorScheme();
   useInterceptor();
 
   const setIsNotify = useSetRecoilState(isNotify);
   const [storage, setStorage] = useRecoilState(defaultNotify);
+
+  const navTheme = {
+    ...DefaultTheme,
+    colors: {
+      ...DefaultTheme.colors,
+      text: theme.color.gray_900,
+      background: theme.color.gray_100,
+    },
+  };
 
   const handleMessage = useCallback(() => {
     messaging().onNotificationOpenedApp(remoteMessage => {
@@ -197,6 +209,10 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <NavigationContainer ref={navigationRef} theme={navTheme}>
+        <StatusBar
+          barStyle={Platform.OS === 'ios' ? 'dark-content' : 'default'}
+          translucent={true}
+        />
         <StackNavigation />
       </NavigationContainer>
     </ThemeProvider>

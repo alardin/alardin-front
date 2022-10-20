@@ -6,10 +6,10 @@ export const beMyFriendTemplate = {
   content: {
     title: 'OOO님께서 회원님과 함께 Alardin 메이트를 하고 싶습니다',
     imageUrl:
-      'http://t1.daumcdn.net/friends/prod/editor/dc8b3d02-a15a-4afa-a88b-989cf2a50476.jpg',
+      'https://alardin-static.s3.ap-northeast-2.amazonaws.com/images/app-meta/app-thumbnail.png',
     link: {
-      webUrl: 'https://www.alard.in/',
-      mobileWebUrl: 'https://www.alard.in/',
+      webUrl: 'https://alard.in/',
+      mobileWebUrl: 'https://alard.in/',
     },
     description:
       '혼자서 힘들게 일어나는 대신 OOO님과 함께 게임을 즐기면서 일어나 보세요. Alardin는 회원님과 여러 기능성 게임으로 맞이하고 있습니다.',
@@ -32,10 +32,10 @@ export const joinMyAlarmTemplate = {
   content: {
     title: 'OOO님께서 회원님과 함께 일어나고 싶습니다',
     imageUrl:
-      'http://t1.daumcdn.net/friends/prod/editor/dc8b3d02-a15a-4afa-a88b-989cf2a50476.jpg',
+      'https://alardin-static.s3.ap-northeast-2.amazonaws.com/images/app-meta/app-thumbnail.png',
     link: {
-      webUrl: 'https://www.alard.in/',
-      mobileWebUrl: 'https://www.alard.in/',
+      webUrl: 'https://alard.in/',
+      mobileWebUrl: 'https://alard.in/',
     },
     description:
       '혼자서 힘들게 일어나는 대신 OOO님과 함께 게임을 즐기면서 일어나 보세요. Alardin는 회원님과 여러 기능성 게임으로 맞이하고 있습니다.',
@@ -58,10 +58,10 @@ export const shareMyProfile = {
   content: {
     title: 'OOO님께서 Alardin의 프로필을 공유합니다.',
     imageUrl:
-      'http://t1.daumcdn.net/friends/prod/editor/dc8b3d02-a15a-4afa-a88b-989cf2a50476.jpg',
+      'https://alardin-static.s3.ap-northeast-2.amazonaws.com/images/app-meta/app-thumbnail.png',
     link: {
-      webUrl: 'https://www.alard.in/',
-      mobileWebUrl: 'https://www.alard.in/',
+      webUrl: 'https://alard.in/',
+      mobileWebUrl: 'https://alard.in/',
     },
     description:
       '혼자서 힘들게 일어나는 대신 OOO님과 함께 게임을 즐기면서 일어나 보세요. Alardin는 회원님과 여러 기능성 게임으로 맞이하고 있습니다.',

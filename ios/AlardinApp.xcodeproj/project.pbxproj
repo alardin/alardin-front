@@ -10,22 +10,22 @@
 		00E356F31AD99517003FC87E /* AlardinAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* AlardinAppTests.m */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		1FABEC92B0FBE7E570058420 /* libPods-AlardinApp-AlardinAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FEB95C36266E1A59269129F /* libPods-AlardinApp-AlardinAppTests.a */; };
-		259D0F7B34C3964609702A8A /* libPods-AlardinApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B1D038A1BF24495762824EFE /* libPods-AlardinApp.a */; };
+		ADF2B2EDB4DDF222948DD389 /* libPods-AlardinApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 064502A6DF2F5290680FEFA9 /* libPods-AlardinApp.a */; };
+		CD768D4A1F9DF91A7BC34296 /* libPods-AlardinApp-AlardinAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DF4F2D452FCCE9DBA305B2D2 /* libPods-AlardinApp-AlardinAppTests.a */; };
 		DD473D5A28CF31A10097D1F9 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD473D5928CF31A10097D1F9 /* StoreKit.framework */; };
-		DD473D6528D1AC180097D1F9 /* test_alarm.wav in Resources */ = {isa = PBXBuildFile; fileRef = DD473D6428D1AC170097D1F9 /* test_alarm.wav */; };
-		DD473D6728D1AC460097D1F9 /* test_rooster.wav in Resources */ = {isa = PBXBuildFile; fileRef = DD473D6628D1AC460097D1F9 /* test_rooster.wav */; };
-		DDCE55EE28FD030F00CD5FB1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DDCE55ED28FD030F00CD5FB1 /* GoogleService-Info.plist */; };
-		DDD3C64828FFFF6B00513D16 /* Images.xcassets in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		DDD3C64928FFFF6E00513D16 /* LaunchScreen.storyboard in Sources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		DDD8647528F0B560006D33A9 /* Pretendard-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DDD8647128F0B55F006D33A9 /* Pretendard-Bold.ttf */; };
-		DDD8647628F0B560006D33A9 /* Pretendard-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DDD8647228F0B560006D33A9 /* Pretendard-SemiBold.ttf */; };
-		DDD8647728F0B560006D33A9 /* Pretendard-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DDD8647328F0B560006D33A9 /* Pretendard-Regular.ttf */; };
-		DDD8647828F0B560006D33A9 /* Pretendard-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DDD8647428F0B560006D33A9 /* Pretendard-Thin.ttf */; };
-		DDD8647F28F1E4F1006D33A9 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = DDD8647D28F1E4F1006D33A9 /* fonts */; };
-		DDD8648028F1E4F1006D33A9 /* css in Resources */ = {isa = PBXBuildFile; fileRef = DDD8647E28F1E4F1006D33A9 /* css */; };
-		DDD8648328F1E501006D33A9 /* src in Resources */ = {isa = PBXBuildFile; fileRef = DDD8648228F1E501006D33A9 /* src */; };
-		DDD8648528F1E51A006D33A9 /* twigitizer_game in Resources */ = {isa = PBXBuildFile; fileRef = DDD8648428F1E51A006D33A9 /* twigitizer_game */; };
+		DDD3C64A2901379200513D16 /* Images.xcassets in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
+		DDD3C64D2901A30C00513D16 /* test_alarm.wav in Resources */ = {isa = PBXBuildFile; fileRef = DD473D6428D1AC170097D1F9 /* test_alarm.wav */; };
+		DDD3C64E2901A30F00513D16 /* test_rooster.wav in Resources */ = {isa = PBXBuildFile; fileRef = DD473D6628D1AC460097D1F9 /* test_rooster.wav */; };
+		DDD3C64F2901A31C00513D16 /* twigitizer_game in Resources */ = {isa = PBXBuildFile; fileRef = DDD8648428F1E51A006D33A9 /* twigitizer_game */; };
+		DDD3C6502901A32300513D16 /* css in Resources */ = {isa = PBXBuildFile; fileRef = DDD8647E28F1E4F1006D33A9 /* css */; };
+		DDD3C6512901A32600513D16 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = DDD8647D28F1E4F1006D33A9 /* fonts */; };
+		DDD3C6622901A5AB00513D16 /* Pretendard-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C4BF20C8731F4485A44605FA /* Pretendard-Bold.ttf */; };
+		DDD3C6632901A5AB00513D16 /* Pretendard-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 71B930328924442C83649ADA /* Pretendard-Medium.ttf */; };
+		DDD3C6642901A5AB00513D16 /* Pretendard-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 575159D80CAE41A49F526199 /* Pretendard-Regular.ttf */; };
+		DDD3C6652901A5AB00513D16 /* Pretendard-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CC4FC53D5E794BA48DCD601F /* Pretendard-SemiBold.ttf */; };
+		DDD3C6662901A5AB00513D16 /* Pretendard-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C6E7A90FC4EF48ED8A77E6F7 /* Pretendard-Thin.ttf */; };
+		DDD3C6672901A86700513D16 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DDCE55ED28FD030F00CD5FB1 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,19 +42,24 @@
 		00E356EE1AD99517003FC87E /* AlardinAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AlardinAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* AlardinAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AlardinAppTests.m; sourceTree = "<group>"; };
+		064502A6DF2F5290680FEFA9 /* libPods-AlardinApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AlardinApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07F961A680F5B00A75B9A /* AlardinApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AlardinApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = AlardinApp/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = AlardinApp/AppDelegate.mm; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = AlardinApp/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = AlardinApp/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = AlardinApp/main.m; sourceTree = "<group>"; };
-		5FEB95C36266E1A59269129F /* libPods-AlardinApp-AlardinAppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AlardinApp-AlardinAppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		624F63B5D99203B93BB6EF87 /* Pods-AlardinApp-AlardinAppTests.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlardinApp-AlardinAppTests.staging.xcconfig"; path = "Target Support Files/Pods-AlardinApp-AlardinAppTests/Pods-AlardinApp-AlardinAppTests.staging.xcconfig"; sourceTree = "<group>"; };
-		68D1195734D7D113200B6D55 /* Pods-AlardinApp.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlardinApp.staging.xcconfig"; path = "Target Support Files/Pods-AlardinApp/Pods-AlardinApp.staging.xcconfig"; sourceTree = "<group>"; };
+		1BF98AC1710ED29A870B5D64 /* Pods-AlardinApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlardinApp.release.xcconfig"; path = "Target Support Files/Pods-AlardinApp/Pods-AlardinApp.release.xcconfig"; sourceTree = "<group>"; };
+		1EA47B55CA95EA68599D2024 /* Pods-AlardinApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlardinApp.debug.xcconfig"; path = "Target Support Files/Pods-AlardinApp/Pods-AlardinApp.debug.xcconfig"; sourceTree = "<group>"; };
+		575159D80CAE41A49F526199 /* Pretendard-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Pretendard-Regular.ttf"; path = "../src/assets/fonts/Pretendard-Regular.ttf"; sourceTree = "<group>"; };
+		71B930328924442C83649ADA /* Pretendard-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Pretendard-Medium.ttf"; path = "../src/assets/fonts/Pretendard-Medium.ttf"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = AlardinApp/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		B0C369AEF98A0517DC5BB324 /* Pods-AlardinApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlardinApp.release.xcconfig"; path = "Target Support Files/Pods-AlardinApp/Pods-AlardinApp.release.xcconfig"; sourceTree = "<group>"; };
-		B1D038A1BF24495762824EFE /* libPods-AlardinApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AlardinApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		DBE9A9B747BDBDB08F145490 /* Pods-AlardinApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlardinApp.debug.xcconfig"; path = "Target Support Files/Pods-AlardinApp/Pods-AlardinApp.debug.xcconfig"; sourceTree = "<group>"; };
+		8B8A297464C5E87943C0FD83 /* Pods-AlardinApp.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlardinApp.staging.xcconfig"; path = "Target Support Files/Pods-AlardinApp/Pods-AlardinApp.staging.xcconfig"; sourceTree = "<group>"; };
+		A145A171E041A974B5F55A8A /* Pods-AlardinApp-AlardinAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlardinApp-AlardinAppTests.release.xcconfig"; path = "Target Support Files/Pods-AlardinApp-AlardinAppTests/Pods-AlardinApp-AlardinAppTests.release.xcconfig"; sourceTree = "<group>"; };
+		A7D2B6A8E7146C00070B3C98 /* Pods-AlardinApp-AlardinAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlardinApp-AlardinAppTests.debug.xcconfig"; path = "Target Support Files/Pods-AlardinApp-AlardinAppTests/Pods-AlardinApp-AlardinAppTests.debug.xcconfig"; sourceTree = "<group>"; };
+		C4BF20C8731F4485A44605FA /* Pretendard-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Pretendard-Bold.ttf"; path = "../src/assets/fonts/Pretendard-Bold.ttf"; sourceTree = "<group>"; };
+		C6E7A90FC4EF48ED8A77E6F7 /* Pretendard-Thin.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Pretendard-Thin.ttf"; path = "../src/assets/fonts/Pretendard-Thin.ttf"; sourceTree = "<group>"; };
+		CC4FC53D5E794BA48DCD601F /* Pretendard-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Pretendard-SemiBold.ttf"; path = "../src/assets/fonts/Pretendard-SemiBold.ttf"; sourceTree = "<group>"; };
 		DD473D5928CF31A10097D1F9 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		DD473D6428D1AC170097D1F9 /* test_alarm.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = test_alarm.wav; path = ../../../Downloads/test_alarm.wav; sourceTree = "<group>"; };
 		DD473D6628D1AC460097D1F9 /* test_rooster.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = test_rooster.wav; sourceTree = "<group>"; };
@@ -86,8 +91,8 @@
 		DDD8647E28F1E4F1006D33A9 /* css */ = {isa = PBXFileReference; lastKnownFileType = folder; path = css; sourceTree = "<group>"; };
 		DDD8648228F1E501006D33A9 /* src */ = {isa = PBXFileReference; lastKnownFileType = folder; path = src; sourceTree = "<group>"; };
 		DDD8648428F1E51A006D33A9 /* twigitizer_game */ = {isa = PBXFileReference; lastKnownFileType = folder; path = twigitizer_game; sourceTree = "<group>"; };
-		E0559055F9768DE1089FDB0F /* Pods-AlardinApp-AlardinAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlardinApp-AlardinAppTests.release.xcconfig"; path = "Target Support Files/Pods-AlardinApp-AlardinAppTests/Pods-AlardinApp-AlardinAppTests.release.xcconfig"; sourceTree = "<group>"; };
-		E08B884E8347662F5D303D52 /* Pods-AlardinApp-AlardinAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlardinApp-AlardinAppTests.debug.xcconfig"; path = "Target Support Files/Pods-AlardinApp-AlardinAppTests/Pods-AlardinApp-AlardinAppTests.debug.xcconfig"; sourceTree = "<group>"; };
+		DF4F2D452FCCE9DBA305B2D2 /* libPods-AlardinApp-AlardinAppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AlardinApp-AlardinAppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E5390DE8236ADC162BFEA6CC /* Pods-AlardinApp-AlardinAppTests.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlardinApp-AlardinAppTests.staging.xcconfig"; path = "Target Support Files/Pods-AlardinApp-AlardinAppTests/Pods-AlardinApp-AlardinAppTests.staging.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -96,7 +101,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1FABEC92B0FBE7E570058420 /* libPods-AlardinApp-AlardinAppTests.a in Frameworks */,
+				CD768D4A1F9DF91A7BC34296 /* libPods-AlardinApp-AlardinAppTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -105,7 +110,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DD473D5A28CF31A10097D1F9 /* StoreKit.framework in Frameworks */,
-				259D0F7B34C3964609702A8A /* libPods-AlardinApp.a in Frameworks */,
+				ADF2B2EDB4DDF222948DD389 /* libPods-AlardinApp.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -149,8 +154,8 @@
 			children = (
 				DD473D5928CF31A10097D1F9 /* StoreKit.framework */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				B1D038A1BF24495762824EFE /* libPods-AlardinApp.a */,
-				5FEB95C36266E1A59269129F /* libPods-AlardinApp-AlardinAppTests.a */,
+				064502A6DF2F5290680FEFA9 /* libPods-AlardinApp.a */,
+				DF4F2D452FCCE9DBA305B2D2 /* libPods-AlardinApp-AlardinAppTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -177,6 +182,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
+				F967EA070301412B920EF297 /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -195,12 +201,12 @@
 		BBD78D7AC51CEA395F1C20DB /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				DBE9A9B747BDBDB08F145490 /* Pods-AlardinApp.debug.xcconfig */,
-				B0C369AEF98A0517DC5BB324 /* Pods-AlardinApp.release.xcconfig */,
-				68D1195734D7D113200B6D55 /* Pods-AlardinApp.staging.xcconfig */,
-				E08B884E8347662F5D303D52 /* Pods-AlardinApp-AlardinAppTests.debug.xcconfig */,
-				E0559055F9768DE1089FDB0F /* Pods-AlardinApp-AlardinAppTests.release.xcconfig */,
-				624F63B5D99203B93BB6EF87 /* Pods-AlardinApp-AlardinAppTests.staging.xcconfig */,
+				1EA47B55CA95EA68599D2024 /* Pods-AlardinApp.debug.xcconfig */,
+				1BF98AC1710ED29A870B5D64 /* Pods-AlardinApp.release.xcconfig */,
+				8B8A297464C5E87943C0FD83 /* Pods-AlardinApp.staging.xcconfig */,
+				A7D2B6A8E7146C00070B3C98 /* Pods-AlardinApp-AlardinAppTests.debug.xcconfig */,
+				A145A171E041A974B5F55A8A /* Pods-AlardinApp-AlardinAppTests.release.xcconfig */,
+				E5390DE8236ADC162BFEA6CC /* Pods-AlardinApp-AlardinAppTests.staging.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -267,6 +273,18 @@
 			path = images;
 			sourceTree = "<group>";
 		};
+		F967EA070301412B920EF297 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				C4BF20C8731F4485A44605FA /* Pretendard-Bold.ttf */,
+				71B930328924442C83649ADA /* Pretendard-Medium.ttf */,
+				575159D80CAE41A49F526199 /* Pretendard-Regular.ttf */,
+				CC4FC53D5E794BA48DCD601F /* Pretendard-SemiBold.ttf */,
+				C6E7A90FC4EF48ED8A77E6F7 /* Pretendard-Thin.ttf */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -274,12 +292,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "AlardinAppTests" */;
 			buildPhases = (
-				7D347ED8EA9BABEF50FB7A9A /* [CP] Check Pods Manifest.lock */,
+				A52C92A064F97449F255EAA3 /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
-				E3D7F268B438D022D87D31BB /* [CP] Embed Pods Frameworks */,
-				290C1A3B597FAE219ED1EAD4 /* [CP] Copy Pods Resources */,
+				68D3C5C115B4398C5355A6FB /* [CP] Embed Pods Frameworks */,
+				572A2CE2BCD3C1134BC190F6 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -295,15 +313,15 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "AlardinApp" */;
 			buildPhases = (
-				54EE7DE2D0F02A9F6441D0F6 /* [CP] Check Pods Manifest.lock */,
+				BD86F10C1CE6126062F6A236 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
 				13B07F871A680F5B00A75B9A /* Sources */,
+				DDD3C64C2901A30800513D16 /* Resources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
-				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				A61732FB505527A28D3AB747 /* [CP] Embed Pods Frameworks */,
-				43ECE8262BBA6C3AB8309289 /* [CP] Copy Pods Resources */,
-				43C16EFC31302D661EC3C22A /* [CP-User] [RNFB] Core Configuration */,
+				DA607FC48EB481B45CE79A98 /* [CP] Embed Pods Frameworks */,
+				A206A8D1DD7E65DF2ECA82EA /* [CP] Copy Pods Resources */,
+				734DEA89338A0DF3B9511EAA /* [CP-User] [RNFB] Core Configuration */,
 			);
 			buildRules = (
 			);
@@ -358,21 +376,21 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		13B07F8E1A680F5B00A75B9A /* Resources */ = {
+		DDD3C64C2901A30800513D16 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DDD8648028F1E4F1006D33A9 /* css in Resources */,
-				DDD8647F28F1E4F1006D33A9 /* fonts in Resources */,
-				DDD8647628F0B560006D33A9 /* Pretendard-SemiBold.ttf in Resources */,
-				DDD8648328F1E501006D33A9 /* src in Resources */,
-				DD473D6528D1AC180097D1F9 /* test_alarm.wav in Resources */,
-				DDD8648528F1E51A006D33A9 /* twigitizer_game in Resources */,
-				DD473D6728D1AC460097D1F9 /* test_rooster.wav in Resources */,
-				DDD8647728F0B560006D33A9 /* Pretendard-Regular.ttf in Resources */,
-				DDCE55EE28FD030F00CD5FB1 /* GoogleService-Info.plist in Resources */,
-				DDD8647828F0B560006D33A9 /* Pretendard-Thin.ttf in Resources */,
-				DDD8647528F0B560006D33A9 /* Pretendard-Bold.ttf in Resources */,
+				DDD3C64D2901A30C00513D16 /* test_alarm.wav in Resources */,
+				DDD3C6512901A32600513D16 /* fonts in Resources */,
+				DDD3C6672901A86700513D16 /* GoogleService-Info.plist in Resources */,
+				DDD3C6502901A32300513D16 /* css in Resources */,
+				DDD3C64E2901A30F00513D16 /* test_rooster.wav in Resources */,
+				DDD3C6622901A5AB00513D16 /* Pretendard-Bold.ttf in Resources */,
+				DDD3C6632901A5AB00513D16 /* Pretendard-Medium.ttf in Resources */,
+				DDD3C6642901A5AB00513D16 /* Pretendard-Regular.ttf in Resources */,
+				DDD3C6652901A5AB00513D16 /* Pretendard-SemiBold.ttf in Resources */,
+				DDD3C6662901A5AB00513D16 /* Pretendard-Thin.ttf in Resources */,
+				DDD3C64F2901A31C00513D16 /* twigitizer_game in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -395,7 +413,7 @@
 			shellPath = /bin/sh;
 			shellScript = "set -e\n\nWITH_ENVIRONMENT=\"../node_modules/react-native/scripts/xcode/with-environment.sh\"\nREACT_NATIVE_XCODE=\"../node_modules/react-native/scripts/react-native-xcode.sh\"\n\n/bin/sh -c \"$WITH_ENVIRONMENT $REACT_NATIVE_XCODE\"\n";
 		};
-		290C1A3B597FAE219ED1EAD4 /* [CP] Copy Pods Resources */ = {
+		572A2CE2BCD3C1134BC190F6 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -412,7 +430,24 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AlardinApp-AlardinAppTests/Pods-AlardinApp-AlardinAppTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		43C16EFC31302D661EC3C22A /* [CP-User] [RNFB] Core Configuration */ = {
+		68D3C5C115B4398C5355A6FB /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AlardinApp-AlardinAppTests/Pods-AlardinApp-AlardinAppTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AlardinApp-AlardinAppTests/Pods-AlardinApp-AlardinAppTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AlardinApp-AlardinAppTests/Pods-AlardinApp-AlardinAppTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		734DEA89338A0DF3B9511EAA /* [CP-User] [RNFB] Core Configuration */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -425,7 +460,7 @@
 			shellPath = /bin/sh;
 			shellScript = "#!/usr/bin/env bash\n#\n# Copyright (c) 2016-present Invertase Limited & Contributors\n#\n# Licensed under the Apache License, Version 2.0 (the \"License\");\n# you may not use this library except in compliance with the License.\n# You may obtain a copy of the License at\n#\n#   http://www.apache.org/licenses/LICENSE-2.0\n#\n# Unless required by applicable law or agreed to in writing, software\n# distributed under the License is distributed on an \"AS IS\" BASIS,\n# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n# See the License for the specific language governing permissions and\n# limitations under the License.\n#\nset -e\n\n_MAX_LOOKUPS=2;\n_SEARCH_RESULT=''\n_RN_ROOT_EXISTS=''\n_CURRENT_LOOKUPS=1\n_JSON_ROOT=\"'react-native'\"\n_JSON_FILE_NAME='firebase.json'\n_JSON_OUTPUT_BASE64='e30=' # { }\n_CURRENT_SEARCH_DIR=${PROJECT_DIR}\n_PLIST_BUDDY=/usr/libexec/PlistBuddy\n_TARGET_PLIST=\"${BUILT_PRODUCTS_DIR}/${INFOPLIST_PATH}\"\n_DSYM_PLIST=\"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Info.plist\"\n\n# plist arrays\n_PLIST_ENTRY_KEYS=()\n_PLIST_ENTRY_TYPES=()\n_PLIST_ENTRY_VALUES=()\n\nfunction setPlistValue {\n  echo \"info:      setting plist entry '$1' of type '$2' in file '$4'\"\n  ${_PLIST_BUDDY} -c \"Add :$1 $2 '$3'\" $4 || echo \"info:      '$1' already exists\"\n}\n\nfunction getFirebaseJsonKeyValue () {\n  if [[ ${_RN_ROOT_EXISTS} ]]; then\n    ruby -e \"require 'rubygems';require 'json'; output=JSON.parse('$1'); puts output[$_JSON_ROOT]['$2']\"\n  else\n    echo \"\"\n  fi;\n}\n\nfunction jsonBoolToYesNo () {\n  if [[ $1 == \"false\" ]]; then\n    echo \"NO\"\n  elif [[ $1 == \"true\" ]]; then\n    echo \"YES\"\n  else echo \"NO\"\n  fi\n}\n\necho \"info: -> RNFB build script started\"\necho \"info: 1) Locating ${_JSON_FILE_NAME} file:\"\n\nif [[ -z ${_CURRENT_SEARCH_DIR} ]]; then\n  _CURRENT_SEARCH_DIR=$(pwd)\nfi;\n\nwhile true; do\n  _CURRENT_SEARCH_DIR=$(dirname \"$_CURRENT_SEARCH_DIR\")\n  if [[ \"$_CURRENT_SEARCH_DIR\" == \"/\" ]] || [[ ${_CURRENT_LOOKUPS} -gt ${_MAX_LOOKUPS} ]]; then break; fi;\n  echo \"info:      ($_CURRENT_LOOKUPS of $_MAX_LOOKUPS) Searching in '$_CURRENT_SEARCH_DIR' for a ${_JSON_FILE_NAME} file.\"\n  _SEARCH_RESULT=$(find \"$_CURRENT_SEARCH_DIR\" -maxdepth 2 -name ${_JSON_FILE_NAME} -print | /usr/bin/head -n 1)\n  if [[ ${_SEARCH_RESULT} ]]; then\n    echo \"info:      ${_JSON_FILE_NAME} found at $_SEARCH_RESULT\"\n    break;\n  fi;\n  _CURRENT_LOOKUPS=$((_CURRENT_LOOKUPS+1))\ndone\n\nif [[ ${_SEARCH_RESULT} ]]; then\n  _JSON_OUTPUT_RAW=$(cat \"${_SEARCH_RESULT}\")\n  _RN_ROOT_EXISTS=$(ruby -e \"require 'rubygems';require 'json'; output=JSON.parse('$_JSON_OUTPUT_RAW'); puts output[$_JSON_ROOT]\" || echo '')\n\n  if [[ ${_RN_ROOT_EXISTS} ]]; then\n    if ! python3 --version >/dev/null 2>&1; then echo \"python3 not found, firebase.json file processing error.\" && exit 1; fi\n    _JSON_OUTPUT_BASE64=$(python3 -c 'import json,sys,base64;print(base64.b64encode(bytes(json.dumps(json.loads(open('\"'${_SEARCH_RESULT}'\"', '\"'rb'\"').read())['${_JSON_ROOT}']), '\"'utf-8'\"')).decode())' || echo \"e30=\")\n  fi\n\n  _PLIST_ENTRY_KEYS+=(\"firebase_json_raw\")\n  _PLIST_ENTRY_TYPES+=(\"string\")\n  _PLIST_ENTRY_VALUES+=(\"$_JSON_OUTPUT_BASE64\")\n\n  # config.app_data_collection_default_enabled\n  _APP_DATA_COLLECTION_ENABLED=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"app_data_collection_default_enabled\")\n  if [[ $_APP_DATA_COLLECTION_ENABLED ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FirebaseDataCollectionDefaultEnabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_APP_DATA_COLLECTION_ENABLED\")\")\n  fi\n\n  # config.analytics_auto_collection_enabled\n  _ANALYTICS_AUTO_COLLECTION=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"analytics_auto_collection_enabled\")\n  if [[ $_ANALYTICS_AUTO_COLLECTION ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FIREBASE_ANALYTICS_COLLECTION_ENABLED\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_ANALYTICS_AUTO_COLLECTION\")\")\n  fi\n\n  # config.analytics_collection_deactivated\n  _ANALYTICS_DEACTIVATED=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"analytics_collection_deactivated\")\n  if [[ $_ANALYTICS_DEACTIVATED ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FIREBASE_ANALYTICS_COLLECTION_DEACTIVATED\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_ANALYTICS_DEACTIVATED\")\")\n  fi\n\n  # config.analytics_idfv_collection_enabled\n  _ANALYTICS_IDFV_COLLECTION=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"analytics_idfv_collection_enabled\")\n  if [[ $_ANALYTICS_IDFV_COLLECTION ]]; then\n    _PLIST_ENTRY_KEYS+=(\"GOOGLE_ANALYTICS_IDFV_COLLECTION_ENABLED\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_ANALYTICS_IDFV_COLLECTION\")\")\n  fi\n\n  # config.analytics_default_allow_ad_personalization_signals\n  _ANALYTICS_PERSONALIZATION=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"analytics_default_allow_ad_personalization_signals\")\n  if [[ $_ANALYTICS_PERSONALIZATION ]]; then\n    _PLIST_ENTRY_KEYS+=(\"GOOGLE_ANALYTICS_DEFAULT_ALLOW_AD_PERSONALIZATION_SIGNALS\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_ANALYTICS_PERSONALIZATION\")\")\n  fi\n\n  # config.analytics_registration_with_ad_network_enabled\n  _ANALYTICS_REGISTRATION_WITH_AD_NETWORK=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"google_analytics_registration_with_ad_network_enabled\")\n  if [[ $_ANALYTICS_REGISTRATION_WITH_AD_NETWORK ]]; then\n    _PLIST_ENTRY_KEYS+=(\"GOOGLE_ANALYTICS_REGISTRATION_WITH_AD_NETWORK_ENABLED\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_ANALYTICS_REGISTRATION_WITH_AD_NETWORK\")\")\n  fi\n\n  # config.google_analytics_automatic_screen_reporting_enabled\n  _ANALYTICS_AUTO_SCREEN_REPORTING=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"google_analytics_automatic_screen_reporting_enabled\")\n  if [[ $_ANALYTICS_AUTO_SCREEN_REPORTING ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FirebaseAutomaticScreenReportingEnabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_ANALYTICS_AUTO_SCREEN_REPORTING\")\")\n  fi\n\n  # config.perf_auto_collection_enabled\n  _PERF_AUTO_COLLECTION=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"perf_auto_collection_enabled\")\n  if [[ $_PERF_AUTO_COLLECTION ]]; then\n    _PLIST_ENTRY_KEYS+=(\"firebase_performance_collection_enabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_PERF_AUTO_COLLECTION\")\")\n  fi\n\n  # config.perf_collection_deactivated\n  _PERF_DEACTIVATED=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"perf_collection_deactivated\")\n  if [[ $_PERF_DEACTIVATED ]]; then\n    _PLIST_ENTRY_KEYS+=(\"firebase_performance_collection_deactivated\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_PERF_DEACTIVATED\")\")\n  fi\n\n  # config.messaging_auto_init_enabled\n  _MESSAGING_AUTO_INIT=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"messaging_auto_init_enabled\")\n  if [[ $_MESSAGING_AUTO_INIT ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FirebaseMessagingAutoInitEnabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_MESSAGING_AUTO_INIT\")\")\n  fi\n\n  # config.in_app_messaging_auto_colllection_enabled\n  _FIAM_AUTO_INIT=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"in_app_messaging_auto_collection_enabled\")\n  if [[ $_FIAM_AUTO_INIT ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FirebaseInAppMessagingAutomaticDataCollectionEnabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_FIAM_AUTO_INIT\")\")\n  fi\n\n  # config.app_check_token_auto_refresh\n  _APP_CHECK_TOKEN_AUTO_REFRESH=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"app_check_token_auto_refresh\")\n  if [[ $_APP_CHECK_TOKEN_AUTO_REFRESH ]]; then\n    _PLIST_ENTRY_KEYS+=(\"FirebaseAppCheckTokenAutoRefreshEnabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"$(jsonBoolToYesNo \"$_APP_CHECK_TOKEN_AUTO_REFRESH\")\")\n  fi\n\n  # config.crashlytics_disable_auto_disabler - undocumented for now - mainly for debugging, document if becomes useful\n  _CRASHLYTICS_AUTO_DISABLE_ENABLED=$(getFirebaseJsonKeyValue \"$_JSON_OUTPUT_RAW\" \"crashlytics_disable_auto_disabler\")\n  if [[ $_CRASHLYTICS_AUTO_DISABLE_ENABLED == \"true\" ]]; then\n    echo \"Disabled Crashlytics auto disabler.\" # do nothing\n  else\n    _PLIST_ENTRY_KEYS+=(\"FirebaseCrashlyticsCollectionEnabled\")\n    _PLIST_ENTRY_TYPES+=(\"bool\")\n    _PLIST_ENTRY_VALUES+=(\"NO\")\n  fi\nelse\n  _PLIST_ENTRY_KEYS+=(\"firebase_json_raw\")\n  _PLIST_ENTRY_TYPES+=(\"string\")\n  _PLIST_ENTRY_VALUES+=(\"$_JSON_OUTPUT_BASE64\")\n  echo \"warning:   A firebase.json file was not found, whilst this file is optional it is recommended to include it to configure firebase services in React Native Firebase.\"\nfi;\n\necho \"info: 2) Injecting Info.plist entries: \"\n\n# Log out the keys we're adding\nfor i in \"${!_PLIST_ENTRY_KEYS[@]}\"; do\n  echo \"    ->  $i) ${_PLIST_ENTRY_KEYS[$i]}\" \"${_PLIST_ENTRY_TYPES[$i]}\" \"${_PLIST_ENTRY_VALUES[$i]}\"\ndone\n\nfor plist in \"${_TARGET_PLIST}\" \"${_DSYM_PLIST}\" ; do\n  if [[ -f \"${plist}\" ]]; then\n\n    # paths with spaces break the call to setPlistValue. temporarily modify\n    # the shell internal field separator variable (IFS), which normally\n    # includes spaces, to consist only of line breaks\n    oldifs=$IFS\n    IFS=\"\n\"\n\n    for i in \"${!_PLIST_ENTRY_KEYS[@]}\"; do\n      setPlistValue \"${_PLIST_ENTRY_KEYS[$i]}\" \"${_PLIST_ENTRY_TYPES[$i]}\" \"${_PLIST_ENTRY_VALUES[$i]}\" \"${plist}\"\n    done\n\n    # restore the original internal field separator value\n    IFS=$oldifs\n  else\n    echo \"warning:   A Info.plist build output file was not found (${plist})\"\n  fi\ndone\n\necho \"info: <- RNFB build script finished\"\n";
 		};
-		43ECE8262BBA6C3AB8309289 /* [CP] Copy Pods Resources */ = {
+		A206A8D1DD7E65DF2ECA82EA /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -442,29 +477,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AlardinApp/Pods-AlardinApp-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		54EE7DE2D0F02A9F6441D0F6 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-AlardinApp-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		7D347ED8EA9BABEF50FB7A9A /* [CP] Check Pods Manifest.lock */ = {
+		A52C92A064F97449F255EAA3 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -486,7 +499,29 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		A61732FB505527A28D3AB747 /* [CP] Embed Pods Frameworks */ = {
+		BD86F10C1CE6126062F6A236 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-AlardinApp-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DA607FC48EB481B45CE79A98 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -501,23 +536,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AlardinApp/Pods-AlardinApp-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		E3D7F268B438D022D87D31BB /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AlardinApp-AlardinAppTests/Pods-AlardinApp-AlardinAppTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AlardinApp-AlardinAppTests/Pods-AlardinApp-AlardinAppTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AlardinApp-AlardinAppTests/Pods-AlardinApp-AlardinAppTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FD10A7F022414F080027D42C /* Start Packager */ = {
@@ -556,7 +574,7 @@
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
-				DDD3C64828FFFF6B00513D16 /* Images.xcassets in Sources */,
+				DDD3C64A2901379200513D16 /* Images.xcassets in Sources */,
 				DDD3C64928FFFF6E00513D16 /* LaunchScreen.storyboard in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -574,7 +592,7 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E08B884E8347662F5D303D52 /* Pods-AlardinApp-AlardinAppTests.debug.xcconfig */;
+			baseConfigurationReference = A7D2B6A8E7146C00070B3C98 /* Pods-AlardinApp-AlardinAppTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -601,7 +619,7 @@
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E0559055F9768DE1089FDB0F /* Pods-AlardinApp-AlardinAppTests.release.xcconfig */;
+			baseConfigurationReference = A145A171E041A974B5F55A8A /* Pods-AlardinApp-AlardinAppTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
@@ -625,7 +643,7 @@
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DBE9A9B747BDBDB08F145490 /* Pods-AlardinApp.debug.xcconfig */;
+			baseConfigurationReference = 1EA47B55CA95EA68599D2024 /* Pods-AlardinApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
@@ -655,7 +673,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B0C369AEF98A0517DC5BB324 /* Pods-AlardinApp.release.xcconfig */;
+			baseConfigurationReference = 1BF98AC1710ED29A870B5D64 /* Pods-AlardinApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
@@ -894,7 +912,7 @@
 		};
 		DD7D70D928F7E1910097906F /* Staging */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 68D1195734D7D113200B6D55 /* Pods-AlardinApp.staging.xcconfig */;
+			baseConfigurationReference = 8B8A297464C5E87943C0FD83 /* Pods-AlardinApp.staging.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
@@ -922,7 +940,7 @@
 		};
 		DD7D70DA28F7E1910097906F /* Staging */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 624F63B5D99203B93BB6EF87 /* Pods-AlardinApp-AlardinAppTests.staging.xcconfig */;
+			baseConfigurationReference = E5390DE8236ADC162BFEA6CC /* Pods-AlardinApp-AlardinAppTests.staging.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;

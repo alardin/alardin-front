@@ -12231,6 +12231,11 @@
   "resolved" "https://registry.npmjs.org/react-native-swipe-gestures/-/react-native-swipe-gestures-1.0.5.tgz"
   "version" "1.0.5"
 
+"react-native-system-setting@^1.8.0-alpha.0":
+  "integrity" "sha512-8Ahmo6VVsX5L+sip6WPcIDNncUeAHC3ZGSc/jMgAOGpxqiBBLoUxDccnydGLOSLvtWci5NELGf+KTbdlxRfTtA=="
+  "resolved" "https://registry.npmjs.org/react-native-system-setting/-/react-native-system-setting-1.8.0-alpha.0.tgz"
+  "version" "1.8.0-alpha.0"
+
 "react-native-tab-view@^3.1.1":
   "integrity" "sha512-M5pRN6utQfytKWoKlKVzg5NbkYu308qNoW1khGTtEOTs1k14p2dHJ/BWOJoJYHKbPVUyZldbG9MFT7gUl4YHnw=="
   "resolved" "https://registry.npmjs.org/react-native-tab-view/-/react-native-tab-view-3.1.1.tgz"

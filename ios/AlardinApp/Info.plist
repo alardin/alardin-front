@@ -56,7 +56,7 @@
 		<true/>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string/>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>The purpose for accessing the microphone, such as for a call or interactive live streaming.</string>
 	<key>UIAppFonts</key>
@@ -80,6 +80,7 @@
 		<string>Pretendard-Regular.ttf</string>
 		<string>Pretendard-SemiBold.ttf</string>
 		<string>Pretendard-Thin.ttf</string>
+		<string>Pretendard-Medium.ttf</string>
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>

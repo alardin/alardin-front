@@ -20,6 +20,7 @@ import { toastEnable } from '../utils/Toast';
 import CloseIcon from '../assets/icons/ic-cancel.svg';
 import alardinApi from '../utils/alardinApi';
 import { minuteStringCheck } from '../utils/home/convertDateTime';
+import systemSetting from 'react-native-system-setting';
 
 export type CallScreenProps = StackScreenProps<
   RootStackParamList,
@@ -150,7 +151,7 @@ const CallScreen = ({ route, navigation }: CallScreenProps) => {
   });
 
   const soundAlarm = () => {
-    sound.setVolume(1);
+    systemSetting.setVolume(0.9, { showUI: true });
     sound.setNumberOfLoops(-1);
 
     sound.play(success => {
@@ -162,6 +163,15 @@ const CallScreen = ({ route, navigation }: CallScreenProps) => {
     });
   };
 
+  const volumeListener = systemSetting.addVolumeListener(data => {
+    const volume = data.value;
+    console.log('volume');
+    console.log(volume);
+    if (volume < 0.9) {
+      systemSetting.setVolume(0.9, { showUI: true });
+    }
+  });
+
   useEffect(() => {
     console.log(netInfo.isConnected);
     if (netInfo.isConnected) {
@@ -170,7 +180,17 @@ const CallScreen = ({ route, navigation }: CallScreenProps) => {
     for (let i = 0; i < 14; i++) {
       deleteAlarmScheduler(alarmId * 1000 + i);
     }
-  }, [netInfo]);
+  }, [netInfo, alarmId]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      soundAlarm();
+    }, 1000);
+    return () => {
+      sound.stop();
+      systemSetting.removeVolumeListener(volumeListener);
+    };
+  }, []);
 
   const handleCall = () => {
     if (netInfo.isConnected) {

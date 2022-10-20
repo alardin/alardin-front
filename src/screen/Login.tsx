@@ -57,7 +57,12 @@ const Login = () => {
     console.log(data);
     if (status === 'SUCCESS') {
       setAuthorization(data);
-      await EncryptedStorage.setItem('scopes', JSON.stringify(scopes));
+      await EncryptedStorage.setItem(
+        'scopes',
+        JSON.stringify(scopes ? scopes : []),
+      );
+
+      messaging().subscribeToTopic('all');
 
       alardinApi.get('/users').then(async (my: any) => {
         const profileData: IMyProfile = my.data.data;

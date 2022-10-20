@@ -23,7 +23,7 @@ import Loading from '../../screen/Loading';
 import TGame from '../../components/templates/shop/TGame';
 import WebScreen from '../../screen/WebScreen';
 import Mates from '../../components/pages/Mates';
-import { TouchableOpacity } from 'react-native';
+import { Platform, TouchableOpacity } from 'react-native';
 
 import BackIcon from '../../assets/icons/ic-back.svg';
 import ShareIcon from '../../assets/icons/ic-share.svg';
@@ -131,7 +131,8 @@ const StackNavigation = () => {
         options={({ navigation }) => ({
           headerTitle: '',
           headerTitleAlign: 'center',
-          headerTransparent: true,
+          headerStyle: { backgroundColor: '#F8F9FA' },
+          headerShadowVisible: false,
           headerLeft: () => (
             <TouchableOpacity onPress={() => navigation.goBack()}>
               <BackIcon width={28} height={28} />

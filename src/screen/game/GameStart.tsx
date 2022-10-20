@@ -19,6 +19,8 @@ import RtmEngine from 'agora-react-native-rtm';
 import Config from 'react-native-config';
 import PushNotification from 'react-native-push-notification';
 import sendGameData from '../../utils/sendGameData';
+import { toastEnable } from '../../utils/Toast';
+import systemSetting from 'react-native-system-setting';
 
 export type GameStartProps = StackScreenProps<RootStackParamList, 'GameStart'>;
 interface WebViewMessageType {
@@ -157,21 +159,6 @@ const GameStart = ({ route, navigation }: GameStartProps) => {
     webViewRef.current?.postMessage(
       JSON.stringify({
         type: 'GAME_START',
-        // message: {
-        //   currentUser: String.fromCharCode(65 + userType),
-        //   images: [...gameDataState?.gameData[0].images],
-        // },
-        // message: {
-        //   subject:
-        //     gameDataState?.gameData[0].images[
-        //       gameDataState?.gameData[gameDataState?.gameData.length - 1].answerIndex
-        //     ],
-        //   images: gameDataState?.gameData[gameDataState?.gameData.length - 1].images,
-        //   answer:
-        //     gameDataState?.gameData[gameDataState?.gameData.length - 1].images[
-        //       gameDataState?.gameData[0].answerIndex
-        //     ],
-        // }
         message: convertData ? { ...convertData[userType] } : {}, // Picoke 게임일 경우
       }),
     );
@@ -333,19 +320,20 @@ const GameStart = ({ route, navigation }: GameStartProps) => {
   };
 
   useEffect(() => {
-    // if (!timer) {
-    //   limitUntilStart = setTimeout(() => setTimer(true), 1000 * 60);
-    // } else {
-    //   toastEnable({
-    //     text: '사용자가 접속하지 않아 싱글 플레이 모드로 전환합니다',
-    //     duration: 'LONG',
-    //   });
-    //   navigation.reset({
-    //     index: 0,
-    //     routes: [{ name: 'SingleGameStart', params: { gameId: 2 } }],
-    //   });
-    // }
-    // return () => clearTimeout(limitUntilStart);
+    systemSetting.setVolume(0.5, { showUI: true });
+    if (!timer) {
+      limitUntilStart = setTimeout(() => setTimer(true), 1000 * 60);
+    } else {
+      toastEnable({
+        text: '사용자가 접속하지 않아 싱글 플레이 모드로 전환합니다',
+        duration: 'LONG',
+      });
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'SingleGameStart', params: { gameId: 2 } }],
+      });
+    }
+    return () => clearTimeout(limitUntilStart);
   }, [timer]);
 
   useEffect(() => {

@@ -25,10 +25,6 @@ import EncryptedStorage from 'react-native-encrypted-storage';
 
 type IAlarmAttendScreen = StackScreenProps<RootStackParamList, 'AlarmAttend'>;
 
-const TopBox = styled(Box)`
-  margin-top: 32px;
-`;
-
 const BottomBox = styled(Box)`
   justify-content: flex-end;
 `;
@@ -139,9 +135,7 @@ const TAttend = ({ route, navigation }: IAlarmAttendScreen) => {
     <SafeAreaView>
       <Container>
         <ScrollView>
-          <TopBox>
-            <Summary type="attend" />
-          </TopBox>
+          <Summary type="attend" />
           <BottomBox>
             {Object.keys(profileData).length !== 0 && (
               <MateInfo members={Members} />

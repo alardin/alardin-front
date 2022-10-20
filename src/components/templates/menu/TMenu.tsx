@@ -18,6 +18,7 @@ import SettingList from '../../organisms/menu/SettingList';
 import alardinApi from '../../../utils/alardinApi';
 import axios from 'axios';
 import SwitchList from '../../organisms/menu/SwitchList';
+import messaging from '@react-native-firebase/messaging';
 
 const TMenu = () => {
   const navigation = useNavigation<any>();
@@ -35,6 +36,7 @@ const TMenu = () => {
     await EncryptedStorage.removeItem('appRefreshToken');
     // await AsyncStorage.removeItem('notifyStorage');
     setAuthorization({} as IAuthorization);
+    messaging().unsubscribeFromTopic('all');
     if (loginPlat === 'kakao') {
       await logout();
     }
@@ -43,6 +45,7 @@ const TMenu = () => {
 
   const handleExit = async () => {
     alardinApi.delete('/users').then(async () => {
+      messaging().subscribeToTopic('all');
       await EncryptedStorage.removeItem('appAccessToken');
       await EncryptedStorage.removeItem('appRefreshToken');
       await AsyncStorage.removeItem('notifyStorage');

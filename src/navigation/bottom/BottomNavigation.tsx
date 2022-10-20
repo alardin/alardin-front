@@ -40,7 +40,7 @@ const BottomNavigation = () => {
       screenOptions={{
         headerShown: true,
         headerTitleAlign: 'center',
-        headerStyle: Platform.OS === 'ios' ? { height: 100 } : { height: 60 },
+        headerStyle: Platform.OS === 'ios' ? { height: 100 } : { height: 80 },
         headerLeftContainerStyle: { paddingLeft: 14 },
         headerRightContainerStyle: { paddingRight: 14 },
         // tabBarShowLabel: false,
