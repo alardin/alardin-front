@@ -8,11 +8,7 @@ import {
   useColorScheme,
 } from 'react-native';
 import messaging from '@react-native-firebase/messaging';
-import {
-  DarkTheme,
-  DefaultTheme,
-  NavigationContainer,
-} from '@react-navigation/native';
+import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { ThemeProvider } from 'styled-components/native';
 import StackNavigation from './navigation/stack/StackNavigation';
@@ -21,7 +17,7 @@ import { navigationRef } from './navigation/RootNavigation';
 import CodePush from 'react-native-code-push';
 import 'react-native-gesture-handler';
 import theme from './theme/theme';
-import checkNotifyType from './utils/checkNotifyType';
+import checkNotifyType from './utils/notification/checkNotifyType';
 import { defaultNotify, isNotify } from './recoil/notify/notify';
 
 import BackgroundFetch from 'react-native-background-fetch';
@@ -33,7 +29,7 @@ import {
   syncAlarmList,
 } from './utils/alarm/alarmStorage';
 import { checkAlarmScheduler } from './utils/alarm/alarmScheduler';
-import notificationHandle from './utils/notificationHandle';
+import notificationHandle from './utils/notification/notificationHandle';
 import { toastEnable } from './utils/Toast';
 import NetInfo from '@react-native-community/netinfo';
 import useInterceptor from './hooks/useInterceptor';
@@ -42,6 +38,7 @@ import StoreNotification from './recoil/notify/storageNotify';
 import { LogBox } from 'react-native';
 import _ from 'lodash';
 import SplashScreen from 'react-native-splash-screen';
+import PushNotification, { Importance } from 'react-native-push-notification';
 
 LogBox.ignoreLogs(['componentWillUpdate']);
 LogBox.ignoreLogs(['new NativeEventEmitter']);
@@ -123,6 +120,18 @@ const initialBackgroundStatus = async () => {
   });
 };
 
+PushNotification.createChannel(
+  {
+    channelId: 'alardin-alarm-notification',
+    channelName: 'alardin',
+    importance: Importance.HIGH,
+    vibrate: true,
+    playSound: true,
+    soundName: 'test_rooster.wav',
+  },
+  created => console.log('channel created! ', created),
+);
+
 const App = () => {
   const scheme = useColorScheme();
   useInterceptor();
@@ -142,6 +151,7 @@ const App = () => {
   const handleMessage = useCallback(() => {
     messaging().onNotificationOpenedApp(remoteMessage => {
       console.log(`message notification one`);
+      console.log(remoteMessage);
       checkNotifyType(remoteMessage) && setIsNotify(true);
       notificationHandle(remoteMessage);
       StoreNotification({ remoteMessage, storage, setStorage });
@@ -152,6 +162,7 @@ const App = () => {
       .then(remoteMessage => {
         console.log(`message notification two`);
         if (remoteMessage) {
+          console.log(remoteMessage);
           checkNotifyType(remoteMessage) && setIsNotify(true);
           notificationHandle(remoteMessage);
           StoreNotification({ remoteMessage, storage, setStorage });
@@ -198,7 +209,7 @@ const App = () => {
   useEffect(() => {
     const unsubscribe = messaging().onMessage(async remoteMessage => {
       console.log(`message notification three`);
-      console.log(typeof remoteMessage);
+      console.log(remoteMessage);
       checkNotifyType(remoteMessage) && setIsNotify(true);
       notificationHandle(remoteMessage);
       StoreNotification({ remoteMessage, storage, setStorage });

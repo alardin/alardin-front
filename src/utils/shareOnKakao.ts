@@ -128,7 +128,10 @@ const shareOnKakao = async (
     }
     return;
   }
-  Alert.alert('미지원 기능', '해당 디바이스에서 지원되지 않는 모드입니다');
+  Alert.alert(
+    '카카오톡 미설치',
+    '해당 디바이스에서 카카오톡이 설치되지 않았습니다.',
+  );
 };
 
 export default shareOnKakao;

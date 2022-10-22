@@ -51,6 +51,7 @@ export type RootStackParamList = {
   AlarmRetouch: IAlarmRetouchStackProps;
   GameStart: {
     id: number;
+    gameId: number;
     client: RtmEngine | undefined;
     engine: RtcEngine | undefined;
     alarmId: number;
@@ -69,6 +70,7 @@ export type RootStackParamList = {
   CallScreen: {
     id: number;
     alarmId: number;
+    gameId: number;
   };
   Mates: undefined;
   Loading: undefined;

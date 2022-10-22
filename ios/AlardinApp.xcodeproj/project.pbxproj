@@ -10,6 +10,7 @@
 		00E356F31AD99517003FC87E /* AlardinAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* AlardinAppTests.m */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		20E984D0C1EC4AE3A60EF7B9 /* KATURI.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 78725EA15FF94017948200CF /* KATURI.TTF */; };
 		ADF2B2EDB4DDF222948DD389 /* libPods-AlardinApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 064502A6DF2F5290680FEFA9 /* libPods-AlardinApp.a */; };
 		CD768D4A1F9DF91A7BC34296 /* libPods-AlardinApp-AlardinAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DF4F2D452FCCE9DBA305B2D2 /* libPods-AlardinApp-AlardinAppTests.a */; };
 		DD473D5A28CF31A10097D1F9 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD473D5928CF31A10097D1F9 /* StoreKit.framework */; };
@@ -43,6 +44,8 @@
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* AlardinAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AlardinAppTests.m; sourceTree = "<group>"; };
 		064502A6DF2F5290680FEFA9 /* libPods-AlardinApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AlardinApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		0F610A16243742A897503663 /* game.css */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = game.css; path = ../src/assets/games/single/twigitizer_game/css/game.css; sourceTree = "<group>"; };
+		129DEB8677DE46DAA710A276 /* index.html */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = index.html; path = ../src/assets/games/single/twigitizer_game/index.html; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* AlardinApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AlardinApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = AlardinApp/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = AlardinApp/AppDelegate.mm; sourceTree = "<group>"; };
@@ -51,15 +54,37 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = AlardinApp/main.m; sourceTree = "<group>"; };
 		1BF98AC1710ED29A870B5D64 /* Pods-AlardinApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlardinApp.release.xcconfig"; path = "Target Support Files/Pods-AlardinApp/Pods-AlardinApp.release.xcconfig"; sourceTree = "<group>"; };
 		1EA47B55CA95EA68599D2024 /* Pods-AlardinApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlardinApp.debug.xcconfig"; path = "Target Support Files/Pods-AlardinApp/Pods-AlardinApp.debug.xcconfig"; sourceTree = "<group>"; };
+		38F6254E7559402C965A1E90 /* roboto.woff */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = roboto.woff; path = ../src/assets/games/single/lib/fonts/roboto.woff; sourceTree = "<group>"; };
+		42008BE783274AF391268FEA /* ic-apple.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "ic-apple.svg"; path = "../src/assets/icons/ic-apple.svg"; sourceTree = "<group>"; };
+		45A632029C854174A9A5EB63 /* ic-event.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "ic-event.png"; path = "../src/assets/icons/ic-event.png"; sourceTree = "<group>"; };
+		45CB647FFFEA4546A67DF4D9 /* lock.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = lock.png; path = ../src/assets/games/single/lib/images/src/lock.png; sourceTree = "<group>"; };
+		4E9A196AAB9D43F2A04C86B9 /* ic-add.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "ic-add.svg"; path = "../src/assets/icons/ic-add.svg"; sourceTree = "<group>"; };
+		4EE9E8A9D6EB45BF902E841E /* ic-alarm.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "ic-alarm.svg"; path = "../src/assets/icons/ic-alarm.svg"; sourceTree = "<group>"; };
 		575159D80CAE41A49F526199 /* Pretendard-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Pretendard-Regular.ttf"; path = "../src/assets/fonts/Pretendard-Regular.ttf"; sourceTree = "<group>"; };
+		5E648946216D4603B59CCD6D /* NotoSans-Medium.woff2 */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NotoSans-Medium.woff2"; path = "../src/assets/games/single/lib/fonts/NotoSans-Medium.woff2"; sourceTree = "<group>"; };
+		620B2A4B3C684200B3083891 /* game.js */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = game.js; path = ../src/assets/games/single/twigitizer_game/js/game.js; sourceTree = "<group>"; };
+		625E94E028774B2B94AB530E /* index.html */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = index.html; path = ../src/assets/games/single/test/index.html; sourceTree = "<group>"; };
+		6CDFE18466B244109BE3C32D /* ic-announce.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "ic-announce.png"; path = "../src/assets/icons/ic-announce.png"; sourceTree = "<group>"; };
 		71B930328924442C83649ADA /* Pretendard-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Pretendard-Medium.ttf"; path = "../src/assets/fonts/Pretendard-Medium.ttf"; sourceTree = "<group>"; };
+		78725EA15FF94017948200CF /* KATURI.TTF */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = KATURI.TTF; path = ../src/assets/games/single/lib/fonts/KATURI.TTF; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = AlardinApp/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		825683A82A3046AAB015A1E4 /* common.css */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = common.css; path = ../src/assets/games/single/lib/css/common.css; sourceTree = "<group>"; };
+		857F7BB89A5141B9A4BA4E6F /* NotoSans-Medium.woff */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NotoSans-Medium.woff"; path = "../src/assets/games/single/lib/fonts/NotoSans-Medium.woff"; sourceTree = "<group>"; };
 		8B8A297464C5E87943C0FD83 /* Pods-AlardinApp.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlardinApp.staging.xcconfig"; path = "Target Support Files/Pods-AlardinApp/Pods-AlardinApp.staging.xcconfig"; sourceTree = "<group>"; };
+		8D643D0301E1480ABBF46023 /* roboto.woff2 */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = roboto.woff2; path = ../src/assets/games/single/lib/fonts/roboto.woff2; sourceTree = "<group>"; };
+		90AA5EE96AF844CF84792C30 /* clock.js */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = clock.js; path = ../src/assets/games/single/twigitizer_game/js/clock.js; sourceTree = "<group>"; };
 		A145A171E041A974B5F55A8A /* Pods-AlardinApp-AlardinAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlardinApp-AlardinAppTests.release.xcconfig"; path = "Target Support Files/Pods-AlardinApp-AlardinAppTests/Pods-AlardinApp-AlardinAppTests.release.xcconfig"; sourceTree = "<group>"; };
 		A7D2B6A8E7146C00070B3C98 /* Pods-AlardinApp-AlardinAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlardinApp-AlardinAppTests.debug.xcconfig"; path = "Target Support Files/Pods-AlardinApp-AlardinAppTests/Pods-AlardinApp-AlardinAppTests.debug.xcconfig"; sourceTree = "<group>"; };
+		B20D85C11EE346B2A00AE2F2 /* ic-chat.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "ic-chat.svg"; path = "../src/assets/icons/ic-chat.svg"; sourceTree = "<group>"; };
+		C3CF12D0198747249EBFBAC2 /* clock.png */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = clock.png; path = ../src/assets/games/single/lib/images/src/clock.png; sourceTree = "<group>"; };
 		C4BF20C8731F4485A44605FA /* Pretendard-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Pretendard-Bold.ttf"; path = "../src/assets/fonts/Pretendard-Bold.ttf"; sourceTree = "<group>"; };
 		C6E7A90FC4EF48ED8A77E6F7 /* Pretendard-Thin.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Pretendard-Thin.ttf"; path = "../src/assets/fonts/Pretendard-Thin.ttf"; sourceTree = "<group>"; };
+		C7FC18E88B6F4DD1981980BD /* ic-cancel.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "ic-cancel.svg"; path = "../src/assets/icons/ic-cancel.svg"; sourceTree = "<group>"; };
 		CC4FC53D5E794BA48DCD601F /* Pretendard-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Pretendard-SemiBold.ttf"; path = "../src/assets/fonts/Pretendard-SemiBold.ttf"; sourceTree = "<group>"; };
+		CCBA7A84E3C943EF89060797 /* ic-game.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "ic-game.svg"; path = "../src/assets/icons/ic-game.svg"; sourceTree = "<group>"; };
+		CD6B7B6BE59F4DFF845A9EE1 /* ic-earth.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "ic-earth.svg"; path = "../src/assets/icons/ic-earth.svg"; sourceTree = "<group>"; };
+		CFA75EADFDC24C81B7823D9D /* ic-calendar.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "ic-calendar.svg"; path = "../src/assets/icons/ic-calendar.svg"; sourceTree = "<group>"; };
+		D60C590E1AB5498C8C1C7B23 /* ic-add-profile.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "ic-add-profile.svg"; path = "../src/assets/icons/ic-add-profile.svg"; sourceTree = "<group>"; };
 		DD473D5928CF31A10097D1F9 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		DD473D6428D1AC170097D1F9 /* test_alarm.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = test_alarm.wav; path = ../../../Downloads/test_alarm.wav; sourceTree = "<group>"; };
 		DD473D6628D1AC460097D1F9 /* test_rooster.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = test_rooster.wav; sourceTree = "<group>"; };
@@ -92,8 +117,11 @@
 		DDD8648228F1E501006D33A9 /* src */ = {isa = PBXFileReference; lastKnownFileType = folder; path = src; sourceTree = "<group>"; };
 		DDD8648428F1E51A006D33A9 /* twigitizer_game */ = {isa = PBXFileReference; lastKnownFileType = folder; path = twigitizer_game; sourceTree = "<group>"; };
 		DF4F2D452FCCE9DBA305B2D2 /* libPods-AlardinApp-AlardinAppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AlardinApp-AlardinAppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E2001D823E1D4F9A9072964A /* ic-back.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "ic-back.svg"; path = "../src/assets/icons/ic-back.svg"; sourceTree = "<group>"; };
 		E5390DE8236ADC162BFEA6CC /* Pods-AlardinApp-AlardinAppTests.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlardinApp-AlardinAppTests.staging.xcconfig"; path = "Target Support Files/Pods-AlardinApp-AlardinAppTests/Pods-AlardinApp-AlardinAppTests.staging.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		EDC57610B54D4B439CEB1E5B /* AlardinPolicy.html */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = AlardinPolicy.html; path = ../src/assets/AlardinPolicy.html; sourceTree = "<group>"; };
+		FF80ECB467524A568F65959F /* ic-down.svg */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "ic-down.svg"; path = "../src/assets/icons/ic-down.svg"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -281,6 +309,33 @@
 				575159D80CAE41A49F526199 /* Pretendard-Regular.ttf */,
 				CC4FC53D5E794BA48DCD601F /* Pretendard-SemiBold.ttf */,
 				C6E7A90FC4EF48ED8A77E6F7 /* Pretendard-Thin.ttf */,
+				EDC57610B54D4B439CEB1E5B /* AlardinPolicy.html */,
+				825683A82A3046AAB015A1E4 /* common.css */,
+				78725EA15FF94017948200CF /* KATURI.TTF */,
+				857F7BB89A5141B9A4BA4E6F /* NotoSans-Medium.woff */,
+				5E648946216D4603B59CCD6D /* NotoSans-Medium.woff2 */,
+				38F6254E7559402C965A1E90 /* roboto.woff */,
+				8D643D0301E1480ABBF46023 /* roboto.woff2 */,
+				C3CF12D0198747249EBFBAC2 /* clock.png */,
+				45CB647FFFEA4546A67DF4D9 /* lock.png */,
+				625E94E028774B2B94AB530E /* index.html */,
+				0F610A16243742A897503663 /* game.css */,
+				129DEB8677DE46DAA710A276 /* index.html */,
+				90AA5EE96AF844CF84792C30 /* clock.js */,
+				620B2A4B3C684200B3083891 /* game.js */,
+				D60C590E1AB5498C8C1C7B23 /* ic-add-profile.svg */,
+				4E9A196AAB9D43F2A04C86B9 /* ic-add.svg */,
+				4EE9E8A9D6EB45BF902E841E /* ic-alarm.svg */,
+				6CDFE18466B244109BE3C32D /* ic-announce.png */,
+				42008BE783274AF391268FEA /* ic-apple.svg */,
+				E2001D823E1D4F9A9072964A /* ic-back.svg */,
+				CFA75EADFDC24C81B7823D9D /* ic-calendar.svg */,
+				C7FC18E88B6F4DD1981980BD /* ic-cancel.svg */,
+				B20D85C11EE346B2A00AE2F2 /* ic-chat.svg */,
+				FF80ECB467524A568F65959F /* ic-down.svg */,
+				CD6B7B6BE59F4DFF845A9EE1 /* ic-earth.svg */,
+				45A632029C854174A9A5EB63 /* ic-event.png */,
+				CCBA7A84E3C943EF89060797 /* ic-game.svg */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -391,6 +446,7 @@
 				DDD3C6652901A5AB00513D16 /* Pretendard-SemiBold.ttf in Resources */,
 				DDD3C6662901A5AB00513D16 /* Pretendard-Thin.ttf in Resources */,
 				DDD3C64F2901A31C00513D16 /* twigitizer_game in Resources */,
+				20E984D0C1EC4AE3A60EF7B9 /* KATURI.TTF in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -658,6 +714,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -687,6 +744,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -926,6 +984,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0.0;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",

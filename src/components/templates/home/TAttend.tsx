@@ -106,6 +106,27 @@ const TAttend = ({ route, navigation }: IAlarmAttendScreen) => {
       });
   };
 
+  const requestQuit = () => {
+    alardinApi
+      .post('/alarm/quit', { alarmId: id })
+      .then(async () => {
+        refreshData(v => v + 1);
+        navigation.reset({
+          index: 0,
+          routes: [{ name: 'BottomNavigation' }],
+        });
+      })
+      .catch(err => {
+        if (err.response.status === 403) {
+          toastEnable({
+            text: '해당 기능을 사용할 수 있는 권한이 없습니다',
+            duration: 'LONG',
+          });
+        }
+        console.log(err);
+      });
+  };
+
   useEffect(() => {
     ProfileCallback();
     console.log(id);
@@ -144,18 +165,26 @@ const TAttend = ({ route, navigation }: IAlarmAttendScreen) => {
               <Button
                 width="100%"
                 height="xl"
-                options="primary"
+                options={
+                  !isHost && checkMeAttend === 1 ? 'destructive' : 'primary'
+                }
                 center
                 onPress={() =>
-                  checkMeAttend
+                  isHost && checkMeAttend === 1
                     ? navigateRetouch()
+                    : !isHost && checkMeAttend === 1
+                    ? requestQuit()
                     : isFull
                     ? Alert.alert(
                         `최대 참가할 수 있는 인원이 ${max_member}명입니다`,
                       )
                     : setVisible(true)
                 }>
-                {isHost && checkMeAttend === 1 ? `알람 수정` : `알람 참가`}
+                {isHost && checkMeAttend === 1
+                  ? `알람 수정`
+                  : !isHost && checkMeAttend === 1
+                  ? `알람 나가기`
+                  : `알람 참가`}
               </Button>
               {isHost && (
                 <ConfirmButton

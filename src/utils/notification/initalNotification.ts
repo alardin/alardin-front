@@ -1,6 +1,7 @@
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import PushNotification, { Importance } from 'react-native-push-notification';
 import notificationHandle from './notificationHandle';
+import { v4 as uuid } from 'uuid';
 
 PushNotification.configure({
   onRegister: register => {
@@ -21,8 +22,8 @@ PushNotification.configure({
 
 PushNotification.createChannel(
   {
-    channelId: 'alardin-alarm-0',
-    channelName: 'alardin',
+    channelId: 'alardin-alarm-notification',
+    channelName: 'alardin-alarm',
     importance: Importance.HIGH,
     vibrate: true,
     playSound: true,

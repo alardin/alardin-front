@@ -3,12 +3,13 @@ apply plugin: 'com.google.gms.google-services'
 
 project.ext.envConfigFiles = [
     developdebug: "./.env",
-    developrelease: ".env", 
-    stagedebug: ".env",
-    stagerelease: ".env",
-    productdebug: ".env",    
-    productrelease: ".env",
-    anothercustombuild: ".env",
+    developrelease: "./.env", 
+    stagedebug: "./.env",
+    stagerelease: "./.env",
+    productdebug: "./.env",    
+    productrelease: "./.env",
+    release: "./.env",
+    anothercustombuild: "./.env",
 ]
 
 apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
@@ -161,8 +162,8 @@ android {
         applicationId "com.alardinapp"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        versionCode 1007009
+        versionName "0.1.4"
         buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString()
         missingDimensionStrategy 'store', 'play'
 
@@ -254,6 +255,14 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
+        release {
+            if(project.hasProperty('ALARDIN_RELEASE_STORE_FILE')) {
+                storeFile file(ALARDIN_RELEASE_STORE_FILE)
+                storePassword ALARDIN_RELEASE_STORE_PASSWORD
+                keyAlias ALARDIN_RELEASE_KEY_ALIAS
+                keyPassword ALARDIN_RELEASE_KEY_PASSWORD
+            }
+        }
     }
     buildTypes {
         debug {
@@ -263,7 +272,7 @@ android {
         release {
             // Caution! In production, you need to generate your own keystore file.
             // see https://reactnative.dev/docs/signed-apk-android.
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
             resValue "string", "CodePushDeploymentKey", CODEPUSH_DEPLOYMENT_KEY_PRODUCTION
@@ -271,7 +280,7 @@ android {
         releaseStaging {
             initWith release
             resValue "string", "CodePushDeploymentKey", CODEPUSH_DEPLOYMENT_KEY_STAGING
-            matchingFallbacks = ['release', 'debug']
+            matchingFallbacks = ['release']
         }
     }
 
@@ -302,6 +311,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging:20.2.3'
     implementation project(':react-native-config')
     implementation project(':react-native-vector-icons')
+
+    implementation project(':react-native-kakao-share-link')
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
         exclude group:'com.facebook.fbjni'

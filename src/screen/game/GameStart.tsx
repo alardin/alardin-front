@@ -6,7 +6,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { AppState, SafeAreaView } from 'react-native';
 import WebView from 'react-native-webview';
 import { WebViewMessageEvent } from 'react-native-webview/lib/WebViewTypes';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 import styled from 'styled-components/native';
 import Box from '../../components/atoms/box/Box';
 import Container from '../../components/atoms/container/Container';
@@ -18,9 +18,10 @@ import alardinApi from '../../utils/alardinApi';
 import RtmEngine from 'agora-react-native-rtm';
 import Config from 'react-native-config';
 import PushNotification from 'react-native-push-notification';
-import sendGameData from '../../utils/sendGameData';
+import sendGameData from '../../utils/game/sendGameData';
 import { toastEnable } from '../../utils/Toast';
 import systemSetting from 'react-native-system-setting';
+import { bringOnlineGameUrl } from '../../utils/game/bringGameUrl';
 
 export type GameStartProps = StackScreenProps<RootStackParamList, 'GameStart'>;
 interface WebViewMessageType {
@@ -48,10 +49,10 @@ const WebBox = styled(Box)`
 let client: RtmEngine = new RtmEngine();
 
 const GameStart = ({ route, navigation }: GameStartProps) => {
-  const { id, alarmId } = route.params;
+  const { id, alarmId, gameId } = route.params;
 
   const appState = useRef(AppState.currentState);
-  const [appStateVisible, setAppStateVisible] = useState(appState.current);
+  const [, setAppStateVisible] = useState(appState.current);
 
   const [timer, setTimer] = useState<boolean>(false);
   const [userType, setUserType] = useState<number>(0);
@@ -117,7 +118,6 @@ const GameStart = ({ route, navigation }: GameStartProps) => {
       if (message.text === 'ALL_ATTEND') {
         console.log(`Attend: ${message.text}`);
         setAllAttend(true);
-        clearTimeout(limitUntilStart);
         return;
       }
 
@@ -380,6 +380,7 @@ const GameStart = ({ route, navigation }: GameStartProps) => {
   useEffect(() => {
     if (allAttend) {
       console.log(`attend: true!!!!`);
+      clearTimeout(limitUntilStart);
       sendNeedGameStart();
     }
   }, [allAttend]);
@@ -422,7 +423,7 @@ const GameStart = ({ route, navigation }: GameStartProps) => {
             onLoad={handleInitialGame}
             javaScriptEnabled
             scrollEnabled={false}
-            source={{ uri: 'http://192.168.0.13:3030' }}
+            source={{ uri: bringOnlineGameUrl(gameId) }}
             style={{
               flex: 1,
             }}

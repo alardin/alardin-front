@@ -56,8 +56,8 @@ export const cleanOldAlarmItems = async () => {
             );
           }
 
-          createdDateType > convertDate &&
-            convertDate.setDate(convertDate.getDate() + 1);
+          // createdDateType > convertDate &&
+          //   convertDate.setDate(convertDate.getDate() + 1);
 
           // if (convertDate < currentDateTime) {
           //   deleteAlarmItem(alarm.id);

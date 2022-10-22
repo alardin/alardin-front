@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { Alert } from 'react-native';
 import styled from 'styled-components/native';
@@ -41,6 +42,7 @@ const TextBox = styled(Box)`
 `;
 
 const BuyConfirm = ({ id, name, price, setVisible }: IBuyConfirmProps) => {
+  const navigation = useNavigation();
   console.log(id);
   const handleCancel = () => {
     setVisible(false);
@@ -49,6 +51,7 @@ const BuyConfirm = ({ id, name, price, setVisible }: IBuyConfirmProps) => {
     try {
       await alardinApi.post(`/game/${id}`);
       Alert.alert('게임 구매', '게임 구매 완료');
+      navigation.goBack();
     } catch (err) {
       Alert.alert('게임 구매', '게임 구매 실패');
     }

@@ -12,6 +12,7 @@
 
 #import <Firebase.h>
 #import <RNKakaoLogins.h>
+#import <CodePush/CodePush.h>
 
 #import <AVFoundation/AVFoundation.h>
 #import <TSBackgroundFetch/TSBackgroundFetch.h>

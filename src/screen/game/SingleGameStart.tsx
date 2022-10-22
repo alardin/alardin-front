@@ -120,6 +120,7 @@ const SingleGameStart = ({ route, navigation }: GameStartProps) => {
             originWhitelist={['*']}
             ref={handleSetRef}
             onMessage={handleMessage}
+            scrollEnabled={false}
             javaScriptEnabled
             domStorageEnabled
             source={sourcePath}

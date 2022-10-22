@@ -77,6 +77,7 @@ const apiAlarmList = selector({
       console.log(resultList);
       await cleanOldAlarmItems();
       checkAlarmScheduler(resultList);
+      console.log('scheduler');
       getAlarmScheduler();
       return resultList;
     } catch (err) {

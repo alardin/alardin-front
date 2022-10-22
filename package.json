@@ -1,6 +1,6 @@
 {
   "name": "alardinapp",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
@@ -30,6 +30,7 @@
     "@types/react-native-push-notification": "^8.1.1",
     "agora-react-native-rtm": "^1.5.0",
     "axios": "^0.27.2",
+    "code-push": "^4.0.5",
     "eslint-config-airbnb": "^19.0.4",
     "jetifier": "^2.0.0",
     "loadsh": "*",

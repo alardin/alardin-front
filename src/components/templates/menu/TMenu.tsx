@@ -80,7 +80,11 @@ const TMenu = () => {
       type: 'button_no-icon',
       key: '공지사항',
       handlePress: () =>
-        navigation.navigate('CallScreen', { id: me.id, alarmId: 57 }),
+        navigation.navigate('CallScreen', {
+          id: me.id,
+          alarmId: 68,
+          gameId: 1,
+        }),
       // navigation.navigate('WebScreen', {
       // mode: 'WEB',
       // uri: 'https://www.google.com',

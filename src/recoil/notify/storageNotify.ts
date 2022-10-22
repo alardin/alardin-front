@@ -37,8 +37,6 @@ const StoreNotification = ({
     const { type, message } = remoteMessage.data;
     let result;
     switch (type) {
-      case 'ALARM_START':
-        return;
       case 'MATE_ALARM':
         result = storagingItem(message);
         return result;

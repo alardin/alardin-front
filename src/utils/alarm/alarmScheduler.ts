@@ -1,5 +1,4 @@
 import EncryptedStorage from 'react-native-encrypted-storage';
-import { Platform } from 'react-native';
 import PushNotification from 'react-native-push-notification';
 import { IAlarmInfoData } from '../../recoil/home/alarmList';
 import { alarmItemtoDate } from '../home/convertDateTime';
@@ -8,6 +7,7 @@ export interface IAlarmNotificationProps {
   alarmId: number;
   date: Date;
   soundName: string;
+  gameId: number;
 }
 
 export const getAlarmScheduler = () => {
@@ -20,6 +20,7 @@ export const addAlarmScheduler = async ({
   soundName,
   date,
   alarmId,
+  gameId,
 }: IAlarmNotificationProps) => {
   const diffSecond = Math.floor(
     (date.getTime() - new Date(Date.now()).getTime()) / 1000,
@@ -29,13 +30,10 @@ export const addAlarmScheduler = async ({
   const { id } = jsonProfile ? JSON.parse(jsonProfile) : { id: 0 };
 
   const platformDate = Date.now() + diffSecond * 1000;
-  // Platform.OS === 'android'
-  //   ? Date.now() + diffSecond * 1000
-  //   : Date.now() + diffSecond * 1000;
 
   for (let i = 0; i < 14; i++) {
     PushNotification.localNotificationSchedule({
-      channelId: `alardin-alarm-0`,
+      channelId: 'alardin-alarm-notification',
       id: String(alarmId * 1000 + i),
       title: 'Alardin 알람',
       message: '지금 일어나세요!!!!',
@@ -43,6 +41,7 @@ export const addAlarmScheduler = async ({
       playSound: true,
       soundName,
       vibration: 1000,
+      vibrate: true,
       allowWhileIdle: true,
       userInfo: {
         type: 'ALARM_START',
@@ -52,6 +51,7 @@ export const addAlarmScheduler = async ({
           thumbnail_image_url: '',
           nickname: '',
           userType: '',
+          gameId,
         }),
       },
     });
@@ -104,6 +104,7 @@ export const checkAlarmScheduler = (alarmList: IAlarmInfoData[]) => {
           time: String(alarm.time),
         }),
         soundName: 'test_rooster.wav',
+        gameId: alarm.Game.id,
       });
     });
 
@@ -116,12 +117,10 @@ export const checkAlarmScheduler = (alarmList: IAlarmInfoData[]) => {
 export const retouchAlarmScheduler = ({
   soundName,
   date,
-  id,
 }: IAlarmNotificationProps) => {
-  PushNotification.cancelLocalNotification(String(id));
+  // PushNotification.cancelLocalNotification(String(id));
   PushNotification.localNotificationSchedule({
     channelId: 'alardin-channel-id',
-    id,
     title: 'Alardin 알람',
     message: '지금 일어나세요!!!!',
     date,

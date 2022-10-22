@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch } from 'react-native';
+import { Platform, Switch } from 'react-native';
 import styled from 'styled-components/native';
 import { ISettingData } from '../../../../recoil/home/alarmSettings';
 import themeColor from '../../../../theme/theme';
@@ -40,7 +40,10 @@ const SetItemBoolean = ({
         disabled={disabled}
         trackColor={{
           false: themeColor.color.gray_200,
-          true: themeColor.color.primary_500,
+          true:
+            Platform.OS === 'android'
+              ? themeColor.color.gray_400
+              : themeColor.color.primary_500,
         }}
         thumbColor={themeColor.color.white}
         onValueChange={() =>

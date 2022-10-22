@@ -29,7 +29,6 @@ import appleAuth, {
   AppleButton,
 } from '@invertase/react-native-apple-authentication';
 import 'react-native-get-random-values';
-import { v4 as uuid } from 'uuid';
 import KakaoButton from '../components/molecules/other/KakaoButton';
 import AlardinIcon from '../assets/icons/ic_alardin.svg';
 import AlardinText from '../assets/icons/ic_alardin_text.svg';

@@ -89,7 +89,7 @@ const TitleText = styled(Text)`
 // let engine: RtcEngine;
 
 const CallScreen = ({ route, navigation }: CallScreenProps) => {
-  const { id, alarmId } = route.params;
+  const { id, alarmId, gameId } = route.params;
 
   const [engine, setEngine] = useRecoilState(rtcEngine);
   const [agora, setAgora] = useRecoilState(rtcState);
@@ -193,37 +193,40 @@ const CallScreen = ({ route, navigation }: CallScreenProps) => {
   }, []);
 
   const handleCall = () => {
-    if (netInfo.isConnected) {
-      navigation.reset({
-        index: 0,
-        routes: [
-          {
-            name: 'GameStart',
-            params: {
-              id,
-              alarmId,
+    setTimeout(() => {
+      if (netInfo.isConnected) {
+        navigation.reset({
+          index: 0,
+          routes: [
+            {
+              name: 'GameStart',
+              params: {
+                id,
+                alarmId,
+                gameId,
+              },
             },
-          },
-        ],
-      });
-    } else {
-      toastEnable({
-        text: '오프라인 상태로 인해 싱글 플레이 모드로 전환합니다.',
-        duration: 'LONG',
-      });
-      navigation.reset({
-        index: 0,
-        routes: [
-          {
-            name: 'SingleGameStart',
-            params: {
-              id,
-              alarmId,
+          ],
+        });
+      } else {
+        toastEnable({
+          text: '오프라인 상태로 인해 싱글 플레이 모드로 전환합니다.',
+          duration: 'LONG',
+        });
+        navigation.reset({
+          index: 0,
+          routes: [
+            {
+              name: 'SingleGameStart',
+              params: {
+                id,
+                alarmId,
+              },
             },
-          },
-        ],
-      });
-    }
+          ],
+        });
+      }
+    }, 1000);
   };
 
   const dayString = ['일', '월', '화', '수', '목', '금', '토'];

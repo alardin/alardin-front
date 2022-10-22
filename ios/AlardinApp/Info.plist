@@ -6,10 +6,12 @@
 	<array>
 		<string>com.transistorsoft.alarmUpdate</string>
 	</array>
+	<key>CFBundleAllowMixedLocalizations</key>
+	<true/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>kr</string>
 	<key>CFBundleDisplayName</key>
-	<string>AlardinApp</string>
+	<string>Alardin</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -21,7 +23,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
@@ -37,6 +39,8 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>CodePushDeploymentKey</key>
+	<string>${CODEPUSH_KEY}</string>
 	<key>KAKAO_APP_KEY</key>
 	<string>${KAKAO_NATIVE_APP_KEY_WITH_KAKAO}</string>
 	<key>LSApplicationCategoryType</key>
@@ -56,9 +60,11 @@
 		<true/>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string/>
+	<string>Alardin 서비스 이용을 위해 사용자의 위치 사용 동의가 필요합니다.</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>The purpose for accessing the microphone, such as for a call or interactive live streaming.</string>
+	<string>Alardin 서비스 중 알람을 끄기 위한 게임 진행을 위해 마이크 사용의 동의가 필요합니다.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Alardin 서비스 이용을 위해 사용자의 카메라 사용 동의가 필요합니다.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>AntDesign.ttf</string>
@@ -98,10 +104,6 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
-	<key>CFBundleAllowMixedLocalizations</key>
-	<true/>
-	<key>CodePushDeploymentKey</key>
-	<string>${CODEPUSH_KEY}</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 </dict>
