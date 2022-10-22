@@ -2,6 +2,8 @@ package com.alardinapp;
 
 import android.app.Application;
 import android.content.Context;
+
+//import com.reactnativekakaosharelink.KakaoShareLinkPackage;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
 import com.facebook.react.ReactInstanceManager;
@@ -10,6 +12,8 @@ import com.facebook.react.ReactPackage;
 import com.facebook.react.config.ReactFeatureFlags;
 import com.facebook.soloader.SoLoader;
 import com.alardinapp.newarchitecture.MainApplicationReactNativeHost;
+import com.microsoft.codepush.react.CodePush;
+import com.alardinapp.BuildConfig;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
@@ -17,19 +21,26 @@ public class MainApplication extends Application implements ReactApplication {
 
   private final ReactNativeHost mReactNativeHost =
       new ReactNativeHost(this) {
+          @Override
+          protected String getJSBundleFile() {
+              return CodePush.getJSBundleFile();
+          }
+
         @Override
         public boolean getUseDeveloperSupport() {
           return BuildConfig.DEBUG;
         }
 
-        @Override
+          @Override
         protected List<ReactPackage> getPackages() {
           @SuppressWarnings("UnnecessaryLocalVariable")
           List<ReactPackage> packages = new PackageList(this).getPackages();
           // Packages that cannot be autolinked yet can be added manually here, for example:
           // packages.add(new MyReactNativePackage());
+//            packages.add(new KakaoShareLinkPackage());
           return packages;
         }
+
 
         @Override
         protected String getJSMainModuleName() {
@@ -49,7 +60,7 @@ public class MainApplication extends Application implements ReactApplication {
     }
   }
 
-  @Override
+    @Override
   public void onCreate() {
     super.onCreate();
     // If you opted-in for the New Architecture, we enable the TurboModule system

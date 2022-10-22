@@ -1,0 +1,11 @@
+//
+//  Config.xcconfig
+//  AlardinApp
+//
+//  Created by 이상혁 on 2022/08/01.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+#include? "tmp.xcconfig"
