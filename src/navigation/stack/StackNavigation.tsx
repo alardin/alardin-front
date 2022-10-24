@@ -88,6 +88,8 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const StackNavigation = () => {
   const auth = useRecoilValueLoadable(token);
+  console.log('auth');
+  console.log(auth.contents);
   const me = useRecoilValue(myProfile);
   const setMateVisible = useSetRecoilState(centerVisible);
 

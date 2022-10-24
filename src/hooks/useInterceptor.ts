@@ -11,7 +11,6 @@ import { toastEnable } from '../utils/Toast';
 import EncryptedStorage from 'react-native-encrypted-storage';
 
 const useInterceptor = () => {
-  EncryptedStorage.clear();
   const [userToken, setUserToken] = useRecoilState(token);
 
   const requestInterceptor = alardinApi.interceptors.request.use(
@@ -33,6 +32,7 @@ const useInterceptor = () => {
       const { config } = error;
       console.log('error');
       console.log(JSON.stringify(error));
+      console.log(JSON.stringify(config));
       if (error.response.status === 401) {
         toastEnable({
           text: '인증이 만료되어 재발급을 요청합니다',
