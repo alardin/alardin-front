@@ -3,7 +3,6 @@
 import { StackScreenProps } from '@react-navigation/stack';
 import React, { useEffect, useState } from 'react';
 import { RootStackParamList } from '../../../navigation/stack/StackNavigation';
-import { IGameMetaType } from '../../../recoil/home/alarmSettings';
 import alardinApi from '../../../utils/alardinApi';
 import GameInfo, { IGameInfoData } from '../../organisms/shop/GameInfo';
 

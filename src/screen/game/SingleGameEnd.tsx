@@ -51,7 +51,7 @@ const HightLightText = styled(Text)`
 const SingleGameEnd = ({ route, navigation }: GameEndProps) => {
   const { gameId } = route.params;
   console.log(route.params);
-  const [ratingScore, setRatingScore] = useState<number>(1);
+  const [, setRatingScore] = useState<number>(1);
   const handleExit = async () => {
     navigation.reset({
       index: 0,

@@ -1,11 +1,7 @@
-import {
-  BottomTabNavigationProp,
-  BottomTabScreenProps,
-} from '@react-navigation/bottom-tabs';
+import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { SafeAreaView } from 'react-native';
-import { RootBottomParamList } from '../../navigation/NavigationData';
 import Container from '../atoms/container/Container';
 import TShop from '../templates/shop/TShop';
 

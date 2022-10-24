@@ -49,18 +49,6 @@ const EventNotifyItem = ({
   handler,
 }: IEventNotfiyProps) => {
   // const [checked, setChecked] = useState<boolean>(false);
-  const convertTypeMessage = (noticeType: string) => {
-    let result: string = '';
-    switch (noticeType) {
-      case 'NOTICE':
-        result = '더 다양한 소식으로 돌아오겠습니다!';
-        break;
-      case 'EVENT':
-        result = 'Alardin에서 많은 혜택을 누리세요~';
-        break;
-    }
-    return { result };
-  };
 
   // const { result } = convertTypeMessage(type);
   const convertProps =

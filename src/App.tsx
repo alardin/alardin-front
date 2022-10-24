@@ -1,12 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 
 import React, { useCallback, useEffect } from 'react';
-import {
-  PermissionsAndroid,
-  Platform,
-  StatusBar,
-  useColorScheme,
-} from 'react-native';
+import { PermissionsAndroid, Platform, StatusBar } from 'react-native';
 import messaging from '@react-native-firebase/messaging';
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { useRecoilState, useSetRecoilState } from 'recoil';
@@ -133,7 +128,6 @@ PushNotification.createChannel(
 );
 
 const App = () => {
-  const scheme = useColorScheme();
   useInterceptor();
 
   const setIsNotify = useSetRecoilState(isNotify);

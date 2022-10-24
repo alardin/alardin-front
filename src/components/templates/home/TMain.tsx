@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { RefreshControl, SafeAreaView, ScrollView } from 'react-native';
 import Container from '../../atoms/container/Container';
 import {

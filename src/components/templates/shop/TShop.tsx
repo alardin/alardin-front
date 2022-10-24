@@ -1,12 +1,7 @@
-import {
-  BottomTabNavigationProp,
-  BottomTabScreenProps,
-} from '@react-navigation/bottom-tabs';
-import { useFocusEffect, useIsFocused } from '@react-navigation/native';
+import { useIsFocused } from '@react-navigation/native';
 import axios from 'axios';
 import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components/native';
-import { RootBottomParamList } from '../../../navigation/NavigationData';
 import { IMyProfile } from '../../../recoil/authorization';
 import { IGameMetaType } from '../../../recoil/home/alarmSettings';
 import CenterScreen from '../../../screen/CenterScreen';
@@ -27,9 +22,7 @@ const CustomScrollView = styled.ScrollView`
   height: 100%;
 `;
 
-type IShopNavigation = BottomTabScreenProps<RootBottomParamList, 'Shop'>;
-
-const TShop = ({ navigation }: IShopNavigation) => {
+const TShop = () => {
   const apiPath = ['/assets', '/game', '/users'];
   const [visible, setVisible] = useState<boolean>(false);
   const [shopState, setShopState] = useState<IShopState>({

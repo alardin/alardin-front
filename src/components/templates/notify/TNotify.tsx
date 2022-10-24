@@ -16,7 +16,7 @@ const TNotify = () => {
 
   return (
     <Container options="zero">
-      <NotifyList type="default" />
+      <NotifyList />
     </Container>
   );
 };

@@ -7,7 +7,6 @@ import { Alert, Platform, SafeAreaView, ScrollView } from 'react-native';
 import {
   useRecoilRefresher_UNSTABLE,
   useRecoilState,
-  useRecoilStateLoadable,
   useRecoilValueLoadable,
   useSetRecoilState,
 } from 'recoil';
@@ -16,7 +15,6 @@ import { RootStackParamList } from '../../../navigation/stack/StackNavigation';
 import { alarmListRefresh } from '../../../recoil/home/alarmList';
 import {
   apiGameMetaData,
-  gameMetaData,
   initialRecoilSetting,
   pickerMetaData,
   settingData,

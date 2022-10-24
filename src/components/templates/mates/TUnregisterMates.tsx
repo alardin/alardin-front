@@ -1,5 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import useMatesList from '../../../hooks/useMatesList';
+import React, { useEffect, useState } from 'react';
 import UnregisteredMate from '../../organisms/mates/UnregisteredMate';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import AcceptFriends from '../../molecules/mates/AcceptFriends';

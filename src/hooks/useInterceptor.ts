@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/dot-notation */
 
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import Config from 'react-native-config';
 import { useRecoilState } from 'recoil';
 import { IAuthorization, token } from '../recoil/authorization';

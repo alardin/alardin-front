@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
 import { FlatList, ListRenderItem, RefreshControl } from 'react-native';
 import styled from 'styled-components/native';
 import themeColor from '../../../../theme/theme';

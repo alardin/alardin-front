@@ -4,12 +4,11 @@ import { logout, unlink } from '@react-native-seoul/kakao-login';
 import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { ScrollView } from 'react-native-gesture-handler';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import {
   IAuthorization,
   IMyProfile,
   loginPlatform,
-  myProfile,
   token,
 } from '../../../recoil/authorization';
 import AdBox from '../../organisms/menu/AdBox';
@@ -22,7 +21,6 @@ import messaging from '@react-native-firebase/messaging';
 
 const TMenu = () => {
   const navigation = useNavigation<any>();
-  const me = useRecoilValue(myProfile);
 
   const [profile, setProfile] = useState<IMyProfile>({} as IMyProfile);
   const [isPremium, setIsPremium] = useState<boolean>(false);

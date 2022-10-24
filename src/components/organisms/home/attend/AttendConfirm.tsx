@@ -56,7 +56,6 @@ const AttendConfirm = ({
   mateNickname,
   time,
   gameName,
-  myName,
 }: IAttendConfirmProps) => {
   const navigation = useNavigation();
   const setVisible = useSetRecoilState(bottomVisible);

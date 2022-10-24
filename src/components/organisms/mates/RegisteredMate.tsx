@@ -1,11 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import styled from 'styled-components/native';
 import { IMembersDataType } from '../../../recoil/home/members';
 import Box from '../../atoms/box/Box';
-import Container from '../../atoms/container/Container';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import RegisterUser from '../../molecules/mates/RegisterUser';
-import InviteFriends from '../../molecules/mates/InviteFriends';
 import NoItem from '../../molecules/other/NoItem';
 
 interface IRegisteredMateProps {

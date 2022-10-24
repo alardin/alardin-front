@@ -2,15 +2,8 @@
 
 import { atom, selector } from 'recoil';
 import alardinApi from '../../utils/alardinApi';
-import {
-  checkAlarmScheduler,
-  getAlarmScheduler,
-} from '../../utils/alarm/alarmScheduler';
-import {
-  cleanOldAlarmItems,
-  getAlarmList,
-  syncAlarmList,
-} from '../../utils/alarm/alarmStorage';
+import { checkAlarmScheduler } from '../../utils/alarm/alarmScheduler';
+import { getAlarmList, syncAlarmList } from '../../utils/alarm/alarmStorage';
 import { convertRepeatDay } from '../../utils/home/convertDateTime';
 import { token } from '../authorization';
 import { IMembersDataType } from './members';
@@ -54,26 +47,15 @@ const apiAlarmList = selector({
       const response = await alardinApi.get('/users/joined-alarms');
       const {
         joinedAlarms,
-        hostedAlarms,
       }: { joinedAlarms: IAlarmInfoData[]; hostedAlarms: IAlarmInfoData[] } =
         response.data.data;
-
-      console.log(`joinedAlarms`);
-      console.log(joinedAlarms);
-      console.log(`hostedAlarms`);
-      console.log(hostedAlarms);
 
       if (joinedAlarms) {
         await syncAlarmList(joinedAlarms);
       }
 
       const resultList = await getAlarmList();
-      console.log('storage');
-      console.log(resultList);
-      await cleanOldAlarmItems();
       checkAlarmScheduler(resultList);
-      console.log('scheduler');
-      getAlarmScheduler();
       return resultList;
     } catch (err) {
       console.log(`cannot connect to server, bring xstorage info`);

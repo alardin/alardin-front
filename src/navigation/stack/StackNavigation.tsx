@@ -23,7 +23,7 @@ import Loading from '../../screen/Loading';
 import TGame from '../../components/templates/shop/TGame';
 import WebScreen from '../../screen/WebScreen';
 import Mates from '../../components/pages/Mates';
-import { Platform, TouchableOpacity } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 
 import BackIcon from '../../assets/icons/ic-back.svg';
 import ShareIcon from '../../assets/icons/ic-share.svg';
@@ -88,8 +88,6 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const StackNavigation = () => {
   const auth = useRecoilValueLoadable(token);
-  console.log('auth');
-  console.log(auth.contents);
   const me = useRecoilValue(myProfile);
   const setMateVisible = useSetRecoilState(centerVisible);
 

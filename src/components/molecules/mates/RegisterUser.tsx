@@ -55,7 +55,7 @@ const CustomProfileIcon = styled(ProfileIcon)`
 const RegisterUser = ({ mate, myId }: IFriendInfoProps) => {
   const mateRefresher = useSetRecoilState(mateRefresh);
   const [openDelete, setOpenDelete] = useState<boolean>(false);
-  const { id, kakao_id, thumbnail_image_url, nickname } = mate;
+  const { id, thumbnail_image_url, nickname } = mate;
 
   const handleOpenButton = () => {
     setOpenDelete(true);
