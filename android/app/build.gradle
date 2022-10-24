@@ -162,15 +162,15 @@ android {
         applicationId "com.alardinapp"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1007009
-        versionName "0.1.4"
+        versionCode 1007010
+        versionName "0.1.5"
         buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString()
         missingDimensionStrategy 'store', 'play'
 
         flavorDimensions "version"
 
         resValue 'string', "CODE_PUSH_APK_BUILD_TIME", String.format("\"%d\"", System.currentTimeMillis())
-        // resValue "string", "build_config_package", "com.alardinapp"
+        resValue "string", "build_config_package", "com.alardinapp"
 
         if (isNewArchitectureEnabled()) {
             // We configure the NDK build only if you decide to opt-in for the New Architecture.
