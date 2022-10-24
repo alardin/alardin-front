@@ -67,10 +67,10 @@ export const cleanOldAlarmItems = async () => {
         },
       );
 
-      await AsyncStorage.setItem(
-        'alarmList',
-        JSON.stringify(removedOldAlarmList),
-      );
+      // await AsyncStorage.setItem(
+      //   'alarmList',
+      //   JSON.stringify(removedOldAlarmList),
+      // );
     }
   } catch (err) {
     console.log(`Error from cleanOldAlarmItems : ` + err);

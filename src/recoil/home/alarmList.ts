@@ -4,19 +4,14 @@ import { atom, selector } from 'recoil';
 import alardinApi from '../../utils/alardinApi';
 import {
   checkAlarmScheduler,
-  clearAlarmScheduler,
   getAlarmScheduler,
 } from '../../utils/alarm/alarmScheduler';
 import {
   cleanOldAlarmItems,
-  clearAlarmList,
   getAlarmList,
   syncAlarmList,
 } from '../../utils/alarm/alarmStorage';
-import {
-  convertRepeatDay,
-  convertTime,
-} from '../../utils/home/convertDateTime';
+import { convertRepeatDay } from '../../utils/home/convertDateTime';
 import { token } from '../authorization';
 import { IMembersDataType } from './members';
 
