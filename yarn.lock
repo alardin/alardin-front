@@ -12144,6 +12144,11 @@
   dependencies:
     "dooboolab-welcome" "1.3.2"
 
+"react-native-image-picker@^4.10.0":
+  "integrity" "sha512-QNK4ZnFLD+BdiM1QL1jh9GUALhRXm3MV97crhnTCSMv50H6E4tq3ozgfyxF5uKz0cECbNkWswg4sjgqZKEJtww=="
+  "resolved" "https://registry.npmjs.org/react-native-image-picker/-/react-native-image-picker-4.10.0.tgz"
+  "version" "4.10.0"
+
 "react-native-kakao-share-link@github:sanghyuk-2i/react-native-kakao-share-link":
   "resolved" "git+ssh://git@github.com/sanghyuk-2i/react-native-kakao-share-link.git#9a2eb22b7d53add38c20203f58c5604193f356e3"
   "version" "1.0.6"

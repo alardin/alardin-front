@@ -65,6 +65,10 @@
 	<string>Alardin 서비스 이용을 위해 사용자의 위치 사용 동의가 필요합니다.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Alardin 서비스 중 알람을 끄기 위한 게임 진행을 위해 마이크 사용의 동의가 필요합니다.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Alardin 서비스 중 캡처된 사진을 저장하기 위한 권한을 허용해야 합니다.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Alardin 서비스 중 프로필 사진 변경을 위한 앨범 접근을 허용해야 합니다.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>AntDesign.ttf</string>

@@ -36,6 +36,7 @@ import SingleGameStart from '../../screen/game/SingleGameStart';
 import SingleGameEnd from '../../screen/game/SingleGameEnd';
 import shareOnKakao from '../../utils/shareOnKakao';
 import centerVisible from '../../recoil/mates/centerVisible';
+import ProfileRetouch from '../../components/organisms/menu/ProfileRetouch';
 
 interface IAlarmAttendStackProps extends IAlarmInfoProps {
   type: string;
@@ -81,6 +82,14 @@ export type RootStackParamList = {
   WebScreen: {
     mode: string;
     uri?: string;
+  };
+  ProfileRetouch: {
+    nickname: string;
+    email: string;
+    thumbnail_image_url: string;
+    profile_image_url: string;
+    bio: string;
+    is_private: boolean;
   };
 };
 
@@ -250,6 +259,19 @@ const StackNavigation = () => {
             </TouchableOpacity>
           ),
           headerShadowVisible: false,
+        })}
+      />
+      <Stack.Screen
+        name="ProfileRetouch"
+        component={ProfileRetouch}
+        options={({ navigation }) => ({
+          headerTitle: '프로필 정보 수정',
+          headerTitleAlign: 'center',
+          headerLeft: () => (
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <BackIcon width={28} height={28} />
+            </TouchableOpacity>
+          ),
         })}
       />
     </Stack.Navigator>

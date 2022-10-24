@@ -491,6 +491,8 @@ PODS:
     - React-Core
   - react-native-get-random-values (1.8.0):
     - React-Core
+  - react-native-image-picker (4.10.0):
+    - React-Core
   - react-native-kakao-share-link (1.0.6):
     - KakaoSDKCommon (~> 2.9.0)
     - KakaoSDKLink (~> 2.9.0)
@@ -684,6 +686,7 @@ DEPENDENCIES:
   - react-native-date-picker (from `../node_modules/react-native-date-picker`)
   - react-native-encrypted-storage (from `../node_modules/react-native-encrypted-storage`)
   - react-native-get-random-values (from `../node_modules/react-native-get-random-values`)
+  - react-native-image-picker (from `../node_modules/react-native-image-picker`)
   - react-native-kakao-share-link (from `../node_modules/react-native-kakao-share-link`)
   - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
   - react-native-pager-view (from `../node_modules/react-native-pager-view`)
@@ -823,6 +826,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-encrypted-storage"
   react-native-get-random-values:
     :path: "../node_modules/react-native-get-random-values"
+  react-native-image-picker:
+    :path: "../node_modules/react-native-image-picker"
   react-native-kakao-share-link:
     :path: "../node_modules/react-native-kakao-share-link"
   react-native-netinfo:
@@ -964,6 +969,7 @@ SPEC CHECKSUMS:
   react-native-date-picker: 55193347d8d0f40948f441ffd4e5db6f0a8fbe13
   react-native-encrypted-storage: e78d848ce0fb663c2ce306e37921d026809322e6
   react-native-get-random-values: a6ea6a8a65dc93e96e24a11105b1a9c8cfe1d72a
+  react-native-image-picker: 4bc9ed38c8be255b515d8c88babbaf74973f91a8
   react-native-kakao-share-link: 78bfe05556e08c739ba4d617bc074bd3e815ab0c
   react-native-netinfo: c8d02a805706024f8de3a339a028f7e64f63b4b6
   react-native-pager-view: da490aa1f902c9a5aeecf0909cc975ad0e92e53e

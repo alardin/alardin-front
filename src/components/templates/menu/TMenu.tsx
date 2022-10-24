@@ -18,6 +18,7 @@ import alardinApi from '../../../utils/alardinApi';
 import axios from 'axios';
 import SwitchList from '../../organisms/menu/SwitchList';
 import messaging from '@react-native-firebase/messaging';
+import { PermissionsAndroid } from 'react-native';
 
 const TMenu = () => {
   const navigation = useNavigation<any>();
@@ -72,20 +73,27 @@ const TMenu = () => {
   ];
 
   const appItems = [
-    // {
-    //   type: 'button_no-icon',
-    //   key: '공지사항',
-    //   handlePress: () =>
-    //     navigation.navigate('CallScreen', {
-    //       id: me.id,
-    //       alarmId: 68,
-    //       gameId: 1,
-    //     }),
-    //   // navigation.navigate('WebScreen', {
-    //   // mode: 'WEB',
-    //   // uri: 'https://www.google.com',
-    //   // }),
-    // },
+    {
+      type: 'button_no-icon',
+      key: '프로필 정보 수정',
+      handlePress: () => {
+        const {
+          nickname,
+          bio,
+          profile_image_url,
+          thumbnail_image_url,
+          is_private,
+        } = profile;
+        navigation.navigate('ProfileRetouch', {
+          nickname,
+          bio,
+          profile_image_url,
+          thumbnail_image_url,
+          email: profile.email,
+          is_private,
+        });
+      },
+    },
     {
       type: 'button_no-icon',
       key: '고객센터',
@@ -135,6 +143,10 @@ const TMenu = () => {
         setIsPremium(asset.is_premium);
       }),
     );
+    return () => {
+      setProfile({} as IMyProfile);
+      setIsPremium(false);
+    };
   }, []);
 
   return (

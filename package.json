@@ -48,6 +48,7 @@
     "react-native-gesture-handler": "^2.5.0",
     "react-native-get-random-values": "^1.8.0",
     "react-native-iap": "^8.0.4",
+    "react-native-image-picker": "^4.10.0",
     "react-native-kakao-share-link": "github:sanghyuk-2i/react-native-kakao-share-link",
     "react-native-pager-view": "^5.4.25",
     "react-native-push-notification": "^8.1.1",
