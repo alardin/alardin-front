@@ -27,7 +27,6 @@ const TMenu = () => {
   const [profile, setProfile] = useState<IMyProfile>({} as IMyProfile);
   const [isPremium, setIsPremium] = useState<boolean>(false);
 
-  console.log(me);
   const setAuthorization = useSetRecoilState(token);
   const [loginPlat, setLoginPlatform] = useRecoilState(loginPlatform);
 
@@ -62,34 +61,32 @@ const TMenu = () => {
       handler: async (args: any) => {
         const { nickname, bio, profile_image_url, thumbnail_image_url } =
           profile;
-        console.log(args, profile);
-        const response = await alardinApi.post('/users/edit', {
+        await alardinApi.post('/users/edit', {
           nickname,
           bio,
           profile_image_url,
           thumbnail_image_url,
           is_private: args,
         });
-        console.log(response);
       },
     },
   ];
 
   const appItems = [
-    {
-      type: 'button_no-icon',
-      key: '공지사항',
-      handlePress: () =>
-        navigation.navigate('CallScreen', {
-          id: me.id,
-          alarmId: 68,
-          gameId: 1,
-        }),
-      // navigation.navigate('WebScreen', {
-      // mode: 'WEB',
-      // uri: 'https://www.google.com',
-      // }),
-    },
+    // {
+    //   type: 'button_no-icon',
+    //   key: '공지사항',
+    //   handlePress: () =>
+    //     navigation.navigate('CallScreen', {
+    //       id: me.id,
+    //       alarmId: 68,
+    //       gameId: 1,
+    //     }),
+    //   // navigation.navigate('WebScreen', {
+    //   // mode: 'WEB',
+    //   // uri: 'https://www.google.com',
+    //   // }),
+    // },
     {
       type: 'button_no-icon',
       key: '고객센터',
