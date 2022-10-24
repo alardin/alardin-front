@@ -29,17 +29,16 @@ const TGame = ({ route }: IGameInfoScreen) => {
   });
 
   useEffect(() => {
-    !visible &&
-      alardinApi
-        .get(`/game/${gameId}`)
-        .then(res => {
-          console.log(res.data.data);
-          setGameData(res.data.data);
-        })
-        .catch(err => {
-          console.log(err);
-        });
-  }, [visible]);
+    alardinApi
+      .get(`/game/${gameId}`)
+      .then(res => {
+        console.log(res.data.data);
+        setGameData(res.data.data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }, [isPaid]);
 
   return (
     <GameInfo

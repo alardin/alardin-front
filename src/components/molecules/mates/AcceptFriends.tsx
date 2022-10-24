@@ -41,10 +41,10 @@ const AcceptFriends = ({ setIsKakaoAgree }: IAcceptFriendsProps) => {
   return (
     <CustomBox width="100%" height="100%">
       <Text options="semiBold" colorName={theme.color.gray_500}>
-        앗! 아직 등록된 메이트가 없어요.
+        앗! 카카오 소셜 권한이 필요합니다.
       </Text>
       <Text size="s" colorName={theme.color.gray_500}>
-        새로운 메이트를 만나러 가볼까요?
+        카카오톡 친구목록을 통해 쉽게 메이트를 찾아볼까요?
       </Text>
       <CustomButton
         width="160px"
@@ -52,7 +52,7 @@ const AcceptFriends = ({ setIsKakaoAgree }: IAcceptFriendsProps) => {
         options="secondary"
         center
         onPress={requestKakaoAgreement}>
-        메이트 요청하러 가기
+        카카오 친구목록 권한
       </CustomButton>
     </CustomBox>
   );

@@ -70,29 +70,7 @@ const TShop = ({ navigation }: IShopNavigation) => {
   }, []);
 
   useEffect(() => {
-    axios.all(apiPath.map(path => alardinApi.get(path))).then(
-      axios.spread((res1, res2, res3) => {
-        const { asset, games } = res1.data.data;
-        const gamelist = res2.data.data;
-        const user = res3.data.data;
-        setShopState({
-          userAsset: {
-            coin: asset.coin,
-            isPremium: asset.is_premium,
-            totalGames: games.length,
-            myGames: games,
-          },
-          gameList: gamelist,
-          profile: user,
-        });
-      }),
-    );
-    return () =>
-      setShopState({
-        gameList: [],
-        profile: {} as IMyProfile,
-        userAsset: {} as IUserAssetData,
-      });
+    isFocusing();
   }, [isFocusing]);
 
   return (
