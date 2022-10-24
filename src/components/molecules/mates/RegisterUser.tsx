@@ -8,7 +8,7 @@ import Box from '../../atoms/box/Box';
 import ProfileIcon from '../../atoms/profile/ProfileIcon';
 import Text from '../../atoms/text/Text';
 import themeColor from '../../../theme/theme';
-import { TouchableOpacity } from 'react-native';
+import { Alert, TouchableOpacity } from 'react-native';
 
 import MoreIcon from '../../../assets/icons/ic-more.svg';
 import OptionIcon from '../../../assets/icons/ic-option.svg';
@@ -65,7 +65,18 @@ const RegisterUser = ({ mate, myId }: IFriendInfoProps) => {
   };
 
   const handlePress = async () => {
-    await alardinApi.delete('/mate', { data: { id: myId, mateId: id } });
+    try {
+      await alardinApi.delete('/mate', { data: { id: myId, mateId: id } });
+      Alert.alert(
+        '메이트 삭제 성공',
+        `${nickname}님을 사용자의 메이트 목록에서 삭제하였습니다.`,
+      );
+    } catch (err) {
+      Alert.alert(
+        '메이트 삭제 실패',
+        `${nickname}님을 사용자의 메이트 목록에서 삭제를 실패하였습니다.`,
+      );
+    }
     mateRefresher(v => v + 1);
   };
 

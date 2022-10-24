@@ -1,6 +1,6 @@
 import React from 'react';
+import { ScrollView } from 'react-native-gesture-handler';
 import { IMembersDataType } from '../../../recoil/home/members';
-import Box from '../../atoms/box/Box';
 import InviteFriends from '../../molecules/mates/InviteFriends';
 import UnregisterUser from '../../molecules/mates/UnregisterUser';
 
@@ -10,7 +10,7 @@ interface IUnregisteredMateProps {
 
 const UnregisteredMate = ({ matesList }: IUnregisteredMateProps) => {
   return (
-    <Box>
+    <ScrollView>
       {matesList.length === 0 ? (
         <InviteFriends />
       ) : (
@@ -18,7 +18,7 @@ const UnregisteredMate = ({ matesList }: IUnregisteredMateProps) => {
           <UnregisterUser mate={mate} key={`friend_${index}`} />
         ))
       )}
-    </Box>
+    </ScrollView>
   );
 };
 

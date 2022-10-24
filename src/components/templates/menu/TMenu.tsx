@@ -38,6 +38,7 @@ const TMenu = () => {
       await logout();
     }
     setLoginPlatform('none');
+    await alardinApi.post('/users/logout');
   };
 
   const handleExit = async () => {
