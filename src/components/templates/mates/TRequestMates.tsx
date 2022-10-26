@@ -37,6 +37,7 @@ const TRequestMates = () => {
 
   useEffect(() => {
     alardinApi.get('/mate/requests').then(res => {
+      console.log(res.data.data);
       setNotifyArr(res.data.data);
     });
   }, [refresher]);

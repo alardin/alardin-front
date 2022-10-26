@@ -127,36 +127,37 @@ export const renewalTokenByAgreement = selector<KakaoOAuthToken>({
   get: () => {
     return {} as KakaoOAuthToken;
   },
-  set: async ({ set }, newToken) => {
+  set: ({ set }, newToken) => {
     const { accessToken, refreshToken }: any = newToken;
-    const deviceToken = await messaging().getToken();
-    axios({
-      method: 'POST',
-      url: `${Config.ENDPOINT}/api/users/auth`,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      data: {
-        accessToken,
-        refreshToken,
-        deviceToken,
-      },
-    }).then(res => {
-      const { data } = res.data;
-      set(token, { ...data });
-      EncryptedStorage.setItem(
-        'appAccessToken',
-        JSON.stringify({ appAccessToken: data.appAccessToken }),
-      );
-      EncryptedStorage.setItem(
-        'appRefreshToken',
-        JSON.stringify({ appRefreshToken: data.appRefreshToken }),
-      );
-      alardinApi.get('/users').then((my: any) => {
-        const profileData: IMyProfile = my.data.data;
-        EncryptedStorage.setItem('myProfile', JSON.stringify(profileData));
-        set(myProfile, profileData);
+    messaging()
+      .getToken()
+      .then(deviceToken => {
+        axios({
+          method: 'POST',
+          url: `${Config.ENDPOINT}/api/auth/kakao`,
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          data: {
+            accessToken,
+            refreshToken,
+            deviceToken,
+          },
+        }).then(res => {
+          const { data } = res.data;
+          EncryptedStorage.setItem(
+            'appAccessToken',
+            JSON.stringify({ appAccessToken: data.appAccessToken }),
+          );
+          EncryptedStorage.setItem(
+            'appRefreshToken',
+            JSON.stringify({ appRefreshToken: data.appRefreshToken }),
+          );
+          alardinApi.get('/users').then((my: any) => {
+            const profileData: IMyProfile = my.data.data;
+            EncryptedStorage.setItem('myProfile', JSON.stringify(profileData));
+          });
+        });
       });
-    });
   },
 });

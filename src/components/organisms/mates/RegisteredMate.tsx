@@ -3,7 +3,7 @@ import { IMembersDataType } from '../../../recoil/home/members';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import RegisterUser from '../../molecules/mates/RegisterUser';
 import NoItem from '../../molecules/other/NoItem';
-import { ScrollView } from 'react-native-gesture-handler';
+import { ScrollView } from 'react-native';
 
 interface IRegisteredMateProps {
   matesList: IMembersDataType[];

@@ -47,7 +47,7 @@ const AcceptFriends = ({ setIsKakaoAgree }: IAcceptFriendsProps) => {
         카카오톡 친구목록을 통해 쉽게 메이트를 찾아볼까요?
       </Text>
       <CustomButton
-        width="160px"
+        width="190px"
         height="m"
         options="secondary"
         center

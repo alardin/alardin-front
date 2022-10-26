@@ -95,20 +95,41 @@ const MateNotifyItem = ({
           ),
         );
     } else {
-      await alardinApi
-        .delete(`/mate/request?receiverId=${Number(id)}`)
-        .then(() =>
-          Alert.alert(
-            '메이트 거부 성공',
-            `${nickname}님과의 메이트를 거부하셨습니다.`,
-          ),
-        )
-        .catch(() =>
-          Alert.alert(
-            '메이트 거부 실패',
-            `${nickname}님과의 메이트 거부를 실패했습니다.`,
-          ),
-        );
+      if (type === 'request') {
+        console.log('check1');
+        await alardinApi
+          .delete(`/mate/request?receiverId=${Number(id)}`)
+          .then(() =>
+            Alert.alert(
+              '메이트 요청 취소',
+              `${nickname}님과의 메이트 요청을 취소하셨습니다.`,
+            ),
+          )
+          .catch(() =>
+            Alert.alert(
+              '메이트 요청 취소 실패',
+              `${nickname}님과의 메이트 요청 취소에 실패했습니다.`,
+            ),
+          );
+      } else {
+        await alardinApi
+          .post(`/mate/response`, {
+            senderId: Number(id),
+            response,
+          })
+          .then(() =>
+            Alert.alert(
+              '메이트 거부 성공',
+              `${nickname}님과의 메이트를 거부하셨습니다.`,
+            ),
+          )
+          .catch(() =>
+            Alert.alert(
+              '메이트 거부 실패',
+              `${nickname}님과의 메이트 거부를 실패했습니다.`,
+            ),
+          );
+      }
     }
     mateRefresher(v => v + 1);
   };

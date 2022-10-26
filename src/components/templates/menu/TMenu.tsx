@@ -29,28 +29,32 @@ const TMenu = () => {
   const setAuthorization = useSetRecoilState(token);
   const [loginPlat, setLoginPlatform] = useRecoilState(loginPlatform);
 
-  const handleLogout = async () => {
-    await EncryptedStorage.removeItem('appAccessToken');
-    await EncryptedStorage.removeItem('appRefreshToken');
-    // await AsyncStorage.removeItem('notifyStorage');
-    setAuthorization({} as IAuthorization);
-    messaging().unsubscribeFromTopic('all');
-    if (loginPlat === 'kakao') {
-      await logout();
-    }
-    setLoginPlatform('none');
-    await alardinApi.post('/users/logout');
+  const handleLogout = () => {
+    alardinApi.post('/users/logout').then(async () => {
+      await EncryptedStorage.removeItem('appAccessToken');
+      await EncryptedStorage.removeItem('appRefreshToken');
+      // await AsyncStorage.removeItem('notifyStorage');
+      setAuthorization({} as IAuthorization);
+      messaging().unsubscribeFromTopic('all');
+      if (loginPlat === 'kakao') {
+        await logout();
+      }
+      setLoginPlatform('none');
+    });
   };
 
   const handleExit = async () => {
-    alardinApi.delete('/users').then(async () => {
-      messaging().subscribeToTopic('all');
-      await EncryptedStorage.removeItem('appAccessToken');
-      await EncryptedStorage.removeItem('appRefreshToken');
-      await AsyncStorage.removeItem('notifyStorage');
-      await unlink();
-      setAuthorization({} as IAuthorization);
-      setLoginPlatform('none');
+    unlink().then(res => {
+      console.log(res);
+      alardinApi.delete('/users').then(async res => {
+        console.log(res);
+        messaging().unsubscribeFromTopic('all');
+        await EncryptedStorage.removeItem('appAccessToken');
+        await EncryptedStorage.removeItem('appRefreshToken');
+        await AsyncStorage.removeItem('notifyStorage');
+        setLoginPlatform('none');
+        setAuthorization({} as IAuthorization);
+      });
     });
   };
 
