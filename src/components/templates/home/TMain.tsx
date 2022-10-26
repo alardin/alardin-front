@@ -12,6 +12,7 @@ import MatesAlarm from '../../organisms/home/main/MatesAlarm';
 import MyAlarm from '../../organisms/home/main/MyAlarm';
 import { useRecoilValueLoadable, useSetRecoilState } from 'recoil';
 import CirclePlus from '../../molecules/home/main/CirclePlus';
+import AdMobsView from '../../../screen/ads/AdMobsView';
 
 const TMain = () => {
   const [refreshing, setRefreshing] = useState<boolean>(false);
@@ -35,6 +36,7 @@ const TMain = () => {
         <Container>
           <Header lastestAlarm={lastestAlarm} />
           <MyAlarm data={myAttendAlarm} />
+          <AdMobsView />
           <MatesAlarm data={matesAttendAlarm} />
         </Container>
       </ScrollView>

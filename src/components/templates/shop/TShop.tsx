@@ -4,6 +4,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components/native';
 import { IMyProfile } from '../../../recoil/authorization';
 import { IGameMetaType } from '../../../recoil/home/alarmSettings';
+import AdMobsView from '../../../screen/ads/AdMobsView';
 import CenterScreen from '../../../screen/CenterScreen';
 import alardinApi from '../../../utils/alardinApi';
 import UserCoin from '../../molecules/shop/user/UserCoin';
@@ -75,6 +76,7 @@ const TShop = () => {
           setVisible={setVisible}
         />
         <UserCoin asset={shopState.userAsset} />
+        <AdMobsView />
         <GameShopList
           data={shopState.gameList}
           myGames={shopState.userAsset.myGames}

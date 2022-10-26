@@ -64,6 +64,9 @@
       <meta-data
           android:name="com.dieam.reactnativepushnotification.default_notification_channel_id"
           android:value="alardin-alarm-notification" />
+      <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="@string/ADMOB_APP_ANDROID_ID"/>
 
       <receiver android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationActions" />
       <receiver android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationPublisher" />

@@ -15,7 +15,7 @@ interface IGameShopProps {
 }
 
 const Title = styled(Text)`
-  margin-bottom: 20px;
+  margin: 20px 0;
 `;
 
 const ListBox = styled(Box)`

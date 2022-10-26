@@ -12029,6 +12029,11 @@
   "resolved" "https://registry.npmjs.org/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz"
   "version" "3.0.4"
 
+"react-native-admob-native-ads@^0.6.0":
+  "integrity" "sha512-KBqdks/+LawXncQXb6kIUBhiOlkcK95o5jrKFjsUTaoudqzYvynI8gv/eBLjBT0p28G/BV2pzI9gEbnyLQ0NpQ=="
+  "resolved" "https://registry.npmjs.org/react-native-admob-native-ads/-/react-native-admob-native-ads-0.6.0.tgz"
+  "version" "0.6.0"
+
 "react-native-agora@^3.7.1":
   "integrity" "sha512-meArJ8YQoZZb4UP2qZEAGWtEJYu/LrOcD/d0sH5BIhwKWZzuLYwN6E/hzlYnd4iWDbuPvaW0dgKCN/RgsoAr3A=="
   "resolved" "https://registry.npmjs.org/react-native-agora/-/react-native-agora-3.7.1.tgz"
@@ -12245,6 +12250,11 @@
   "integrity" "sha512-M5pRN6utQfytKWoKlKVzg5NbkYu308qNoW1khGTtEOTs1k14p2dHJ/BWOJoJYHKbPVUyZldbG9MFT7gUl4YHnw=="
   "resolved" "https://registry.npmjs.org/react-native-tab-view/-/react-native-tab-view-3.1.1.tgz"
   "version" "3.1.1"
+
+"react-native-tracking-transparency@^0.1.2":
+  "integrity" "sha512-oe+BFutdq+fnTgyC9pAm/NEz6nuYkEHpFQUU8swj+E5oOOPqGmrNXmseNatKob521Zh7w0ovxXkoQNTV+PKTFA=="
+  "resolved" "https://registry.npmjs.org/react-native-tracking-transparency/-/react-native-tracking-transparency-0.1.2.tgz"
+  "version" "0.1.2"
 
 "react-native-vector-icons@^9.2.0":
   "integrity" "sha512-wKYLaFuQST/chH3AJRjmOLoLy3JEs1JR6zMNgTaemFpNoXs0ztRnTxcxFD9xhX7cJe1/zoN5BpQYe7kL0m5yyA=="

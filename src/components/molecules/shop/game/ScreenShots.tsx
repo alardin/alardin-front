@@ -19,22 +19,21 @@ const ScreenShotBox = styled(Box)`
   height: 420px;
 `;
 
-const ScreenShotImage = styled.Image`
-  width: 100%;
-  height: 100%;
-  border-radius: 12px;
-`;
+const ScreenShotImage = styled.Image``;
 
 const Title = styled(Text)`
   margin-bottom: 16px;
 `;
 
 const ScreenShots = ({ images }: IScreenShotsProps) => {
-  const renderItem: ListRenderItem<string> = ({ item }) => (
-    <ScreenShotBox bgColor="#fffff" style={{ marginRight: 24 }}>
-      <ScreenShotImage source={{ uri: item }} />
-    </ScreenShotBox>
-  );
+  const renderItem: ListRenderItem<string> = ({ item }) => {
+    console.log(item);
+    return (
+      <ScreenShotBox style={{ marginRight: 24 }}>
+        <ScreenShotImage source={{ uri: item }} />
+      </ScreenShotBox>
+    );
+  };
   return (
     <CustomContainer>
       <Title size="l" options="semiBold">

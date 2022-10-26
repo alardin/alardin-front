@@ -16,6 +16,10 @@ target 'AlardinApp' do
   pod 'react-native-config', :path => '../node_modules/react-native-config', :modular_headers => true
   pod 'RNSound', :path => '../node_modules/react-native-sound'
 
+  pod 'Google-Mobile-Ads-SDK'
+  pod 'GoogleMobileAdsMediationFacebook', '6.11.0.0'
+
+
   # Flags change depending on the env values.
   flags = get_default_flags()
 

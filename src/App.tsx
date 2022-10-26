@@ -35,6 +35,10 @@ import _ from 'lodash';
 import SplashScreen from 'react-native-splash-screen';
 import PushNotification, { Importance } from 'react-native-push-notification';
 
+import { AdManager } from 'react-native-admob-native-ads';
+import { requestTrackingPermission } from 'react-native-tracking-transparency';
+import { Config } from 'react-native-config';
+
 LogBox.ignoreLogs(['componentWillUpdate']);
 LogBox.ignoreLogs(['new NativeEventEmitter']);
 const _console = _.clone(console);
@@ -130,6 +134,36 @@ PushNotification.createChannel(
 const App = () => {
   useInterceptor();
 
+  const AdSettings = useCallback(async () => {
+    AdManager.registerRepository({
+      name: 'imageAd',
+      adUnitId:
+        Platform.OS === 'android'
+          ? Config.ADMOB_APP_ANDROID_NATIVE_AD_UNIT_ONE
+          : Config.ADMOB_APP_IOS_NATIVE_AD_UNIT_ONE,
+      numOfAds: 3,
+      requestNonPersonalizedAdsOnly: true,
+      videoOptions: {
+        muted: true,
+      },
+      expirationPeriod: 360000, // in milliseconds (optional)
+      mediationEnabled: false,
+    }).then(result => {
+      console.log('registered: ', result);
+    });
+
+    const trackingStatus = await requestTrackingPermission();
+
+    let trackingAuthorized = false;
+    if (trackingStatus === 'authorized' || trackingStatus === 'unavailable') {
+      trackingAuthorized = true;
+    }
+
+    await AdManager.setRequestConfiguration({
+      trackingAuthorized,
+    });
+  }, []);
+
   const setIsNotify = useSetRecoilState(isNotify);
   const [storage, setStorage] = useRecoilState(defaultNotify);
 
@@ -178,6 +212,7 @@ const App = () => {
     requestUserPermission();
     requestCameraAndAudioPermission();
     initialBackgroundStatus();
+    AdSettings();
   }, []);
 
   useEffect(() => {

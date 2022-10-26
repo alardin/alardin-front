@@ -2,6 +2,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import React from 'react';
 import { useRecoilState } from 'recoil';
 import { isNotify } from '../../../recoil/notify/notify';
+import AdMobsView from '../../../screen/ads/AdMobsView';
 import Container from '../../atoms/container/Container';
 import NotifyList from '../../organisms/notify/NotifyList';
 
@@ -16,6 +17,7 @@ const TNotify = () => {
 
   return (
     <Container options="zero">
+      <AdMobsView />
       <NotifyList />
     </Container>
   );
