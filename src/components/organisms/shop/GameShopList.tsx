@@ -33,22 +33,23 @@ const GameShopList = ({ data, myGames }: IGameShopProps) => {
       <Title options="bold">게임 목록</Title>
       <ListBox row bgColor={themeColor.color.white}>
         {data.map((item, index) => {
-          console.log(myGames.map(game => game.id).includes(item.id));
           const isPaid = myGames.map(game => game.id).includes(item.id);
           return (
-            <View
-              key={`icon_${index}`}
-              style={{
-                width: '25%',
-                marginVertical: 8,
-              }}>
-              <GameShopIcon
-                text={item.name}
-                icon={item.thumbnail_url}
-                id={item.id}
-                isPaid={isPaid}
-              />
-            </View>
+            item.id !== 3 && (
+              <View
+                key={`icon_${index}`}
+                style={{
+                  width: '25%',
+                  marginVertical: 8,
+                }}>
+                <GameShopIcon
+                  text={item.name}
+                  icon={item.thumbnail_url}
+                  id={item.id}
+                  isPaid={isPaid}
+                />
+              </View>
+            )
           );
         })}
       </ListBox>

@@ -27,8 +27,6 @@ const sendGameData = (
         },
       ];
     case 2:
-      return;
-    case 3:
       return [
         {
           currentUser: 'A',
@@ -39,6 +37,8 @@ const sendGameData = (
           images: originalData[originalData.length - 1].images,
         },
       ];
+    case 3:
+      return;
     default:
       return;
   }

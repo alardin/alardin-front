@@ -3,11 +3,15 @@
 import React, { useCallback, useEffect } from 'react';
 import { PermissionsAndroid, Platform, StatusBar } from 'react-native';
 import messaging from '@react-native-firebase/messaging';
-import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
+import {
+  DefaultTheme,
+  NavigationContainer,
+  useNavigation,
+} from '@react-navigation/native';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { ThemeProvider } from 'styled-components/native';
 import StackNavigation from './navigation/stack/StackNavigation';
-import { navigationRef } from './navigation/RootNavigation';
+import { navigate, navigationRef } from './navigation/RootNavigation';
 
 import CodePush from 'react-native-code-push';
 import 'react-native-gesture-handler';
@@ -38,6 +42,7 @@ import PushNotification, { Importance } from 'react-native-push-notification';
 import { AdManager } from 'react-native-admob-native-ads';
 import { requestTrackingPermission } from 'react-native-tracking-transparency';
 import { Config } from 'react-native-config';
+import { checkMultiple, PERMISSIONS } from 'react-native-permissions';
 
 LogBox.ignoreLogs(['componentWillUpdate']);
 LogBox.ignoreLogs(['new NativeEventEmitter']);
@@ -48,36 +53,36 @@ console.warn = message => {
   }
 };
 
-const requestUserPermission = async () => {
-  const authStatus = await messaging().requestPermission();
-  const enabled =
-    authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
-    authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+// const requestUserPermission = async () => {
+//   const authStatus = await messaging().requestPermission();
+//   const enabled =
+//     authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+//     authStatus === messaging.AuthorizationStatus.PROVISIONAL;
 
-  if (enabled) {
-    console.log('Authorization status:', authStatus);
-  }
-};
+//   if (enabled) {
+//     console.log('Authorization status:', authStatus);
+//   }
+// };
 
-const requestCameraAndAudioPermission = async () => {
-  if (Platform.OS === 'android') {
-    try {
-      const granted = await PermissionsAndroid.requestMultiple([
-        PermissionsAndroid.PERMISSIONS.RECORD_AUDIO,
-      ]);
-      if (
-        granted['android.permission.RECORD_AUDIO'] ===
-        PermissionsAndroid.RESULTS.GRANTED
-      ) {
-        console.log('You can use the mic');
-      } else {
-        console.log('Permission denied');
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  }
-};
+// const requestCameraAndAudioPermission = async () => {
+//   if (Platform.OS === 'android') {
+//     try {
+//       const granted = await PermissionsAndroid.requestMultiple([
+//         PermissionsAndroid.PERMISSIONS.RECORD_AUDIO,
+//       ]);
+//       if (
+//         granted['android.permission.RECORD_AUDIO'] ===
+//         PermissionsAndroid.RESULTS.GRANTED
+//       ) {
+//         console.log('You can use the mic');
+//       } else {
+//         console.log('Permission denied');
+//       }
+//     } catch (err) {
+//       console.log(err);
+//     }
+//   }
+// };
 
 const initialBackgroundStatus = async () => {
   await BackgroundFetch.configure(
@@ -134,6 +139,29 @@ PushNotification.createChannel(
 const App = () => {
   useInterceptor();
 
+  const checkDevicePermission = () => {
+    const checkPermissionArr =
+      Platform.OS === 'ios'
+        ? [
+            PERMISSIONS.IOS.MICROPHONE,
+            PERMISSIONS.IOS.APP_TRACKING_TRANSPARENCY,
+          ]
+        : [
+            PERMISSIONS.ANDROID.RECORD_AUDIO,
+            PERMISSIONS.ANDROID.POST_NOTIFICATIONS,
+          ];
+    checkMultiple(checkPermissionArr).then(response => {
+      if (
+        response['android.permission.POST_NOTIFICATIONS'] === 'denied' ||
+        response['android.permission.RECORD_AUDIO'] === 'denied' ||
+        response['ios.permission.APP_TRACKING_TRANSPARENCY'] === 'denied' ||
+        response['ios.permission.MICROPHONE'] === 'denied'
+      ) {
+        navigate({ name: 'PermissionScreen', params: {} });
+      }
+    });
+  };
+
   const AdSettings = useCallback(async () => {
     AdManager.registerRepository({
       name: 'imageAd',
@@ -152,16 +180,16 @@ const App = () => {
       console.log('registered: ', result);
     });
 
-    const trackingStatus = await requestTrackingPermission();
+    // const trackingStatus = await requestTrackingPermission();
 
-    let trackingAuthorized = false;
-    if (trackingStatus === 'authorized' || trackingStatus === 'unavailable') {
-      trackingAuthorized = true;
-    }
+    // let trackingAuthorized = false;
+    // if (trackingStatus === 'authorized' || trackingStatus === 'unavailable') {
+    //   trackingAuthorized = true;
+    // }
 
-    await AdManager.setRequestConfiguration({
-      trackingAuthorized,
-    });
+    // await AdManager.setRequestConfiguration({
+    //   trackingAuthorized,
+    // });
   }, []);
 
   const setIsNotify = useSetRecoilState(isNotify);
@@ -209,8 +237,9 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    requestUserPermission();
-    requestCameraAndAudioPermission();
+    checkDevicePermission();
+    // requestUserPermission();
+    // requestCameraAndAudioPermission();
     initialBackgroundStatus();
     AdSettings();
   }, []);

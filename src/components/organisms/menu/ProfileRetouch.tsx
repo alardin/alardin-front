@@ -5,7 +5,7 @@ import {
   NativeSyntheticEvent,
   TextInputChangeEventData,
 } from 'react-native';
-import { launchImageLibrary } from 'react-native-image-picker';
+// import { launchImageLibrary } from 'react-native-image-picker';
 import styled from 'styled-components/native';
 import { RootStackParamList } from '../../../navigation/stack/StackNavigation';
 import theme from '../../../theme/theme';
@@ -65,9 +65,9 @@ const ErrorText = styled(Text)`
   margin-left: 8px;
 `;
 
-const ImageButton = styled(Button)`
-  margin-top: 12px;
-`;
+// const ImageButton = styled(Button)`
+//   margin-top: 12px;
+// `;
 
 const NoticeText = styled(Text)`
   text-align: center;
@@ -144,14 +144,14 @@ const ProfileRetouch = ({ navigation, route }: ProfileRetouchScreen) => {
   //       .then(res => console.log(res));
   //   };
 
-  const launchPhotoLibrary = async () => {
-    const result = await launchImageLibrary({
-      maxHeight: 100,
-      maxWidth: 100,
-      mediaType: 'photo',
-    });
-    console.log(result);
-  };
+  // const launchPhotoLibrary = async () => {
+  //   const result = await launchImageLibrary({
+  //     maxHeight: 100,
+  //     maxWidth: 100,
+  //     mediaType: 'photo',
+  //   });
+  //   console.log(result);
+  // };
 
   const requestEdit = async () => {
     if (retouchItems.thumbnail_image_url !== thumbnail_image_url) {
@@ -180,7 +180,7 @@ const ProfileRetouch = ({ navigation, route }: ProfileRetouchScreen) => {
     <CustomContainer>
       <Top>
         <ProfileIcon size={100} uri={thumbnail_image_url} />
-        <ImageButton
+        {/* <ImageButton
           width="100px"
           height="s"
           options="destructive"
@@ -188,7 +188,7 @@ const ProfileRetouch = ({ navigation, route }: ProfileRetouchScreen) => {
           disabled
           onPress={launchPhotoLibrary}>
           사진 변경
-        </ImageButton>
+        </ImageButton> */}
         <NoticeText size="xs" colorName={theme.color.gray_600}>
           ※ 프로필 수정했어도, 바로 반영이 안될 수 있습니다. 그럴때는 앱의
           백그라운드를 종료 후 다시 실행해보시면 됩니다.

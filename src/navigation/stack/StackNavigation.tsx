@@ -37,6 +37,7 @@ import SingleGameEnd from '../../screen/game/SingleGameEnd';
 import shareOnKakao from '../../utils/shareOnKakao';
 import centerVisible from '../../recoil/mates/centerVisible';
 import ProfileRetouch from '../../components/organisms/menu/ProfileRetouch';
+import PermissionScreen from '../../screen/PermissionScreen';
 
 interface IAlarmAttendStackProps extends IAlarmInfoProps {
   type: string;
@@ -91,6 +92,7 @@ export type RootStackParamList = {
     bio: string;
     is_private: boolean;
   };
+  PermissionScreen: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -208,6 +210,11 @@ const StackNavigation = () => {
       <Stack.Screen
         name="CallScreen"
         component={CallScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="PermissionScreen"
+        component={PermissionScreen}
         options={{ headerShown: false }}
       />
       <Stack.Screen

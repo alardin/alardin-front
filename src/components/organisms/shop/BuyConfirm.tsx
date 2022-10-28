@@ -48,7 +48,7 @@ const BuyConfirm = ({ id, name, price, setVisible }: IBuyConfirmProps) => {
     setVisible(false);
   };
   const handleConfirm = async () => {
-    if (id === 2) {
+    if (id === 3) {
       Alert.alert('미지원 게임', '해당 게임을 구매하실 수 없습니다.');
       return;
     }
