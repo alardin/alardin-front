@@ -1,4 +1,20 @@
 apply plugin: "com.android.application"
+apply plugin: 'com.google.gms.google-services'
+
+project.ext.envConfigFiles = [
+    developdebug: "./.env",
+    developrelease: "./.env", 
+    stagedebug: "./.env",
+    stagerelease: "./.env",
+    productdebug: "./.env",    
+    productrelease: "./.env",
+    release: "./.env",
+    anothercustombuild: "./.env",
+]
+
+apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
+apply from: "../../node_modules/react-native-code-push/android/codepush.gradle"
+
 
 import com.android.build.OutputFile
 
@@ -133,13 +149,28 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
+        productFlavors {
+            develop {
+            }
+            stage {
+            }
+            product {
+            }
+        }
+
     defaultConfig {
         applicationId "com.alardinapp"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        versionCode 12
+        versionName "1.0.0"
         buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString()
+        missingDimensionStrategy 'store', 'play'
+
+        flavorDimensions "version"
+
+        resValue 'string', "CODE_PUSH_APK_BUILD_TIME", String.format("\"%d\"", System.currentTimeMillis())
+        resValue "string", "build_config_package", "com.alardinapp"
 
         if (isNewArchitectureEnabled()) {
             // We configure the NDK build only if you decide to opt-in for the New Architecture.
@@ -224,17 +255,32 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
+        release {
+            if(project.hasProperty('ALARDIN_RELEASE_STORE_FILE')) {
+                storeFile file(ALARDIN_RELEASE_STORE_FILE)
+                storePassword ALARDIN_RELEASE_STORE_PASSWORD
+                keyAlias ALARDIN_RELEASE_KEY_ALIAS
+                keyPassword ALARDIN_RELEASE_KEY_PASSWORD
+            }
+        }
     }
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
+            resValue "string", "CodePushDeploymentKey", CODEPUSH_DEPLOYMENT_KEY_DEBUG
         }
         release {
             // Caution! In production, you need to generate your own keystore file.
             // see https://reactnative.dev/docs/signed-apk-android.
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            resValue "string", "CodePushDeploymentKey", CODEPUSH_DEPLOYMENT_KEY_PRODUCTION
+        }
+        releaseStaging {
+            initWith release
+            resValue "string", "CodePushDeploymentKey", CODEPUSH_DEPLOYMENT_KEY_STAGING
+            matchingFallbacks = ['release']
         }
     }
 
@@ -262,6 +308,11 @@ dependencies {
     implementation "com.facebook.react:react-native:+"  // From node_modules
 
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
+    implementation 'com.google.firebase:firebase-messaging:20.2.3'
+    implementation project(':react-native-config')
+    implementation project(':react-native-vector-icons')
+
+    implementation project(':react-native-kakao-share-link')
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
         exclude group:'com.facebook.fbjni'
@@ -278,6 +329,7 @@ dependencies {
 
     if (enableHermes) {
         //noinspection GradleDynamicVersion
+        releaseStagingImplementation files(hermesPath + "hermes-release.aar")
         implementation("com.facebook.react:hermes-engine:+") { // From node_modules
             exclude group:'com.facebook.fbjni'
         }
@@ -309,6 +361,7 @@ task copyDownloadableDepsToLibs(type: Copy) {
     into 'libs'
 }
 
+
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
 
 def isNewArchitectureEnabled() {
@@ -318,3 +371,9 @@ def isNewArchitectureEnabled() {
     // - Set an environment variable `ORG_GRADLE_PROJECT_newArchEnabled=true`
     return project.hasProperty("newArchEnabled") && project.newArchEnabled == "true"
 }
+
+project.ext.vectoricons = [
+    iconFontNames: [ 'AntDesign.ttf', 'Entypo.ttf', 'EvilIcons.ttf', 'Feather.ttf', 'FontAwesome.ttf', 'FontAwesome5_Brands.ttf', 'FontAwesome5_Regular.ttf', 'FontAwesome5_Solid.ttf', 'Foundation.ttf', 'Ionicons.ttf', 'MaterialIcons.ttf', 'MaterialCommunityIcons.ttf', 'SimpleLineIcons.ttf', 'Octicons.ttf', 'Zocial.ttf' ] // Name of the font files you want to copy
+]
+
+apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"

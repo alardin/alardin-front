@@ -7,7 +7,24 @@ install! 'cocoapods', :deterministic_uuids => false
 production = ENV["PRODUCTION"] == "1"
 
 target 'AlardinApp' do
+  $RNFirebaseAsStaticFramework = true
   config = use_native_modules!
+
+  permissions_path = '../node_modules/react-native-permissions/ios'
+
+  pod 'Firebase', :modular_headers => true
+  pod 'FirebaseCore', :modular_headers => true
+  pod 'GoogleUtilities', :modular_headers => true
+  pod 'react-native-config', :path => '../node_modules/react-native-config', :modular_headers => true
+  pod 'RNSound', :path => '../node_modules/react-native-sound'
+
+  pod 'Google-Mobile-Ads-SDK'
+  pod 'GoogleMobileAdsMediationFacebook', '6.11.0.0'
+
+  pod 'Permission-AppTrackingTransparency', :path => "#{permissions_path}/AppTrackingTransparency"
+  pod 'Permission-Microphone', :path => "#{permissions_path}/Microphone"
+  pod 'Permission-Notifications', :path => "#{permissions_path}/Notifications"
+
 
   # Flags change depending on the env values.
   flags = get_default_flags()
@@ -26,7 +43,7 @@ target 'AlardinApp' do
   target 'AlardinAppTests' do
     inherit! :complete
     # Pods for testing
-  end
+  end 
 
   post_install do |installer|
     react_native_post_install(installer)

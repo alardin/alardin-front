@@ -1,0 +1,225 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "src/assets/AlardinPolicy.html",
+      "sha1": "f1f4cae5e03d5327a894f154a278b50af30297e7"
+    },
+    {
+      "path": "src/assets/fonts/Pretendard-Bold.ttf",
+      "sha1": "0f1e836182c5e5880fc7e928d8de4377242d687c"
+    },
+    {
+      "path": "src/assets/fonts/Pretendard-Medium.ttf",
+      "sha1": "4f4b0691ada96849bd3ef54950b427515f9a71ff"
+    },
+    {
+      "path": "src/assets/fonts/Pretendard-Regular.ttf",
+      "sha1": "32317ccf43e6d722cfa71f8746c4c1da98031bdc"
+    },
+    {
+      "path": "src/assets/fonts/Pretendard-SemiBold.ttf",
+      "sha1": "f1afc4fafdc4d5fd83ee207bf9159251e4f7c8c7"
+    },
+    {
+      "path": "src/assets/fonts/Pretendard-Thin.ttf",
+      "sha1": "9a3b6b11b81f3885fd8378775769ebd34f4970db"
+    },
+    {
+      "path": "src/assets/games/single/lib/css/common.css",
+      "sha1": "fa3ff5009709931f0ae74f921afdc4f709f482e8"
+    },
+    {
+      "path": "src/assets/games/single/lib/fonts/KATURI.TTF",
+      "sha1": "bad3bf2767b26c5997cd91a6ee057a267e3a9fdd"
+    },
+    {
+      "path": "src/assets/games/single/lib/fonts/NotoSans-Medium.woff",
+      "sha1": "06c2959df7e1e68921d1e886a0acd3ada28fd580"
+    },
+    {
+      "path": "src/assets/games/single/lib/fonts/NotoSans-Medium.woff2",
+      "sha1": "4d4e9ff4a9a64deb53a6d559a40875e8ea7d5fb5"
+    },
+    {
+      "path": "src/assets/games/single/lib/fonts/roboto.woff",
+      "sha1": "9badee6277617fcdd3db0043f553b01399121812"
+    },
+    {
+      "path": "src/assets/games/single/lib/fonts/roboto.woff2",
+      "sha1": "d6d20c3cdde1365e58c1b8e5d1cc49b75de80cdd"
+    },
+    {
+      "path": "src/assets/games/single/lib/images/src/clock.png",
+      "sha1": "50a2bb61acb8afe8ab309603e3b2e02d6068c790"
+    },
+    {
+      "path": "src/assets/games/single/lib/images/src/lock.png",
+      "sha1": "6f08e2e3cf8c0212dd518971115eaf935d435e52"
+    },
+    {
+      "path": "src/assets/games/single/test/index.html",
+      "sha1": "b8ab68a28d171f5640259e28f3118b9887c3f6be"
+    },
+    {
+      "path": "src/assets/games/single/twigitizer_game/css/game.css",
+      "sha1": "c22e48cf6dc477a5292bc0fb834dfec894e68cd3"
+    },
+    {
+      "path": "src/assets/games/single/twigitizer_game/index.html",
+      "sha1": "20156457e29ed0a942e01400b12f88605f14500f"
+    },
+    {
+      "path": "src/assets/games/single/twigitizer_game/js/clock.js",
+      "sha1": "2820e452ca069e4d4e4b0abc9171d30c26e30ccb"
+    },
+    {
+      "path": "src/assets/games/single/twigitizer_game/js/game.js",
+      "sha1": "03a15a049340262babfec01c7f26d3f4128299e2"
+    },
+    {
+      "path": "src/assets/icons/ic-add-profile.svg",
+      "sha1": "70fd17e6fbde6c0c5e529990507423312faf928e"
+    },
+    {
+      "path": "src/assets/icons/ic-add.svg",
+      "sha1": "e5c92cd391584bb35a3084eb798f53d92ac29651"
+    },
+    {
+      "path": "src/assets/icons/ic-alarm.svg",
+      "sha1": "210d33c27e4d915a93dd9c8d113552713a5894bb"
+    },
+    {
+      "path": "src/assets/icons/ic-announce.png",
+      "sha1": "6b2ccca66089d00d3d944c690f178640ec9cefb7"
+    },
+    {
+      "path": "src/assets/icons/ic-apple.svg",
+      "sha1": "84f404e6faeafe8b72f27e3b85d75e4a5df5db16"
+    },
+    {
+      "path": "src/assets/icons/ic-back.svg",
+      "sha1": "a6d55b959132ffbae9934d41de2c49c5ad34a5fc"
+    },
+    {
+      "path": "src/assets/icons/ic-calendar.svg",
+      "sha1": "abb435af29331966909bf4d0db5f021f12ece01f"
+    },
+    {
+      "path": "src/assets/icons/ic-cancel.svg",
+      "sha1": "72b87f7513b47c5693106a1543f7cdacfb557fc6"
+    },
+    {
+      "path": "src/assets/icons/ic-chat.svg",
+      "sha1": "d98187dfc1030177f1f04a6028c16e33ca8540c3"
+    },
+    {
+      "path": "src/assets/icons/ic-down.svg",
+      "sha1": "63529204696ebd30571f96225dbda08704c41d29"
+    },
+    {
+      "path": "src/assets/icons/ic-earth.svg",
+      "sha1": "247478de0d1f463c743c7d71ce5e426791ee263c"
+    },
+    {
+      "path": "src/assets/icons/ic-event.png",
+      "sha1": "01079f736467dfb99dcb1665e42dc7d748cb4907"
+    },
+    {
+      "path": "src/assets/icons/ic-game.svg",
+      "sha1": "398decbb3b60c38b04793388749eb231fe334282"
+    },
+    {
+      "path": "src/assets/icons/ic-google.svg",
+      "sha1": "8f054a4d2b79b1157c39a9d32888c3dbc80f08d6"
+    },
+    {
+      "path": "src/assets/icons/ic-home.svg",
+      "sha1": "e4135d83814a89444fa1ae11ba06edcc44f1c7b8"
+    },
+    {
+      "path": "src/assets/icons/ic-info.png",
+      "sha1": "95a9df8470325e84030b48bb7b24028a289541b0"
+    },
+    {
+      "path": "src/assets/icons/ic-kakao.svg",
+      "sha1": "332b9b3c54f467c7cf2c4c1ec93e4971b9cc14b6"
+    },
+    {
+      "path": "src/assets/icons/ic-medal.svg",
+      "sha1": "08fcf5eacabbc80933fb84855bd4d1a15dc9ba3d"
+    },
+    {
+      "path": "src/assets/icons/ic-menu.svg",
+      "sha1": "b50916d07122a6dfb57b51b289f9a35434294b02"
+    },
+    {
+      "path": "src/assets/icons/ic-more.svg",
+      "sha1": "8bf498b98c627cd32bcb65ea41d89246dee7a2e6"
+    },
+    {
+      "path": "src/assets/icons/ic-option.svg",
+      "sha1": "01b21ae0c399485b62829d4699a66c4c4525955d"
+    },
+    {
+      "path": "src/assets/icons/ic-profile.svg",
+      "sha1": "28ee1aa2a8bf2686517367a540441fbffe6bd4d5"
+    },
+    {
+      "path": "src/assets/icons/ic-share.svg",
+      "sha1": "b35db7c67a6bd9500e2c469d22ddbd655c54556f"
+    },
+    {
+      "path": "src/assets/icons/ic-store.svg",
+      "sha1": "6e9c355f7ad4b9de82c5d84f0aac99679c937a54"
+    },
+    {
+      "path": "src/assets/icons/ic-trash.svg",
+      "sha1": "26f19f87fdb0e583a8ef86fe65c11d45eb685716"
+    },
+    {
+      "path": "src/assets/icons/ic-up.svg",
+      "sha1": "2d3b2929985351b5d8ebedd4cbc74302542f87fa"
+    },
+    {
+      "path": "src/assets/icons/ic-users.svg",
+      "sha1": "44c2065a1178dd7e0eae87066ce0b025fd2fdb79"
+    },
+    {
+      "path": "src/assets/icons/ic_alardin.svg",
+      "sha1": "0b2ab162d6c1bc889e71e2a113b01758600e26a6"
+    },
+    {
+      "path": "src/assets/icons/ic_alardin_text.svg",
+      "sha1": "5d1be22eb877da3d2b35e25c336d102d71dd99e2"
+    },
+    {
+      "path": "src/assets/images/alarm_background.jpg",
+      "sha1": "67bdb8185865b1ecad0df430b1a86511af8e6ef6"
+    },
+    {
+      "path": "src/assets/images/clock.png",
+      "sha1": "1a3d027abee76f74f8d9eadb7d729d28394b562b"
+    },
+    {
+      "path": "src/assets/images/crown.png",
+      "sha1": "3de572dbc363e9209e1fcbff2ceee3de36b99c13"
+    },
+    {
+      "path": "src/assets/images/game-end-flag.png",
+      "sha1": "b7fd398f1fdfc4072615d7c61347b689b5f567df"
+    },
+    {
+      "path": "src/assets/images/kakao_login_large_wide.png",
+      "sha1": "bf5265e12ba30b9cb07431cc30e30c3400dba2d2"
+    },
+    {
+      "path": "src/assets/images/sample-profile.jpeg",
+      "sha1": "15fa19a191fc50043a07793f5b110d0b9b8346da"
+    },
+    {
+      "path": "src/assets/test_rooster.wav",
+      "sha1": "f160ba793477d274a8a66fcb7445cc0e30d11104"
+    }
+  ]
+}
