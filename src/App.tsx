@@ -172,24 +172,24 @@ const App = () => {
       numOfAds: 3,
       requestNonPersonalizedAdsOnly: true,
       videoOptions: {
-        muted: true,
+        muted: false,
       },
-      expirationPeriod: 360000, // in milliseconds (optional)
+      expirationPeriod: 3600000, // in milliseconds (optional)
       mediationEnabled: false,
     }).then(result => {
       console.log('registered: ', result);
     });
 
-    // const trackingStatus = await requestTrackingPermission();
+    const trackingStatus = await requestTrackingPermission();
 
-    // let trackingAuthorized = false;
-    // if (trackingStatus === 'authorized' || trackingStatus === 'unavailable') {
-    //   trackingAuthorized = true;
-    // }
+    let trackingAuthorized = false;
+    if (trackingStatus === 'authorized' || trackingStatus === 'unavailable') {
+      trackingAuthorized = true;
+    }
 
-    // await AdManager.setRequestConfiguration({
-    //   trackingAuthorized,
-    // });
+    await AdManager.setRequestConfiguration({
+      trackingAuthorized,
+    });
   }, []);
 
   const setIsNotify = useSetRecoilState(isNotify);
@@ -237,11 +237,11 @@ const App = () => {
   }, []);
 
   useEffect(() => {
+    AdSettings();
     checkDevicePermission();
     // requestUserPermission();
     // requestCameraAndAudioPermission();
     initialBackgroundStatus();
-    AdSettings();
   }, []);
 
   useEffect(() => {

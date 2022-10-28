@@ -7,6 +7,8 @@ import NativeAdView, {
   AdvertiserView,
   HeadlineView,
   IconView,
+  NativeAd,
+  NativeAdViewProps,
   TaglineView,
 } from 'react-native-admob-native-ads';
 import { Config } from 'react-native-config';
@@ -76,7 +78,7 @@ const styles = StyleSheet.create({
 });
 
 const AdMobsView = () => {
-  const adRef = useRef();
+  const adRef = useRef<NativeAdView>();
 
   useEffect(() => {
     adRef.current?.loadAd();

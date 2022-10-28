@@ -9,7 +9,7 @@
 	<key>CFBundleAllowMixedLocalizations</key>
 	<true/>
 	<key>CFBundleDevelopmentRegion</key>
-	<string>kr</string>
+	<string>ko_KR</string>
 	<key>CFBundleDisplayName</key>
 	<string>Alardin</string>
 	<key>CFBundleExecutable</key>

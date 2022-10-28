@@ -39,6 +39,7 @@ const MiddleBox = styled(Box)`
 
 const BottomBox = styled(Box)`
   flex: 1.5;
+
   justify-content: flex-end;
   align-items: center;
 `;
@@ -59,6 +60,10 @@ const TextBox = styled(Box)`
 
 const TextTitle = styled(Text)`
   margin: 8px 0;
+`;
+
+const ConfirmButton = styled(Button)`
+  margin-bottom: 4px;
 `;
 
 const PermissionScreen = ({ navigation }: BottomStackScreen) => {
@@ -114,11 +119,12 @@ const PermissionScreen = ({ navigation }: BottomStackScreen) => {
           response['android.permission.RECORD_AUDIO'] === 'denied';
     if (result) {
       await handleRequestPermission();
+    } else {
+      navigation.reset({
+        index: 0,
+        routes: [!isLogin ? { name: 'Login' } : { name: 'BottomNavigation' }],
+      });
     }
-    navigation.reset({
-      index: 0,
-      routes: [!isLogin ? { name: 'Login' } : { name: 'BottomNavigation' }],
-    });
   };
 
   return (
