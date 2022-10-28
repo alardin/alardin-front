@@ -13,7 +13,6 @@ import Container from '../../components/atoms/container/Container';
 import { RootStackParamList } from '../../navigation/stack/StackNavigation';
 import NetInfo from '@react-native-community/netinfo';
 import alardinApi from '../../utils/alardinApi';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export type GameStartProps = StackScreenProps<
   RootStackParamList,
@@ -36,7 +35,7 @@ const WebBox = styled(Box)`
 const SingleGameStart = ({ route, navigation }: GameStartProps) => {
   const { alarmId } = route.params;
   const appState = useRef(AppState.currentState);
-  const [appStateVisible, setAppStateVisible] = useState(appState.current);
+  const [, setAppStateVisible] = useState(appState.current);
 
   let webViewRef = useRef<WebView>();
 

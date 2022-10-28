@@ -1,5 +1,5 @@
 import { atom, selector } from 'recoil';
-import { gameMetaData, pickerMetaData } from './home/alarmSettings';
+import { apiGameMetaData, pickerMetaData } from './home/alarmSettings';
 
 export interface IPickerData {
   label: string;
@@ -25,7 +25,7 @@ export const pickerList = selector<IPickerObject>({
   key: 'pickerList',
   get: async ({ get }) => {
     const mode = get(pickerMode);
-    const gameData = get(gameMetaData);
+    const gameData = get(apiGameMetaData);
 
     switch (mode) {
       case 'music_name':

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NetInfoState } from '@react-native-community/netinfo';
-import { Platform } from 'react-native';
+// import { Platform } from 'react-native';
 import { IAlarmInfoData } from '../../recoil/home/alarmList';
 import alardinApi from '../alardinApi';
 
@@ -38,39 +38,34 @@ export const cleanOldAlarmItems = async () => {
   try {
     const jsonList = await AsyncStorage.getItem('alarmList');
     if (jsonList !== null) {
-      const parseAlarmList = JSON.parse(jsonList);
-      const currentDateTime = new Date(Date.now());
-
-      const removedOldAlarmList = parseAlarmList.filter(
-        (alarm: IAlarmInfoData) => {
-          if (alarm.is_repeated !== '0') {
-            return true;
-          }
-
-          const createdDateType = new Date(alarm.created_at);
-          const createDate = createdDateType.toISOString().split('T')[0];
-          let convertDate = new Date(`${createDate}T${alarm.time}:00`);
-          if (Platform.OS === 'android') {
-            convertDate.setMinutes(
-              convertDate.getMinutes() + currentDateTime.getTimezoneOffset(),
-            );
-          }
-
-          // createdDateType > convertDate &&
-          //   convertDate.setDate(convertDate.getDate() + 1);
-
-          // if (convertDate < currentDateTime) {
-          //   deleteAlarmItem(alarm.id);
-          //   return false;
-          // }
-          return true;
-        },
-      );
-
-      await AsyncStorage.setItem(
-        'alarmList',
-        JSON.stringify(removedOldAlarmList),
-      );
+      // const parseAlarmList = JSON.parse(jsonList);
+      // const currentDateTime = new Date(Date.now());
+      // const removedOldAlarmList = parseAlarmList.filter(
+      //   (alarm: IAlarmInfoData) => {
+      //     if (alarm.is_repeated !== '0') {
+      //       return true;
+      //     }
+      //     const createdDateType = new Date(alarm.created_at);
+      //     const createDate = createdDateType.toISOString().split('T')[0];
+      //     let convertDate = new Date(`${createDate}T${alarm.time}:00`);
+      //     if (Platform.OS === 'android') {
+      //       convertDate.setMinutes(
+      //         convertDate.getMinutes() + currentDateTime.getTimezoneOffset(),
+      //       );
+      //     }
+      //     // createdDateType > convertDate &&
+      //     //   convertDate.setDate(convertDate.getDate() + 1);
+      //     // if (convertDate < currentDateTime) {
+      //     //   deleteAlarmItem(alarm.id);
+      //     //   return false;
+      //     // }
+      //     return true;
+      //   },
+      // );
+      // await AsyncStorage.setItem(
+      //   'alarmList',
+      //   JSON.stringify(removedOldAlarmList),
+      // );
     }
   } catch (err) {
     console.log(`Error from cleanOldAlarmItems : ` + err);

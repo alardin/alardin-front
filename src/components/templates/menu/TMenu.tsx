@@ -4,12 +4,11 @@ import { logout, unlink } from '@react-native-seoul/kakao-login';
 import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { ScrollView } from 'react-native-gesture-handler';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import {
   IAuthorization,
   IMyProfile,
   loginPlatform,
-  myProfile,
   token,
 } from '../../../recoil/authorization';
 import AdBox from '../../organisms/menu/AdBox';
@@ -19,39 +18,43 @@ import alardinApi from '../../../utils/alardinApi';
 import axios from 'axios';
 import SwitchList from '../../organisms/menu/SwitchList';
 import messaging from '@react-native-firebase/messaging';
+import { PermissionsAndroid } from 'react-native';
 
 const TMenu = () => {
   const navigation = useNavigation<any>();
-  const me = useRecoilValue(myProfile);
 
   const [profile, setProfile] = useState<IMyProfile>({} as IMyProfile);
   const [isPremium, setIsPremium] = useState<boolean>(false);
 
-  console.log(me);
   const setAuthorization = useSetRecoilState(token);
   const [loginPlat, setLoginPlatform] = useRecoilState(loginPlatform);
 
-  const handleLogout = async () => {
-    await EncryptedStorage.removeItem('appAccessToken');
-    await EncryptedStorage.removeItem('appRefreshToken');
-    // await AsyncStorage.removeItem('notifyStorage');
-    setAuthorization({} as IAuthorization);
-    messaging().unsubscribeFromTopic('all');
-    if (loginPlat === 'kakao') {
-      await logout();
-    }
-    setLoginPlatform('none');
+  const handleLogout = () => {
+    alardinApi.post('/users/logout').then(async () => {
+      await EncryptedStorage.removeItem('appAccessToken');
+      await EncryptedStorage.removeItem('appRefreshToken');
+      // await AsyncStorage.removeItem('notifyStorage');
+      setAuthorization({} as IAuthorization);
+      messaging().unsubscribeFromTopic('all');
+      if (loginPlat === 'kakao') {
+        await logout();
+      }
+      setLoginPlatform('none');
+    });
   };
 
   const handleExit = async () => {
-    alardinApi.delete('/users').then(async () => {
-      messaging().subscribeToTopic('all');
-      await EncryptedStorage.removeItem('appAccessToken');
-      await EncryptedStorage.removeItem('appRefreshToken');
-      await AsyncStorage.removeItem('notifyStorage');
-      await unlink();
-      setAuthorization({} as IAuthorization);
-      setLoginPlatform('none');
+    unlink().then(res => {
+      console.log(res);
+      alardinApi.delete('/users').then(async res => {
+        console.log(res);
+        messaging().unsubscribeFromTopic('all');
+        await EncryptedStorage.removeItem('appAccessToken');
+        await EncryptedStorage.removeItem('appRefreshToken');
+        await AsyncStorage.removeItem('notifyStorage');
+        setLoginPlatform('none');
+        setAuthorization({} as IAuthorization);
+      });
     });
   };
 
@@ -62,15 +65,13 @@ const TMenu = () => {
       handler: async (args: any) => {
         const { nickname, bio, profile_image_url, thumbnail_image_url } =
           profile;
-        console.log(args, profile);
-        const response = await alardinApi.post('/users/edit', {
+        await alardinApi.post('/users/edit', {
           nickname,
           bio,
           profile_image_url,
           thumbnail_image_url,
           is_private: args,
         });
-        console.log(response);
       },
     },
   ];
@@ -78,17 +79,24 @@ const TMenu = () => {
   const appItems = [
     {
       type: 'button_no-icon',
-      key: '공지사항',
-      handlePress: () =>
-        navigation.navigate('CallScreen', {
-          id: me.id,
-          alarmId: 68,
-          gameId: 1,
-        }),
-      // navigation.navigate('WebScreen', {
-      // mode: 'WEB',
-      // uri: 'https://www.google.com',
-      // }),
+      key: '프로필 정보 수정',
+      handlePress: () => {
+        const {
+          nickname,
+          bio,
+          profile_image_url,
+          thumbnail_image_url,
+          is_private,
+        } = profile;
+        navigation.navigate('ProfileRetouch', {
+          nickname,
+          bio,
+          profile_image_url,
+          thumbnail_image_url,
+          email: profile.email,
+          is_private,
+        });
+      },
     },
     {
       type: 'button_no-icon',
@@ -139,6 +147,10 @@ const TMenu = () => {
         setIsPremium(asset.is_premium);
       }),
     );
+    return () => {
+      setProfile({} as IMyProfile);
+      setIsPremium(false);
+    };
   }, []);
 
   return (

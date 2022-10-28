@@ -23,7 +23,7 @@ import Loading from '../../screen/Loading';
 import TGame from '../../components/templates/shop/TGame';
 import WebScreen from '../../screen/WebScreen';
 import Mates from '../../components/pages/Mates';
-import { Platform, TouchableOpacity } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 
 import BackIcon from '../../assets/icons/ic-back.svg';
 import ShareIcon from '../../assets/icons/ic-share.svg';
@@ -36,6 +36,8 @@ import SingleGameStart from '../../screen/game/SingleGameStart';
 import SingleGameEnd from '../../screen/game/SingleGameEnd';
 import shareOnKakao from '../../utils/shareOnKakao';
 import centerVisible from '../../recoil/mates/centerVisible';
+import ProfileRetouch from '../../components/organisms/menu/ProfileRetouch';
+import PermissionScreen from '../../screen/PermissionScreen';
 
 interface IAlarmAttendStackProps extends IAlarmInfoProps {
   type: string;
@@ -82,14 +84,21 @@ export type RootStackParamList = {
     mode: string;
     uri?: string;
   };
+  ProfileRetouch: {
+    nickname: string;
+    email: string;
+    thumbnail_image_url: string;
+    profile_image_url: string;
+    bio: string;
+    is_private: boolean;
+  };
+  PermissionScreen: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const StackNavigation = () => {
   const auth = useRecoilValueLoadable(token);
-  console.log('auth');
-  console.log(auth.contents);
   const me = useRecoilValue(myProfile);
   const setMateVisible = useSetRecoilState(centerVisible);
 
@@ -204,6 +213,11 @@ const StackNavigation = () => {
         options={{ headerShown: false }}
       />
       <Stack.Screen
+        name="PermissionScreen"
+        component={PermissionScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
         name="Mates"
         component={Mates}
         options={({ navigation }) => ({
@@ -252,6 +266,19 @@ const StackNavigation = () => {
             </TouchableOpacity>
           ),
           headerShadowVisible: false,
+        })}
+      />
+      <Stack.Screen
+        name="ProfileRetouch"
+        component={ProfileRetouch}
+        options={({ navigation }) => ({
+          headerTitle: '프로필 정보 수정',
+          headerTitleAlign: 'center',
+          headerLeft: () => (
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <BackIcon width={28} height={28} />
+            </TouchableOpacity>
+          ),
         })}
       />
     </Stack.Navigator>

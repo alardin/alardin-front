@@ -9,16 +9,14 @@ import Text from '../components/atoms/text/Text';
 import styled from 'styled-components/native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { RootStackParamList } from '../navigation/stack/StackNavigation';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { rtcEngine, rtcState } from '../recoil/gameState';
-import { deleteAlarmItem } from '../utils/alarm/alarmStorage';
 import { deleteAlarmScheduler } from '../utils/alarm/alarmScheduler';
 import { useNetInfo } from '@react-native-community/netinfo';
 import Sound from 'react-native-sound';
 import { toastEnable } from '../utils/Toast';
 
 import CloseIcon from '../assets/icons/ic-cancel.svg';
-import alardinApi from '../utils/alardinApi';
 import { minuteStringCheck } from '../utils/home/convertDateTime';
 import systemSetting from 'react-native-system-setting';
 

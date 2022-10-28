@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
-import bottomVisible from '../../../recoil/bottomVisible';
 import bottomNotifyInfo from '../../../recoil/notify/bottomNotifyInfo';
 import Box from '../../atoms/box/Box';
 import Button from '../../atoms/button/Button';

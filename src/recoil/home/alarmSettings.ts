@@ -75,6 +75,7 @@ export const apiGameMetaData = selector({
     //   params: { skip: 0, take: 100 },
     // });
     try {
+      console.log('run state');
       const response = await alardinApi.get('/assets/games');
       const gameDataList: IGameMetaType[] = response.data.data;
       console.log(response.data.data);
@@ -89,10 +90,10 @@ export const apiGameMetaData = selector({
   },
 });
 
-export const gameMetaData = atom({
-  key: 'gameMetaData',
-  default: apiGameMetaData,
-});
+// export const gameMetaData = atom({
+//   key: 'gameMetaData',
+//   default: apiGameMetaData,
+// });
 
 export const settingData = atom<ISettingData>({
   key: 'settingData',

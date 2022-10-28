@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { NativeSyntheticEvent, TextInputChangeEventData } from 'react-native';
 import styled from 'styled-components/native';
 import { IMembersDataType } from '../../../../recoil/home/members';

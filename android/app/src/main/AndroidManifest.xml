@@ -6,6 +6,8 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
       android:name=".MainApplication"
@@ -13,6 +15,7 @@
       android:icon="@mipmap/ic_main"
       android:roundIcon="@mipmap/ic_main_round"
       android:allowBackup="true"
+      android:usesCleartextTraffic="true"
       android:theme="@style/AppTheme">
        <activity
           android:name=".SplashActivity"
@@ -61,6 +64,9 @@
       <meta-data
           android:name="com.dieam.reactnativepushnotification.default_notification_channel_id"
           android:value="alardin-alarm-notification" />
+      <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="@string/ADMOB_APP_ANDROID_ID"/>
 
       <receiver android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationActions" />
       <receiver android:name="com.dieam.reactnativepushnotification.modules.RNPushNotificationPublisher" />

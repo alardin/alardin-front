@@ -5,8 +5,6 @@ import styled from 'styled-components/native';
 import Box from '../box/Box';
 import ProfileIc from '../../../assets/icons/ic-profile.svg';
 import themeColor from '../../../theme/theme';
-import { SvgUri } from 'react-native-svg';
-import SvgImage from 'react-native-svg/lib/typescript/elements/Image';
 
 export interface IProfileIconProps {
   size: number;

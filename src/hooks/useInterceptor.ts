@@ -2,10 +2,10 @@
 /* eslint-disable @typescript-eslint/dot-notation */
 
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import Config from 'react-native-config';
 import { useRecoilState } from 'recoil';
-import { token } from '../recoil/authorization';
+import { IAuthorization, token } from '../recoil/authorization';
 import alardinApi from '../utils/alardinApi';
 import { toastEnable } from '../utils/Toast';
 import EncryptedStorage from 'react-native-encrypted-storage';
@@ -30,9 +30,6 @@ const useInterceptor = () => {
     response => response,
     async error => {
       const { config } = error;
-      console.log('error');
-      console.log(JSON.stringify(error));
-      console.log(JSON.stringify(config));
       if (error.response.status === 401) {
         toastEnable({
           text: '인증이 만료되어 재발급을 요청합니다',
@@ -41,8 +38,6 @@ const useInterceptor = () => {
         const refreshTokenStorage = await EncryptedStorage.getItem(
           'appRefreshToken',
         );
-        console.log('appRefreshToken');
-        console.log(refreshTokenStorage);
         if (refreshTokenStorage) {
           const parseRefreshToken = JSON.parse(refreshTokenStorage);
           axios({
@@ -61,18 +56,16 @@ const useInterceptor = () => {
                 'appAccessToken',
                 JSON.stringify({ appAccessToken }),
               );
-              console.log('new access token');
-              console.log(appAccessToken);
               axios.defaults.headers.common.Authorization = `Bearer ${appAccessToken}`;
               config.headers.Authorization = `Bearer ${appAccessToken}`;
-              console.log('ready for request');
-              // return alardinApi.request(config);
+              return alardinApi.request(config);
             })
             .catch(() => {
               toastEnable({
                 text: '인증을 재발급하지 못했습니다. 로그인을 다시 시도해보세요.',
-                duration: 'SHORT',
+                duration: 'LONG',
               });
+              setUserToken({} as IAuthorization);
             });
         }
       }

@@ -3,7 +3,6 @@
 import { StackScreenProps } from '@react-navigation/stack';
 import React, { useEffect, useState } from 'react';
 import { RootStackParamList } from '../../../navigation/stack/StackNavigation';
-import { IGameMetaType } from '../../../recoil/home/alarmSettings';
 import alardinApi from '../../../utils/alardinApi';
 import GameInfo, { IGameInfoData } from '../../organisms/shop/GameInfo';
 
@@ -29,17 +28,16 @@ const TGame = ({ route }: IGameInfoScreen) => {
   });
 
   useEffect(() => {
-    !visible &&
-      alardinApi
-        .get(`/game/${gameId}`)
-        .then(res => {
-          console.log(res.data.data);
-          setGameData(res.data.data);
-        })
-        .catch(err => {
-          console.log(err);
-        });
-  }, [visible]);
+    alardinApi
+      .get(`/game/${gameId}`)
+      .then(res => {
+        console.log(res.data.data);
+        setGameData(res.data.data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }, [isPaid]);
 
   return (
     <GameInfo
