@@ -1,0 +1,47 @@
+name: Alardin App Build V1(Android)
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  android_build:
+    name: Android Build
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Check git repository
+        uses: actions/checkout@v3
+        
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: '11'
+          
+      - name: Install dependecies
+        run: npm install --legacy-peer-deps
+        
+      - name: Make Gradlew executable
+        run: cd android && chmod +x ./gradlew
+        
+      - name: Make Android Keystore
+        run: echo "$KEYSTORE" | base64 -d > android/app/alardin-release-key.keystore
+        env:
+          KEYSTORE : ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+      
+      - name: Build Android App Bundle
+        run: |
+          cd android && ./gradlew bundleRelease
+          
+      - name: Upload App to Google Play
+        uses: r0adkll/upload-google-play@v1
+        with:
+          serviceAccountJsonPlainText: ${{ secrets.ANDROID_SERVICE_ACCOUNT_JSON_TEXT }}
+          packageName: com.alardinapp
+          releaseFiles: android/app/build/outputs/bundle/release/*.aab
+          track: alpha
+          status: completed
+          inAppUpdatePriority: 2
+  
