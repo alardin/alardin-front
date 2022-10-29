@@ -25,17 +25,22 @@ const CustomButton = styled(Button)`
 const AcceptFriends = ({ setIsKakaoAgree }: IAcceptFriendsProps) => {
   const renewalToken = useSetRecoilState(renewalTokenByAgreement);
   const requestKakaoAgreement = () => {
-    addFriendsAccess().then(async newToken => {
-      console.log(newToken);
-      if (typeof newToken !== 'string') {
-        await EncryptedStorage.setItem(
-          'scopes',
-          JSON.stringify(newToken.scopes),
-        );
-        renewalToken(newToken);
-        setIsKakaoAgree(newToken.scopes.includes('friends'));
-      }
-    });
+    addFriendsAccess()
+      .then(async newToken => {
+        console.log(newToken);
+        if (typeof newToken !== 'string') {
+          await EncryptedStorage.setItem(
+            'scopes',
+            JSON.stringify(newToken.scopes),
+          );
+          renewalToken(newToken);
+          setIsKakaoAgree(newToken.scopes.includes('friends'));
+        }
+      })
+      .catch(err => {
+        console.log('kakao friends list agreement');
+        console.log(err);
+      });
   };
 
   return (

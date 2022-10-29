@@ -288,15 +288,16 @@ const App = () => {
   );
 };
 
+// updateDialog: {
+//   title: '최신 업데이트 필요',
+//   optionalUpdateMessage:
+//     '현재 사용하고 계신 버전보다 개선된 서비스를 제공하기 위해 업데이트를 하시는 걸 권장합니다.',
+//   optionalInstallButtonLabel: '업데이트',
+//   optionalIgnoreButtonLabel: '아니요.',
+// },
 const codePushOptions = {
   checkFrequency: CodePush.CheckFrequency.ON_APP_START,
-  updateDialog: {
-    title: '최신 업데이트 필요',
-    optionalUpdateMessage:
-      '현재 사용하고 계신 버전보다 개선된 서비스를 제공하기 위해 업데이트를 하시는 걸 권장합니다.',
-    optionalInstallButtonLabel: '업데이트',
-    optionalIgnoreButtonLabel: '아니요.',
-  },
+  updateDialong: false,
   installMode: CodePush.InstallMode.IMMEDIATE,
 };
 

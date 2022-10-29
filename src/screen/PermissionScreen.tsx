@@ -119,12 +119,8 @@ const PermissionScreen = ({ navigation }: BottomStackScreen) => {
           response['android.permission.RECORD_AUDIO'] === 'denied';
     if (result) {
       await handleRequestPermission();
-    } else {
-      navigation.reset({
-        index: 0,
-        routes: [!isLogin ? { name: 'Login' } : { name: 'BottomNavigation' }],
-      });
     }
+    navigation.goBack();
   };
 
   return (
