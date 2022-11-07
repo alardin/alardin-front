@@ -18,7 +18,7 @@ import alardinApi from '../../../utils/alardinApi';
 import axios from 'axios';
 import SwitchList from '../../organisms/menu/SwitchList';
 import messaging from '@react-native-firebase/messaging';
-import { PermissionsAndroid } from 'react-native';
+import { Alert, PermissionsAndroid } from 'react-native';
 
 const TMenu = () => {
   const navigation = useNavigation<any>();
@@ -44,18 +44,31 @@ const TMenu = () => {
   };
 
   const handleExit = async () => {
-    unlink().then(res => {
-      console.log(res);
-      alardinApi.delete('/users').then(async res => {
-        console.log(res);
-        messaging().unsubscribeFromTopic('all');
-        await EncryptedStorage.removeItem('appAccessToken');
-        await EncryptedStorage.removeItem('appRefreshToken');
-        await AsyncStorage.removeItem('notifyStorage');
-        setLoginPlatform('none');
-        setAuthorization({} as IAuthorization);
-      });
-    });
+    Alert.alert(
+      '회원 탈퇴 확인',
+      `${profile.nickname} 회원님께서 Alardin 회원에 탈퇴하시겠습니까?`,
+      [
+        { text: '아니요' },
+        {
+          text: '예',
+          onPress: () =>
+            unlink()
+              .then(res => {
+                console.log(res);
+              })
+              .finally(() => {
+                alardinApi.delete('/users').then(async () => {
+                  messaging().unsubscribeFromTopic('all');
+                  await EncryptedStorage.removeItem('appAccessToken');
+                  await EncryptedStorage.removeItem('appRefreshToken');
+                  await AsyncStorage.removeItem('notifyStorage');
+                  setLoginPlatform('none');
+                  setAuthorization({} as IAuthorization);
+                });
+              }),
+        },
+      ],
+    );
   };
 
   const swtichItems = [

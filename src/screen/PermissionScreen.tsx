@@ -6,18 +6,13 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { PERMISSIONS, requestMultiple } from 'react-native-permissions';
 import { Platform } from 'react-native';
 import messaging from '@react-native-firebase/messaging';
-import Container from '../components/atoms/container/Container';
 import styled from 'styled-components/native';
-import HighlightedText from '../components/atoms/text/HighlightedText';
-import { useNavigation } from '@react-navigation/native';
-import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack';
+import { StackScreenProps } from '@react-navigation/stack';
 import { RootStackParamList } from '../navigation/stack/StackNavigation';
-import { useRecoilValue } from 'recoil';
-import { token } from '../recoil/authorization';
 
 type BottomStackScreen = StackScreenProps<
   RootStackParamList,
-  'BottomNavigation'
+  'PermissionScreen'
 >;
 
 const CustomContainer = styled.SafeAreaView`
@@ -62,12 +57,8 @@ const TextTitle = styled(Text)`
   margin: 8px 0;
 `;
 
-const ConfirmButton = styled(Button)`
-  margin-bottom: 4px;
-`;
-
 const PermissionScreen = ({ navigation }: BottomStackScreen) => {
-  const isLogin = useRecoilValue(token);
+  // const isLogin = useRecoilValue(token);
   const permissionMetaData = [
     {
       name: '앱 추적',

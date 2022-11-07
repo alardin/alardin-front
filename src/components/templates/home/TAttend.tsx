@@ -90,6 +90,10 @@ const TAttend = ({ route, navigation }: IAlarmAttendScreen) => {
       .delete(`/alarm/${id}`)
       .then(async () => {
         refreshData(v => v + 1);
+        toastEnable({
+          text: '해당 알람방이 삭제가 되었습니다.',
+          duration: 'SHORT',
+        });
         navigation.reset({
           index: 0,
           routes: [{ name: 'BottomNavigation' }],
@@ -99,6 +103,11 @@ const TAttend = ({ route, navigation }: IAlarmAttendScreen) => {
         if (err.response.status === 403) {
           toastEnable({
             text: '해당 기능을 사용할 수 있는 권한이 없습니다',
+            duration: 'LONG',
+          });
+        } else {
+          toastEnable({
+            text: '원인을 알 수 없는 오류가 발생했습니다.',
             duration: 'LONG',
           });
         }
@@ -111,6 +120,10 @@ const TAttend = ({ route, navigation }: IAlarmAttendScreen) => {
       .post('/alarm/quit', { alarmId: id })
       .then(async () => {
         refreshData(v => v + 1);
+        toastEnable({
+          text: '해당 알람방에 나가셨습니다.',
+          duration: 'SHORT',
+        });
         navigation.reset({
           index: 0,
           routes: [{ name: 'BottomNavigation' }],
