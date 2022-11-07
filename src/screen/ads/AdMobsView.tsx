@@ -7,8 +7,6 @@ import NativeAdView, {
   AdvertiserView,
   HeadlineView,
   IconView,
-  NativeAd,
-  NativeAdViewProps,
   TaglineView,
 } from 'react-native-admob-native-ads';
 import { Config } from 'react-native-config';
@@ -16,6 +14,7 @@ import { Config } from 'react-native-config';
 const styles = StyleSheet.create({
   container: {
     width: '95%',
+    height: 90,
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',

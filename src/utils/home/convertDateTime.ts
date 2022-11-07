@@ -6,7 +6,7 @@ export const minuteStringCheck = (minute: number) => {
 
 export const convertDay = (day: number) => {
   const dayString = ['월', '화', '수', '목', '금', '토', '일'];
-  return day === 0 ? '없음' : dayString[day];
+  return day === 0 ? '없음' : dayString[day - 1];
 };
 
 export const convertIsRepeat = (repeatStr: string) => {
@@ -24,8 +24,6 @@ export const convertDate = (dateString: string) => {
   if (dateString !== '' && dateString) {
     const date = new Date(dateString);
     const today = new Date(Date.now());
-    console.log(date);
-    console.log(today);
     const [dMonth, dDate, dDay] = [
       date.getMonth() + 1,
       date.getDate(),
@@ -35,7 +33,6 @@ export const convertDate = (dateString: string) => {
       const leftDate = Math.floor(
         (date.getTime() - today.getTime()) / (1000 * 60 * 60 * 24),
       );
-      console.log(leftDate);
       if (leftDate <= 0) return '오늘';
       if (leftDate === 1) return '내일';
       if (leftDate === 2) return '내일 모레';

@@ -56,8 +56,7 @@ const TUnregisterMates = () => {
           <InviteFriends />
         )
       ) : (
-        <InviteFriends />
-        // <AcceptFriends setIsKakaoAgree={setIsKakaoAgree} />
+        <AcceptFriends setIsKakaoAgree={setIsKakaoAgree} />
       )}
     </>
   );
