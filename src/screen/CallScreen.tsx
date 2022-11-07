@@ -98,7 +98,7 @@ const CallScreen = ({ route, navigation }: CallScreenProps) => {
     console.log(`cehck engine`);
     console.log(engine);
     await engine?.enableAudio();
-    await engine?.setChannelProfile(ChannelProfile.Game);
+    await engine?.setChannelProfile(ChannelProfile.Communication);
 
     engine?.addListener('Warning', warn => {
       console.log(`RTCWarning: ${warn}`);

@@ -119,7 +119,6 @@ export const matesAttendAlarmList = selector<IAlarmInfoData[]>({
     const matesAlarmList: IAlarmInfoData[] = response.data.data;
 
     console.log('mates alarms');
-    // console.log(matesAlarmList);
 
     const removeJoinedAlarm = matesAlarmList.filter(
       mateAlarm => !myAlarmList.some(myAlarm => mateAlarm.id === myAlarm.id),
