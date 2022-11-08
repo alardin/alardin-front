@@ -61,7 +61,7 @@ const RegisterUser = ({ mate, myId }: IFriendInfoProps) => {
     setOpenDelete(true);
     setTimeout(() => {
       setOpenDelete(false);
-    }, 5000);
+    }, 3000);
   };
 
   const handlePress = async () => {

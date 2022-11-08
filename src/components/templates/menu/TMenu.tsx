@@ -18,7 +18,7 @@ import alardinApi from '../../../utils/alardinApi';
 import axios from 'axios';
 import SwitchList from '../../organisms/menu/SwitchList';
 import messaging from '@react-native-firebase/messaging';
-import { Alert, PermissionsAndroid } from 'react-native';
+import { Alert } from 'react-native';
 
 const TMenu = () => {
   const navigation = useNavigation<any>();
@@ -138,7 +138,7 @@ const TMenu = () => {
           uri: 'https://alard.in/terms/service',
         }),
     },
-    { type: 'info', key: '앱 버전', value: '1.0.0' },
+    { type: 'info', key: '앱 버전', value: '1.0.2' },
     {
       type: 'button_info',
       key: '회원탈퇴',
