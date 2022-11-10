@@ -92,46 +92,43 @@ const shareOnKakao = async (
       : `${myName}님께서 회원님과 함께 일어나고 싶습니다`;
   const customDescription = `혼자서 힘들게 일어나는 대신 ${myName}님과 함께 게임을 즐기면서 일어나 보세요. Alardin는 회원님과 여러 기능성 게임으로 맞이하고 있습니다.`;
 
-  if (Platform.OS === 'ios') {
-    try {
-      const response = await KakaoShareLink.sendFeed(
-        type === 'mate'
-          ? {
-              ...beMyFriendTemplate,
-              content: {
-                ...beMyFriendTemplate.content,
-                title: customTitle,
-                description: customDescription,
-              },
-            }
-          : type === 'profile'
-          ? {
-              ...shareMyProfile,
-              content: {
-                ...shareMyProfile.content,
-                title: customTitle,
-                description: customDescription,
-              },
-            }
-          : {
-              ...joinMyAlarmTemplate,
-              content: {
-                ...joinMyAlarmTemplate.content,
-                title: customTitle,
-                description: customDescription,
-              },
+  try {
+    const response = await KakaoShareLink.sendFeed(
+      type === 'mate'
+        ? {
+            ...beMyFriendTemplate,
+            content: {
+              ...beMyFriendTemplate.content,
+              title: customTitle,
+              description: customDescription,
             },
-      );
-      console.log(response);
-    } catch (e) {
-      console.log(e);
-    }
-    return;
+          }
+        : type === 'profile'
+        ? {
+            ...shareMyProfile,
+            content: {
+              ...shareMyProfile.content,
+              title: customTitle,
+              description: customDescription,
+            },
+          }
+        : {
+            ...joinMyAlarmTemplate,
+            content: {
+              ...joinMyAlarmTemplate.content,
+              title: customTitle,
+              description: customDescription,
+            },
+          },
+    );
+    console.log(response);
+  } catch (e) {
+    console.log(e);
+    Alert.alert(
+      '카카오톡 미설치',
+      '해당 디바이스에서 카카오톡이 설치되지 않았습니다.',
+    );
   }
-  Alert.alert(
-    '카카오톡 미설치',
-    '해당 디바이스에서 카카오톡이 설치되지 않았습니다.',
-  );
 };
 
 export default shareOnKakao;

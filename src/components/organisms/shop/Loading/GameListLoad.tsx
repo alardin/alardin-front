@@ -36,7 +36,7 @@ const GameListLoad = () => {
       <Title options="bold">게임 목록</Title>
       <Placeholder Animation={Fade}>
         <ListBox row bgColor={themeColor.color.white}>
-          {Array.from({ length: 8 }).map((item, index) => {
+          {Array.from({ length: 8 }).map(() => {
             return (
               <ItemBox width="25%" center>
                 <PlaceholderMedia

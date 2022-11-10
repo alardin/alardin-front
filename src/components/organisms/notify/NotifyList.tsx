@@ -3,16 +3,10 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList, ListRenderItem } from 'react-native';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { defaultNotify, mateNotifyList } from '../../../recoil/notify/notify';
+import { defaultNotify } from '../../../recoil/notify/notify';
 import { isTrashMode } from '../../../recoil/notify/trashMode';
-import Box from '../../atoms/box/Box';
 import EventNotifyItem from '../../molecules/notify/EventNotifyItem';
-import MateNotifyItem from '../../molecules/notify/MateNotifyItem';
 import NoItem from '../../molecules/other/NoItem';
-
-interface INotifyListProps {
-  type: 'default' | 'mate';
-}
 
 export interface INotifyDataType {
   type: 'event' | 'mate' | 'announce' | 'local';
@@ -24,7 +18,7 @@ export interface INotifyDataType {
   isHidden?: boolean;
 }
 
-const NotifyList = ({ type }: INotifyListProps) => {
+const NotifyList = () => {
   const [notifyData, setNotifyData] = useRecoilState(defaultNotify);
   const [checkingArray, setCheckingArray] = useState<boolean[]>(
     Array(100).fill(false),

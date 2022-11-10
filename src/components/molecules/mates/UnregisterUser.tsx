@@ -13,6 +13,7 @@ import KakaoIcon from '../../../assets/icons/ic-kakao.svg';
 import Button from '../../atoms/button/Button';
 import { useSetRecoilState } from 'recoil';
 import { mateRefresh } from '../../../recoil/mates/mateRefresh';
+import { Alert } from 'react-native';
 
 interface IFriendInfoProps {
   mate: IMembersDataType;
@@ -67,9 +68,19 @@ const UnregisterUser = ({ mate }: IFriendInfoProps) => {
     : `/kakao?receiverKakaoId=${kakao_id}`;
 
   const handlePress = async () => {
-    console.log(requestBody);
-    const result = await alardinApi.post(`/mate${requestBody}`);
-    console.log(result);
+    try {
+      const result = await alardinApi.post(`/mate${requestBody}`);
+      console.log(result);
+      Alert.alert(
+        '메이트 요청 성공',
+        `${nickname}님한테 메이트를 요청하셨습니다.`,
+      );
+    } catch (err) {
+      Alert.alert(
+        '메이트 요청 실패',
+        `${nickname}님한테 메이트를 요청을 실패하셨습니다.`,
+      );
+    }
     mateRefresher(v => v + 1);
   };
 

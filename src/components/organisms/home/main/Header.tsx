@@ -11,6 +11,7 @@ import {
   alarmItemtoDate,
   convertDate,
   convertTime,
+  minuteStringCheck,
 } from '../../../../utils/home/convertDateTime';
 import { Loadable } from 'recoil';
 import theme from '../../../../theme/theme';
@@ -42,9 +43,9 @@ const Header = ({ lastestAlarm }: IHeaderProps) => {
       const convertDateTime = alarmItemtoDate({ is_repeated, time });
       setNextData({
         date: convertDate(
-          `${convertDateTime.getFullYear()}-${
-            convertDateTime.getMonth() + 1
-          }-${convertDateTime.getDate()}`,
+          `${convertDateTime.getFullYear()}-${minuteStringCheck(
+            convertDateTime.getMonth() + 1,
+          )}-${minuteStringCheck(convertDateTime.getDate())}`,
         ),
         time: convertTime(
           lastestAlarm.state === 'hasValue' ? lastestAlarm.contents.time : '',

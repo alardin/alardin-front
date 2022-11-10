@@ -13,6 +13,7 @@
 #import <Firebase.h>
 #import <RNKakaoLogins.h>
 #import <CodePush/CodePush.h>
+#import <GoogleMobileAds/GoogleMobileAds.h>
 
 #import <AVFoundation/AVFoundation.h>
 #import <TSBackgroundFetch/TSBackgroundFetch.h>
@@ -81,6 +82,7 @@ static NSString *const kRNConcurrentRoot = @"concurrentRoot";
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
   
+  [GADMobileAds.sharedInstance startWithCompletionHandler:nil];
   
   [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
   // [REQUIRED] Register BackgroundFetch

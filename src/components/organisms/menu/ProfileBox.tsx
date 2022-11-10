@@ -3,9 +3,7 @@ import styled from 'styled-components/native';
 import { IMyProfile } from '../../../recoil/authorization';
 import theme from '../../../theme/theme';
 import Box from '../../atoms/box/Box';
-import Container from '../../atoms/container/Container';
 import ProfileIcon from '../../atoms/profile/ProfileIcon';
-import Text from '../../atoms/text/Text';
 import ProfileText from '../../molecules/menu/ProfileText';
 import LoadingComponent from './LoadingComponent';
 

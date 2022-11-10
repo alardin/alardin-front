@@ -1,14 +1,10 @@
-import {
-  BottomTabNavigationProp,
-  BottomTabScreenProps,
-} from '@react-navigation/bottom-tabs';
-import { useFocusEffect, useIsFocused } from '@react-navigation/native';
+import { useIsFocused } from '@react-navigation/native';
 import axios from 'axios';
 import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components/native';
-import { RootBottomParamList } from '../../../navigation/NavigationData';
 import { IMyProfile } from '../../../recoil/authorization';
 import { IGameMetaType } from '../../../recoil/home/alarmSettings';
+import AdMobsView from '../../../screen/ads/AdMobsView';
 import CenterScreen from '../../../screen/CenterScreen';
 import alardinApi from '../../../utils/alardinApi';
 import UserCoin from '../../molecules/shop/user/UserCoin';
@@ -27,9 +23,7 @@ const CustomScrollView = styled.ScrollView`
   height: 100%;
 `;
 
-type IShopNavigation = BottomTabScreenProps<RootBottomParamList, 'Shop'>;
-
-const TShop = ({ navigation }: IShopNavigation) => {
+const TShop = () => {
   const apiPath = ['/assets', '/game', '/users'];
   const [visible, setVisible] = useState<boolean>(false);
   const [shopState, setShopState] = useState<IShopState>({
@@ -70,29 +64,7 @@ const TShop = ({ navigation }: IShopNavigation) => {
   }, []);
 
   useEffect(() => {
-    axios.all(apiPath.map(path => alardinApi.get(path))).then(
-      axios.spread((res1, res2, res3) => {
-        const { asset, games } = res1.data.data;
-        const gamelist = res2.data.data;
-        const user = res3.data.data;
-        setShopState({
-          userAsset: {
-            coin: asset.coin,
-            isPremium: asset.is_premium,
-            totalGames: games.length,
-            myGames: games,
-          },
-          gameList: gamelist,
-          profile: user,
-        });
-      }),
-    );
-    return () =>
-      setShopState({
-        gameList: [],
-        profile: {} as IMyProfile,
-        userAsset: {} as IUserAssetData,
-      });
+    isFocusing();
   }, [isFocusing]);
 
   return (
@@ -104,6 +76,7 @@ const TShop = ({ navigation }: IShopNavigation) => {
           setVisible={setVisible}
         />
         <UserCoin asset={shopState.userAsset} />
+        <AdMobsView />
         <GameShopList
           data={shopState.gameList}
           myGames={shopState.userAsset.myGames}

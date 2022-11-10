@@ -68,8 +68,6 @@ const GameStart = ({ route, navigation }: GameStartProps) => {
   const [checkSucess, setCheckSuccess] = useState<boolean>(false);
 
   console.log(engine);
-
-  let limitUntilStart: any;
   let webViewRef = useRef<WebView>();
 
   const handleSetRef = (_ref: any) => {
@@ -189,7 +187,7 @@ const GameStart = ({ route, navigation }: GameStartProps) => {
     };
   };
 
-  const leaveChannel = async (gameNum: number) => {
+  const leaveChannel = async (gameNum: number, type: 'single' | 'multi') => {
     engine
       ?.leaveChannel()
       .catch(err => console.log(`error from engine leavechannel: ${err}`));
@@ -208,10 +206,12 @@ const GameStart = ({ route, navigation }: GameStartProps) => {
       playEffect: false,
       peerIds: [],
     });
-    navigation.reset({
-      index: 0,
-      routes: [{ name: 'GameEnd', params: { gameId: gameNum } }],
-    });
+    if (type === 'multi') {
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'GameEnd', params: { gameId } }],
+      });
+    }
   };
 
   const switchMicrophone = () => {
@@ -271,24 +271,25 @@ const GameStart = ({ route, navigation }: GameStartProps) => {
         console.log(`game id`);
         console.log({
           ...message,
-          Game_id: gameDataState?.gameId,
+          Game_id: gameId,
           is_cleared: true,
           Alarm_id: alarmId,
         });
 
         await alardinApi.post('/game/save', {
           ...message,
-          Game_id: gameDataState?.gameId,
+          Game_id: gameId,
           is_cleared: true,
           Alarm_id: alarmId,
         });
-        await leaveChannel(message.Game_id);
+        await leaveChannel(gameId, 'multi');
         return;
       case 'TIME_OUT':
         console.log('time out!!');
+        await leaveChannel(gameId, 'multi');
         navigation.reset({
           index: 0,
-          routes: [{ name: 'GameEnd', params: { gameId: message.Game_id } }],
+          routes: [{ name: 'GameEnd', params: { gameId } }],
         });
         return;
       default:
@@ -321,19 +322,18 @@ const GameStart = ({ route, navigation }: GameStartProps) => {
 
   useEffect(() => {
     systemSetting.setVolume(0.5, { showUI: true });
-    if (!timer) {
-      limitUntilStart = setTimeout(() => setTimer(true), 1000 * 60);
-    } else {
+    if (timer) {
       toastEnable({
         text: '사용자가 접속하지 않아 싱글 플레이 모드로 전환합니다',
         duration: 'LONG',
       });
-      navigation.reset({
-        index: 0,
-        routes: [{ name: 'SingleGameStart', params: { gameId: 2 } }],
-      });
+      leaveChannel(0, 'single').then(() =>
+        navigation.reset({
+          index: 0,
+          routes: [{ name: 'SingleGameStart', params: { gameId: 2 } }],
+        }),
+      );
     }
-    return () => clearTimeout(limitUntilStart);
   }, [timer]);
 
   useEffect(() => {
@@ -380,9 +380,13 @@ const GameStart = ({ route, navigation }: GameStartProps) => {
   useEffect(() => {
     if (allAttend) {
       console.log(`attend: true!!!!`);
-      clearTimeout(limitUntilStart);
       sendNeedGameStart();
     }
+    const limitUntilStart = setTimeout(
+      () => !allAttend && setTimer(true),
+      1000 * 61,
+    );
+    return () => clearTimeout(limitUntilStart);
   }, [allAttend]);
 
   useEffect(() => {
@@ -415,7 +419,6 @@ const GameStart = ({ route, navigation }: GameStartProps) => {
     <SafeAreaView>
       <CustomContianer options="zero">
         <WebBox width="100%" height="100%">
-          {checkSucess && <Text>Success! Wait for other player!</Text>}
           <WebView
             originWhitelist={['*']}
             ref={handleSetRef}

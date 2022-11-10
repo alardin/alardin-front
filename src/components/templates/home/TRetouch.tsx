@@ -13,7 +13,7 @@ import styled from 'styled-components/native';
 import { RootStackParamList } from '../../../navigation/stack/StackNavigation';
 import { alarmListRefresh } from '../../../recoil/home/alarmList';
 import {
-  gameMetaData,
+  apiGameMetaData,
   initialRecoilSetting,
   pickerMetaData,
   settingData,
@@ -22,11 +22,7 @@ import {
 import BottomScreen from '../../../screen/BottomScreen';
 import Pickers from '../../../screen/Pickers';
 import alardinApi from '../../../utils/alardinApi';
-import {
-  convertIsRepeat,
-  convertTime,
-} from '../../../utils/home/convertDateTime';
-import Box from '../../atoms/box/Box';
+import { convertIsRepeat } from '../../../utils/home/convertDateTime';
 import Button from '../../atoms/button/Button';
 import Container from '../../atoms/container/Container';
 import AlarmSettings from '../../organisms/home/create/AlarmSettings';
@@ -46,14 +42,13 @@ const TRetouch = ({ route, navigation }: IAlarmRetouchScreen) => {
     is_private,
     music_name,
     max_member,
-    Host,
     Game,
     name,
   } = route.params;
   const [visible, setVisible] = useState<boolean>(false);
   const [setting, setSetting] = useRecoilState(settingData);
   const [inputLabel, setInputLabel] = useRecoilState(settingLabel);
-  const gameList = useRecoilValueLoadable(gameMetaData);
+  const gameList = useRecoilValueLoadable(apiGameMetaData);
 
   const refreshData = useSetRecoilState(alarmListRefresh);
 

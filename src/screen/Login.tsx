@@ -47,6 +47,8 @@ const BottomBox = styled(Box)`
 `;
 
 const Login = () => {
+  console.log('Testing env input');
+  console.log(Config.ENV_CONSOLE_TEST);
   const setAuthorization = useSetRecoilState(token);
   const setMyProfile = useSetRecoilState(myProfile);
   const setLoginPlatform = useSetRecoilState(loginPlatform);

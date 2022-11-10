@@ -1,5 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import useMatesList from '../../../hooks/useMatesList';
+import React, { useEffect, useState } from 'react';
 import UnregisteredMate from '../../organisms/mates/UnregisteredMate';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import AcceptFriends from '../../molecules/mates/AcceptFriends';
@@ -16,18 +15,14 @@ const TUnregisterMates = () => {
   // const kakaoFriends = useMatesList('kakaoFriends');
 
   useEffect(() => {
-    console.log(isKakaoAgree);
-    console.log(userPlatform);
-    if (userPlatform === 'kakao') {
-      EncryptedStorage.getItem('scopes').then(jsonScopes => {
-        if (jsonScopes) {
-          const scopes = JSON.parse(jsonScopes);
-          console.log(scopes);
-          setIsKakaoAgree(scopes.includes('friends'));
-        }
-      });
-    }
-    return () => setIsKakaoAgree(false);
+    EncryptedStorage.getItem('scopes').then(jsonScopes => {
+      console.log(jsonScopes);
+      if (jsonScopes) {
+        const scopes = JSON.parse(jsonScopes);
+        console.log(scopes);
+        setIsKakaoAgree(scopes.includes('friends'));
+      }
+    });
   }, []);
 
   useEffect(() => {
