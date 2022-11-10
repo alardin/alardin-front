@@ -88,8 +88,6 @@ const GameStart = ({ route, navigation }: GameStartProps) => {
       client.getMembers(channelId).then(members => {
         setUserType(members.length - 1);
         if (members.length === 2) {
-          // total_members로 변경 필요
-          //
           client
             ?.sendMessage(channelId, { text: 'ALL_ATTEND' }, {})
             .then(() => setAllAttend(true));
@@ -153,13 +151,17 @@ const GameStart = ({ route, navigation }: GameStartProps) => {
       userType,
     );
     console.log('user cehcking');
-    console.log(convertData);
-    webViewRef.current?.postMessage(
-      JSON.stringify({
-        type: 'GAME_START',
-        message: convertData ? { ...convertData[userType] } : {}, // Picoke 게임일 경우
-      }),
-    );
+    console.log(userType);
+    console.log(convertData && convertData[userType]);
+    if (convertData) {
+      console.log('load');
+      webViewRef.current?.postMessage(
+        JSON.stringify({
+          type: 'GAME_START',
+          message: convertData[userType],
+        }),
+      );
+    }
   };
 
   const requestStartData = async () => {
