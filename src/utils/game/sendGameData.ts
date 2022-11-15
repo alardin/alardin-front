@@ -34,7 +34,7 @@ const sendGameData = (
         },
         {
           currentUser: 'B',
-          images: originalData[originalData.length - 1].images,
+          images: originalData[0].images,
         },
       ];
     case 3:
