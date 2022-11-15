@@ -10,7 +10,6 @@ import { useRecoilState } from 'recoil';
 import styled from 'styled-components/native';
 import Box from '../../components/atoms/box/Box';
 import Container from '../../components/atoms/container/Container';
-import Text from '../../components/atoms/text/Text';
 import { RootStackParamList } from '../../navigation/stack/StackNavigation';
 import { rtcEngine, rtcState } from '../../recoil/gameState';
 import theme from '../../theme/theme';
@@ -65,7 +64,7 @@ const GameStart = ({ route, navigation }: GameStartProps) => {
   const [agora, setAgora] = useRecoilState(rtcState);
   // const [gamePlayState, setGamePlayState] = useRecoilState(gameState);
 
-  const [checkSucess, setCheckSuccess] = useState<boolean>(false);
+  const [, setCheckSuccess] = useState<boolean>(false);
 
   console.log(engine);
   let webViewRef = useRef<WebView>();
@@ -219,6 +218,7 @@ const GameStart = ({ route, navigation }: GameStartProps) => {
   const switchMicrophone = () => {
     console.log('check mic');
     console.log(agora.openMicrophone);
+    engine?.adjustRecordingSignalVolume(200);
     if (agora.openMicrophone === false) {
       engine
         ?.enableLocalAudio(!agora.openMicrophone)
