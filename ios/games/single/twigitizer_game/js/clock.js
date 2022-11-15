@@ -19,30 +19,11 @@ const secondsToMiniutes = (seconds) => {
 const clockChange = () => {
   clock.innerHTML = secondsToMiniutes(playSeconds);
   playSeconds += 1;
-  if (playSeconds > 60 * 5) {
-    // 5분 시간 초과로 RN한테 시간 초과했다고 전달하기!!
-    const startedTime = new Date(Date.now());
-    startedTime.setMinutes(startedTime.getMinutes() - 5);
+  if (playSeconds > 60 * 10) {
+    // 10분 시간 초과로 RN한테 시간 초과했다고 전달하기!!
+    makeOutputData(false);
     if (window.ReactNativeWebView) {
-      const result = JSON.stringify({
-        type: "TIME_OUT",
-        message: {
-          start_time: startedTime.toISOString(),
-          end_time: new Date().toISOString(),
-          data: {
-            play_time: 300, //플레이시간
-            trial: 1, //실패 횟수
-            data: {
-              // optional keys
-              is_cleared: false,
-              is_bot_used: false, //봇 개입 여부
-            },
-          },
-          Game_channel_id: 0,
-          Game_id: 2, //진행한 게임
-        },
-      });
-      window.ReactNativeWebView.postMessage(result);
+      window.ReactNativeWebView.postMessage(toJSON("TIME_OUT",outputData));
     } else {
       console.log("Not React Native WebView");
     }

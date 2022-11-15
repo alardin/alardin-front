@@ -1,17 +1,20 @@
-const outputData = {
-  start_time: new Date().toISOString(),
-  end_time: "2022-07-22:09:03:00",
+const outputData={
   data: {
-    play_time: 180, //플레이시간
-    trial: 3, //실패 횟수
-    data: {
-      // optional keys
-      is_bot_used: false, //봇 개입 여부
-      is_cleared: false,
+    data: {//optional keys
+      is_cleared: false
     },
+    play_time: 0,//플레이 시간
+    trial: 0//시도 횟수
   },
-  Game_channel_id: 0,
-  Game_id: 2, //진행한 게임
+  end_time: "2022-10-18T07:26:09.676Z",
+  start_time: new Date().toISOString()
+};
+
+const makeOutputData = (is_cleared=true) => {
+  outputData.end_time = new Date().toISOString();
+  outputData.data.play_time = playSeconds - 1;
+  outputData.data.trial = failCount;
+  outputData.is_cleared = is_cleared;
 };
 
 //외의 outputData
@@ -52,17 +55,20 @@ const orderingException = (ordering) => {
             `${operOne}+${operTwo}`,
             eval(`${operOne}+${operTwo}`),
           ];
-          if (
-            !allCases.has(resultEvalOne) ||
-            (allCases.get(resultEvalOne).length > resultOne.length &&
-              String(resultEvalOne).length === 2)
-          )
-            allCases.set(resultEvalOne, resultOne); //덧셈
+          if(resultEvalOne > 9){
+            if (
+              !allCases.has(resultEvalOne) ||
+              (allCases.get(resultEvalOne).length > resultOne.length &&
+                String(resultEvalOne).length === 2)
+            )
+              allCases.set(resultEvalOne, resultOne); //덧셈
+          }
+
           const [resultTwo, resultEvalTwo] = [
             `${operOne}-${operTwo}`,
             eval(`${operOne}-${operTwo}`),
           ];
-          if (resultEvalTwo > 0) {
+          if (resultEvalTwo > 9) {
             //뺄셈
             if (
               !allCases.has(resultEvalTwo) ||
@@ -157,7 +163,9 @@ const makeGrid = (container, rows, cols, vh) => {
   for (let i = 1; i <= rows * cols; i++) {
     let cell = document.createElement("div");
     cell.innerText = i;
-    cell.style.padding = `${vh}vh 0 ${vh}vh 0`;
+    cell.style.display='flex';
+    cell.style.justifyContent='center';
+    cell.style.alignItems='center';
     container.appendChild(cell).className = `grid-item${i}`;
   }
 };
@@ -174,7 +182,7 @@ const textModify = () => {
   calculatorGrid.querySelector(".grid-item10").innerHTML = "←"; //계산기 출력 조정
   calculatorGrid.querySelector(".grid-item11").innerHTML = "0";
   calculatorGrid.querySelector(".grid-item12").innerHTML = "입력";
-  const objCases = Math.min(20, Math.ceil(allCases.size / 2)); //맞추어야 하는 개수 보정
+  objCases = Math.min(20, Math.ceil(allCases.size / 2)); //맞추어야 하는 개수 보정
   document
     .querySelector(".question-info")
     .querySelector(
@@ -210,12 +218,8 @@ const startGame = () => {
   layoutModify(); //자잘한 레이아웃 예쁘게 수정
 };
 
-const makeOutputData = () => {
-  outputData.end_time = new Date().toISOString();
-  outputData.data.play_time = playSeconds - 1;
-  outputData.data.trial = failCount;
-  outputData.Game_id = 2;
-  outputData.data.data.is_cleared = true;
+const toJSON=(messageType,text)=>{//넘 많아서 함수화
+  return JSON.stringify({type:messageType,message:text});
 };
 
 // 아래에 있는 함수들은 적절한 위치에 실행 시킬 것!
@@ -223,11 +227,7 @@ const requestGameHasEnd = () => {
   // requestGameHasEnd는 게임이 종료되었다는 결과를 RN(App)한테 통보할 수 있는 함수
   if (window.ReactNativeWebView) {
     // endGame 함수와 병합
-    const result = JSON.stringify({
-      type: "OUTPUT_DATA",
-      message: outputData,
-    });
-    window.ReactNativeWebView.postMessage(result);
+    window.ReactNativeWebView.postMessage(toJSON("OUTPUT_DATA",outputData));
   } else {
     console.log("Not React Native WebView");
     // alert({ message: "error" });
@@ -235,7 +235,7 @@ const requestGameHasEnd = () => {
 };
 
 const endGame = () => {
-  makeOutputData();
+  makeOutputData(true);
   requestGameHasEnd();
 };
 
