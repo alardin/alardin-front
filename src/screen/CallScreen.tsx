@@ -95,10 +95,7 @@ const CallScreen = ({ route, navigation }: CallScreenProps) => {
 
   const initialAgoraEngine = async () => {
     setEngine(await RtcEngine.create(Config.AGORA_APP_ID));
-    console.log(`cehck engine`);
-    console.log(engine);
     await engine?.enableAudio();
-    await engine?.setChannelProfile(ChannelProfile.Game);
 
     engine?.addListener('Warning', warn => {
       console.log(`RTCWarning: ${warn}`);
@@ -149,7 +146,7 @@ const CallScreen = ({ route, navigation }: CallScreenProps) => {
   });
 
   const soundAlarm = () => {
-    systemSetting.setVolume(0.9, { showUI: true });
+    systemSetting.setVolume(0.9, { showUI: false });
     sound.setNumberOfLoops(-1);
 
     sound.play(success => {
@@ -166,7 +163,7 @@ const CallScreen = ({ route, navigation }: CallScreenProps) => {
     console.log('volume');
     console.log(volume);
     if (volume < 0.9) {
-      systemSetting.setVolume(0.9, { showUI: true });
+      systemSetting.setVolume(0.9, { showUI: false });
     }
   });
 
@@ -183,7 +180,7 @@ const CallScreen = ({ route, navigation }: CallScreenProps) => {
   useEffect(() => {
     setTimeout(() => {
       soundAlarm();
-    }, 1000);
+    }, 500);
     return () => {
       sound.stop();
       systemSetting.removeVolumeListener(volumeListener);
@@ -191,40 +188,38 @@ const CallScreen = ({ route, navigation }: CallScreenProps) => {
   }, []);
 
   const handleCall = () => {
-    setTimeout(() => {
-      if (netInfo.isConnected) {
-        navigation.reset({
-          index: 0,
-          routes: [
-            {
-              name: 'GameStart',
-              params: {
-                id,
-                alarmId,
-                gameId,
-              },
+    if (netInfo.isConnected) {
+      navigation.reset({
+        index: 0,
+        routes: [
+          {
+            name: 'GameStart',
+            params: {
+              id,
+              alarmId,
+              gameId,
             },
-          ],
-        });
-      } else {
-        toastEnable({
-          text: '오프라인 상태로 인해 싱글 플레이 모드로 전환합니다.',
-          duration: 'LONG',
-        });
-        navigation.reset({
-          index: 0,
-          routes: [
-            {
-              name: 'SingleGameStart',
-              params: {
-                id,
-                alarmId,
-              },
+          },
+        ],
+      });
+    } else {
+      toastEnable({
+        text: '오프라인 상태로 인해 싱글 플레이 모드로 전환합니다.',
+        duration: 'LONG',
+      });
+      navigation.reset({
+        index: 0,
+        routes: [
+          {
+            name: 'SingleGameStart',
+            params: {
+              id,
+              alarmId,
             },
-          ],
-        });
-      }
-    }, 1000);
+          },
+        ],
+      });
+    }
   };
 
   const dayString = ['일', '월', '화', '수', '목', '금', '토'];

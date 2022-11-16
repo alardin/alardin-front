@@ -10,7 +10,6 @@ import { useRecoilState } from 'recoil';
 import styled from 'styled-components/native';
 import Box from '../../components/atoms/box/Box';
 import Container from '../../components/atoms/container/Container';
-import Text from '../../components/atoms/text/Text';
 import { RootStackParamList } from '../../navigation/stack/StackNavigation';
 import { rtcEngine, rtcState } from '../../recoil/gameState';
 import theme from '../../theme/theme';
@@ -65,7 +64,7 @@ const GameStart = ({ route, navigation }: GameStartProps) => {
   const [agora, setAgora] = useRecoilState(rtcState);
   // const [gamePlayState, setGamePlayState] = useRecoilState(gameState);
 
-  const [checkSucess, setCheckSuccess] = useState<boolean>(false);
+  const [, setCheckSuccess] = useState<boolean>(false);
 
   console.log(engine);
   let webViewRef = useRef<WebView>();
@@ -88,8 +87,6 @@ const GameStart = ({ route, navigation }: GameStartProps) => {
       client.getMembers(channelId).then(members => {
         setUserType(members.length - 1);
         if (members.length === 2) {
-          // total_members로 변경 필요
-          //
           client
             ?.sendMessage(channelId, { text: 'ALL_ATTEND' }, {})
             .then(() => setAllAttend(true));
@@ -153,13 +150,17 @@ const GameStart = ({ route, navigation }: GameStartProps) => {
       userType,
     );
     console.log('user cehcking');
-    console.log(convertData);
-    webViewRef.current?.postMessage(
-      JSON.stringify({
-        type: 'GAME_START',
-        message: convertData ? { ...convertData[userType] } : {}, // Picoke 게임일 경우
-      }),
-    );
+    console.log(userType);
+    console.log(convertData && convertData[userType]);
+    if (convertData) {
+      console.log('load');
+      webViewRef.current?.postMessage(
+        JSON.stringify({
+          type: 'GAME_START',
+          message: convertData[userType],
+        }),
+      );
+    }
   };
 
   const requestStartData = async () => {
@@ -217,6 +218,7 @@ const GameStart = ({ route, navigation }: GameStartProps) => {
   const switchMicrophone = () => {
     console.log('check mic');
     console.log(agora.openMicrophone);
+    engine?.adjustRecordingSignalVolume(400);
     if (agora.openMicrophone === false) {
       engine
         ?.enableLocalAudio(!agora.openMicrophone)

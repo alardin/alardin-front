@@ -1,20 +1,20 @@
-const outputData = {
-  start_time: new Date(Date.now())
-    .toISOString()
-    .replace(/[T]/g, ' ')
-    .replace(/[Z]/g, ''),
-  end_time: '2022-07-22:09:03:00',
+const outputData={
   data: {
-    play_time: 180, //플레이시간
-    trial: 3, //실패 횟수
-    data: {
-      // optional keys
-      is_bot_used: false, //봇 개입 여부
+    data: {//optional keys
+      is_cleared: false
     },
+    play_time: 0,//플레이 시간
+    trial: 0//시도 횟수
   },
-  Game_channel_id: 0,
-  is_cleared: false,
-  Game_id: 2, //진행한 게임
+  end_time: "2022-10-18T07:26:09.676Z",
+  start_time: new Date().toISOString()
+};
+
+const makeOutputData = (is_cleared=true) => {
+  outputData.end_time = new Date().toISOString();
+  outputData.data.play_time = playSeconds - 1;
+  outputData.data.trial = failCount;
+  outputData.is_cleared = is_cleared;
 };
 
 //외의 outputData
@@ -26,18 +26,18 @@ let correctArray = []; //숫자 정보가 들어가있음
 const tutorialCode = []; //튜토리얼 전용 숫자 3개
 
 //아래는 사용할 기타 변수들
-let userInput = '';
+let userInput = "";
 let LOCK_SECONDS = 5; //틀렸을 때 잠금거는 시간
 
 //다음 정보는 document에서 가져올 그리드 정보
-const userAnswerGrid = document.querySelector('.user-correct-answer');
-const calculatorGrid = document.querySelector('.calculator');
-const userInputData = document.querySelector('.user-input');
-const correctCountData = document.querySelector('.check');
+const userAnswerGrid = document.querySelector(".user-correct-answer");
+const calculatorGrid = document.querySelector(".calculator");
+const userInputData = document.querySelector(".user-input");
+const correctCountData = document.querySelector(".check");
 
-const orderingException = ordering => {
+const orderingException = (ordering) => {
   //괄호가 두 개 나오는 경우 exception 처리
-  const orderOps = ['*', '/'];
+  const orderOps = ["*", "/"];
   for (let i1 = 0; i1 < 2; i1++) {
     const [operOne, evalOne] = [
       `(${ordering[0]}${orderOps[i1]}${ordering[1]})`,
@@ -55,17 +55,20 @@ const orderingException = ordering => {
             `${operOne}+${operTwo}`,
             eval(`${operOne}+${operTwo}`),
           ];
-          if (
-            !allCases.has(resultEvalOne) ||
-            (allCases.get(resultEvalOne).length > resultOne.length &&
-              String(resultEvalOne).length === 2)
-          )
-            allCases.set(resultEvalOne, resultOne); //덧셈
+          if(resultEvalOne > 9){
+            if (
+              !allCases.has(resultEvalOne) ||
+              (allCases.get(resultEvalOne).length > resultOne.length &&
+                String(resultEvalOne).length === 2)
+            )
+              allCases.set(resultEvalOne, resultOne); //덧셈
+          }
+
           const [resultTwo, resultEvalTwo] = [
             `${operOne}-${operTwo}`,
             eval(`${operOne}-${operTwo}`),
           ];
-          if (resultEvalTwo > 0) {
+          if (resultEvalTwo > 9) {
             //뺄셈
             if (
               !allCases.has(resultEvalTwo) ||
@@ -81,16 +84,16 @@ const orderingException = ordering => {
 };
 //예외 일단 발견
 
-const makeAllCasesFromOrdering = ordering => {
+const makeAllCasesFromOrdering = (ordering) => {
   //stack을 이용한 모든 경우의 사칙연산. 일종의 dfs
   orderingException(ordering);
   const [a, b] = [ordering[0], ordering[1]]; //비구조화 선언
   //어려운 js의 세계. easy to learn, hard to master. sibal
   const stack = [];
-  stack.push([`${a}+${b}`, '+', 2]);
-  stack.push([`${a}-${b}`, '-', 2]);
-  stack.push([`${a}*${b}`, '*', 2]);
-  if (a % b == 0) stack.push([`${a}/${b}`, '/', 2]);
+  stack.push([`${a}+${b}`, "+", 2]);
+  stack.push([`${a}-${b}`, "-", 2]);
+  stack.push([`${a}*${b}`, "*", 2]);
+  if (a % b == 0) stack.push([`${a}/${b}`, "/", 2]);
   while (stack.length != 0) {
     const [fullOps, op, length] = stack.pop(); //비구조화^^
     if (eval(fullOps) > 0 && String(eval(fullOps)).length == 2) {
@@ -103,17 +106,17 @@ const makeAllCasesFromOrdering = ordering => {
         allCases.set(eval(fullOps), fullOps); //음수가 아니고 두 자리 경우에만 저장(+수식 최적화)
     }
     if (length == ordering.length) continue; //최대 길이라면 아래의 연산을 실행하지 않음
-    stack.push([`${fullOps}+${ordering[length]}`, '+', length + 1]); //덧셈 연산
-    stack.push([`${fullOps}-${ordering[length]}`, '-', length + 1]); //뺄셈 연산
-    if (op == '+' || op == '-')
-      stack.push([`(${fullOps})*${ordering[length]}`, '*', length + 1]);
+    stack.push([`${fullOps}+${ordering[length]}`, "+", length + 1]); //덧셈 연산
+    stack.push([`${fullOps}-${ordering[length]}`, "-", length + 1]); //뺄셈 연산
+    if (op == "+" || op == "-")
+      stack.push([`(${fullOps})*${ordering[length]}`, "*", length + 1]);
     //곱셈 연산
-    else stack.push([`${fullOps}*${ordering[length]}`, '*', length + 1]);
+    else stack.push([`${fullOps}*${ordering[length]}`, "*", length + 1]);
     if (eval(fullOps) % ordering[length] == 0) {
       //나눗셈 연산
-      if (op == '+' || op == '-')
-        stack.push([`(${fullOps})/${ordering[length]}`, '/', length + 1]);
-      else stack.push([`${fullOps}/${ordering[length]}`, '/', length + 1]);
+      if (op == "+" || op == "-")
+        stack.push([`(${fullOps})/${ordering[length]}`, "/", length + 1]);
+      else stack.push([`${fullOps}/${ordering[length]}`, "/", length + 1]);
     }
   }
 };
@@ -150,38 +153,40 @@ const makeRandomNumber = () => {
   //objNums.push(6);
   //objNums.push(10);
 
-  document.querySelector('.num-one p').innerHTML = objNums[0];
-  document.querySelector('.num-two p').innerHTML = objNums[1];
-  document.querySelector('.num-three p').innerHTML = objNums[2];
-  document.querySelector('.num-four p').innerHTML = objNums[3];
+  document.querySelector(".num-one p").innerHTML = objNums[0];
+  document.querySelector(".num-two p").innerHTML = objNums[1];
+  document.querySelector(".num-three p").innerHTML = objNums[2];
+  document.querySelector(".num-four p").innerHTML = objNums[3];
 };
 
 const makeGrid = (container, rows, cols, vh) => {
   for (let i = 1; i <= rows * cols; i++) {
-    let cell = document.createElement('div');
+    let cell = document.createElement("div");
     cell.innerText = i;
-    cell.style.padding = `${vh}vh 0 ${vh}vh 0`;
+    cell.style.display='flex';
+    cell.style.justifyContent='center';
+    cell.style.alignItems='center';
     container.appendChild(cell).className = `grid-item${i}`;
   }
 };
 
-const tempClickLock = milli => {
+const tempClickLock = (milli) => {
   //임시로 클릭 막는 함수
-  calculatorGrid.classList.add('click-locked');
+  calculatorGrid.classList.add("click-locked");
   setTimeout(() => {
-    calculatorGrid.classList.remove('click-locked');
+    calculatorGrid.classList.remove("click-locked");
   }, milli);
 };
 
 const textModify = () => {
-  calculatorGrid.querySelector('.grid-item10').innerHTML = '←'; //계산기 출력 조정
-  calculatorGrid.querySelector('.grid-item11').innerHTML = '0';
-  calculatorGrid.querySelector('.grid-item12').innerHTML = '입력';
-  const objCases = Math.min(20, Math.ceil(allCases.size / 2)); //맞추어야 하는 개수 보정
+  calculatorGrid.querySelector(".grid-item10").innerHTML = "←"; //계산기 출력 조정
+  calculatorGrid.querySelector(".grid-item11").innerHTML = "0";
+  calculatorGrid.querySelector(".grid-item12").innerHTML = "입력";
+  objCases = Math.min(20, Math.ceil(allCases.size / 2)); //맞추어야 하는 개수 보정
   document
-    .querySelector('.question-info')
+    .querySelector(".question-info")
     .querySelector(
-      'p:nth-child(2)',
+      "p:nth-child(2)"
     ).innerHTML = `두 자리 수를 ${objCases}개 만드세요`; //맞추어야 하는 개수 조정
   for (let i = 1; i <= 20; i++)
     userAnswerGrid.querySelector(`.grid-item${i}`).innerHTML = ``; //맞춘 정답 칸 비워놓기
@@ -192,10 +197,10 @@ const layoutModify = () => {
   for (let i = 2; i <= 11; i += 3)
     calculatorGrid
       .querySelector(`.grid-item${i}`)
-      .classList.add('keypad-column');
+      .classList.add("keypad-column");
   for (let i = 4; i <= 12; i++)
-    calculatorGrid.querySelector(`.grid-item${i}`).classList.add('keypad-row');
-  document.querySelector('.user-correct-explain').classList.add('keypad-row');
+    calculatorGrid.querySelector(`.grid-item${i}`).classList.add("keypad-row");
+  document.querySelector(".user-correct-explain").classList.add("keypad-row");
 };
 
 const startGame = () => {
@@ -213,15 +218,8 @@ const startGame = () => {
   layoutModify(); //자잘한 레이아웃 예쁘게 수정
 };
 
-const makeOutputData = () => {
-  outputData.end_time = new Date(Date.now())
-    .toISOString()
-    .replace(/[T]/g, ' ')
-    .replace(/[Z]/g, '');
-  outputData.data.play_time = playSeconds - 1;
-  outputData.data.trial = failCount;
-  outputData.Game_id = 2;
-  outputData.is_cleared = true;
+const toJSON=(messageType,text)=>{//넘 많아서 함수화
+  return JSON.stringify({type:messageType,message:text});
 };
 
 // 아래에 있는 함수들은 적절한 위치에 실행 시킬 것!
@@ -229,19 +227,15 @@ const requestGameHasEnd = () => {
   // requestGameHasEnd는 게임이 종료되었다는 결과를 RN(App)한테 통보할 수 있는 함수
   if (window.ReactNativeWebView) {
     // endGame 함수와 병합
-    const result = JSON.stringify({
-      type: 'OUTPUT_DATA',
-      message: outputData,
-    });
-    window.ReactNativeWebView.postMessage(result);
+    window.ReactNativeWebView.postMessage(toJSON("OUTPUT_DATA",outputData));
   } else {
-    console.log('Not React Native WebView');
+    console.log("Not React Native WebView");
     // alert({ message: "error" });
   }
 };
 
 const endGame = () => {
-  makeOutputData();
+  makeOutputData(true);
   requestGameHasEnd();
 };
 
@@ -251,7 +245,7 @@ const gameTutorial = () => {
     while (correctArray.includes(tempTutorialInfo))
       tempTutorialInfo = tutorialCode.pop();
     userInputData.placeholder = tempTutorialInfo;
-  } else userInputData.placeholder = '';
+  } else userInputData.placeholder = "";
 };
 
 const addCorrectArr = () => {
@@ -262,8 +256,8 @@ const addCorrectArr = () => {
 };
 
 const lockClassInfoAdd = () => {
-  calculatorGrid.classList.add('click-locked');
-  document.querySelector('.warning-watch').classList.remove('hidden');
+  calculatorGrid.classList.add("click-locked");
+  document.querySelector(".warning-watch").classList.remove("hidden");
   stopWatchSeconds = LOCK_SECONDS; //스탑워치 초기화
   failCount += 1;
 };
@@ -273,38 +267,38 @@ const appEvent = () => {
   for (let i = 1; i <= 12; i++) {
     calculatorGrid
       .querySelector(`.grid-item${i}`)
-      .addEventListener('touchstart', e => {
+      .addEventListener("touchstart", (e) => {
         //console.log(i+'누름');//색을 변하게 해야함
         if (i == 1)
           calculatorGrid
             .querySelector(`.grid-item${i}`)
-            .classList.add('clicked-one');
+            .classList.add("clicked-one");
         if (i == 3)
           calculatorGrid
             .querySelector(`.grid-item${i}`)
-            .classList.add('clicked-three');
+            .classList.add("clicked-three");
         if (i == 10)
           calculatorGrid
             .querySelector(`.grid-item${i}`)
-            .classList.add('clicked-erase');
+            .classList.add("clicked-erase");
         if (i == 12)
           calculatorGrid
             .querySelector(`.grid-item${i}`)
-            .classList.add('clicked-enter');
+            .classList.add("clicked-enter");
         else
           calculatorGrid
             .querySelector(`.grid-item${i}`)
-            .classList.add('clicked');
+            .classList.add("clicked");
       });
   }
   for (let i = 1; i <= 12; i++) {
     calculatorGrid
       .querySelector(`.grid-item${i}`)
-      .addEventListener('touchend', e => {
+      .addEventListener("touchend", (e) => {
         //console.log(i+'뗌');//
         if (i == 10) {
           //지우기 버튼
-          userInput = '';
+          userInput = "";
         } else if (i == 12) {
           //입력 버튼
           //체크 부분 구현
@@ -316,10 +310,10 @@ const appEvent = () => {
             gameTutorial(); //3개 예제 보여주면서 게임 익히기
 
             document.querySelector(
-              '.user-correct-explain',
+              ".user-correct-explain"
             ).innerText = `${allCases.get(inputToInt)} = ${inputToInt}`;
-            userInput = '';
-            correctCountData.querySelector('p').innerText = correctCount;
+            userInput = "";
+            correctCountData.querySelector("p").innerText = correctCount;
             if (correctCount == objCases) {
               //게임 종료 조건 쿼리
               endGame();
@@ -328,12 +322,12 @@ const appEvent = () => {
             //틀림
             if (correctArray.includes(inputToInt)) {
               userAnswerGrid.querySelector(
-                `.grid-item${correctArray.indexOf(inputToInt) + 1}`,
+                `.grid-item${correctArray.indexOf(inputToInt) + 1}`
               ).style.animation = `wrong ${LOCK_SECONDS}s both`;
               setTimeout(() => {
                 userAnswerGrid.querySelector(
-                  `.grid-item${correctArray.indexOf(inputToInt) + 1}`,
-                ).style.animation = '';
+                  `.grid-item${correctArray.indexOf(inputToInt) + 1}`
+                ).style.animation = "";
               }, LOCK_SECONDS * 1000);
             }
             lockClassInfoAdd(); //관련 클래스 및 output 정보 추가
@@ -347,10 +341,10 @@ const appEvent = () => {
             //숫자 길이 제한과 0에 대한 처리
             if (i == 11) {
               if (userInput.length == 0 || Number(userInput) != 0)
-                userInput += '0';
-              else userInput += '';
+                userInput += "0";
+              else userInput += "";
             } else {
-              if (userInput == '0') userInput += '';
+              if (userInput == "0") userInput += "";
               else userInput += String(i);
             }
           }
@@ -359,23 +353,23 @@ const appEvent = () => {
         if (i == 1)
           calculatorGrid
             .querySelector(`.grid-item${i}`)
-            .classList.remove('clicked-one');
+            .classList.remove("clicked-one");
         if (i == 3)
           calculatorGrid
             .querySelector(`.grid-item${i}`)
-            .classList.remove('clicked-three');
+            .classList.remove("clicked-three");
         if (i == 10)
           calculatorGrid
             .querySelector(`.grid-item${i}`)
-            .classList.remove('clicked-erase');
+            .classList.remove("clicked-erase");
         if (i == 12)
           calculatorGrid
             .querySelector(`.grid-item${i}`)
-            .classList.remove('clicked-enter');
+            .classList.remove("clicked-enter");
         else
           calculatorGrid
             .querySelector(`.grid-item${i}`)
-            .classList.remove('clicked');
+            .classList.remove("clicked");
       });
   }
 };

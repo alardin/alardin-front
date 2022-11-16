@@ -1,6 +1,6 @@
 {
   "name": "alardinapp",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
@@ -9,7 +9,8 @@
     "test": "jest",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "lint:fix": "eslint --fix './src/**/*.{ts,tsx,js,jsx}'",
-    "storybook": "start-storybook"
+    "storybook": "start-storybook",
+    "postinstall": "patch-package"
   },
   "dependencies": {
     "@invertase/react-native-apple-authentication": "^2.2.2",
@@ -35,6 +36,7 @@
     "jetifier": "^2.0.0",
     "loadsh": "*",
     "metro-config": "^0.73.1",
+    "patch-package": "^6.5.0",
     "react": "18.0.0",
     "react-native": "^0.69.3",
     "react-native-admob-native-ads": "^0.6.0",

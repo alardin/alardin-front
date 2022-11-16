@@ -167,7 +167,7 @@ const MateNotifyItem = ({
           </Button>
         )}
         <DeleteButton
-          width={type === 'request' ? '75px' : '56px'}
+          width={type === 'request' ? '90px' : '56px'}
           height="s"
           options="destructive"
           center

@@ -44,8 +44,6 @@ const GameInfo = ({
     max_player,
   } = game;
 
-  console.log(id);
-
   return (
     <SafeAreaView>
       <Container>

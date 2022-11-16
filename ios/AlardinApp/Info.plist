@@ -259,6 +259,8 @@
 	<array>
 		<string>armv7</string>
 	</array>
+	<key>Localization native developement region</key>
+	<string>Korea</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

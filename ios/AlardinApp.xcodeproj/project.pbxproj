@@ -15,12 +15,12 @@
 		A8F9059A5602C66F603FD9C8 /* libPods-AlardinApp-AlardinAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 008B2D8EB883DEE65354C89D /* libPods-AlardinApp-AlardinAppTests.a */; };
 		DD473D5A28CF31A10097D1F9 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD473D5928CF31A10097D1F9 /* StoreKit.framework */; };
 		DD47CDFB2906813F009D18EF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DD47CDFA2906813F009D18EF /* GoogleService-Info.plist */; };
+		DDD30C1E29233A7800AF7EA7 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = DDD30C1C29233A7700AF7EA7 /* fonts */; };
+		DDD30C1F29233A7800AF7EA7 /* css in Resources */ = {isa = PBXBuildFile; fileRef = DDD30C1D29233A7800AF7EA7 /* css */; };
 		DDD3C64928FFFF6E00513D16 /* LaunchScreen.storyboard in Sources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		DDD3C64A2901379200513D16 /* Images.xcassets in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		DDD3C64E2901A30F00513D16 /* test_rooster.wav in Resources */ = {isa = PBXBuildFile; fileRef = DD473D6628D1AC460097D1F9 /* test_rooster.wav */; };
 		DDD3C64F2901A31C00513D16 /* twigitizer_game in Resources */ = {isa = PBXBuildFile; fileRef = DDD8648428F1E51A006D33A9 /* twigitizer_game */; };
-		DDD3C6502901A32300513D16 /* css in Resources */ = {isa = PBXBuildFile; fileRef = DDD8647E28F1E4F1006D33A9 /* css */; };
-		DDD3C6512901A32600513D16 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = DDD8647D28F1E4F1006D33A9 /* fonts */; };
 		DDD3C6622901A5AB00513D16 /* Pretendard-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C4BF20C8731F4485A44605FA /* Pretendard-Bold.ttf */; };
 		DDD3C6632901A5AB00513D16 /* Pretendard-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 71B930328924442C83649ADA /* Pretendard-Medium.ttf */; };
 		DDD3C6642901A5AB00513D16 /* Pretendard-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 575159D80CAE41A49F526199 /* Pretendard-Regular.ttf */; };
@@ -105,12 +105,12 @@
 		DDC9F50A289A3C1400CD8CCE /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = SimpleLineIcons.ttf; path = "../../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
 		DDC9F50B289A3C1400CD8CCE /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = MaterialCommunityIcons.ttf; path = "../../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
 		DDC9F50C289A3C1400CD8CCE /* EvilIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = EvilIcons.ttf; path = "../../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
+		DDD30C1C29233A7700AF7EA7 /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = fonts; path = "../../../../../alardin-game/lib/fonts"; sourceTree = "<group>"; };
+		DDD30C1D29233A7800AF7EA7 /* css */ = {isa = PBXFileReference; lastKnownFileType = folder; name = css; path = "../../../../../alardin-game/lib/css"; sourceTree = "<group>"; };
 		DDD8647128F0B55F006D33A9 /* Pretendard-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.ttf"; sourceTree = "<group>"; };
 		DDD8647228F0B560006D33A9 /* Pretendard-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-SemiBold.ttf"; sourceTree = "<group>"; };
 		DDD8647328F0B560006D33A9 /* Pretendard-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.ttf"; sourceTree = "<group>"; };
 		DDD8647428F0B560006D33A9 /* Pretendard-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Thin.ttf"; sourceTree = "<group>"; };
-		DDD8647D28F1E4F1006D33A9 /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fonts; sourceTree = "<group>"; };
-		DDD8647E28F1E4F1006D33A9 /* css */ = {isa = PBXFileReference; lastKnownFileType = folder; path = css; sourceTree = "<group>"; };
 		DDD8648228F1E501006D33A9 /* src */ = {isa = PBXFileReference; lastKnownFileType = folder; path = src; sourceTree = "<group>"; };
 		DDD8648428F1E51A006D33A9 /* twigitizer_game */ = {isa = PBXFileReference; lastKnownFileType = folder; path = twigitizer_game; sourceTree = "<group>"; };
 		E06328622ED44CD0C8D9201D /* Pods-AlardinApp-AlardinAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlardinApp-AlardinAppTests.release.xcconfig"; path = "Target Support Files/Pods-AlardinApp-AlardinAppTests/Pods-AlardinApp-AlardinAppTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -283,9 +283,9 @@
 		DDD8647C28F1E4E4006D33A9 /* lib */ = {
 			isa = PBXGroup;
 			children = (
+				DDD30C1D29233A7800AF7EA7 /* css */,
+				DDD30C1C29233A7700AF7EA7 /* fonts */,
 				DDD8648128F1E4F8006D33A9 /* images */,
-				DDD8647E28F1E4F1006D33A9 /* css */,
-				DDD8647D28F1E4F1006D33A9 /* fonts */,
 			);
 			path = lib;
 			sourceTree = "<group>";
@@ -432,12 +432,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DDD3C6512901A32600513D16 /* fonts in Resources */,
-				DDD3C6502901A32300513D16 /* css in Resources */,
 				DDD3C64E2901A30F00513D16 /* test_rooster.wav in Resources */,
+				DDD30C1E29233A7800AF7EA7 /* fonts in Resources */,
 				DDD3C6622901A5AB00513D16 /* Pretendard-Bold.ttf in Resources */,
 				DD47CDFB2906813F009D18EF /* GoogleService-Info.plist in Resources */,
 				DDD3C6632901A5AB00513D16 /* Pretendard-Medium.ttf in Resources */,
+				DDD30C1F29233A7800AF7EA7 /* css in Resources */,
 				DDD3C6642901A5AB00513D16 /* Pretendard-Regular.ttf in Resources */,
 				DDD3C6652901A5AB00513D16 /* Pretendard-SemiBold.ttf in Resources */,
 				DDD3C6662901A5AB00513D16 /* Pretendard-Thin.ttf in Resources */,
@@ -701,7 +701,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = AlardinApp/AlardinApp.entitlements;
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 13;
 				DEVELOPMENT_TEAM = K58SR8M7MB;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = AlardinApp/Info.plist;
@@ -710,7 +710,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.0.2;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -732,7 +732,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = AlardinApp/AlardinApp.entitlements;
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 13;
 				DEVELOPMENT_TEAM = K58SR8M7MB;
 				INFOPLIST_FILE = AlardinApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -740,7 +740,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.0.2;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -973,7 +973,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = AlardinApp/AlardinApp.entitlements;
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 13;
 				DEVELOPMENT_TEAM = K58SR8M7MB;
 				INFOPLIST_FILE = AlardinApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -981,7 +981,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.0.2;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",

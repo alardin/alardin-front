@@ -141,7 +141,7 @@ const StackNavigation = () => {
       <Stack.Screen
         name="AlarmAttend"
         component={TAttend}
-        options={({ navigation }) => ({
+        options={({ navigation, route }) => ({
           headerTitle: '',
           headerTitleAlign: 'center',
           headerStyle: { backgroundColor: '#F8F9FA' },
@@ -151,27 +151,31 @@ const StackNavigation = () => {
               <BackIcon width={28} height={28} />
             </TouchableOpacity>
           ),
-          headerRight: () => (
-            <Box row>
-              <TouchableOpacity onPress={() => sharingAlarm()}>
-                <ShareIcon
-                  width={28}
-                  height={28}
-                  fill={theme.color.gray_900}
-                  style={{ marginHorizontal: 8 }}
-                />
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => shareOnKakao('alarm', me.nickname)}>
-                <ChatIcon
-                  width={28}
-                  height={28}
-                  fill={theme.color.gray_900}
-                  style={{ marginHorizontal: 8 }}
-                />
-              </TouchableOpacity>
-            </Box>
-          ),
+          headerRight: () => {
+            const { Members } = route.params;
+            const isUserAccess = Members.find(member => member.id === me.id);
+            return isUserAccess ? (
+              <Box row>
+                <TouchableOpacity onPress={() => sharingAlarm()}>
+                  <ShareIcon
+                    width={28}
+                    height={28}
+                    fill={theme.color.gray_900}
+                    style={{ marginHorizontal: 8 }}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => shareOnKakao('alarm', me.nickname)}>
+                  <ChatIcon
+                    width={28}
+                    height={28}
+                    fill={theme.color.gray_900}
+                    style={{ marginHorizontal: 8 }}
+                  />
+                </TouchableOpacity>
+              </Box>
+            ) : null;
+          },
         })}
       />
       <Stack.Screen

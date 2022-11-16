@@ -1,11 +1,13 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { StackScreenProps } from '@react-navigation/stack';
 import React, { useState } from 'react';
 import {
   Alert,
   NativeSyntheticEvent,
+  SafeAreaView,
   TextInputChangeEventData,
 } from 'react-native';
-// import { launchImageLibrary } from 'react-native-image-picker';
+import { launchImageLibrary } from 'react-native-image-picker';
 import styled from 'styled-components/native';
 import { RootStackParamList } from '../../../navigation/stack/StackNavigation';
 import theme from '../../../theme/theme';
@@ -21,12 +23,18 @@ type ProfileInputData = {
   nickname: string;
   email: string;
   thumbnail_image_url: string;
+  profile_image_url: string;
+  imageName: string;
 };
 
 type ProfileRetouchScreen = StackScreenProps<
   RootStackParamList,
   'ProfileRetouch'
 >;
+
+const CustomSafeBox = styled.SafeAreaView`
+  flex: 1;
+`;
 
 const CustomContainer = styled(Container)`
   flex: 1;
@@ -47,7 +55,6 @@ const Middle = styled(Box)`
 const Bottom = styled(Box)`
   flex: 1;
   justify-content: flex-end;
-  padding-bottom: 8px;
 `;
 
 const CustomBox = styled(Box)`
@@ -70,8 +77,13 @@ const ErrorText = styled(Text)`
 // `;
 
 const NoticeText = styled(Text)`
+  width: 80%;
   text-align: center;
   padding-top: 8px;
+`;
+
+const ImageButton = styled(Button)`
+  margin-top: 20px;
 `;
 
 const ProfileRetouch = ({ navigation, route }: ProfileRetouchScreen) => {
@@ -90,7 +102,9 @@ const ProfileRetouch = ({ navigation, route }: ProfileRetouchScreen) => {
   const [retouchItems, setRetouchItems] = useState<ProfileInputData>({
     nickname,
     email,
+    profile_image_url: profile_image_url,
     thumbnail_image_url: profile_image_url,
+    imageName: '',
   });
 
   const handleNameChange = (
@@ -128,34 +142,46 @@ const ProfileRetouch = ({ navigation, route }: ProfileRetouchScreen) => {
   //     setRetouchItems(prevState => ({ ...prevState, email: value }));
   //   };
 
-  //   const uploadProfileImage = async (imgName: string) => {
-  //     let formData = new FormData();
+  const uploadProfileImage = async () => {
+    let formData = new FormData();
 
-  //     formData.append('image', {
-  //       uri: retouchItems.thumbnail_image_url,
-  //       type: 'multipart/form-data',
-  //       name: imgName,
-  //     });
+    formData.append('profile_image', {
+      uri: retouchItems.thumbnail_image_url,
+      type: 'image',
+      name: retouchItems.imageName,
+    });
 
-  //     alardinApi
-  //       .post('/', formData, {
-  //         headers: { 'content-type': 'multipart/form-data' },
-  //       })
-  //       .then(res => console.log(res));
-  //   };
+    alardinApi
+      .post('/users/profile-image', formData, {
+        headers: { 'content-type': 'multipart/form-data' },
+      })
+      .then(res => console.log(res))
+      .catch(e => console.log(e));
+  };
 
-  // const launchPhotoLibrary = async () => {
-  //   const result = await launchImageLibrary({
-  //     maxHeight: 100,
-  //     maxWidth: 100,
-  //     mediaType: 'photo',
-  //   });
-  //   console.log(result);
-  // };
+  const launchPhotoLibrary = async () => {
+    try {
+      const result: any = await launchImageLibrary({
+        mediaType: 'photo',
+        maxWidth: 200,
+        maxHeight: 200,
+        quality: 0.8,
+      });
+      console.log(result);
+      setRetouchItems({
+        ...retouchItems,
+        profile_image_url: result.assets[0].uri,
+        thumbnail_image_url: result.assets[0].uri,
+        imageName: result.assets[0].fileName,
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   const requestEdit = async () => {
     if (retouchItems.thumbnail_image_url !== thumbnail_image_url) {
-      // 설정된 이미지 경로랑 현재 프로필 사진이 다를 경우 사용자는 프로필 이미지를 변경!
+      await uploadProfileImage();
     }
 
     try {
@@ -177,41 +203,41 @@ const ProfileRetouch = ({ navigation, route }: ProfileRetouchScreen) => {
   };
 
   return (
-    <CustomContainer>
-      <Top>
-        <ProfileIcon size={100} uri={thumbnail_image_url} />
-        {/* <ImageButton
-          width="100px"
-          height="s"
-          options="destructive"
-          center
-          disabled
-          onPress={launchPhotoLibrary}>
-          사진 변경
-        </ImageButton> */}
-        <NoticeText size="xs" colorName={theme.color.gray_600}>
-          ※ 프로필 수정했어도, 바로 반영이 안될 수 있습니다. 그럴때는 앱의
-          백그라운드를 종료 후 다시 실행해보시면 됩니다.
-        </NoticeText>
-      </Top>
-      <Middle>
-        <CustomBox>
-          <Title>이름(닉네임)</Title>
-          <InputText
-            width="100%"
-            height="52px"
-            value={retouchItems.nickname}
-            placeholder="2 ~ 8글자까지 가능 (※ 띄어쓰기 포함)"
-            onChange={handleNameChange}
-            error={isError.nickname}
-          />
-          {isError.nickname && (
-            <ErrorText size="s" colorName={theme.color.function_error}>
-              {errorComment}
-            </ErrorText>
-          )}
-        </CustomBox>
-        {/* <CustomBox>
+    <CustomSafeBox>
+      <CustomContainer>
+        <Top>
+          <ProfileIcon size={100} uri={retouchItems.thumbnail_image_url} />
+          <ImageButton
+            width="100px"
+            height="s"
+            options="destructive"
+            center
+            onPress={launchPhotoLibrary}>
+            사진 변경
+          </ImageButton>
+          <NoticeText size="xs" colorName={theme.color.gray_600}>
+            ※ 프로필 수정했어도, 바로 반영이 안될 수 있습니다. 그럴때는 앱의
+            백그라운드를 종료 후 다시 실행해보시면 됩니다.
+          </NoticeText>
+        </Top>
+        <Middle>
+          <CustomBox>
+            <Title>이름(닉네임)</Title>
+            <InputText
+              width="100%"
+              height="52px"
+              value={retouchItems.nickname}
+              placeholder="2 ~ 8글자까지 가능 (※ 띄어쓰기 포함)"
+              onChange={handleNameChange}
+              error={isError.nickname}
+            />
+            {isError.nickname && (
+              <ErrorText size="s" colorName={theme.color.function_error}>
+                {errorComment}
+              </ErrorText>
+            )}
+          </CustomBox>
+          {/* <CustomBox>
           <Title>이메일</Title>
           <InputText
             width="100%"
@@ -227,18 +253,19 @@ const ProfileRetouch = ({ navigation, route }: ProfileRetouchScreen) => {
             </ErrorText>
           )}
         </CustomBox> */}
-      </Middle>
-      <Bottom>
-        <Button
-          width="100%"
-          height="xl"
-          options="primary"
-          center
-          onPress={requestEdit}>
-          수정하기
-        </Button>
-      </Bottom>
-    </CustomContainer>
+        </Middle>
+        <Bottom>
+          <Button
+            width="100%"
+            height="xl"
+            options="primary"
+            center
+            onPress={requestEdit}>
+            수정하기
+          </Button>
+        </Bottom>
+      </CustomContainer>
+    </CustomSafeBox>
   );
 };
 

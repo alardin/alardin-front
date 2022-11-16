@@ -11,7 +11,7 @@ import { toastEnable } from '../utils/Toast';
 import EncryptedStorage from 'react-native-encrypted-storage';
 
 const useInterceptor = () => {
-  const [userToken, setUserToken] = useRecoilState(token);
+  const [, setUserToken] = useRecoilState(token);
 
   const requestInterceptor = alardinApi.interceptors.request.use(
     async config => {
