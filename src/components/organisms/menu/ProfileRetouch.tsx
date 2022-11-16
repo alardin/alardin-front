@@ -23,6 +23,8 @@ type ProfileInputData = {
   nickname: string;
   email: string;
   thumbnail_image_url: string;
+  profile_image_url: string;
+  imageName: string;
 };
 
 type ProfileRetouchScreen = StackScreenProps<
@@ -100,7 +102,9 @@ const ProfileRetouch = ({ navigation, route }: ProfileRetouchScreen) => {
   const [retouchItems, setRetouchItems] = useState<ProfileInputData>({
     nickname,
     email,
+    profile_image_url: profile_image_url,
     thumbnail_image_url: profile_image_url,
+    imageName: '',
   });
 
   const handleNameChange = (
@@ -138,34 +142,46 @@ const ProfileRetouch = ({ navigation, route }: ProfileRetouchScreen) => {
   //     setRetouchItems(prevState => ({ ...prevState, email: value }));
   //   };
 
-  const uploadProfileImage = async (imgName: string) => {
+  const uploadProfileImage = async () => {
     let formData = new FormData();
 
-    formData.append('file', {
+    formData.append('profile_image', {
       uri: retouchItems.thumbnail_image_url,
       type: 'image',
-      name: imgName,
+      name: retouchItems.imageName,
     });
 
     alardinApi
-      .post('/', formData, {
+      .post('/users/profile-image', formData, {
         headers: { 'content-type': 'multipart/form-data' },
       })
-      .then(res => console.log(res));
+      .then(res => console.log(res))
+      .catch(e => console.log(e));
   };
 
   const launchPhotoLibrary = async () => {
-    const result = await launchImageLibrary({
-      maxHeight: 100,
-      maxWidth: 100,
-      mediaType: 'photo',
-    });
-    console.log(result);
+    try {
+      const result: any = await launchImageLibrary({
+        mediaType: 'photo',
+        maxWidth: 200,
+        maxHeight: 200,
+        quality: 0.8,
+      });
+      console.log(result);
+      setRetouchItems({
+        ...retouchItems,
+        profile_image_url: result.assets[0].uri,
+        thumbnail_image_url: result.assets[0].uri,
+        imageName: result.assets[0].fileName,
+      });
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const requestEdit = async () => {
     if (retouchItems.thumbnail_image_url !== thumbnail_image_url) {
-      // 설정된 이미지 경로랑 현재 프로필 사진이 다를 경우 사용자는 프로필 이미지를 변경!
+      await uploadProfileImage();
     }
 
     try {
@@ -190,7 +206,7 @@ const ProfileRetouch = ({ navigation, route }: ProfileRetouchScreen) => {
     <CustomSafeBox>
       <CustomContainer>
         <Top>
-          <ProfileIcon size={100} uri={thumbnail_image_url} />
+          <ProfileIcon size={100} uri={retouchItems.thumbnail_image_url} />
           <ImageButton
             width="100px"
             height="s"

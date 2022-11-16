@@ -218,7 +218,7 @@ const GameStart = ({ route, navigation }: GameStartProps) => {
   const switchMicrophone = () => {
     console.log('check mic');
     console.log(agora.openMicrophone);
-    engine?.adjustRecordingSignalVolume(200);
+    engine?.adjustRecordingSignalVolume(400);
     if (agora.openMicrophone === false) {
       engine
         ?.enableLocalAudio(!agora.openMicrophone)

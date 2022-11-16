@@ -61,14 +61,14 @@ const SingleGameStart = ({ route, navigation }: GameStartProps) => {
         );
         navigation.reset({
           index: 0,
-          routes: [{ name: 'SingleGameEnd', params: { gameId: 2 } }],
+          routes: [{ name: 'SingleGameEnd', params: { gameId: 4 } }],
         });
         return;
       case 'TIME_OUT':
         console.log('time out!!');
         navigation.reset({
           index: 0,
-          routes: [{ name: 'SingleGameEnd', params: { gameId: 2 } }],
+          routes: [{ name: 'SingleGameEnd', params: { gameId: 4 } }],
         });
         return;
       default:
