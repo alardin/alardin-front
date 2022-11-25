@@ -58,6 +58,9 @@ const ItemPicker = ({
           setSelectedValue((prevState: any) => ({
             ...prevState,
             [recoilResult.type]: value,
+            ...(recoilResult.type === 'Game_id' && {
+              max_member: recoilResult.data[index].max_player,
+            }),
           }));
         }
         if (typeof selectedValue === 'string') {

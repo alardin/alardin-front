@@ -48,10 +48,6 @@ const BuyConfirm = ({ id, name, price, setVisible }: IBuyConfirmProps) => {
     setVisible(false);
   };
   const handleConfirm = async () => {
-    if (id === 3) {
-      Alert.alert('미지원 게임', '해당 게임을 구매하실 수 없습니다.');
-      return;
-    }
     try {
       await alardinApi.post(`/game/${id}`);
       Alert.alert('게임 구매', '게임 구매 완료');
