@@ -10,7 +10,6 @@ import { useRecoilState } from 'recoil';
 import styled from 'styled-components/native';
 import Box from '../../components/atoms/box/Box';
 import Container from '../../components/atoms/container/Container';
-import Text from '../../components/atoms/text/Text';
 import { RootStackParamList } from '../../navigation/stack/StackNavigation';
 import { rtcEngine, rtcState } from '../../recoil/gameState';
 import theme from '../../theme/theme';
@@ -36,6 +35,7 @@ interface IGameTokenData {
   gameId: number;
   gameData: [{ [key: string]: any }];
   channelName: string;
+  members: number;
 }
 
 const CustomContianer = styled(Container)`
@@ -59,27 +59,44 @@ const GameStart = ({ route, navigation }: GameStartProps) => {
   const [gameDataState, setGameDataState] = useState<IGameTokenData>();
   const [allAttend, setAllAttend] = useState<boolean>(false);
   const [steadyMe, setSteadyMe] = useState<boolean | null>(null);
-  const [steadyOther, setSteadyOther] = useState<boolean | null>(null);
+  const [steadyOther, setSteadyOther] = useState<boolean[]>([]);
 
   const [engine, setEngine] = useRecoilState(rtcEngine);
   const [agora, setAgora] = useRecoilState(rtcState);
   // const [gamePlayState, setGamePlayState] = useRecoilState(gameState);
 
-  const [checkSucess, setCheckSuccess] = useState<boolean>(false);
+  const [, setCheckSuccess] = useState<boolean>(false);
 
   console.log(engine);
-
-  let limitUntilStart: any;
   let webViewRef = useRef<WebView>();
 
   const handleSetRef = (_ref: any) => {
     webViewRef.current = _ref;
   };
 
-  const initialRtmAgoraEngine = async () => {
+  const myUserType = useRef(userType);
+  const _setUserType = (data: number) => {
+    myUserType.current = data;
+    setUserType(data);
+  };
+
+  const mySteadyOther = useRef(steadyOther);
+  const _setSteadyOther = (data: boolean[]) => {
+    mySteadyOther.current = data;
+    setSteadyOther(data);
+  };
+
+  // const countSteadyOtherNum = () => {
+  //   return steadyOther;
+  // };
+
+  const initialRtmAgoraEngine = async (members: number) => {
     await client
       .createInstance(Config.AGORA_APP_ID)
       .catch(err => console.log(`create instance error: ${err}`));
+
+    // const alarmResponse = await alardinApi.get(`/alarm/${alarmId}`);
+    // const { Members } = alarmResponse.data;
 
     console.log('create instance');
     console.log(client);
@@ -87,11 +104,14 @@ const GameStart = ({ route, navigation }: GameStartProps) => {
     client?.addListener('ChannelMemberJoined', evt => {
       const { channelId } = evt;
       console.log('someone has joined!');
-      client.getMembers(channelId).then(members => {
-        setUserType(members.length - 1);
-        if (members.length === 2) {
-          // total_members로 변경 필요
-          //
+      client.getMembers(channelId).then(mem => {
+        if (myUserType.current === 0) {
+          _setUserType(mem.length - 1);
+        }
+        console.log('members length');
+        // console.log(Members.length);
+        console.log(mem.length);
+        if (mem.length === members) {
           client
             ?.sendMessage(channelId, { text: 'ALL_ATTEND' }, {})
             .then(() => setAllAttend(true));
@@ -106,12 +126,13 @@ const GameStart = ({ route, navigation }: GameStartProps) => {
     client?.addListener('ChannelMessageReceived', message => {
       if (message.text === 'SUCCESS') {
         console.log('상대방이 성공함');
-        setSteadyOther(true);
+        _setSteadyOther([...mySteadyOther.current, true]);
         return;
       }
       if (message.text === 'FAIL') {
         console.log('상대방이 실패함');
-        setSteadyOther(false);
+        _setSteadyOther([...mySteadyOther.current, false]);
+        // setSteadyOther(false);
         return;
       }
 
@@ -155,20 +176,24 @@ const GameStart = ({ route, navigation }: GameStartProps) => {
       userType,
     );
     console.log('user cehcking');
-    console.log(convertData);
-    webViewRef.current?.postMessage(
-      JSON.stringify({
-        type: 'GAME_START',
-        message: convertData ? { ...convertData[userType] } : {}, // Picoke 게임일 경우
-      }),
-    );
+    console.log(userType);
+    console.log(convertData && convertData[userType]);
+    if (convertData) {
+      console.log('load');
+      webViewRef.current?.postMessage(
+        JSON.stringify({
+          type: 'GAME_START',
+          message: convertData[userType],
+        }),
+      );
+    }
   };
 
   const requestStartData = async () => {
     const res = await alardinApi.post(`/game/start?alarmId=${alarmId}`);
     console.log(`alarm id`);
     console.log(JSON.stringify(res.data.data));
-    const { rtmToken, rtcToken, channelName, gameData, Game_id } =
+    const { rtmToken, rtcToken, channelName, gameData, Game_id, members } =
       res.data.data;
     setGameDataState({
       rtmToken,
@@ -177,6 +202,7 @@ const GameStart = ({ route, navigation }: GameStartProps) => {
       uid: String(id),
       gameData,
       channelName,
+      members,
     });
     setAgora(prevState => ({ ...prevState, channelName }));
     console.log(`state: ${channelName}`);
@@ -186,10 +212,11 @@ const GameStart = ({ route, navigation }: GameStartProps) => {
       uid: String(id),
       channelName,
       gameId: Game_id,
+      members,
     };
   };
 
-  const leaveChannel = async (gameNum: number) => {
+  const leaveChannel = async (gameNum: number, type: 'single' | 'multi') => {
     engine
       ?.leaveChannel()
       .catch(err => console.log(`error from engine leavechannel: ${err}`));
@@ -208,15 +235,18 @@ const GameStart = ({ route, navigation }: GameStartProps) => {
       playEffect: false,
       peerIds: [],
     });
-    navigation.reset({
-      index: 0,
-      routes: [{ name: 'GameEnd', params: { gameId: gameNum } }],
-    });
+    if (type === 'multi') {
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'GameEnd', params: { gameId } }],
+      });
+    }
   };
 
   const switchMicrophone = () => {
     console.log('check mic');
     console.log(agora.openMicrophone);
+    engine?.adjustRecordingSignalVolume(400);
     if (agora.openMicrophone === false) {
       engine
         ?.enableLocalAudio(!agora.openMicrophone)
@@ -271,24 +301,25 @@ const GameStart = ({ route, navigation }: GameStartProps) => {
         console.log(`game id`);
         console.log({
           ...message,
-          Game_id: gameDataState?.gameId,
+          Game_id: gameId,
           is_cleared: true,
           Alarm_id: alarmId,
         });
 
         await alardinApi.post('/game/save', {
           ...message,
-          Game_id: gameDataState?.gameId,
+          Game_id: gameId,
           is_cleared: true,
           Alarm_id: alarmId,
         });
-        await leaveChannel(message.Game_id);
+        await leaveChannel(gameId, 'multi');
         return;
       case 'TIME_OUT':
         console.log('time out!!');
+        await leaveChannel(gameId, 'multi');
         navigation.reset({
           index: 0,
-          routes: [{ name: 'GameEnd', params: { gameId: message.Game_id } }],
+          routes: [{ name: 'GameEnd', params: { gameId } }],
         });
         return;
       default:
@@ -298,7 +329,9 @@ const GameStart = ({ route, navigation }: GameStartProps) => {
   };
 
   const joinChannel = async () => {
-    const { rtcToken, rtmToken, uid, channelName } = await requestStartData();
+    const { rtcToken, rtmToken, uid, channelName, members } =
+      await requestStartData();
+    await initialRtmAgoraEngine(members);
 
     console.log('uid');
     console.log(uid);
@@ -321,23 +354,21 @@ const GameStart = ({ route, navigation }: GameStartProps) => {
 
   useEffect(() => {
     systemSetting.setVolume(0.5, { showUI: true });
-    if (!timer) {
-      limitUntilStart = setTimeout(() => setTimer(true), 1000 * 60);
-    } else {
+    if (timer) {
       toastEnable({
         text: '사용자가 접속하지 않아 싱글 플레이 모드로 전환합니다',
         duration: 'LONG',
       });
-      navigation.reset({
-        index: 0,
-        routes: [{ name: 'SingleGameStart', params: { gameId: 2 } }],
-      });
+      leaveChannel(0, 'single').then(() =>
+        navigation.reset({
+          index: 0,
+          routes: [{ name: 'SingleGameStart', params: { gameId: 2 } }],
+        }),
+      );
     }
-    return () => clearTimeout(limitUntilStart);
   }, [timer]);
 
   useEffect(() => {
-    initialRtmAgoraEngine();
     const unsubscribeAppState = AppState.addEventListener(
       'change',
       nextAppState => {
@@ -380,16 +411,25 @@ const GameStart = ({ route, navigation }: GameStartProps) => {
   useEffect(() => {
     if (allAttend) {
       console.log(`attend: true!!!!`);
-      clearTimeout(limitUntilStart);
       sendNeedGameStart();
     }
+    const limitUntilStart = setTimeout(
+      () => !allAttend && setTimer(true),
+      1000 * 61,
+    );
+    return () => clearTimeout(limitUntilStart);
   }, [allAttend]);
 
   useEffect(() => {
     console.log('누군가 정답을 제출 or 초기화 렌더링');
-    if (steadyMe !== null && steadyOther !== null) {
+    console.log(steadyOther.length);
+    if (
+      gameDataState &&
+      steadyMe !== null &&
+      steadyOther.length === gameDataState.members - 1
+    ) {
       console.log('둘 다 정답은 제출했음');
-      if (steadyMe === true && steadyOther === true) {
+      if (steadyMe === true && !steadyOther.includes(false)) {
         console.log('둘 다 성공!!');
         webViewRef.current?.postMessage(
           JSON.stringify({
@@ -406,16 +446,15 @@ const GameStart = ({ route, navigation }: GameStartProps) => {
           }),
         );
         setSteadyMe(null);
-        setSteadyOther(null);
+        _setSteadyOther([]);
       }
     }
   }, [steadyOther, steadyMe]);
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{ paddingTop: 28 }}>
       <CustomContianer options="zero">
         <WebBox width="100%" height="100%">
-          {checkSucess && <Text>Success! Wait for other player!</Text>}
           <WebView
             originWhitelist={['*']}
             ref={handleSetRef}

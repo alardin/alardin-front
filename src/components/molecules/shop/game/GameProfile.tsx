@@ -6,6 +6,7 @@ import ProfileIcon from '../../../atoms/profile/ProfileIcon';
 import Text from '../../../atoms/text/Text';
 
 interface IGameProfileProps {
+  id: number;
   name: string;
   thumbnail_url: string;
   isPaid: boolean;
@@ -36,6 +37,7 @@ const ConfirmButton = styled(Button)`
 `;
 
 const GameProfile = ({
+  id,
   name,
   thumbnail_url,
   price,
@@ -46,6 +48,7 @@ const GameProfile = ({
     setVisible(true);
   };
 
+  const checkOffineGame = id === 4 ? true : false;
   const priceText = isPaid ? '구매 완료' : price === 0 ? '무료' : `${price} G`;
   return (
     <CustomBox row>
@@ -59,9 +62,9 @@ const GameProfile = ({
           height="s"
           options="primary"
           center
-          disabled={isPaid}
+          disabled={checkOffineGame ? true : isPaid}
           onPress={handlePress}>
-          {priceText}
+          {checkOffineGame ? '보유' : priceText}
         </ConfirmButton>
       </TextBox>
     </CustomBox>

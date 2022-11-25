@@ -1,3 +1,10 @@
+const makeUserSet = (totalUser: number) => {
+  const setUser = Array.from({ length: totalUser }).map((_, idx) =>
+    String.fromCharCode(64 + (idx + 1)),
+  );
+  return setUser;
+};
+
 const sendGameData = (
   type: number | undefined,
   originalData: [{ [key: string]: any }] | undefined,
@@ -27,8 +34,6 @@ const sendGameData = (
         },
       ];
     case 2:
-      return;
-    case 3:
       return [
         {
           currentUser: 'A',
@@ -36,9 +41,22 @@ const sendGameData = (
         },
         {
           currentUser: 'B',
-          images: originalData[originalData.length - 1].images,
+          images: originalData[0].images,
         },
       ];
+    case 3:
+      return;
+    case 5:
+      const totalUser = originalData[0].totalUsers;
+      const randomSet = makeUserSet(totalUser);
+      return originalData.map((data, idx) => ({
+        images: data.images,
+        currentUser: String.fromCharCode(64 + (idx + 1)),
+        outputUser: randomSet,
+        totalUser: data.totalUsers,
+      }));
+    case 6:
+      return;
     default:
       return;
   }

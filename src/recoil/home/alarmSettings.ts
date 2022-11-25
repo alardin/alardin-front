@@ -27,7 +27,7 @@ export const pickerMetaData = [
   },
   {
     type: 'Game_id',
-    data: [{ label: '선택하세요', value: 'default' }],
+    data: [{ label: '선택하세요', value: 'default', max_player: 2 }],
   },
   {
     type: 'is_repeated',
@@ -75,24 +75,28 @@ export const apiGameMetaData = selector({
     //   params: { skip: 0, take: 100 },
     // });
     try {
+      console.log('run state');
       const response = await alardinApi.get('/assets/games');
       const gameDataList: IGameMetaType[] = response.data.data;
       console.log(response.data.data);
-      const gameData = gameDataList.map(({ name, id }: IGameMetaType) => ({
-        label: name,
-        value: String(id),
-      }));
+      const gameData = gameDataList.map(
+        ({ name, id, max_player }: IGameMetaType) => ({
+          label: name,
+          value: String(id),
+          max_player,
+        }),
+      );
       return gameData;
     } catch (err) {
-      return [{ label: '자동(오프라인 모드)', value: '0' }];
+      return [{ label: '자동(오프라인 모드)', value: '0', max_player: 1 }];
     }
   },
 });
 
-export const gameMetaData = atom({
-  key: 'gameMetaData',
-  default: apiGameMetaData,
-});
+// export const gameMetaData = atom({
+//   key: 'gameMetaData',
+//   default: apiGameMetaData,
+// });
 
 export const settingData = atom<ISettingData>({
   key: 'settingData',
@@ -104,7 +108,7 @@ export const settingData = atom<ISettingData>({
     Game_id: pickerMetaData[1].data[0].value,
     music_name: pickerMetaData[0].data[0].value,
     music_volume: 90,
-    max_member: 2,
+    max_member: pickerMetaData[1].data[0].max_player,
     expired_at: '',
   },
 });

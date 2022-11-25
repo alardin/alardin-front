@@ -5,8 +5,8 @@ import { StackScreenProps } from '@react-navigation/stack';
 import React, { useEffect, useState } from 'react';
 import { Alert, Platform, SafeAreaView, ScrollView } from 'react-native';
 import {
+  useRecoilRefresher_UNSTABLE,
   useRecoilState,
-  useRecoilStateLoadable,
   useRecoilValueLoadable,
   useSetRecoilState,
 } from 'recoil';
@@ -15,7 +15,6 @@ import { RootStackParamList } from '../../../navigation/stack/StackNavigation';
 import { alarmListRefresh } from '../../../recoil/home/alarmList';
 import {
   apiGameMetaData,
-  gameMetaData,
   initialRecoilSetting,
   pickerMetaData,
   settingData,
@@ -40,9 +39,10 @@ const TCreate = ({ navigation }: IAlarmCreateScreen) => {
   const [visible, setVisible] = useState<boolean>(false);
   const [setting, setSetting] = useRecoilState(settingData);
   const [inputLabel, setInputLabel] = useRecoilState(settingLabel);
-  const [gameList, setGameList] = useRecoilStateLoadable(gameMetaData);
+  const gameList = useRecoilValueLoadable(apiGameMetaData);
 
   const refreshData = useSetRecoilState(alarmListRefresh);
+  const refreshGameList = useRecoilRefresher_UNSTABLE(apiGameMetaData);
 
   const requestData = async () => {
     if (setting.name === '') {
@@ -73,6 +73,8 @@ const TCreate = ({ navigation }: IAlarmCreateScreen) => {
         music_name: pickerMetaData[0].data[0].value,
         Game_id:
           gameList.contents.length === 0 ? 0 : gameList.contents[0].value,
+        max_member:
+          gameList.contents.length === 0 ? 0 : gameList.contents[0].max_player,
       });
       setInputLabel({
         ...initialRecoilSetting,
@@ -87,6 +89,10 @@ const TCreate = ({ navigation }: IAlarmCreateScreen) => {
       });
     }
   }, [gameList]);
+
+  useEffect(() => {
+    refreshGameList();
+  }, []);
 
   return (
     <SafeAreaView>

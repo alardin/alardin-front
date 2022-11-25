@@ -162,8 +162,8 @@ android {
         applicationId "com.alardinapp"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1007010
-        versionName "0.1.5"
+        versionCode 15
+        versionName "1.0.6"
         buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString()
         missingDimensionStrategy 'store', 'play'
 

@@ -17,7 +17,7 @@ const CustomBox = styled(Box)`
   height: 60px;
   padding: 0 18px;
   margin-top: 8px;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 `;
 
 const IconText = styled(Text)`

@@ -1,11 +1,14 @@
+/* eslint-disable react/jsx-filename-extension */
+
 import { AppRegistry } from 'react-native';
 import { name as appName } from './app.json';
 import messaging from '@react-native-firebase/messaging';
+import React from 'react';
 import Root from './src/Root';
 import StoreNotification from './src/recoil/notify/storageNotify';
 
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
-import PushNotification, { Importance } from 'react-native-push-notification';
+import PushNotification from 'react-native-push-notification';
 import notificationHandle from './src/utils/notification/notificationHandle';
 
 PushNotification.configure({
@@ -34,4 +37,12 @@ messaging().setBackgroundMessageHandler(async remoteMessage => {
   );
 });
 
-AppRegistry.registerComponent(appName, () => Root);
+function HeadlessCheck({ isHeadless }) {
+  if (isHeadless) {
+    return null;
+  }
+
+  return <Root />;
+}
+
+AppRegistry.registerComponent(appName, () => HeadlessCheck);

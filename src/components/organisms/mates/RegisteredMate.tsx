@@ -1,12 +1,9 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import styled from 'styled-components/native';
 import { IMembersDataType } from '../../../recoil/home/members';
-import Box from '../../atoms/box/Box';
-import Container from '../../atoms/container/Container';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import RegisterUser from '../../molecules/mates/RegisterUser';
-import InviteFriends from '../../molecules/mates/InviteFriends';
 import NoItem from '../../molecules/other/NoItem';
+import { ScrollView } from 'react-native';
 
 interface IRegisteredMateProps {
   matesList: IMembersDataType[];
@@ -27,7 +24,7 @@ const RegisteredMate = ({ matesList }: IRegisteredMateProps) => {
   }, []);
 
   return (
-    <Box>
+    <ScrollView>
       {matesList.length === 0 ? (
         <NoItem title="등록된 메이트" />
       ) : (
@@ -35,7 +32,7 @@ const RegisteredMate = ({ matesList }: IRegisteredMateProps) => {
           <RegisterUser mate={mate} myId={myId} key={`friend_${index}`} />
         ))
       )}
-    </Box>
+    </ScrollView>
   );
 };
 

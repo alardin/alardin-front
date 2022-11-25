@@ -25,7 +25,21 @@ import EncryptedStorage from 'react-native-encrypted-storage';
 
 type IAlarmAttendScreen = StackScreenProps<RootStackParamList, 'AlarmAttend'>;
 
+const CustomContainer = styled(Container)`
+  width: 100%;
+  height: 100%;
+`;
+
+const TopBox = styled(Box)`
+  flex: 1;
+`;
+
+const MiddleBox = styled(Box)`
+  flex: 1;
+`;
+
 const BottomBox = styled(Box)`
+  flex: 0.5;
   justify-content: flex-end;
 `;
 
@@ -52,7 +66,7 @@ const TAttend = ({ route, navigation }: IAlarmAttendScreen) => {
   const [isHost, setIsHost] = useState<boolean>(false);
   const [profileData, setProfileData] = useState<any>({} as IMyProfile);
   const [checkMeAttend, setCheckMeAttend] = useState<number>(0);
-  const isFull = Members.length === max_member;
+  const isFull = Members.length >= max_member;
 
   console.log(Host);
   console.log(time);
@@ -84,12 +98,14 @@ const TAttend = ({ route, navigation }: IAlarmAttendScreen) => {
   };
 
   const requestDelete = () => {
-    console.log('alarmId');
-    console.log(id);
     alardinApi
       .delete(`/alarm/${id}`)
       .then(async () => {
         refreshData(v => v + 1);
+        toastEnable({
+          text: '해당 알람방이 삭제가 되었습니다.',
+          duration: 'SHORT',
+        });
         navigation.reset({
           index: 0,
           routes: [{ name: 'BottomNavigation' }],
@@ -99,6 +115,11 @@ const TAttend = ({ route, navigation }: IAlarmAttendScreen) => {
         if (err.response.status === 403) {
           toastEnable({
             text: '해당 기능을 사용할 수 있는 권한이 없습니다',
+            duration: 'LONG',
+          });
+        } else {
+          toastEnable({
+            text: '원인을 알 수 없는 오류가 발생했습니다.',
             duration: 'LONG',
           });
         }
@@ -111,6 +132,10 @@ const TAttend = ({ route, navigation }: IAlarmAttendScreen) => {
       .post('/alarm/quit', { alarmId: id })
       .then(async () => {
         refreshData(v => v + 1);
+        toastEnable({
+          text: '해당 알람방에 나가셨습니다.',
+          duration: 'SHORT',
+        });
         navigation.reset({
           index: 0,
           routes: [{ name: 'BottomNavigation' }],
@@ -154,62 +179,64 @@ const TAttend = ({ route, navigation }: IAlarmAttendScreen) => {
 
   return (
     <SafeAreaView>
-      <Container>
-        <ScrollView>
+      <CustomContainer>
+        <TopBox>
           <Summary type="attend" />
-          <BottomBox>
-            {Object.keys(profileData).length !== 0 && (
-              <MateInfo members={Members} />
-            )}
-            <Box>
-              <Button
+        </TopBox>
+        <MiddleBox>
+          {Object.keys(profileData).length !== 0 && (
+            <MateInfo members={Members} />
+          )}
+        </MiddleBox>
+        <BottomBox>
+          <Box>
+            <Button
+              width="100%"
+              height="xl"
+              options={
+                !isHost && checkMeAttend === 1 ? 'destructive' : 'primary'
+              }
+              center
+              onPress={() =>
+                isHost && checkMeAttend === 1
+                  ? navigateRetouch()
+                  : !isHost && checkMeAttend === 1
+                  ? requestQuit()
+                  : isFull
+                  ? Alert.alert(
+                      `최대 참가할 수 있는 인원이 ${max_member}명입니다`,
+                    )
+                  : setVisible(true)
+              }>
+              {isHost && checkMeAttend === 1
+                ? `알람 수정`
+                : !isHost && checkMeAttend === 1
+                ? `알람 나가기`
+                : `알람 참가`}
+            </Button>
+            {isHost && (
+              <ConfirmButton
                 width="100%"
                 height="xl"
-                options={
-                  !isHost && checkMeAttend === 1 ? 'destructive' : 'primary'
-                }
+                options="destructive"
                 center
-                onPress={() =>
-                  isHost && checkMeAttend === 1
-                    ? navigateRetouch()
-                    : !isHost && checkMeAttend === 1
-                    ? requestQuit()
-                    : isFull
-                    ? Alert.alert(
-                        `최대 참가할 수 있는 인원이 ${max_member}명입니다`,
-                      )
-                    : setVisible(true)
-                }>
-                {isHost && checkMeAttend === 1
-                  ? `알람 수정`
-                  : !isHost && checkMeAttend === 1
-                  ? `알람 나가기`
-                  : `알람 참가`}
-              </Button>
-              {isHost && (
-                <ConfirmButton
-                  width="100%"
-                  height="xl"
-                  options="destructive"
-                  center
-                  onPress={requestDelete}>
-                  알람 삭제
-                </ConfirmButton>
-              )}
-            </Box>
-          </BottomBox>
-          <CenterScreen {...{ visible, setVisible }}>
-            <AttendConfirm
-              mateNickname={Members[0].nickname}
-              name={name}
-              time={String(time)}
-              isRepeated={is_repeated}
-              gameName={Game.name}
-              myName={profileData.nickname}
-            />
-          </CenterScreen>
-        </ScrollView>
-      </Container>
+                onPress={requestDelete}>
+                알람 삭제
+              </ConfirmButton>
+            )}
+          </Box>
+        </BottomBox>
+        <CenterScreen {...{ visible, setVisible }}>
+          <AttendConfirm
+            mateNickname={Members[0].nickname}
+            name={name}
+            time={String(time)}
+            isRepeated={is_repeated}
+            gameName={Game.name}
+            myName={profileData.nickname}
+          />
+        </CenterScreen>
+      </CustomContainer>
     </SafeAreaView>
   );
 };

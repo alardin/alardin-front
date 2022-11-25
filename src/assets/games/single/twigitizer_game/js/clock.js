@@ -1,19 +1,17 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
-const clock = document.querySelector('.timer p');
-const stopWatch = document.querySelector('.lock-remain p');
+const clock = document.querySelector(".timer p");
+const stopWatch = document.querySelector(".lock-remain p");
 let lockingFlag = false;
 let playSeconds = -2;
 let stopWatchSeconds = 60;
 let failCount = 0;
 
 //초를 분으로 바꾸어주는 함수
-const secondsToMiniutes = seconds => {
+const secondsToMiniutes = (seconds) => {
   const minutes = Math.floor(seconds / 60);
   const afterSeconds = seconds % 60;
-  return `${String(minutes).padStart(2, '0')}:${String(afterSeconds).padStart(
+  return `${String(minutes).padStart(2, "0")}:${String(afterSeconds).padStart(
     2,
-    '0',
+    "0"
   )}`;
 };
 
@@ -21,38 +19,13 @@ const secondsToMiniutes = seconds => {
 const clockChange = () => {
   clock.innerHTML = secondsToMiniutes(playSeconds);
   playSeconds += 1;
-  if (playSeconds > 60 * 5) {
-    // 5분 시간 초과로 RN한테 시간 초과했다고 전달하기!!
-    const startedTime = new Date(Date.now())
-      .toISOString()
-      .replace(/[T]/g, ' ')
-      .replace(/[Z]/g, '');
-    startedTime.setMinutes(startedTime.getMinutes() - 5);
+  if (playSeconds > 60 * 10) {
+    // 10분 시간 초과로 RN한테 시간 초과했다고 전달하기!!
+    makeOutputData(false);
     if (window.ReactNativeWebView) {
-      const result = JSON.stringify({
-        type: 'TIME_OUT',
-        message: {
-          start_time: startedTime.toISOString(),
-          end_time: new Date(Date.now())
-            .toISOString()
-            .replace(/[T]/g, ' ')
-            .replace(/[Z]/g, ''),
-          data: {
-            play_time: 300, //플레이시간
-            trial: 1, //실패 횟수
-            data: {
-              // optional keys
-              is_bot_used: false, //봇 개입 여부
-            },
-          },
-          is_cleared: false,
-          Game_channel_id: 0,
-          Game_id: 2, //진행한 게임
-        },
-      });
-      window.ReactNativeWebView.postMessage(result);
+      window.ReactNativeWebView.postMessage(toJSON("TIME_OUT",outputData));
     } else {
-      console.log('Not React Native WebView');
+      console.log("Not React Native WebView");
     }
   }
   //console.log(playSeconds, clock.innerHTML);
@@ -67,7 +40,7 @@ const startStopWatch = () => {
   const stopWatchInterval = setInterval(function () {
     if (stopWatchSeconds == 1) {
       lockingFlag = false;
-      document.querySelector('.warning-watch').classList.add('hidden');
+      document.querySelector(".warning-watch").classList.add("hidden");
       clearInterval(stopWatchInterval);
     }
     stopWatchSeconds -= 1;

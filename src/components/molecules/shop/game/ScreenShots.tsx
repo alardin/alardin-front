@@ -1,7 +1,6 @@
 import React from 'react';
 import { Image, ListRenderItem } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
-import { SvgUri } from 'react-native-svg';
 import styled from 'styled-components/native';
 import Box from '../../../atoms/box/Box';
 import Container from '../../../atoms/container/Container';
@@ -16,14 +15,15 @@ const CustomContainer = styled(Container)`
 `;
 
 const ScreenShotBox = styled(Box)`
-  width: 240px;
-  height: 420px;
+  width: 260px;
+  height: 480px;
+  margin-right: 20px;
 `;
 
 const ScreenShotImage = styled.Image`
   width: 100%;
   height: 100%;
-  border-radius: 12px;
+  border-radius: 8px;
 `;
 
 const Title = styled(Text)`
@@ -31,11 +31,13 @@ const Title = styled(Text)`
 `;
 
 const ScreenShots = ({ images }: IScreenShotsProps) => {
-  const renderItem: ListRenderItem<string> = ({ item }) => (
-    <ScreenShotBox bgColor="#fffff" style={{ marginRight: 24 }}>
-      <ScreenShotImage source={{ uri: item }} />
-    </ScreenShotBox>
-  );
+  const renderItem: ListRenderItem<string> = ({ item }) => {
+    return (
+      <ScreenShotBox>
+        <ScreenShotImage source={{ uri: item }} resizeMode="stretch" />
+      </ScreenShotBox>
+    );
+  };
   return (
     <CustomContainer>
       <Title size="l" options="semiBold">

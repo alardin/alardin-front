@@ -4,6 +4,7 @@
 	background-color: #edf0f3;
 }
 .grid{
+	padding: 5%;
 	width:100vw;
 	height:100vh;
 	display: grid;

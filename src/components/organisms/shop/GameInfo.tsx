@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { SafeAreaView } from 'react-native';
 import styled from 'styled-components/native';
 import { IGameMetaType } from '../../../recoil/home/alarmSettings';
@@ -43,8 +43,6 @@ const GameInfo = ({
     min_player,
     max_player,
   } = game;
-
-  console.log(id);
 
   return (
     <SafeAreaView>

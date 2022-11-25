@@ -5,7 +5,7 @@ import Container from '../../atoms/container/Container';
 const AdBox = () => {
   return (
     <Container>
-      <Box width="100%" height="100px" colorName="green"></Box>
+      <Box width="100%" height="100px" />
     </Container>
   );
 };

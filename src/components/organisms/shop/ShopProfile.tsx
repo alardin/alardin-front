@@ -77,7 +77,7 @@ const ShopProfile = ({ asset, profile, setVisible }: IHeaderProps) => {
               </Text>
             </LabelBox>
           </GradeBox>
-          <PremiumLabel isPremium={isPremium} setVisible={setVisible} />
+          {/* <PremiumLabel isPremium={isPremium} setVisible={setVisible} /> */}
         </TextBox>
       </RightBox>
     </CustomContainer>

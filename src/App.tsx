@@ -1,18 +1,17 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 
 import React, { useCallback, useEffect } from 'react';
-import {
-  PermissionsAndroid,
-  Platform,
-  StatusBar,
-  useColorScheme,
-} from 'react-native';
+import { PermissionsAndroid, Platform, StatusBar } from 'react-native';
 import messaging from '@react-native-firebase/messaging';
-import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
+import {
+  DefaultTheme,
+  NavigationContainer,
+  useNavigation,
+} from '@react-navigation/native';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { ThemeProvider } from 'styled-components/native';
 import StackNavigation from './navigation/stack/StackNavigation';
-import { navigationRef } from './navigation/RootNavigation';
+import { navigate, navigationRef } from './navigation/RootNavigation';
 
 import CodePush from 'react-native-code-push';
 import 'react-native-gesture-handler';
@@ -40,6 +39,11 @@ import _ from 'lodash';
 import SplashScreen from 'react-native-splash-screen';
 import PushNotification, { Importance } from 'react-native-push-notification';
 
+import { AdManager } from 'react-native-admob-native-ads';
+import { requestTrackingPermission } from 'react-native-tracking-transparency';
+import { Config } from 'react-native-config';
+import { checkMultiple, PERMISSIONS } from 'react-native-permissions';
+
 LogBox.ignoreLogs(['componentWillUpdate']);
 LogBox.ignoreLogs(['new NativeEventEmitter']);
 const _console = _.clone(console);
@@ -49,36 +53,36 @@ console.warn = message => {
   }
 };
 
-const requestUserPermission = async () => {
-  const authStatus = await messaging().requestPermission();
-  const enabled =
-    authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
-    authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+// const requestUserPermission = async () => {
+//   const authStatus = await messaging().requestPermission();
+//   const enabled =
+//     authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+//     authStatus === messaging.AuthorizationStatus.PROVISIONAL;
 
-  if (enabled) {
-    console.log('Authorization status:', authStatus);
-  }
-};
+//   if (enabled) {
+//     console.log('Authorization status:', authStatus);
+//   }
+// };
 
-const requestCameraAndAudioPermission = async () => {
-  if (Platform.OS === 'android') {
-    try {
-      const granted = await PermissionsAndroid.requestMultiple([
-        PermissionsAndroid.PERMISSIONS.RECORD_AUDIO,
-      ]);
-      if (
-        granted['android.permission.RECORD_AUDIO'] ===
-        PermissionsAndroid.RESULTS.GRANTED
-      ) {
-        console.log('You can use the mic');
-      } else {
-        console.log('Permission denied');
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  }
-};
+// const requestCameraAndAudioPermission = async () => {
+//   if (Platform.OS === 'android') {
+//     try {
+//       const granted = await PermissionsAndroid.requestMultiple([
+//         PermissionsAndroid.PERMISSIONS.RECORD_AUDIO,
+//       ]);
+//       if (
+//         granted['android.permission.RECORD_AUDIO'] ===
+//         PermissionsAndroid.RESULTS.GRANTED
+//       ) {
+//         console.log('You can use the mic');
+//       } else {
+//         console.log('Permission denied');
+//       }
+//     } catch (err) {
+//       console.log(err);
+//     }
+//   }
+// };
 
 const initialBackgroundStatus = async () => {
   await BackgroundFetch.configure(
@@ -133,8 +137,60 @@ PushNotification.createChannel(
 );
 
 const App = () => {
-  const scheme = useColorScheme();
   useInterceptor();
+
+  const checkDevicePermission = () => {
+    const checkPermissionArr =
+      Platform.OS === 'ios'
+        ? [
+            PERMISSIONS.IOS.MICROPHONE,
+            PERMISSIONS.IOS.APP_TRACKING_TRANSPARENCY,
+          ]
+        : [
+            PERMISSIONS.ANDROID.RECORD_AUDIO,
+            PERMISSIONS.ANDROID.POST_NOTIFICATIONS,
+          ];
+    checkMultiple(checkPermissionArr).then(response => {
+      if (
+        response['android.permission.POST_NOTIFICATIONS'] === 'denied' ||
+        response['android.permission.RECORD_AUDIO'] === 'denied' ||
+        response['ios.permission.APP_TRACKING_TRANSPARENCY'] === 'denied' ||
+        response['ios.permission.MICROPHONE'] === 'denied'
+      ) {
+        navigate({ name: 'PermissionScreen', params: {} });
+      }
+    });
+  };
+
+  const AdSettings = useCallback(async () => {
+    AdManager.registerRepository({
+      name: 'imageAd',
+      adUnitId:
+        Platform.OS === 'android'
+          ? Config.ADMOB_APP_ANDROID_NATIVE_AD_UNIT_ONE
+          : Config.ADMOB_APP_IOS_NATIVE_AD_UNIT_ONE,
+      numOfAds: 3,
+      requestNonPersonalizedAdsOnly: true,
+      videoOptions: {
+        muted: false,
+      },
+      expirationPeriod: 3600000, // in milliseconds (optional)
+      mediationEnabled: false,
+    }).then(result => {
+      console.log('registered: ', result);
+    });
+
+    const trackingStatus = await requestTrackingPermission();
+
+    let trackingAuthorized = false;
+    if (trackingStatus === 'authorized' || trackingStatus === 'unavailable') {
+      trackingAuthorized = true;
+    }
+
+    await AdManager.setRequestConfiguration({
+      trackingAuthorized,
+    });
+  }, []);
 
   const setIsNotify = useSetRecoilState(isNotify);
   const [storage, setStorage] = useRecoilState(defaultNotify);
@@ -181,8 +237,10 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    requestUserPermission();
-    requestCameraAndAudioPermission();
+    AdSettings();
+    checkDevicePermission();
+    // requestUserPermission();
+    // requestCameraAndAudioPermission();
     initialBackgroundStatus();
   }, []);
 
@@ -230,15 +288,16 @@ const App = () => {
   );
 };
 
+// updateDialog: {
+//   title: '최신 업데이트 필요',
+//   optionalUpdateMessage:
+//     '현재 사용하고 계신 버전보다 개선된 서비스를 제공하기 위해 업데이트를 하시는 걸 권장합니다.',
+//   optionalInstallButtonLabel: '업데이트',
+//   optionalIgnoreButtonLabel: '아니요.',
+// },
 const codePushOptions = {
   checkFrequency: CodePush.CheckFrequency.ON_APP_START,
-  updateDialog: {
-    title: '최신 업데이트 필요',
-    optionalUpdateMessage:
-      '현재 사용하고 계신 버전보다 개선된 서비스를 제공하기 위해 업데이트를 하시는 걸 권장합니다.',
-    optionalInstallButtonLabel: '업데이트',
-    optionalIgnoreButtonLabel: '아니요.',
-  },
+  updateDialong: false,
   installMode: CodePush.InstallMode.IMMEDIATE,
 };
 

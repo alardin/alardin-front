@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { NativeSyntheticEvent, TextInputChangeEventData } from 'react-native';
 import styled from 'styled-components/native';
 import { IMembersDataType } from '../../../../recoil/home/members';
@@ -28,20 +28,38 @@ const CustomText = styled(Text)`
 `;
 
 const InputSearch = ({ text, setText, setSearchResult }: IInputSearchProps) => {
-  const handleSearch = async (
-    event: NativeSyntheticEvent<TextInputChangeEventData>,
-  ) => {
-    const value = event.nativeEvent.text;
-    setText(value);
+  let inputTimer: any = null;
+
+  const requestSearch = async (value: string) => {
     if (value.length >= 2) {
       const response = await alardinApi.get('/mate/search', {
         params: { keyword: value },
       });
-      console.log(response.data.data);
       setSearchResult(response.data.data);
-      console.log(value);
+    } else {
+      setSearchResult([]);
     }
   };
+
+  const handleSearch = async (
+    event: NativeSyntheticEvent<TextInputChangeEventData>,
+  ) => {
+    try {
+      if (inputTimer) {
+        clearTimeout(inputTimer);
+      }
+      const value = event.nativeEvent.text;
+      setText(value);
+      if (value) {
+        inputTimer = setTimeout(async () => {
+          await requestSearch(value);
+        }, 500);
+      }
+    } catch (e) {
+      console.log('error');
+    }
+  };
+
   return (
     <CustomBox>
       <CustomText size="m" options="bold">

@@ -28,19 +28,16 @@ const DaysBox = styled(Box)<Omit<ISetItemDaysProps, 'setSetting'>>`
 `;
 
 const SetItemDays = ({ display, setSetting }: ISetItemDaysProps) => {
-  console.log(display);
   const dayText = ['월', '화', '수', '목', '금', '토', '일'];
   const [checked, setChecked] = useState<boolean[]>(
     display === '0'
       ? Array.from({ length: 8 }, () => false)
       : Array.from({ length: 8 }, (_, index) => {
-          console.log(index);
           return display.split('').includes(String(index + 1)) ? true : false;
         }),
   );
 
   useEffect(() => {
-    console.log(checked);
     const daysArr = checked
       .map((day, index) => day && index)
       .filter(value => typeof value === 'number');

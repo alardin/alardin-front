@@ -13,7 +13,6 @@ import Container from '../../components/atoms/container/Container';
 import { RootStackParamList } from '../../navigation/stack/StackNavigation';
 import NetInfo from '@react-native-community/netinfo';
 import alardinApi from '../../utils/alardinApi';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export type GameStartProps = StackScreenProps<
   RootStackParamList,
@@ -36,7 +35,7 @@ const WebBox = styled(Box)`
 const SingleGameStart = ({ route, navigation }: GameStartProps) => {
   const { alarmId } = route.params;
   const appState = useRef(AppState.currentState);
-  const [appStateVisible, setAppStateVisible] = useState(appState.current);
+  const [, setAppStateVisible] = useState(appState.current);
 
   let webViewRef = useRef<WebView>();
 
@@ -62,14 +61,14 @@ const SingleGameStart = ({ route, navigation }: GameStartProps) => {
         );
         navigation.reset({
           index: 0,
-          routes: [{ name: 'SingleGameEnd', params: { gameId: 2 } }],
+          routes: [{ name: 'SingleGameEnd', params: { gameId: 4 } }],
         });
         return;
       case 'TIME_OUT':
         console.log('time out!!');
         navigation.reset({
           index: 0,
-          routes: [{ name: 'SingleGameEnd', params: { gameId: 2 } }],
+          routes: [{ name: 'SingleGameEnd', params: { gameId: 4 } }],
         });
         return;
       default:
@@ -113,7 +112,7 @@ const SingleGameStart = ({ route, navigation }: GameStartProps) => {
         };
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{ paddingTop: 28 }}>
       <CustomContianer options="zero">
         <WebBox width="100%" height="100%">
           <WebView
