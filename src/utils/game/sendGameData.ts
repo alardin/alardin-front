@@ -50,7 +50,7 @@ const sendGameData = (
       const totalUser = originalData[0].totalUsers;
       const randomSet = makeUserSet(totalUser);
       return originalData.map((data, idx) => ({
-        images: originalData[0].images,
+        images: data.images,
         currentUser: String.fromCharCode(64 + (idx + 1)),
         outputUser: randomSet,
         totalUser: data.totalUsers,
