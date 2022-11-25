@@ -66,7 +66,7 @@ const TAttend = ({ route, navigation }: IAlarmAttendScreen) => {
   const [isHost, setIsHost] = useState<boolean>(false);
   const [profileData, setProfileData] = useState<any>({} as IMyProfile);
   const [checkMeAttend, setCheckMeAttend] = useState<number>(0);
-  const isFull = Members.length === max_member;
+  const isFull = Members.length >= max_member;
 
   console.log(Host);
   console.log(time);

@@ -112,7 +112,7 @@ const SingleGameStart = ({ route, navigation }: GameStartProps) => {
         };
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{ paddingTop: 28 }}>
       <CustomContianer options="zero">
         <WebBox width="100%" height="100%">
           <WebView

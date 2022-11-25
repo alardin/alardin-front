@@ -19,6 +19,7 @@ import { toastEnable } from '../utils/Toast';
 import CloseIcon from '../assets/icons/ic-cancel.svg';
 import { minuteStringCheck } from '../utils/home/convertDateTime';
 import systemSetting from 'react-native-system-setting';
+import alardinApi from '../utils/alardinApi';
 
 export type CallScreenProps = StackScreenProps<
   RootStackParamList,
@@ -94,6 +95,8 @@ const CallScreen = ({ route, navigation }: CallScreenProps) => {
   const netInfo = useNetInfo();
 
   const initialAgoraEngine = async () => {
+    await alardinApi.post(`/game/ready?alarmId=${alarmId}`);
+
     setEngine(await RtcEngine.create(Config.AGORA_APP_ID));
     await engine?.enableAudio();
 

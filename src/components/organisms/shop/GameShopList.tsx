@@ -35,7 +35,7 @@ const GameShopList = ({ data, myGames }: IGameShopProps) => {
         {data.map((item, index) => {
           const isPaid = myGames.map(game => game.id).includes(item.id);
           return (
-            item.id !== 3 && (
+            !(item.id === 3 || item.id === 6) && (
               <View
                 key={`icon_${index}`}
                 style={{

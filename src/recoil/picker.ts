@@ -2,6 +2,7 @@ import { atom, selector } from 'recoil';
 import { apiGameMetaData, pickerMetaData } from './home/alarmSettings';
 
 export interface IPickerData {
+  max_player: number;
   label: string;
   value: string;
 }

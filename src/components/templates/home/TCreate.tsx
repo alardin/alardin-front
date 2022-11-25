@@ -73,6 +73,8 @@ const TCreate = ({ navigation }: IAlarmCreateScreen) => {
         music_name: pickerMetaData[0].data[0].value,
         Game_id:
           gameList.contents.length === 0 ? 0 : gameList.contents[0].value,
+        max_member:
+          gameList.contents.length === 0 ? 0 : gameList.contents[0].max_player,
       });
       setInputLabel({
         ...initialRecoilSetting,
